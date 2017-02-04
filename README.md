@@ -1,21 +1,25 @@
-# The Rust Programming Language
+# Rust 程序设计语言
 
 [![Build Status](https://travis-ci.org/rust-lang/book.svg?branch=master)](https://travis-ci.org/rust-lang/book)
 
-This is the next iteration of “The Rust Programming Language”, which is
-currently located [in the main Rust repository][src]. If you want to read the
-book, you should check it out there or [on the web][prod].
+> Chinese translation of [The Rust Programming Language][book-en]  
+> 持续翻译中...
+
+[book-en]： https://github.com/rust-lang/book
+
+这是新版的《Rust 程序设计语言》，上一版是放在 [Rust 主代码库][src]中。如果想阅读上一版文档，可[在网上][prod]直接直接查阅。
 
 [src]: https://github.com/rust-lang/rust/tree/master/src/doc/book
 [prod]: https://doc.rust-lang.org/book/
 
-If you would like to see this version rendered, it’s [on GitHub pages][html].
+如果你想看当前版本的内容，可[点击阅读][html-cn]（英文原版在 [Gihub pages][html] 上）。
 
+[html-cn]: https://rustwiki.org/zh-CN/book-cn
 [html]: http://rust-lang.github.io/book/
 
-## Requirements
+## 要求
 
-Building the book requires [mdBook] >= v0.0.13. To get it:
+构建这本书需要 [mdBook] >= v0.0.13。执行以下命令安装：
 
 [mdBook]: https://github.com/azerupi/mdBook
 
@@ -23,16 +27,15 @@ Building the book requires [mdBook] >= v0.0.13. To get it:
 $ cargo install mdbook
 ```
 
-## Building
+## 构建
 
-To build the book, type:
+构建此书，请输入：
 
 ```
 $ mdbook build
 ```
 
-The output will be in the `book` subdirectory. To check it out, open it in
-your web browser.
+输出落在 `book` 子目录中。可使用浏览器打开来查看内容。
 
 _Firefox:_
 ```
@@ -46,63 +49,55 @@ $ google-chrome book/index.html           # Linux
 $ open -a "Google Chrome" book/index.html # OS X
 ```
 
-To run the tests:
+运行测试:
 
 ```
 $ mdbook test
 ```
 
-## Contributing
+## 参与贡献
 
-We'd love your help! Please see [CONTRIBUTING.md][contrib].
+您的帮助，我们将感激不尽(We'd love your help)！请参见 [CONTRIBUTING.md][contrib]。
 
 [contrib]: https://github.com/rust-lang/book/blob/master/CONTRIBUTING.md
 
 ## No Starch
 
-As the book will be published by No Starch, we first iterate here, then ship the
-text off to No Starch. Then they do editing, and we fold it back in.
+> No Starch 是美国的一家出版社
 
-As such, there’s a directory, *nostarch*, which corresponds to the text in No
-Starch’s system.
+本书（英文原版）将由 No Starch 出版社出版，我们先在这里更新迭代，再将文本发送到 No Starch。然后他们进一步编辑，最后我们将内容取回来。
 
-When we've started working with No Starch in a word doc, we will also check
-those into the repo in the *nostarch/odt* directory. To extract the text from
-the word doc as markdown in order to backport changes to the online book:
+所以这里有一个 *nostarch* 目录，对应 No Starch 系统的文本。
 
-1. Open the doc file in LibreOffice
-1. Accept all tracked changes
-1. Save as Microsoft Word 2007-2013 XML (.docx) in the *tmp* directory
-1. Run `./doc-to-md.sh`
-1. Inspect changes made to the markdown file in the *nostarch* directory and copy the changes to the *src* directory as appropriate.
+当我们开始和 No Starch 配合使用 Word 文档后，我们还会在 *nostarch/odt* 目录中核对这些内容并加到库中。要将文本从 Word 文档中提取成 Markdown 格式，以便追踪线上书籍（即本书）的变更记录：
+
+1. 在 LibreOffice 打开 doc 文件
+1. 接受所有跟踪的更改
+1. 另存为 Microsoft Word 2007-2013 XML (.docx) 文件到 *tmp* 目录
+1. 运行 `./doc-to-md.sh`
+1. 检查 *nostarch* 目录中的 Markdown 文件所做的更改，并适当地将变更的内容复制到 *src* 目录。
 
 ## Graphviz dot
 
-This is mostly for Carol's reference because she keeps having to look it up.
+> Graphviz 是一种图形绘制工具，使用 dot 语言来编写绘制
 
-We're using [Graphviz](http://graphviz.org/) for some of the diagrams in the
-book. The source for those files live in the `dot` directory. To turn a `dot`
-file, for example, `dot/trpl04-01.dot` into an `svg`, run:
+这主要是给 Carol 参考的，因为她不得不检查这些内容（原文：This is mostly for Carol's reference because she keeps having to look it up）。
+
+我们使用 [Graphviz](http://graphviz.org/) 来绘制一些书中需要的图表。这些文件的源文件位于 `dot` 目录中。要将 `dot` 文件转换成 `svg` 文件，如转换 `dot/trpl04-01.dot` 文件，运行：
 
 ```
 $ dot dot/trpl04-01.dot -Tsvg > src/img/trpl04-01.svg
 ```
 
-In the generated SVG, remove the width and the height attributes from the `svg`
-element and set the `viewBox` attribute to `0.00 0.00 1000.00 1000.00` or other
-values that don't cut off the image.
+在生成的 SVG 中，从 `svg` 元素中删除了宽度和高度属性，并将 `viewBox` 属性设置成 `0.00 0.00 1000.00 1000.00` 或其他不会截断图像的值。
 
-## Spellchecking
+## 拼写检查（仅对英文检查起作用）
 
-To scan source files for spelling errors, you can use the `spellcheck.sh`
-script. It needs a dictionary of valid words, which is provided in
-`dictionary.txt`. If the script produces a false positive (say, you used word
-`BTreeMap` which the script considers invalid), you need to add this word to
-`dictionary.txt` (keep the sorted order for consistency).
+要扫描源文件的拼写错误，可以使用 `spellcheck.sh` 脚本。这需要一个带有有效单词的字典文件，由 `dictionary.txt` 提供。如果脚本产生了一个假阳性（比如说，你使用了 `BTreeMap` 单词，但脚本认为无效），就需要将这个单词添加到 `dictionary.txt` 文件（保持排序的顺序以确保一致性）。
 
-## Converting Windows newlines to Unix
+## 将 Windows 换行符转换为 Unix 的
 
-This is mostly for Carol's reference because she keeps having to look it up.
+这主要是给 Carol 参考，因为她不得不检查不规范的换行符。（原文：This is mostly for Carol's reference because she keeps having to look it up.）
 
 ```
 $ tr -d '\015' < DOS-file > UNIX-file
