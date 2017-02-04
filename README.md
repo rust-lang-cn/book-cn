@@ -12,9 +12,9 @@
 [src]: https://github.com/rust-lang/rust/tree/master/src/doc/book
 [prod]: https://doc.rust-lang.org/book/
 
-如果你想看当前版本的内容，可[点击阅读][html-cn]（英文原版在 [Gihub pages][html] 上）。
+如果你想看当前版本的内容，可[点击这里阅读][html-cn]（英文原版在 [Gihub pages][html] 上）。
 
-[html-cn]: https://rustwiki.org/zh-CN/book-cn
+[html-cn]: https://rustwiki.org/zh-CN/book
 [html]: http://rust-lang.github.io/book/
 
 ## 要求
