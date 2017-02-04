@@ -5,9 +5,9 @@
 > Chinese translation of [The Rust Programming Language][book-en]  
 > 持续翻译中...
 
-[book-en]： https://github.com/rust-lang/book
+[book-en]: https://github.com/rust-lang/book
 
-这是新版的《Rust 程序设计语言》，上一版是放在 [Rust 主代码库][src]中。如果想阅读上一版文档，可[在网上][prod]直接直接查阅。
+这是新版的《Rust 程序设计语言》，上一版是放在 [Rust 主代码库][src]中。如果想阅读上一版文档，可在[官网][prod]上直接查阅。
 
 [src]: https://github.com/rust-lang/rust/tree/master/src/doc/book
 [prod]: https://doc.rust-lang.org/book/
