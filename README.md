@@ -57,13 +57,14 @@ $ mdbook test
 
 ## 参与贡献
 
-您的帮助，我们将感激不尽(We'd love your help)！请参见 [CONTRIBUTING.md][contrib]。
+您的帮助，我们将感激不尽(We'd love your help)！请参见 [CONTRIBUTING.md][contrib-cn]（英文原项目参与贡献指引 [CONTRIBUTING-EN.md][contrib]）。
 
+[contrib-cn]: https://github.com/rust-lang-cn/book-cn/blob/master/CONTRIBUTING.md
 [contrib]: https://github.com/rust-lang/book/blob/master/CONTRIBUTING.md
 
 ## No Starch
 
-> No Starch 是美国的一家出版社
+> 译注：No Starch 是美国的一家出版社
 
 本书（英文原版）将由 No Starch 出版社出版，我们先在这里更新迭代，再将文本发送到 No Starch。然后他们进一步编辑，最后我们将内容取回来。
 
@@ -79,7 +80,7 @@ $ mdbook test
 
 ## Graphviz dot
 
-> Graphviz 是一种图形绘制工具，使用 dot 语言来编写绘制
+> 译注：Graphviz 是一种图形绘制工具，使用 dot 语言来编写绘制
 
 这主要是给 Carol 参考的，因为她不得不检查这些内容（原文：This is mostly for Carol's reference because she keeps having to look it up）。
 
