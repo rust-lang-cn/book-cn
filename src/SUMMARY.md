@@ -1,32 +1,32 @@
-# The Rust Programming Language
+# Rust 程序设计语言
 
-## Getting started
+## 开始
 
-- [Introduction](ch01-00-introduction.md)
-    - [Installation](ch01-01-installation.md)
+- [简介](ch01-00-introduction.md)
+    - [安装](ch01-01-installation.md)
     - [Hello, World!](ch01-02-hello-world.md)
 
-- [Guessing Game Tutorial](ch02-00-guessing-game-tutorial.md)
+- [猜数字游戏](ch02-00-guessing-game-tutorial.md)
 
-- [Common Programming Concepts](ch03-00-common-programming-concepts.md)
-    - [Variables and Mutability](ch03-01-variables-and-mutability.md)
-    - [Data Types](ch03-02-data-types.md)
-    - [How Functions Work](ch03-03-how-functions-work.md)
-    - [Comments](ch03-04-comments.md)
-    - [Control Flow](ch03-05-control-flow.md)
+- [常用编程概念](ch03-00-common-programming-concepts.md)
+    - [变量和可变性](ch03-01-variables-and-mutability.md)
+    - [数据类型](ch03-02-data-types.md)
+    - [函数是如何工作的](ch03-03-how-functions-work.md)
+    - [注释](ch03-04-comments.md)
+    - [控制流](ch03-05-control-flow.md)
 
-- [Understanding Ownership](ch04-00-understanding-ownership.md)
-    - [What is Ownership?](ch04-01-what-is-ownership.md)
-    - [References & Borrowing](ch04-02-references-and-borrowing.md)
-    - [Slices](ch04-03-slices.md)
+- [了解所有权](ch04-00-understanding-ownership.md)
+    - [什么是所有权？](ch04-01-what-is-ownership.md)
+    - [引用和借用](ch04-02-references-and-borrowing.md)
+    - [切片 slice](ch04-03-slices.md)
 
-- [Structs](ch05-00-structs.md)
-    - [Method Syntax](ch05-01-method-syntax.md)
+- [结构体](ch05-00-structs.md)
+    - [方法语法](ch05-01-method-syntax.md)
 
-- [Enums and Pattern Matching](ch06-00-enums.md)
-    - [Defining an Enum](ch06-01-defining-an-enum.md)
-    - [The `match` Control Flow Operator](ch06-02-match.md)
-    - [Concise Control Flow with `if let`](ch06-03-if-let.md)
+- [枚举和模式匹配](ch06-00-enums.md)
+    - [定义枚举](ch06-01-defining-an-enum.md)
+    - [`match` 控制流运算符](ch06-02-match.md)
+    - [`if let` 简单控制流](ch06-03-if-let.md)
 
 ## Basic Rust Literacy
 
