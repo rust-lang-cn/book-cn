@@ -67,67 +67,39 @@
                 </div>
 
                 <div id="content" class="content">
-                    <h2>Installation</h2>
-<p>The first step to using Rust is to install it. You’ll need an internet
-connection to run the commands in this chapter, as we’ll be downloading Rust
-from the internet.</p>
-<p>We’ll be showing off a number of commands using a terminal, and those lines all
-start with <code>$</code>. You don't need to type in the <code>$</code> character; they are there to indicate
-the start of each command. You’ll see many tutorials and examples around the web
-that follow this convention: <code>$</code> for commands run as a regular user, and <code>#</code>
-for commands you should be running as an administrator. Lines that don't start
-with <code>$</code> are typically showing the output of the previous command.</p>
-<h3>Installing on Linux or Mac</h3>
-<p>If you're on Linux or a Mac, all you need to do is open a terminal and type
-this:</p>
+                    <h2>安装</h2>
+<p>使用 Rust 的第一步就是安装它。运行本章的命令需要联网，因为要从网络上下载 Rust。</p>
+<p>我们将使用终端来显示一些命令，这些行都以 <code>$</code> 符号开头。<code>$</code> 符号不需要键入，它们在那里表示每个命令的起始。网上很多教程和示例都遵循这个约定：<code>$</code> 表示命令以普通用户运行，<code>#</code> 表示命令以管理员用户运行。不以 <code>$</code> 开头的行通常表示上一个命令的输出内容。</p>
+<h3>在 Linux 或 Mac 上安装</h3>
+<p>如果您使用的是 Linux 或 Mac，您只需打开一个终端并输入：</p>
 <pre><code class="language-text">$ curl https://sh.rustup.rs -sSf | sh
 </code></pre>
-<p>This will download a script and start the installation. You may be prompted for
-your password. If it all goes well, you’ll see this appear:</p>
+<p>这将下载一个脚本并开始安装。系统可能会提示您输入密码。如果一切顺利，您将会看到：</p>
 <pre><code class="language-text">Rust is installed now. Great!
 </code></pre>
-<p>Of course, if you disapprove of the <code>curl | sh</code> pattern, you can download, inspect
-and run the script however you like.</p>
-<h3>Installing on Windows</h3>
-<p>On Windows, go to <a href="https://rustup.rs/">https://rustup.rs</a><!-- ignore --> and
-follow the instructions to download rustup-init.exe. Run that and follow the
-rest of the instructions it gives you.</p>
-<p>The rest of the Windows-specific commands in the book will assume that you are
-using <code>cmd</code> as your shell. If you use a different shell, you may be able to run
-the same commands that Linux and Mac users do. If neither work, consult the
-documentation for the shell you are using.</p>
-<h3>Custom installations</h3>
-<p>If you have reasons for preferring not to use rustup.rs, please see <a href="https://www.rust-lang.org/install.html">the Rust
-installation page</a> for other options.</p>
-<h3>Uninstalling</h3>
-<p>Uninstalling Rust is as easy as installing it. From your shell, run
-the uninstall script:</p>
+<p>当然，若是你不认可 <code>curl | sh</code> 模式，你可以以你喜欢的方式下载，检查，再运行脚本。</p>
+<h3>在 Windows 上安装</h3>
+<p>在 Windows 上，请到 <a href="https://rustup.rs/">https://rustup.rs</a><!-- ignore --> 网站上按照说明下载 rustup-init.exe。双击运行并按照提示装好。</p>
+<p>在本书其余地方用到的 Windows 特定的命令都假定您使用的是 <code>cmd</code> 作为 <code>shell</code>。如果使用不同的 <code>shell</code>，很可能运行的命令与 Linux 和 Mac 的命令一样。要是都不能工作，请参考您正在使用的 shell 说明文档。</p>
+<h3>自定义安装</h3>
+<p>如果你出于某些原因而不喜欢使用 rustup.rs，请参阅 <a href="https://www.rust-lang.org/install.html">Rust 安装说明页</a>的其他选项。</p>
+<h3>卸载</h3>
+<p>卸载 Rust 和安装 Rust 一样简单。在你的 shell 中运行卸载脚本：</p>
 <pre><code class="language-text">$ rustup self uninstall
 </code></pre>
-<h3>Troubleshooting</h3>
-<p>If you've got Rust installed, you can open up a shell, and type this:</p>
+<h3>疑难解答</h3>
+<p>如果已经安装好 Rust，你可以打开一个 shell，并键入：</p>
 <pre><code class="language-text">$ rustc --version
 </code></pre>
-<p>You should see the version number, commit hash, and commit date in a format
-similar to this for the latest stable version at the time you install:</p>
+<p>你将看到版本号，提交的哈希值（commit hash），以及提交日期。对于安装好的最新稳定版，该命令输出内容的格式类似这样：</p>
 <pre><code class="language-text">rustc x.y.z (abcabcabc yyyy-mm-dd)
 </code></pre>
-<p>If you see this, Rust has been installed successfully!
-Congrats!</p>
-<p>If you don't and you're on Windows, check that Rust is in your <code>%PATH%</code> system
-variable.</p>
-<p>If it still isn't working, there are a number of places where you can get help.
-The easiest is <a href="irc://irc.mozilla.org/#rust">the #rust IRC channel on irc.mozilla.org</a><!-- ignore -->,
-which you can access through <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">Mibbit</a>. Go to that address, and you'll
-be chatting with other Rustaceans (a silly nickname we call ourselves) who can
-help you out. Other great resources include <a href="https://users.rust-lang.org/">the user’s forum</a> and
-<a href="http://stackoverflow.com/questions/tagged/rust">Stack Overflow</a>.</p>
-<h3>Local documentation</h3>
-<p>The installer also includes a copy of the documentation locally, so you can
-read it offline. Run <code>rustup doc</code> to open the local documentation in your
-browser.</p>
-<p>Any time there's a type or function provided by the standard library and you're
-not sure what it does, use the API documentation to find out!</p>
+<p>若你看到这些内容，则说明 Rust 已经安装成功！恭喜！</p>
+<p>要是看不到这些输出内容，且你正在使用 Windows，请检查 Rust 是否已经加入到 <code>%PATH%</code> 系统变量中。</p>
+<p>如果还是不能工作，你可以在一些地方寻求帮助。最简单的方式就是使用 <a href="irc://irc.mozilla.org/#rust">irc.mozilla.org 上的 #rust 频道</a><!-- ignore -->，可以通过 <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">Mibbit</a> 访问。进入该频道，你就和其他的 Rustaceans（我们称呼自己的昵称，译注：指 Rust 程序员或爱好者）交流，他们会帮助你。其他不错的资源还有 <a href="https://users.rust-lang.org/">Rust 用户论坛</a> 和 <a href="http://stackoverflow.com/questions/tagged/rust">Stack Overflow</a>。</p>
+<h3>本地文档</h3>
+<p>安装程序还包括文档的副本存放在本地，可以方便地离线阅读。运行 <code>rustup doc</code> 让浏览器上打开本地文档。(译注：自 Rust Stable 1.14.0 版本后，Rust 安装程序默认不再自带本地文档，需要添加本地文档的话，需要执行 <code>rustup component list</code> 查看 rust-docs 是否高亮，若无的话，则需要通过命令手动安装 <code>rustup component add rust-docs</code>，装好后 <code>rustup doc</code> 就可用了。参见<a href="https://www.reddit.com/r/rust/comments/5jv5lm/is_rustup_docs_broken_for_other_people/">reddit</a>)</p>
+<p>遇到标准库提供的类型或函数不知道怎么用时，可在 API 文档找到相关的说明。</p>
 
                 </div>
 
