@@ -8,7 +8,7 @@
 
 - [猜数字游戏](ch02-00-guessing-game-tutorial.md)
 
-- [常用编程概念](ch03-00-common-programming-concepts.md)
+- [通用编程概念](ch03-00-common-programming-concepts.md)
     - [变量和可变性](ch03-01-variables-and-mutability.md)
     - [数据类型](ch03-02-data-types.md)
     - [函数是如何工作的](ch03-03-how-functions-work.md)
