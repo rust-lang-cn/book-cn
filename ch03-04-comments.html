@@ -67,36 +67,30 @@
                 </div>
 
                 <div id="content" class="content">
-                    <h2>Comments</h2>
-<p>All programmers strive to make their code easy to understand, but sometimes
-extra explanation is warranted. In these cases, programmers leave notes, or
-<em>comments</em>, in their source code that the compiler will ignore but people
-reading the source code may find useful.</p>
-<p>Here’s a simple comment:</p>
+                    <h2>注释</h2>
+<p>很多程序员都在努力使他们的代码容易理解，但有时需要额外的解释。在这种情况下，程序员在它们的源代码中留下笔记或注释，编译器将会忽略掉这些内容，但读源代码的人可能会发现有用。</p>
+<p>这是一条简单的注释：</p>
 <pre><code class="language-rust">// Hello, world.
 </code></pre>
-<p>In Rust, comments must start with two slashes and continue until the end of the
-line. For comments that extend beyond a single line, you’ll need to include
-<code>//</code> on each line, like this:</p>
-<pre><code class="language-rust">// So we’re doing something complicated here, long enough that we need
-// multiple lines of comments to do it! Whew! Hopefully, this comment will
-// explain what’s going on.
+<p>在 Rust 中，注释必须以两个斜杆开头，直到该行尾结束。对于超出单行的注释，需要在注释的每行行首加上 <code>//</code>，如下所示：</p>
+<pre><code class="language-rust">// 我们在这里处理一些复杂事情，需要足够长的解释，使用
+// 多行注释可做到这点。哇！我们希望这个注释将解释接下
+// 来要实现的内容。
 </code></pre>
-<p>Comments can also be placed at the end of lines containing code:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>注释也可以放在包含代码的行后面：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
-    let lucky_number = 7; // I’m feeling lucky today.
+    let lucky_number = 7; // 我今天感觉好幸运。
 }
 </code></pre>
-<p>But you’ll more often see them used in this format, with the comment on a
-separate line above the code it's annotating:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>不过下面的这种格式会更常见，将注释放到需要解释的代码的上面单独一行：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
-    // I’m feeling lucky today.
+    // 我今天感觉好幸运。
     let lucky_number = 7;
 }
 </code></pre>
-<p>That’s all there is to comments. They’re not particularly complicated.</p>
+<p>这就是注释的全部内容，这些内容并不复杂。</p>
 
                 </div>
 
