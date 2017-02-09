@@ -176,12 +176,6 @@ authors = ["Your Name <you@example.com>"]
 
 接下来的三行设置了 Cargo 需要查看的三个配置点，以便知道它应该编译你的程序：程序名称，版本号，编写作者。Cargo 将从您的环境中获取您的姓名和电子邮件信息。如果信息有误，请修正并保存文件。
 
-The last line, `[dependencies]`, is the start of a section for you to list any
-*crates* (which is what we call packages of Rust code) that your project will
-depend on so that Cargo knows to download and compile those too. We won't need
-any other crates for this project, but we will in the guessing game tutorial in
-the next chapter.
-
 最后一行 `[dependencies]` 是另一个小节的开始，此节可列出项目将要依赖的任意 *crates*（这是我们对 Rust 代码的包的称呼），从而让 Cargo 知道下载和编译这些内容。我们在此项目不需要任何 cretes，但下一章节中的猜数字游戏就需要了。
 
 现在我们来看看 *src/main.rs*:
