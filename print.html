@@ -212,11 +212,6 @@ authors = [&quot;Your Name &lt;you@example.com&gt;&quot;]
 <p>此文件采用 <a href="https://github.com/toml-lang/toml"><em>TOML</em></a><!-- ignore --> (Tom's Obvious, Minimal Language) 格式。TOML 类似于 INI，但有一些额外的好处，并用作 Cargo 的配置格式。</p>
 <p>第一行 <code>[package]</code> 是一个小节标题，表示下面语句正在配置包。当我们向此文件添加更多信息时，我们将添加其他小节。</p>
 <p>接下来的三行设置了 Cargo 需要查看的三个配置点，以便知道它应该编译你的程序：程序名称，版本号，编写作者。Cargo 将从您的环境中获取您的姓名和电子邮件信息。如果信息有误，请修正并保存文件。</p>
-<p>The last line, <code>[dependencies]</code>, is the start of a section for you to list any
-<em>crates</em> (which is what we call packages of Rust code) that your project will
-depend on so that Cargo knows to download and compile those too. We won't need
-any other crates for this project, but we will in the guessing game tutorial in
-the next chapter.</p>
 <p>最后一行 <code>[dependencies]</code> 是另一个小节的开始，此节可列出项目将要依赖的任意 <em>crates</em>（这是我们对 Rust 代码的包的称呼），从而让 Cargo 知道下载和编译这些内容。我们在此项目不需要任何 cretes，但下一章节中的猜数字游戏就需要了。</p>
 <p>现在我们来看看 <em>src/main.rs</em>:</p>
 <p><span class="filename">文件名：src/main.rs</span></p>
@@ -1132,7 +1127,7 @@ Chapter 6 endeavors to explain enums.</p>
 <p>Rust 语言有一组<strong>关键字</strong>（<em>keywords</em>），和其他语言一样，这些关键字被保留下来只提供给语言作特殊使用。请记住，这些关键字不能用作变量或函数的名称。大多数关键字都有特殊的含义，在 Rust 程序中可使用它们执行多种任务；有少数关键字暂时没有相关联的功能，但这些功能将来可能会加入到 Rust 中。在附录 A 中可找到关键字列表。</p>
 </blockquote>
 <!-- PROD: END BOX -->
-<h2>Variables and Mutability</h2>
+<h2>变量和可变性</h2>
 <p>As mentioned in Chapter 2, by default variables are <em>immutable</em>. This is one of
 many nudges in Rust that encourages you to write your code in a way that takes
 advantage of the safety and easy concurrency that Rust offers. However, you
