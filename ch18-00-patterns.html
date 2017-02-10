@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Rust 程序设计语言</title>
+        <title>Patterns - Rust 程序设计语言</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +10,12 @@
         <base href="">
 
         <link rel="stylesheet" href="book.css">
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
         <link rel="shortcut icon" href="favicon.png">
 
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -24,14 +24,14 @@
         <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script>
             if (typeof jQuery == 'undefined') {
                 document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
             }
         </script>
     </head>
-    <body>
+    <body class="light">
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme = localStorage.getItem('theme');
@@ -47,7 +47,7 @@
         </script>
 
         <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="ch01-00-introduction.html"><strong>1.</strong> 简介</a></li><li><ul class="section"><li><a href="ch01-01-installation.html"><strong>1.1.</strong> 安装</a></li><li><a href="ch01-02-hello-world.html"><strong>1.2.</strong> Hello, World!</a></li></ul></li><li><a href="ch02-00-guessing-game-tutorial.html"><strong>2.</strong> 猜数字游戏</a></li><li><a href="ch03-00-common-programming-concepts.html"><strong>3.</strong> 通用编程概念</a></li><li><ul class="section"><li><a href="ch03-01-variables-and-mutability.html"><strong>3.1.</strong> 变量和可变性</a></li><li><a href="ch03-02-data-types.html"><strong>3.2.</strong> 数据类型</a></li><li><a href="ch03-03-how-functions-work.html"><strong>3.3.</strong> 函数是如何工作的</a></li><li><a href="ch03-04-comments.html"><strong>3.4.</strong> 注释</a></li><li><a href="ch03-05-control-flow.html"><strong>3.5.</strong> 控制流</a></li></ul></li><li><a href="ch04-00-understanding-ownership.html"><strong>4.</strong> 了解所有权</a></li><li><ul class="section"><li><a href="ch04-01-what-is-ownership.html"><strong>4.1.</strong> 什么是所有权？</a></li><li><a href="ch04-02-references-and-borrowing.html"><strong>4.2.</strong> 引用和借用</a></li><li><a href="ch04-03-slices.html"><strong>4.3.</strong> 切片 slice</a></li></ul></li><li><a href="ch05-00-structs.html"><strong>5.</strong> 结构体</a></li><li><ul class="section"><li><a href="ch05-01-method-syntax.html"><strong>5.1.</strong> 方法语法</a></li></ul></li><li><a href="ch06-00-enums.html"><strong>6.</strong> 枚举和模式匹配</a></li><li><ul class="section"><li><a href="ch06-01-defining-an-enum.html"><strong>6.1.</strong> 定义枚举</a></li><li><a href="ch06-02-match.html"><strong>6.2.</strong> <code>match</code> 控制流运算符</a></li><li><a href="ch06-03-if-let.html"><strong>6.3.</strong> <code>if let</code> 简单控制流</a></li></ul></li><li><a href="ch07-00-modules.html"><strong>7.</strong> Modules</a></li><li><ul class="section"><li><a href="ch07-01-mod-and-the-filesystem.html"><strong>7.1.</strong> <code>mod</code> and the Filesystem</a></li><li><a href="ch07-02-controlling-visibility-with-pub.html"><strong>7.2.</strong> Controlling Visibility with <code>pub</code></a></li><li><a href="ch07-03-importing-names-with-use.html"><strong>7.3.</strong> Importing Names with <code>use</code></a></li></ul></li><li><a href="ch08-00-fundamental-collections.html"><strong>8.</strong> Fundamental Collections</a></li><li><ul class="section"><li><a href="ch08-01-vectors.html"><strong>8.1.</strong> Vectors</a></li><li><a href="ch08-02-strings.html"><strong>8.2.</strong> Strings</a></li><li><a href="ch08-03-hash-maps.html"><strong>8.3.</strong> Hash Maps</a></li></ul></li><li><a href="ch09-00-error-handling.html"><strong>9.</strong> Error Handling</a></li><li><ul class="section"><li><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong>9.1.</strong> Unrecoverable Errors with <code>panic!</code></a></li><li><a href="ch09-02-recoverable-errors-with-result.html"><strong>9.2.</strong> Recoverable Errors with <code>Result</code></a></li><li><a href="ch09-03-to-panic-or-not-to-panic.html"><strong>9.3.</strong> To <code>panic!</code> or Not To <code>panic!</code></a></li></ul></li><li><a href="ch10-00-generics.html"><strong>10.</strong> Generics</a></li><li><ul class="section"><li><a href="ch10-01-syntax.html"><strong>10.1.</strong> Syntax</a></li><li><a href="ch10-02-traits.html"><strong>10.2.</strong> Traits</a></li><li><a href="ch10-03-lifetime-syntax.html"><strong>10.3.</strong> Lifetime syntax</a></li></ul></li><li><a href="ch11-00-testing.html"><strong>11.</strong> Testing</a></li><li><ul class="section"><li><a href="ch11-01-writing-tests.html"><strong>11.1.</strong> Writing tests</a></li><li><a href="ch11-02-running-tests.html"><strong>11.2.</strong> Running tests</a></li><li><a href="ch11-03-test-organization.html"><strong>11.3.</strong> Test Organization</a></li></ul></li><li><a href="ch12-00-an-io-project.html"><strong>12.</strong> An I/O Project</a></li><li><ul class="section"><li><a href="ch12-01-accepting-command-line-arguments.html"><strong>12.1.</strong> Accepting Command Line Arguments</a></li><li><a href="ch12-02-reading-a-file.html"><strong>12.2.</strong> Reading a File</a></li><li><a href="ch12-03-improving-error-handling-and-modularity.html"><strong>12.3.</strong> Improving Error Handling and Modularity</a></li><li><a href="ch12-04-testing-the-librarys-functionality.html"><strong>12.4.</strong> Testing the Library's Functionality</a></li><li><a href="ch12-05-working-with-environment-variables.html"><strong>12.5.</strong> Working with Environment Variables</a></li><li><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong>12.6.</strong> Writing to <code>stderr</code> instead of <code>stdout</code></a></li></ul></li><li><a href="ch13-00-functional-features.html"><strong>13.</strong> Functional Language Features in Rust</a></li><li><ul class="section"><li><a href="ch13-01-closures.html"><strong>13.1.</strong> Closures</a></li><li><a href="ch13-02-iterators.html"><strong>13.2.</strong> Iterators</a></li><li><a href="ch13-03-improving-our-io-project.html"><strong>13.3.</strong> Improving our I/O Project</a></li><li><a href="ch13-04-performance.html"><strong>13.4.</strong> Performance</a></li></ul></li><li><a href="ch14-00-more-about-cargo.html"><strong>14.</strong> More about Cargo and Crates.io</a></li><li><ul class="section"><li><a href="ch14-01-release-profiles.html"><strong>14.1.</strong> Release Profiles</a></li><li><a href="ch14-02-publishing-to-crates-io.html"><strong>14.2.</strong> Publishing a Crate to Crates.io</a></li><li><a href="ch14-03-cargo-workspaces.html"><strong>14.3.</strong> Cargo Workspaces</a></li><li><a href="ch14-04-installing-binaries.html"><strong>14.4.</strong> Installing Binaries from Crates.io with <code>cargo install</code></a></li><li><a href="ch14-05-extending-cargo.html"><strong>14.5.</strong> Extending Cargo with Custom Commands</a></li></ul></li><li><a href="ch15-00-smart-pointers.html"><strong>15.</strong> Smart Pointers</a></li><li><a href="ch16-00-concurrency.html"><strong>16.</strong> Concurrency</a></li><li><a href="ch17-00-oop.html"><strong>17.</strong> Is Rust OOP?</a></li><li><a href="ch18-00-patterns.html" class="active"><strong>18.</strong> Patterns</a></li><li><a href="ch19-00-more-lifetimes.html"><strong>19.</strong> More Lifetimes</a></li><li><a href="ch20-00-advanced-types.html"><strong>20.</strong> Advanced Type System Features</a></li><li><a href="appendix-00.html"><strong>21.</strong> Appendix</a></li><li><ul class="section"><li><a href="appendix-01-keywords.html"><strong>21.1.</strong> Keywords</a></li><li><a href="appendix-02-operators.html"><strong>21.2.</strong> Operators</a></li><li><a href="appendix-03-derivable-traits.html"><strong>21.3.</strong> Derivable Traits</a></li><li><a href="appendix-04-nightly-rust.html"><strong>21.4.</strong> Nightly Rust</a></li><li><a href="appendix-05-macros.html"><strong>21.5.</strong> Macros</a></li></ul>
+            <ul class="chapter"><li><a href="ch01-00-introduction.html"><strong>1.</strong> 简介</a></li><li><ul class="section"><li><a href="ch01-01-installation.html"><strong>1.1.</strong> 安装</a></li><li><a href="ch01-02-hello-world.html"><strong>1.2.</strong> Hello, World!</a></li></ul></li><li><a href="ch02-00-guessing-game-tutorial.html"><strong>2.</strong> 猜数字游戏</a></li><li><a href="ch03-00-common-programming-concepts.html"><strong>3.</strong> 通用编程概念</a></li><li><ul class="section"><li><a href="ch03-01-variables-and-mutability.html"><strong>3.1.</strong> 变量和可变性</a></li><li><a href="ch03-02-data-types.html"><strong>3.2.</strong> 数据类型</a></li><li><a href="ch03-03-how-functions-work.html"><strong>3.3.</strong> 函数是如何工作的</a></li><li><a href="ch03-04-comments.html"><strong>3.4.</strong> 注释</a></li><li><a href="ch03-05-control-flow.html"><strong>3.5.</strong> 控制流</a></li></ul></li><li><a href="ch04-00-understanding-ownership.html"><strong>4.</strong> 了解所有权</a></li><li><ul class="section"><li><a href="ch04-01-what-is-ownership.html"><strong>4.1.</strong> 什么是所有权？</a></li><li><a href="ch04-02-references-and-borrowing.html"><strong>4.2.</strong> 引用和借用</a></li><li><a href="ch04-03-slices.html"><strong>4.3.</strong> 切片 slice</a></li></ul></li><li><a href="ch05-00-structs.html"><strong>5.</strong> 结构体</a></li><li><ul class="section"><li><a href="ch05-01-method-syntax.html"><strong>5.1.</strong> 方法语法</a></li></ul></li><li><a href="ch06-00-enums.html"><strong>6.</strong> 枚举和模式匹配</a></li><li><ul class="section"><li><a href="ch06-01-defining-an-enum.html"><strong>6.1.</strong> 定义枚举</a></li><li><a href="ch06-02-match.html"><strong>6.2.</strong> <code>match</code> 控制流运算符</a></li><li><a href="ch06-03-if-let.html"><strong>6.3.</strong> <code>if let</code> 简单控制流</a></li></ul></li><li><a href="ch07-00-modules.html"><strong>7.</strong> Modules</a></li><li><ul class="section"><li><a href="ch07-01-mod-and-the-filesystem.html"><strong>7.1.</strong> <code>mod</code> and the Filesystem</a></li><li><a href="ch07-02-controlling-visibility-with-pub.html"><strong>7.2.</strong> Controlling Visibility with <code>pub</code></a></li><li><a href="ch07-03-importing-names-with-use.html"><strong>7.3.</strong> Importing Names with <code>use</code></a></li></ul></li><li><a href="ch08-00-fundamental-collections.html"><strong>8.</strong> Fundamental Collections</a></li><li><ul class="section"><li><a href="ch08-01-vectors.html"><strong>8.1.</strong> Vectors</a></li><li><a href="ch08-02-strings.html"><strong>8.2.</strong> Strings</a></li><li><a href="ch08-03-hash-maps.html"><strong>8.3.</strong> Hash Maps</a></li></ul></li><li><a href="ch09-00-error-handling.html"><strong>9.</strong> Error Handling</a></li><li><ul class="section"><li><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong>9.1.</strong> Unrecoverable Errors with <code>panic!</code></a></li><li><a href="ch09-02-recoverable-errors-with-result.html"><strong>9.2.</strong> Recoverable Errors with <code>Result</code></a></li><li><a href="ch09-03-to-panic-or-not-to-panic.html"><strong>9.3.</strong> To <code>panic!</code> or Not To <code>panic!</code></a></li></ul></li><li><a href="ch10-00-generics.html"><strong>10.</strong> Generics</a></li><li><ul class="section"><li><a href="ch10-01-syntax.html"><strong>10.1.</strong> Syntax</a></li><li><a href="ch10-02-traits.html"><strong>10.2.</strong> Traits</a></li><li><a href="ch10-03-lifetime-syntax.html"><strong>10.3.</strong> Lifetime syntax</a></li></ul></li><li><a href="ch11-00-testing.html"><strong>11.</strong> Testing</a></li><li><ul class="section"><li><a href="ch11-01-writing-tests.html"><strong>11.1.</strong> Writing tests</a></li><li><a href="ch11-02-running-tests.html"><strong>11.2.</strong> Running tests</a></li><li><a href="ch11-03-test-organization.html"><strong>11.3.</strong> Test Organization</a></li></ul></li><li><a href="ch12-00-an-io-project.html"><strong>12.</strong> An I/O Project</a></li><li><ul class="section"><li><a href="ch12-01-accepting-command-line-arguments.html"><strong>12.1.</strong> Accepting Command Line Arguments</a></li><li><a href="ch12-02-reading-a-file.html"><strong>12.2.</strong> Reading a File</a></li><li><a href="ch12-03-improving-error-handling-and-modularity.html"><strong>12.3.</strong> Improving Error Handling and Modularity</a></li><li><a href="ch12-04-testing-the-librarys-functionality.html"><strong>12.4.</strong> Testing the Library's Functionality</a></li><li><a href="ch12-05-working-with-environment-variables.html"><strong>12.5.</strong> Working with Environment Variables</a></li><li><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong>12.6.</strong> Writing to <code>stderr</code> instead of <code>stdout</code></a></li></ul></li><li><a href="ch13-00-functional-features.html"><strong>13.</strong> Functional Language Features in Rust</a></li><li><ul class="section"><li><a href="ch13-01-closures.html"><strong>13.1.</strong> Closures</a></li><li><a href="ch13-02-iterators.html"><strong>13.2.</strong> Iterators</a></li><li><a href="ch13-03-improving-our-io-project.html"><strong>13.3.</strong> Improving our I/O Project</a></li><li><a href="ch13-04-performance.html"><strong>13.4.</strong> Performance</a></li></ul></li><li><a href="ch14-00-more-about-cargo.html"><strong>14.</strong> More about Cargo and Crates.io</a></li><li><ul class="section"><li><a href="ch14-01-release-profiles.html"><strong>14.1.</strong> Release Profiles</a></li><li><a href="ch14-02-publishing-to-crates-io.html"><strong>14.2.</strong> Publishing a Crate to Crates.io</a></li><li><a href="ch14-03-cargo-workspaces.html"><strong>14.3.</strong> Cargo Workspaces</a></li><li><a href="ch14-04-installing-binaries.html"><strong>14.4.</strong> Installing Binaries from Crates.io with <code>cargo install</code></a></li><li><a href="ch14-05-extending-cargo.html"><strong>14.5.</strong> Extending Cargo with Custom Commands</a></li></ul></li><li><a href="ch15-00-smart-pointers.html"><strong>15.</strong> Smart Pointers</a></li><li><a href="ch16-00-concurrency.html"><strong>16.</strong> Concurrency</a></li><li><a href="ch17-00-oop.html"><strong>17.</strong> Is Rust OOP?</a></li><li><a href="ch18-00-patterns.html" class="active"><strong>18.</strong> Patterns</a></li><li><a href="ch19-00-more-lifetimes.html"><strong>19.</strong> More Lifetimes</a></li><li><a href="ch20-00-advanced-types.html"><strong>20.</strong> Advanced Type System Features</a></li><li><a href="appendix-00.html"><strong>21.</strong> Appendix</a></li><li><ul class="section"><li><a href="appendix-01-keywords.html"><strong>21.1.</strong> Keywords</a></li><li><a href="appendix-02-operators.html"><strong>21.2.</strong> Operators</a></li><li><a href="appendix-03-derivable-traits.html"><strong>21.3.</strong> Derivable Traits</a></li><li><a href="appendix-04-nightly-rust.html"><strong>21.4.</strong> Nightly Rust</a></li><li><a href="appendix-05-macros.html"><strong>21.5.</strong> Macros</a></li></ul></li></ul>
         </div>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -67,13 +67,13 @@
                 </div>
 
                 <div id="content" class="content">
-                    <h1>Patterns</h1>
+                    <a class="header" href="ch18-00-patterns.html#patterns" name="patterns"><h1>Patterns</h1></a>
 <p>We've actually used patterns a few times so far: they're used in <code>let</code>
 statements, in function parameters, and in the <code>match</code> expression. Patterns have
 a lot more abilities than we have demonstrated so far, so we'll cover some of
 the most commonly used ones in this section. Any of these abilities work in any
 place where a pattern is used.</p>
-<h2><code>let</code> statements</h2>
+<a class="header" href="ch18-00-patterns.html#let-statements" name="let-statements"><h2><code>let</code> statements</h2></a>
 <p>A basic <code>let</code> statement has this form:</p>
 <pre><code class="language-text">let PATTERN = EXPRESSION;
 </code></pre>
@@ -112,7 +112,7 @@ well:</p>
 <p>In simple cases like this, two <code>let</code>s may be clearer, but in others, creating
 multiple variables at once is nice. As we become more proficient in Rust, we’ll
 figure out which style is better, but it’s mostly a judgment call.</p>
-<h2>Type annotations</h2>
+<a class="header" href="ch18-00-patterns.html#type-annotations" name="type-annotations"><h2>Type annotations</h2></a>
 <p>Most of the time, Rust uses <em>type inference</em>, meaning that it attempts to infer
 the types of your variables rather than you having to declare them explicitly
 even though Rust is a statically typed language. Occasionally, Rust won't have
@@ -131,7 +131,7 @@ itself. As an example, here’s our more complex pattern with two variables:</p>
 </code></pre>
 <p>Just like we match up the <code>VALUE</code> with the <code>PATTERN</code>, we match up the <code>TYPE</code>
 with the <code>PATTERN</code>.</p>
-<h2>Literals &amp; _</h2>
+<a class="header" href="ch18-00-patterns.html#literals--_" name="literals--_"><h2>Literals &amp; _</h2></a>
 <p>You can match against literals directly, and <code>_</code> acts as an any case:</p>
 <pre><code class="language-rust">let x = 1;
 
@@ -143,7 +143,7 @@ match x {
 }
 </code></pre>
 <p>This prints <code>one</code>.</p>
-<h1>Multiple patterns</h1>
+<a class="header" href="ch18-00-patterns.html#multiple-patterns" name="multiple-patterns"><h1>Multiple patterns</h1></a>
 <p>You can match multiple patterns with <code>|</code>:</p>
 <pre><code class="language-rust">let x = 1;
 
@@ -154,10 +154,10 @@ match x {
 }
 </code></pre>
 <p>This prints <code>one or two</code>.</p>
-<h2>ref and ref mut</h2>
+<a class="header" href="ch18-00-patterns.html#ref-and-ref-mut" name="ref-and-ref-mut"><h2>ref and ref mut</h2></a>
 <p>Usually, when you match against a pattern, variables are bound to a value.
 This means you'll end up moving the value into the <code>match</code>:</p>
-<pre><code class="language-rust,ignore">let name = Some(String::from(&quot;Bors&quot;));
+<pre><code class="language-rust ignore">let name = Some(String::from(&quot;Bors&quot;));
 
 match name {
     Some(name) =&gt; println!(&quot;Found a name: {}&quot;, name),
@@ -191,7 +191,7 @@ match name {
 // than moving it
 println!(&quot;name is: {:?}&quot;, name);
 </code></pre>
-<h2>Destructuring</h2>
+<a class="header" href="ch18-00-patterns.html#destructuring" name="destructuring"><h2>Destructuring</h2></a>
 <p>Patterns can be used to destructure structs and enums:</p>
 <pre><code class="language-rust">struct Point {
     x: i32,
@@ -216,7 +216,7 @@ match origin {
     Point { x, y } =&gt; { }, // variables x and y are created here
 }
 </code></pre>
-<h2>Shadowing</h2>
+<a class="header" href="ch18-00-patterns.html#shadowing" name="shadowing"><h2>Shadowing</h2></a>
 <p>As with all variables, those declared by a pattern will shadow variables
 outside of the <code>match</code> construct:</p>
 <pre><code class="language-rust">let x = Some(5);
@@ -226,7 +226,7 @@ match x {
     None =&gt; (),
 }
 </code></pre>
-<h2>Ignoring values</h2>
+<a class="header" href="ch18-00-patterns.html#ignoring-values" name="ignoring-values"><h2>Ignoring values</h2></a>
 <p>We discussed using <code>_</code> as a whole pattern to ignore it above, but you can
 also use <code>_</code> inside of another pattern to ignore just part of it:</p>
 <pre><code class="language-rust">let x = Some(5);
@@ -256,7 +256,7 @@ match origin {
     Point { x, .. } =&gt; { }, // y and z are ignored
 }
 </code></pre>
-<h2>Ranges</h2>
+<a class="header" href="ch18-00-patterns.html#ranges" name="ranges"><h2>Ranges</h2></a>
 <p>You can match a range of values with <code>...</code>:</p>
 <pre><code class="language-rust">let x = 5;
 
@@ -274,7 +274,7 @@ match x {
     _ =&gt; println!(&quot;something else&quot;),
 }
 </code></pre>
-<h2>Guards</h2>
+<a class="header" href="ch18-00-patterns.html#guards" name="guards"><h2>Guards</h2></a>
 <p>You can introduce match guards with <code>if</code>:</p>
 <pre><code class="language-rust">let x = Some(5);
 
@@ -300,7 +300,7 @@ the <code>5</code>. In other words, the precedence of if behaves like this:</p>
 <p>not this:</p>
 <pre><code class="language-text">4 | (5 if y) =&gt; ...
 </code></pre>
-<h2>Bindings</h2>
+<a class="header" href="ch18-00-patterns.html#bindings" name="bindings"><h2>Bindings</h2></a>
 <p>You can bind values to names with <code>@</code>:</p>
 
                 </div>
@@ -341,6 +341,9 @@ the <code>5</code>. In other words, the precedence of if behaves like this:</p>
                 $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
             }
         </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
 
         <script src="highlight.js"></script>
         <script src="book.js"></script>
