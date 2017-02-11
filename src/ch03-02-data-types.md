@@ -1,16 +1,8 @@
-## Data Types
+## 数据类型
 
-Every value in Rust is of a certain *type*, which tells Rust what kind of data
-is being specified so it knows how to work with that data. In this section,
-we’ll look at a number of types that are built into the language. We split the
-types into two subsets: scalar and compound.
+Rust 的每个值都有确切的**类型**（*type*），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍一些内置于语言中的类型。我们将类型分为两大类：数量类型和复合类型。
 
-Throughout this section, keep in mind that Rust is a *statically typed*
-language, which means that it must know the types of all variables at compile
-time. The compiler can usually infer what type we want to use based on the
-value and how we use it. In cases when many types are possible, such as when we
-converted a `String` to a numeric type using `parse` in Chapter 2, we must add
-a type annotation, like this:
+在学习本节内容时，请记住 Rust 是一种**静态类型**（*statically typed*）的语言，这意味着它必须在编译期知道所有变量的类型。编译器通常可以根据值和使用方式推导出我们想要使用的类型。在类型可能是多种情况时，例如第 2 章中的当我们使用 `parse` 将`String` 转换成数值类型时，我们必须加上一个类型标注，如下所示：
 
 ```rust
 let guess: u32 = "42".parse().unwrap();
