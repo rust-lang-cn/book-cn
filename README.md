@@ -35,7 +35,7 @@ $ cargo install mdbook
 $ mdbook build
 ```
 
-输出落在 `book` 子目录中。可使用浏览器打开来查看内容。
+输出内容存放在 `book` 子目录中。可使用浏览器打开来查看内容。
 
 _Firefox:_
 ```
