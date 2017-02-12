@@ -8,9 +8,7 @@ Rust 的每个值都有确切的**类型**（*type*），该类型告诉 Rust �
 let guess: u32 = "42".parse().unwrap();
 ```
 
-If we don’t add the type annotation here, Rust will display the following
-error, which means the compiler needs more information from us to know which
-possible type we want to use:
+如果我们在这里不添加类型标注的话，Rust 将显示以下错误，意思是编译器需要我们提供更多信息来确定我们到底想用什么类型：
 
 ```text
 error[E0282]: unable to infer enough type information about `_`
@@ -22,103 +20,68 @@ error[E0282]: unable to infer enough type information about `_`
   = note: type annotations or generic parameter binding required
 ```
 
-You’ll see different type annotations as we discuss the various data types.
+在讨论各种数据类型时，你将看到不同的类型标注。
 
-### Scalar Types
+### 标量类型
 
-A *scalar* type represents a single value. Rust has four primary scalar types:
-integers, floating-point numbers, booleans, and characters. You’ll likely
-recognize these from other programming languages, but let’s jump into how they
-work in Rust.
+**标量**类型表示单个值。Rust 有 4 个标量类型：整型、浮点型、布尔型和字符。你可从其他语言了解过这些类型，不过我们还是深入了解下它们在 Rust 中的用法。
 
-#### Integer Types
+#### 整数类型
 
-An *integer* is a number without a fractional component. We used one integer
-type earlier in this chapter, the `i32` type. This type declaration indicates
-that the value it’s associated with should be a signed integer (hence the `i`,
-as opposed to a `u` for unsigned) for a 32-bit system. Table 3-1 shows the
-built-in integer types in Rust. Each variant in the Signed and Unsigned columns
-(for example, *i32*) can be used to declare the type of an integer value.
+**整数**（*integer*）是没有是没有小数部分的数字。我们在本章前面使用过了一个整数类型，即 `i32` 类型。此类型声明表明了与其相关的值应为 32 位系统的有符号整型（`i` 是英文单词 *integer* 的首字母，与之相反的是 `u`，代表无符号 `unsigned` 类型）。表 3-1 显示了 Rust 中的内置的整数类型。在有符号和和无符号的列中（例如 *i32*）的每个定义形式都可用于声明整数类型。
 
 <figure>
 <figcaption>
 
-Table 3-1: Integer Types in Rust
+表 3-1: Rust 中的整数类型
 
 </figcaption>
 
-| Length | Signed | Unsigned |
-|--------|--------|----------|
-| 8-bit  | i8     | u8       |
-| 16-bit | i16    | u16      |
-| 32-bit | i32    | u32      |
-| 64-bit | i64    | u64      |
-| arch   | isize  | usize    |
+| 长度       | 有符号类型 | 无符号类型 |
+|------------|--------|----------|
+| 8 位       | i8     | u8       |
+| 16 位      | i16    | u16      |
+| 32 位      | i32    | u32      |
+| 64 位      | i64    | u64      |
+| 视架构而定  | isize  | usize    |
 
 </figure>
 
-Each variant can be either signed or unsigned and has an explicit size.
-Signed and unsigned refers to whether it’s possible for the number to be
-negative or positive; in other words, whether the number needs to have a sign
-with it (signed) or whether it will only ever be positive and can therefore be
-represented without a sign (unsigned). It’s like writing numbers on paper: when
-the sign matters, a number is shown with a plus sign or a minus sign; however,
-when it’s safe to assume the number is positive, it’s shown with no sign.
-Signed numbers are stored using two’s complement representation (if you’re
-unsure what this is, you can search for it online; an explanation is outside
-the scope of this book).
+每个定义形式都可以是有符号类型或无符号类型，且带有一个显式的大小。有符号和无符号表示数字能否取负数或是只能取正数；也就是说，数字是否需要带一个符号（有符号类型）或数字只能表示正数，因此可以没有符号（无符号类型）。就像在纸上写数字一样：当要强调符号时，数字前面可以带上正号或负号；然而，当很明显确定数字为正数时，就不需要加上正号了。有符号数字以二进制补码形式存储（若是不了解，可以在网上搜索相关资料；这些知识已经超出本书的范围）。
 
-Each signed variant can store numbers from -(2<sup>n - 1</sup>) to 2<sup>n -
-1</sup> - 1 inclusive, where `n` is the number of bits that variant uses. So an
-`i8` can store numbers from -(2<sup>7</sup>) to 2<sup>7</sup> - 1, which equals
--128 to 127. Unsigned variants can store numbers from 0 to 2<sup>n</sup> - 1,
-so a `u8` can store numbers from 0 to 2<sup>8</sup> - 1, which equals 0 to 255.
+每种有符号类型的定义形式规定的数字范围是  -(2<sup>n - 1</sup>) ~ 2<sup>n -
+1</sup> - 1，其中 `n` 是该定义形式的位长度。所以 `i8` 可存储数字范围是 -(2<sup>7</sup>) ~ 2<sup>7</sup> - 1，即 -128 ~ 127。无符号类型可以存储的数字范围是 0 ~ 2<sup>n</sup> - 1，所以 `u8` 能够存储的数字为 0 ~ 2<sup>8</sup> - 1，即 0 ~ 255。
 
-Additionally, the `isize` and `usize` types depend on the kind of computer your
-program is running on: 64-bits if you’re on a 64-bit architecture and 32-bits
-if you’re on a 32-bit architecture.
+此外，`isize` 和 `usize` 类型取决于程序运行的计算机类型：64 位（如果使用 64 位架构系统）和 32 位（如果使用 32 位架构系统）。
 
-You can write integer literals in any of the forms shown in Table 3-2. Note
-that all number literals except the byte literal allow a type suffix, such as
-`57u8`, and `_` as a visual separator, such as `1_000`.
+整型的字面量可以可以写成下表 3-2 中任意一种。注意，除了字节字面量之外的所有的数字字面量都允许使用类型后缀，例如 `57u8`，还有可以使用 `_` 作为可视分隔符，如 `1_000`。
 
 <figure>
 <figcaption>
 
-Table 3-2: Integer Literals in Rust
+表 3-2: Rust 的整型字面量
 
 </figcaption>
 
-| Number literals  | Example       |
-|------------------|---------------|
-| Decimal          | `98_222`      |
-| Hex              | `0xff`        |
-| Octal            | `0o77`        |
-| Binary           | `0b1111_0000` |
-| Byte (`u8` only) | `b'A'`        |
+| 数字字面量        | 示例          |
+|-----------------|---------------|
+| 十进制           | `98_222`      |
+| 十六进制         | `0xff`        |
+| 八进制           | `0o77`        |
+| 二进制           | `0b1111_0000` |
+| 字节 (只有 `u8`) | `b'A'`        |
 
 </figure>
 
-So how do you know which type of integer to use? If you’re unsure, Rust’s
-defaults are generally good choices, and integer types default to `i32`: it’s
-generally the fastest, even on 64-bit systems. The primary situation in which
-you’d use `isize` or `usize` is when indexing some sort of collection.
+那么你怎么知道使用哪种类型的整型呢？如果不确定，Rust 的默认值通常是个不错的选择，整型默认是 `i32`：这通常是最快的，即使在 64 位系统上。`isize` 和 `usize` 的主要应用场景是用作某些集合类型的索引。
 
-#### Floating-Point Types
+#### 浮点类型
 
-Rust also has two primitive types for *floating-point numbers*, which are
-numbers with decimal points. Rust’s floating-point types are `f32` and `f64`,
-which are 32 bits and 64 bits in size, respectively. The default type is `f64`
-because it’s roughly the same speed as `f32` but is capable of more precision.
-It’s possible to use an `f64` type on 32-bit systems, but it will be slower
-than using an `f32` type on those systems. Most of the time, trading potential
-worse performance for better precision is a reasonable initial choice, and you
-should benchmark your code if you suspect floating-point size is a problem in
-your situation.
+**浮点类型数字** 是带有小数点的数字，在 Rust 中浮点类型也有两种基本类型： `f32` 和 `f64`，分别为 32 位和 64 位大小。默认浮点类型是 `f64`，因为它的速度与 `f32` 几乎相同，但精度更高。在 32 位系统上使用 `f64` 也是可行的，但在这些系统上会比使用 `f32` 类型的速度要慢。多数情况下，稍差点的性能但获取更高精度是一个合理的初步选择，若是怀疑浮点型大小在你的应用场景下是一个问题，你可以对代码进行基准测试。
 
-Here’s an example that shows floating-point numbers in action:
+下面是一个演示浮点数的示例：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -128,67 +91,68 @@ fn main() {
 }
 ```
 
-Floating-point numbers are represented according to the IEEE-754 standard. The
-`f32` type is a single-precision float, and `f64` has double precision.
+浮点数根据 IEEE-754 标准表示。`f32` 类型是单精度浮点型，`f64` 为双精度。
 
-#### Numeric Operations
+#### 数字运算
 
 Rust supports the usual basic mathematic operations you’d expect for all of the
 number types: addition, subtraction, multiplication, division, and remainder.
 The following code shows how you’d use each one in a `let` statement:
 
-<span class="filename">Filename: src/main.rs</span>
+Rust 支持常见的数字类型的基本数学运算：加法、减法、乘法、除法和取模运算。下面代码演示了各使用一条 `let` 语句来说明相应运算的用法：
+
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
-    // addition
+    // 加法
     let sum = 5 + 10;
 
-    // subtraction
+    // 减法
     let difference = 95.5 - 4.3;
 
-    // multiplication
+    // 乘法
     let product = 4 * 30;
 
-    // division
+    // 除法
     let quotient = 56.7 / 32.2;
 
-    // remainder
+    // 取模运算
     let remainder = 43 % 5;
 }
 ```
 
-Each expression in these statements uses a mathematical operator and evaluates
-to a single value, which is then bound to a variable. Appendix B contains a
-list of all operators that Rust provides.
+这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。附录 B 给出了 Rust 提供的所有运算符的列表。
 
-#### The Boolean Type
+#### 布尔类型
 
 As in most other programming languages, a boolean type in Rust has two possible
 values: `true` and `false`. The boolean type in Rust is specified using `bool`.
 For example:
 
-<span class="filename">Filename: src/main.rs</span>
+和大多数编程语言一样，Rust 中的布尔类型也有两个可能的值：`true` 和 `false`。Rust 中的布尔类型使用 `bool` 指定。例如：
+
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
     let t = true;
 
-    let f: bool = false; // with explicit type annotation
+    let f: bool = false; // 使用显式类型标注
 }
 ```
 
-The main way to consume boolean values is through conditionals, such as an `if`
-statement. We’ll cover how `if` statements work in Rust in the “Control Flow”
-section.
+用到布尔值的地方主要是条件语句，如 `if` 语句。我们将会在“控制流”章节中介绍 `if` 在 Rust 中的用法。
 
-#### The Character Type
+#### 字符类型
 
 So far we’ve only worked with numbers, but Rust supports letters too. Rust’s
 `char` type is the language’s most primitive alphabetic type, and the following
 code shows one way to use it:
 
-<span class="filename">Filename: src/main.rs</span>
+到目前为止，我们只在用数字，不过 Rust 同样也支持字母。Rust 的 `char` （字符）类型语言最原始的字母类型，下面代码展示了使用它的一种方式：
+
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -198,14 +162,7 @@ fn main() {
 }
 ```
 
-Rust’s `char` type represents a Unicode Scalar Value, which means it can
-represent a lot more than just ASCII. Accented letters, Chinese/Japanese/Korean
-ideographs, emoji, and zero width spaces are all valid `char` types in Rust.
-Unicode Scalar Values range from `U+0000` to `U+D7FF` and `U+E000` to
-`U+10FFFF` inclusive. However, a “character” isn’t really a concept in Unicode,
-so your human intuition for what a “character” is may not match up with what a
-`char` is in Rust. We’ll discuss this topic in detail in the “Strings” section
-in Chapter 8.
+Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示的不仅仅是 ASCII。标音字母，中文/日文/韩文的表意文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法字符类型。Unicode 值的范围从 `U+0000`~`U+D7FF` 和 `U+E000`~`U+10FFFF`（含）。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章“字符串”中详细讨论这个主题。
 
 ### Compound Types
 
