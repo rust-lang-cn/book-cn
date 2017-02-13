@@ -95,10 +95,6 @@ fn main() {
 
 #### 数字运算
 
-Rust supports the usual basic mathematic operations you’d expect for all of the
-number types: addition, subtraction, multiplication, division, and remainder.
-The following code shows how you’d use each one in a `let` statement:
-
 Rust 支持常见的数字类型的基本数学运算：加法、减法、乘法、除法和取模运算。下面代码演示了各使用一条 `let` 语句来说明相应运算的用法：
 
 <span class="filename">文件名：src/main.rs</span>
@@ -126,10 +122,6 @@ fn main() {
 
 #### 布尔类型
 
-As in most other programming languages, a boolean type in Rust has two possible
-values: `true` and `false`. The boolean type in Rust is specified using `bool`.
-For example:
-
 和大多数编程语言一样，Rust 中的布尔类型也有两个可能的值：`true` 和 `false`。Rust 中的布尔类型使用 `bool` 指定。例如：
 
 <span class="filename">文件名：src/main.rs</span>
@@ -146,10 +138,6 @@ fn main() {
 
 #### 字符类型
 
-So far we’ve only worked with numbers, but Rust supports letters too. Rust’s
-`char` type is the language’s most primitive alphabetic type, and the following
-code shows one way to use it:
-
 到目前为止，我们只在用数字，不过 Rust 同样也支持字母。Rust 的 `char` （字符）类型语言最原始的字母类型，下面代码展示了使用它的一种方式：
 
 <span class="filename">文件名：src/main.rs</span>
@@ -164,22 +152,17 @@ fn main() {
 
 Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示的不仅仅是 ASCII。标音字母，中文/日文/韩文的表意文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法字符类型。Unicode 值的范围从 `U+0000`~`U+D7FF` 和 `U+E000`~`U+10FFFF`（含）。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章“字符串”中详细讨论这个主题。
 
-### Compound Types
+### 复合类型
 
-*Compound types* can group multiple values of other types into one type. Rust
-has two primitive compound types: tuples and arrays.
+**复合类型**（*compound type*）可以将其他类型的多个值合在一块组成一个类型。Rust 有两种基本的复合类型：元组（tuple）和数组（array）。
 
-#### Grouping Values into Tuples
+#### 将多个值组成元组
 
-A tuple is a general way of grouping together some number of other values with
-a variety of types into one compound type.
+元组是将具有多种类型的其他值分组到一个复合类型中的一种基本方式。
 
-We create a tuple by writing a comma-separated list of values inside
-parentheses. Each position in the tuple has a type, and the types of the
-different values in the tuple don’t have to be the same. We’ve added optional
-type annotations in this example:
+我们通过在括号内写入以逗号分隔的值列表来创建一个元组。元组中的每个位置都有一个类型，并且元组中不同值的类型不一定是相同的。我们在下面示例中添加了可选的类型标注：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -187,11 +170,9 @@ fn main() {
 }
 ```
 
-The variable `tup` binds to the entire tuple, since a tuple is considered a
-single compound element. To get the individual values out of a tuple, we can
-use pattern matching to destructure a tuple value, like this:
+变量 `tup` 绑定到整个元组，因为元组被认作是单个复合元素。 想从元组中获取个别值，我们可以使用模式匹配来解构（destructure）元组的一个值，如下所示：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -203,17 +184,11 @@ fn main() {
 }
 ```
 
-This program first creates a tuple and binds it to the variable `tup`. It then
-uses a pattern with `let` to take `tup` and turn it into three separate
-variables, `x`, `y`, and `z`. This is called *destructuring*, because it breaks
-the single tuple into three parts. Finally, the program prints the value of
-`y`, which is `6.4`.
+该程序首先创建一个元组并将其绑定到变量 `tup`。 然后它借助 `let` 来使用一个模式匹配 `tup`，并将它分解成三个单独的变量 `x`、`y` 和 `z`。 这过程称为**解构**（*destructuring*），因为它将单个元组分为三部分。 最后，程序打印出 `y` 值，为 `6.4`。
 
-In addition to destructuring through pattern matching, we can also access a
-tuple element directly by using a period (`.`) followed by the index of the
-value we want to access. For example:
+除了通过模式匹配进行解构外，我们还可以使用一个句点（`.`）连上要访问的值的索引来直接访问元组元素。例如：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -227,21 +202,15 @@ fn main() {
 }
 ```
 
-This program creates a tuple, `x`, and then makes new variables for each
-element by using their index. As with most programming languages, the first
-index in a tuple is 0.
+该程序创建一个元组 `x`，然后通过使用它们的索引为每个元素创建新的变量。和大多数编程语言一样，元组中的第一个索引为 0。
 
-#### Arrays
+#### 数组
 
-Another way to have a collection of multiple values is with an *array*. Unlike
-a tuple, every element of an array must have the same type. Arrays in Rust are
-different than arrays in some other languages because arrays in Rust have a
-fixed length: once declared, they cannot grow or shrink in size.
+将多个值的组合在一起另一种方式就是使用**数组**（*array*）。与元组不同，数组的每个元素必须具有相同的类型。Rust 中的数组与其他语言中的数组不同，因为 Rust 中的数组具有固定长度：一旦声明，它们就不能在大小上增长或缩小。
 
-In Rust, the values going into an array are written as a comma-separated list
-inside square brackets:
+在Rust中，数组内的值将以逗号分隔的列表形式写入方括号内的：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -249,28 +218,18 @@ fn main() {
 }
 ```
 
-Arrays are useful when you want your data allocated on the stack rather than
-the heap (we will discuss the stack and the heap more in Chapter 4), or when
-you want to ensure you always have a fixed number of elements. They aren’t as
-flexible as the vector type, though. The vector type is a similar collection
-type provided by the standard library that *is* allowed to grow or shrink in
-size. If you’re unsure whether to use an array or a vector, you should probably
-use a vector: Chapter 8 discusses vectors in more detail.
+当您希望将数据分配到栈（stack）而不是堆（heap）时（我们将在第 4 章中进一步讨论栈和堆），或者当您希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型是标准库提供的类似的集合类型，其的大小允许增长或缩小。如果您不确定是使用数组还是 vector，那就应该使用一个 vector：第 8 章更详细地讨论 vector。
 
-An example of when you might want to use an array rather than a vector is in a
-program that needs to know the names of the months of the year. It’s very
-unlikely that such a program will need to add or remove months, so you can use
-an array because you know it will always contain 12 items:
+举个例子，在需要知道一年中各个月份名称的程序中，您很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以您可以使用数组，因为您知道它总是包含 12 个条目：
 
 ```rust
 let months = ["January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December"];
 ```
 
-##### Accessing Array Elements
+##### 访问数组元素
 
-An array is a single chunk of memory allocated on the stack. We can access
-elements of an array using indexing, like this:
+数组是在栈上分配的内存上的单个数据块（原文：An array is a single chunk of memory allocated on the stack.）。我们可以使用索引来访问数组的元素，如下所示：
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -283,16 +242,13 @@ fn main() {
 }
 ```
 
-In this example, the variable named `first` will get the value `1`, because
-that is the value at index `[0]` in the array. The variable named `second` will
-get the value `2` from index `[1]` in the array.
+在这个例中，名为 `first` 的变量将获取值 `1`，因为它是数组中索引 `[0]` 处的值。名为 `second` 的变量将从数组中的索引 `[1]` 中获取值 `2`。
 
-##### Invalid Array Element Access
+##### 无效的数组元素访问
 
-What happens if we try to access an element of an array that is past the end of
-the array? Say we change the example to the following:
+如果我们尝试访问超出数组末尾的数组元素，会发生什么？ 假如我们将示例更改为以下内容：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件了名：src/main.rs</span>
 
 ```rust,ignore
 fn main() {
@@ -304,7 +260,7 @@ fn main() {
 }
 ```
 
-Running this code using `cargo run` produces the following result:
+使用 `cargo run` 运行此代码得到下面结果：
 
 ```text
 $ cargo run
@@ -316,14 +272,6 @@ note: Run with `RUST_BACKTRACE=1` for a backtrace.
 error: Process didn't exit successfully: `target/debug/arrays` (exit code: 101)
 ```
 
-The compilation didn’t produce any errors, but the program results in a
-*runtime* error and didn’t exit successfully. When you attempt to access an
-element using indexing, Rust will check that the index you’ve specified is less
-than the array length. If the index is greater than the length, Rust will
-*panic*, which is the term Rust uses when a program exits with an error.
+编译没有产生任何错误，但程序会产生**运行时**（*runtime*）错误，并且没有成功退出。当您尝试使用索引访问元素时，Rust 将检查您指定的索引是否小于数组长度。如果索引大于数组长度（译注：此处原文有误，应该是“大于或等于数组长度”），Rust将会出现 `panic`，其中 `panic` 是 Rust 的一个术语，在程序退出并出现错误时使用。
 
-This is the first example of Rust’s safety principles in action. In many
-low-level languages, this kind of check is not done, and when you provide an
-incorrect index, invalid memory can be accessed. Rust protects you against this
-kind of error by immediately exiting instead of allowing the memory access and
-continuing. Chapter 9 discusses more of Rust’s error handling.
+这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，当您使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。 第 9 章将进一步讨论 Rust 的错误处理。
