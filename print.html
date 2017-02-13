@@ -1221,22 +1221,12 @@ spaces = spaces.len();
   = note:    found type `usize`
 </code></pre>
 <p>现在我们已经探索了变量是如何工作的，接下来我们学习更多的数据类型。</p>
-<a class="header" href="print.html#data-types" name="data-types"><h2>Data Types</h2></a>
-<p>Every value in Rust is of a certain <em>type</em>, which tells Rust what kind of data
-is being specified so it knows how to work with that data. In this section,
-we’ll look at a number of types that are built into the language. We split the
-types into two subsets: scalar and compound.</p>
-<p>Throughout this section, keep in mind that Rust is a <em>statically typed</em>
-language, which means that it must know the types of all variables at compile
-time. The compiler can usually infer what type we want to use based on the
-value and how we use it. In cases when many types are possible, such as when we
-converted a <code>String</code> to a numeric type using <code>parse</code> in Chapter 2, we must add
-a type annotation, like this:</p>
+<a class="header" href="print.html#数据类型" name="数据类型"><h2>数据类型</h2></a>
+<p>Rust 的每个值都有确切的<strong>类型</strong>（<em>type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍一些内置于语言中的类型。我们将类型分为两大类：数量类型和复合类型。</p>
+<p>在学习本节内容时，请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。编译器通常可以根据值和使用方式推导出我们想要使用的类型。在类型可能是多种情况时，例如第 2 章中的当我们使用 <code>parse</code> 将<code>String</code> 转换成数值类型时，我们必须加上一个类型标注，如下所示：</p>
 <pre><code class="language-rust">let guess: u32 = &quot;42&quot;.parse().unwrap();
 </code></pre>
-<p>If we don’t add the type annotation here, Rust will display the following
-error, which means the compiler needs more information from us to know which
-possible type we want to use:</p>
+<p>如果我们在这里不添加类型标注的话，Rust 将显示以下错误，意思是编译器需要我们提供更多信息来确定我们到底想用什么类型：</p>
 <pre><code class="language-text">error[E0282]: unable to infer enough type information about `_`
  --&gt; src/main.rs:2:5
   |
@@ -1245,165 +1235,105 @@ possible type we want to use:</p>
   |
   = note: type annotations or generic parameter binding required
 </code></pre>
-<p>You’ll see different type annotations as we discuss the various data types.</p>
-<a class="header" href="print.html#scalar-types" name="scalar-types"><h3>Scalar Types</h3></a>
-<p>A <em>scalar</em> type represents a single value. Rust has four primary scalar types:
-integers, floating-point numbers, booleans, and characters. You’ll likely
-recognize these from other programming languages, but let’s jump into how they
-work in Rust.</p>
-<a class="header" href="print.html#integer-types" name="integer-types"><h4>Integer Types</h4></a>
-<p>An <em>integer</em> is a number without a fractional component. We used one integer
-type earlier in this chapter, the <code>i32</code> type. This type declaration indicates
-that the value it’s associated with should be a signed integer (hence the <code>i</code>,
-as opposed to a <code>u</code> for unsigned) for a 32-bit system. Table 3-1 shows the
-built-in integer types in Rust. Each variant in the Signed and Unsigned columns
-(for example, <em>i32</em>) can be used to declare the type of an integer value.</p>
+<p>在讨论各种数据类型时，你将看到不同的类型标注。</p>
+<a class="header" href="print.html#标量类型" name="标量类型"><h3>标量类型</h3></a>
+<p><strong>标量</strong>类型表示单个值。Rust 有 4 个标量类型：整型、浮点型、布尔型和字符。你可从其他语言了解过这些类型，不过我们还是深入了解下它们在 Rust 中的用法。</p>
+<a class="header" href="print.html#整数类型" name="整数类型"><h4>整数类型</h4></a>
+<p><strong>整数</strong>（<em>integer</em>）是没有是没有小数部分的数字。我们在本章前面使用过了一个整数类型，即 <code>i32</code> 类型。此类型声明表明了与其相关的值应为 32 位系统的有符号整型（<code>i</code> 是英文单词 <em>integer</em> 的首字母，与之相反的是 <code>u</code>，代表无符号 <code>unsigned</code> 类型）。表 3-1 显示了 Rust 中的内置的整数类型。在有符号和和无符号的列中（例如 <em>i32</em>）的每个定义形式都可用于声明整数类型。</p>
 <figure>
 <figcaption>
-<p>Table 3-1: Integer Types in Rust</p>
+<p>表 3-1: Rust 中的整数类型</p>
 </figcaption>
-<table><thead><tr><td> Length </td><td> Signed </td><td> Unsigned </td></tr></thead>
-<tr><td> 8-bit  </td><td> i8     </td><td> u8       </td></tr>
-<tr><td> 16-bit </td><td> i16    </td><td> u16      </td></tr>
-<tr><td> 32-bit </td><td> i32    </td><td> u32      </td></tr>
-<tr><td> 64-bit </td><td> i64    </td><td> u64      </td></tr>
-<tr><td> arch   </td><td> isize  </td><td> usize    </td></tr>
+<table><thead><tr><td> 长度       </td><td> 有符号类型 </td><td> 无符号类型 </td></tr></thead>
+<tr><td> 8 位       </td><td> i8     </td><td> u8       </td></tr>
+<tr><td> 16 位      </td><td> i16    </td><td> u16      </td></tr>
+<tr><td> 32 位      </td><td> i32    </td><td> u32      </td></tr>
+<tr><td> 64 位      </td><td> i64    </td><td> u64      </td></tr>
+<tr><td> 视架构而定  </td><td> isize  </td><td> usize    </td></tr>
 </table>
 </figure>
-<p>Each variant can be either signed or unsigned and has an explicit size.
-Signed and unsigned refers to whether it’s possible for the number to be
-negative or positive; in other words, whether the number needs to have a sign
-with it (signed) or whether it will only ever be positive and can therefore be
-represented without a sign (unsigned). It’s like writing numbers on paper: when
-the sign matters, a number is shown with a plus sign or a minus sign; however,
-when it’s safe to assume the number is positive, it’s shown with no sign.
-Signed numbers are stored using two’s complement representation (if you’re
-unsure what this is, you can search for it online; an explanation is outside
-the scope of this book).</p>
-<p>Each signed variant can store numbers from -(2<sup>n - 1</sup>) to 2<sup>n -
-1</sup> - 1 inclusive, where <code>n</code> is the number of bits that variant uses. So an
-<code>i8</code> can store numbers from -(2<sup>7</sup>) to 2<sup>7</sup> - 1, which equals
--128 to 127. Unsigned variants can store numbers from 0 to 2<sup>n</sup> - 1,
-so a <code>u8</code> can store numbers from 0 to 2<sup>8</sup> - 1, which equals 0 to 255.</p>
-<p>Additionally, the <code>isize</code> and <code>usize</code> types depend on the kind of computer your
-program is running on: 64-bits if you’re on a 64-bit architecture and 32-bits
-if you’re on a 32-bit architecture.</p>
-<p>You can write integer literals in any of the forms shown in Table 3-2. Note
-that all number literals except the byte literal allow a type suffix, such as
-<code>57u8</code>, and <code>_</code> as a visual separator, such as <code>1_000</code>.</p>
+<p>每个定义形式都可以是有符号类型或无符号类型，且带有一个显式的大小。有符号和无符号表示数字能否取负数或是只能取正数；也就是说，数字是否需要带一个符号（有符号类型）或数字只能表示正数，因此可以没有符号（无符号类型）。就像在纸上写数字一样：当要强调符号时，数字前面可以带上正号或负号；然而，当很明显确定数字为正数时，就不需要加上正号了。有符号数字以二进制补码形式存储（若是不了解，可以在网上搜索相关资料；这些知识已经超出本书的范围）。</p>
+<p>每种有符号类型的定义形式规定的数字范围是  -(2<sup>n - 1</sup>) ~ 2<sup>n -
+1</sup> - 1，其中 <code>n</code> 是该定义形式的位长度。所以 <code>i8</code> 可存储数字范围是 -(2<sup>7</sup>) ~ 2<sup>7</sup> - 1，即 -128 ~ 127。无符号类型可以存储的数字范围是 0 ~ 2<sup>n</sup> - 1，所以 <code>u8</code> 能够存储的数字为 0 ~ 2<sup>8</sup> - 1，即 0 ~ 255。</p>
+<p>此外，<code>isize</code> 和 <code>usize</code> 类型取决于程序运行的计算机类型：64 位（如果使用 64 位架构系统）和 32 位（如果使用 32 位架构系统）。</p>
+<p>整型的字面量可以可以写成下表 3-2 中任意一种。注意，除了字节字面量之外的所有的数字字面量都允许使用类型后缀，例如 <code>57u8</code>，还有可以使用 <code>_</code> 作为可视分隔符，如 <code>1_000</code>。</p>
 <figure>
 <figcaption>
-<p>Table 3-2: Integer Literals in Rust</p>
+<p>表 3-2: Rust 的整型字面量</p>
 </figcaption>
-<table><thead><tr><td> Number literals  </td><td> Example       </td></tr></thead>
-<tr><td> Decimal          </td><td> <code>98_222</code>      </td></tr>
-<tr><td> Hex              </td><td> <code>0xff</code>        </td></tr>
-<tr><td> Octal            </td><td> <code>0o77</code>        </td></tr>
-<tr><td> Binary           </td><td> <code>0b1111_0000</code> </td></tr>
-<tr><td> Byte (<code>u8</code> only) </td><td> <code>b'A'</code>        </td></tr>
+<table><thead><tr><td> 数字字面量        </td><td> 示例          </td></tr></thead>
+<tr><td> 十进制           </td><td> <code>98_222</code>      </td></tr>
+<tr><td> 十六进制         </td><td> <code>0xff</code>        </td></tr>
+<tr><td> 八进制           </td><td> <code>0o77</code>        </td></tr>
+<tr><td> 二进制           </td><td> <code>0b1111_0000</code> </td></tr>
+<tr><td> 字节 (只有 <code>u8</code>) </td><td> <code>b'A'</code>        </td></tr>
 </table>
 </figure>
-<p>So how do you know which type of integer to use? If you’re unsure, Rust’s
-defaults are generally good choices, and integer types default to <code>i32</code>: it’s
-generally the fastest, even on 64-bit systems. The primary situation in which
-you’d use <code>isize</code> or <code>usize</code> is when indexing some sort of collection.</p>
-<a class="header" href="print.html#floating-point-types" name="floating-point-types"><h4>Floating-Point Types</h4></a>
-<p>Rust also has two primitive types for <em>floating-point numbers</em>, which are
-numbers with decimal points. Rust’s floating-point types are <code>f32</code> and <code>f64</code>,
-which are 32 bits and 64 bits in size, respectively. The default type is <code>f64</code>
-because it’s roughly the same speed as <code>f32</code> but is capable of more precision.
-It’s possible to use an <code>f64</code> type on 32-bit systems, but it will be slower
-than using an <code>f32</code> type on those systems. Most of the time, trading potential
-worse performance for better precision is a reasonable initial choice, and you
-should benchmark your code if you suspect floating-point size is a problem in
-your situation.</p>
-<p>Here’s an example that shows floating-point numbers in action:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>那么你怎么知道使用哪种类型的整型呢？如果不确定，Rust 的默认值通常是个不错的选择，整型默认是 <code>i32</code>：这通常是最快的，即使在 64 位系统上。<code>isize</code> 和 <code>usize</code> 的主要应用场景是用作某些集合类型的索引。</p>
+<a class="header" href="print.html#浮点类型" name="浮点类型"><h4>浮点类型</h4></a>
+<p><strong>浮点类型数字</strong> 是带有小数点的数字，在 Rust 中浮点类型也有两种基本类型： <code>f32</code> 和 <code>f64</code>，分别为 32 位和 64 位大小。默认浮点类型是 <code>f64</code>，因为它的速度与 <code>f32</code> 几乎相同，但精度更高。在 32 位系统上使用 <code>f64</code> 也是可行的，但在这些系统上会比使用 <code>f32</code> 类型的速度要慢。多数情况下，稍差点的性能但获取更高精度是一个合理的初步选择，若是怀疑浮点型大小在你的应用场景下是一个问题，你可以对代码进行基准测试。</p>
+<p>下面是一个演示浮点数的示例：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let x = 2.0; // f64
 
     let y: f32 = 3.0; // f32
 }
 </code></pre>
-<p>Floating-point numbers are represented according to the IEEE-754 standard. The
-<code>f32</code> type is a single-precision float, and <code>f64</code> has double precision.</p>
-<a class="header" href="print.html#numeric-operations" name="numeric-operations"><h4>Numeric Operations</h4></a>
-<p>Rust supports the usual basic mathematic operations you’d expect for all of the
-number types: addition, subtraction, multiplication, division, and remainder.
-The following code shows how you’d use each one in a <code>let</code> statement:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>浮点数根据 IEEE-754 标准表示。<code>f32</code> 类型是单精度浮点型，<code>f64</code> 为双精度。</p>
+<a class="header" href="print.html#数字运算" name="数字运算"><h4>数字运算</h4></a>
+<p>Rust 支持常见的数字类型的基本数学运算：加法、减法、乘法、除法和取模运算。下面代码演示了各使用一条 <code>let</code> 语句来说明相应运算的用法：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
-    // addition
+    // 加法
     let sum = 5 + 10;
 
-    // subtraction
+    // 减法
     let difference = 95.5 - 4.3;
 
-    // multiplication
+    // 乘法
     let product = 4 * 30;
 
-    // division
+    // 除法
     let quotient = 56.7 / 32.2;
 
-    // remainder
+    // 取模运算
     let remainder = 43 % 5;
 }
 </code></pre>
-<p>Each expression in these statements uses a mathematical operator and evaluates
-to a single value, which is then bound to a variable. Appendix B contains a
-list of all operators that Rust provides.</p>
-<a class="header" href="print.html#the-boolean-type" name="the-boolean-type"><h4>The Boolean Type</h4></a>
-<p>As in most other programming languages, a boolean type in Rust has two possible
-values: <code>true</code> and <code>false</code>. The boolean type in Rust is specified using <code>bool</code>.
-For example:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。附录 B 给出了 Rust 提供的所有运算符的列表。</p>
+<a class="header" href="print.html#布尔类型" name="布尔类型"><h4>布尔类型</h4></a>
+<p>和大多数编程语言一样，Rust 中的布尔类型也有两个可能的值：<code>true</code> 和 <code>false</code>。Rust 中的布尔类型使用 <code>bool</code> 指定。例如：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let t = true;
 
-    let f: bool = false; // with explicit type annotation
+    let f: bool = false; // 使用显式类型标注
 }
 </code></pre>
-<p>The main way to consume boolean values is through conditionals, such as an <code>if</code>
-statement. We’ll cover how <code>if</code> statements work in Rust in the “Control Flow”
-section.</p>
-<a class="header" href="print.html#the-character-type" name="the-character-type"><h4>The Character Type</h4></a>
-<p>So far we’ve only worked with numbers, but Rust supports letters too. Rust’s
-<code>char</code> type is the language’s most primitive alphabetic type, and the following
-code shows one way to use it:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>用到布尔值的地方主要是条件语句，如 <code>if</code> 语句。我们将会在“控制流”章节中介绍 <code>if</code> 在 Rust 中的用法。</p>
+<a class="header" href="print.html#字符类型" name="字符类型"><h4>字符类型</h4></a>
+<p>到目前为止，我们只在用数字，不过 Rust 同样也支持字母。Rust 的 <code>char</code> （字符）类型语言最原始的字母类型，下面代码展示了使用它的一种方式：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
    let c = 'z';
    let z = 'ℤ';
    let heart_eyed_cat = '😻';
 }
 </code></pre>
-<p>Rust’s <code>char</code> type represents a Unicode Scalar Value, which means it can
-represent a lot more than just ASCII. Accented letters, Chinese/Japanese/Korean
-ideographs, emoji, and zero width spaces are all valid <code>char</code> types in Rust.
-Unicode Scalar Values range from <code>U+0000</code> to <code>U+D7FF</code> and <code>U+E000</code> to
-<code>U+10FFFF</code> inclusive. However, a “character” isn’t really a concept in Unicode,
-so your human intuition for what a “character” is may not match up with what a
-<code>char</code> is in Rust. We’ll discuss this topic in detail in the “Strings” section
-in Chapter 8.</p>
-<a class="header" href="print.html#compound-types" name="compound-types"><h3>Compound Types</h3></a>
-<p><em>Compound types</em> can group multiple values of other types into one type. Rust
-has two primitive compound types: tuples and arrays.</p>
-<a class="header" href="print.html#grouping-values-into-tuples" name="grouping-values-into-tuples"><h4>Grouping Values into Tuples</h4></a>
-<p>A tuple is a general way of grouping together some number of other values with
-a variety of types into one compound type.</p>
-<p>We create a tuple by writing a comma-separated list of values inside
-parentheses. Each position in the tuple has a type, and the types of the
-different values in the tuple don’t have to be the same. We’ve added optional
-type annotations in this example:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示的不仅仅是 ASCII。标音字母，中文/日文/韩文的表意文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法字符类型。Unicode 值的范围从 <code>U+0000</code>~<code>U+D7FF</code> 和 <code>U+E000</code>~<code>U+10FFFF</code>（含）。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章“字符串”中详细讨论这个主题。</p>
+<a class="header" href="print.html#复合类型" name="复合类型"><h3>复合类型</h3></a>
+<p><strong>复合类型</strong>（<em>compound type</em>）可以将其他类型的多个值合在一块组成一个类型。Rust 有两种基本的复合类型：元组（tuple）和数组（array）。</p>
+<a class="header" href="print.html#将多个值组成元组" name="将多个值组成元组"><h4>将多个值组成元组</h4></a>
+<p>元组是将具有多种类型的其他值分组到一个复合类型中的一种基本方式。</p>
+<p>我们通过在括号内写入以逗号分隔的值列表来创建一个元组。元组中的每个位置都有一个类型，并且元组中不同值的类型不一定是相同的。我们在下面示例中添加了可选的类型标注：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let tup: (i32, f64, u8) = (500, 6.4, 1);
 }
 </code></pre>
-<p>The variable <code>tup</code> binds to the entire tuple, since a tuple is considered a
-single compound element. To get the individual values out of a tuple, we can
-use pattern matching to destructure a tuple value, like this:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>变量 <code>tup</code> 绑定到整个元组，因为元组被认作是单个复合元素。 想从元组中获取个别值，我们可以使用模式匹配来解构（destructure）元组的一个值，如下所示：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let tup = (500, 6.4, 1);
 
@@ -1412,15 +1342,9 @@ use pattern matching to destructure a tuple value, like this:</p>
     println!(&quot;The value of y is: {}&quot;, y);
 }
 </code></pre>
-<p>This program first creates a tuple and binds it to the variable <code>tup</code>. It then
-uses a pattern with <code>let</code> to take <code>tup</code> and turn it into three separate
-variables, <code>x</code>, <code>y</code>, and <code>z</code>. This is called <em>destructuring</em>, because it breaks
-the single tuple into three parts. Finally, the program prints the value of
-<code>y</code>, which is <code>6.4</code>.</p>
-<p>In addition to destructuring through pattern matching, we can also access a
-tuple element directly by using a period (<code>.</code>) followed by the index of the
-value we want to access. For example:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>该程序首先创建一个元组并将其绑定到变量 <code>tup</code>。 然后它借助 <code>let</code> 来使用一个模式匹配 <code>tup</code>，并将它分解成三个单独的变量 <code>x</code>、<code>y</code> 和 <code>z</code>。 这过程称为<strong>解构</strong>（<em>destructuring</em>），因为它将单个元组分为三部分。 最后，程序打印出 <code>y</code> 值，为 <code>6.4</code>。</p>
+<p>除了通过模式匹配进行解构外，我们还可以使用一个句点（<code>.</code>）连上要访问的值的索引来直接访问元组元素。例如：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let x: (i32, f64, u8) = (500, 6.4, 1);
 
@@ -1431,38 +1355,22 @@ value we want to access. For example:</p>
     let one = x.2;
 }
 </code></pre>
-<p>This program creates a tuple, <code>x</code>, and then makes new variables for each
-element by using their index. As with most programming languages, the first
-index in a tuple is 0.</p>
-<a class="header" href="print.html#arrays" name="arrays"><h4>Arrays</h4></a>
-<p>Another way to have a collection of multiple values is with an <em>array</em>. Unlike
-a tuple, every element of an array must have the same type. Arrays in Rust are
-different than arrays in some other languages because arrays in Rust have a
-fixed length: once declared, they cannot grow or shrink in size.</p>
-<p>In Rust, the values going into an array are written as a comma-separated list
-inside square brackets:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>该程序创建一个元组 <code>x</code>，然后通过使用它们的索引为每个元素创建新的变量。和大多数编程语言一样，元组中的第一个索引为 0。</p>
+<a class="header" href="print.html#数组" name="数组"><h4>数组</h4></a>
+<p>将多个值的组合在一起另一种方式就是使用<strong>数组</strong>（<em>array</em>）。与元组不同，数组的每个元素必须具有相同的类型。Rust 中的数组与其他语言中的数组不同，因为 Rust 中的数组具有固定长度：一旦声明，它们就不能在大小上增长或缩小。</p>
+<p>在Rust中，数组内的值将以逗号分隔的列表形式写入方括号内的：</p>
+<p><span class="filename">文件名：src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let a = [1, 2, 3, 4, 5];
 }
 </code></pre>
-<p>Arrays are useful when you want your data allocated on the stack rather than
-the heap (we will discuss the stack and the heap more in Chapter 4), or when
-you want to ensure you always have a fixed number of elements. They aren’t as
-flexible as the vector type, though. The vector type is a similar collection
-type provided by the standard library that <em>is</em> allowed to grow or shrink in
-size. If you’re unsure whether to use an array or a vector, you should probably
-use a vector: Chapter 8 discusses vectors in more detail.</p>
-<p>An example of when you might want to use an array rather than a vector is in a
-program that needs to know the names of the months of the year. It’s very
-unlikely that such a program will need to add or remove months, so you can use
-an array because you know it will always contain 12 items:</p>
+<p>当您希望将数据分配到栈（stack）而不是堆（heap）时（我们将在第 4 章中进一步讨论栈和堆），或者当您希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型是标准库提供的类似的集合类型，其的大小允许增长或缩小。如果您不确定是使用数组还是 vector，那就应该使用一个 vector：第 8 章更详细地讨论 vector。</p>
+<p>举个例子，在需要知道一年中各个月份名称的程序中，您很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以您可以使用数组，因为您知道它总是包含 12 个条目：</p>
 <pre><code class="language-rust">let months = [&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;,
               &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;];
 </code></pre>
-<a class="header" href="print.html#accessing-array-elements" name="accessing-array-elements"><h5>Accessing Array Elements</h5></a>
-<p>An array is a single chunk of memory allocated on the stack. We can access
-elements of an array using indexing, like this:</p>
+<a class="header" href="print.html#访问数组元素" name="访问数组元素"><h5>访问数组元素</h5></a>
+<p>数组是在栈上分配的内存上的单个数据块（原文：An array is a single chunk of memory allocated on the stack.）。我们可以使用索引来访问数组的元素，如下所示：</p>
 <p><span class="filename">Filename: src/main.rs</span></p>
 <pre><code class="language-rust">fn main() {
     let a = [1, 2, 3, 4, 5];
@@ -1471,13 +1379,10 @@ elements of an array using indexing, like this:</p>
     let second = a[1];
 }
 </code></pre>
-<p>In this example, the variable named <code>first</code> will get the value <code>1</code>, because
-that is the value at index <code>[0]</code> in the array. The variable named <code>second</code> will
-get the value <code>2</code> from index <code>[1]</code> in the array.</p>
-<a class="header" href="print.html#invalid-array-element-access" name="invalid-array-element-access"><h5>Invalid Array Element Access</h5></a>
-<p>What happens if we try to access an element of an array that is past the end of
-the array? Say we change the example to the following:</p>
-<p><span class="filename">Filename: src/main.rs</span></p>
+<p>在这个例中，名为 <code>first</code> 的变量将获取值 <code>1</code>，因为它是数组中索引 <code>[0]</code> 处的值。名为 <code>second</code> 的变量将从数组中的索引 <code>[1]</code> 中获取值 <code>2</code>。</p>
+<a class="header" href="print.html#无效的数组元素访问" name="无效的数组元素访问"><h5>无效的数组元素访问</h5></a>
+<p>如果我们尝试访问超出数组末尾的数组元素，会发生什么？ 假如我们将示例更改为以下内容：</p>
+<p><span class="filename">文件了名：src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let a = [1, 2, 3, 4, 5];
 
@@ -1486,7 +1391,7 @@ the array? Say we change the example to the following:</p>
     println!(&quot;The value of element is: {}&quot;, element);
 }
 </code></pre>
-<p>Running this code using <code>cargo run</code> produces the following result:</p>
+<p>使用 <code>cargo run</code> 运行此代码得到下面结果：</p>
 <pre><code class="language-text">$ cargo run
    Compiling arrays v0.1.0 (file:///projects/arrays)
      Running `target/debug/arrays`
@@ -1495,16 +1400,8 @@ thread '&lt;main&gt;' panicked at 'index out of bounds: the len is 5 but the ind
 note: Run with `RUST_BACKTRACE=1` for a backtrace.
 error: Process didn't exit successfully: `target/debug/arrays` (exit code: 101)
 </code></pre>
-<p>The compilation didn’t produce any errors, but the program results in a
-<em>runtime</em> error and didn’t exit successfully. When you attempt to access an
-element using indexing, Rust will check that the index you’ve specified is less
-than the array length. If the index is greater than the length, Rust will
-<em>panic</em>, which is the term Rust uses when a program exits with an error.</p>
-<p>This is the first example of Rust’s safety principles in action. In many
-low-level languages, this kind of check is not done, and when you provide an
-incorrect index, invalid memory can be accessed. Rust protects you against this
-kind of error by immediately exiting instead of allowing the memory access and
-continuing. Chapter 9 discusses more of Rust’s error handling.</p>
+<p>编译没有产生任何错误，但程序会产生<strong>运行时</strong>（<em>runtime</em>）错误，并且没有成功退出。当您尝试使用索引访问元素时，Rust 将检查您指定的索引是否小于数组长度。如果索引大于数组长度（译注：此处原文有误，应该是“大于或等于数组长度”），Rust将会出现 <code>panic</code>，其中 <code>panic</code> 是 Rust 的一个术语，在程序退出并出现错误时使用。</p>
+<p>这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，当您使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。 第 9 章将进一步讨论 Rust 的错误处理。</p>
 <a class="header" href="print.html#how-functions-work" name="how-functions-work"><h2>How Functions Work</h2></a>
 <p>Functions are pervasive in Rust code. You’ve already seen one of the most
 important functions in the language: the <code>main</code> function, which is the entry
