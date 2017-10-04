@@ -1,15 +1,10 @@
-## How Functions Work
+## 函数是如何工作的
 
-Functions are pervasive in Rust code. You’ve already seen one of the most
-important functions in the language: the `main` function, which is the entry
-point of many programs. You’ve also seen the `fn` keyword, which allows you to
-declare new functions.
+函数在 Rust 代码中无处不在。您在此语言中已经看到其中一个最重要的函数：主函数（`main` 函数），这是许多程序的入口。您也看过 `fn` 关键字，它允许你声明新的函数。
 
-Rust code uses *snake case* as the conventional style for function and variable
-names. In snake case, all letters are lowercase and underscores separate words.
-Here’s a program that contains an example function definition:
+Rust 代码使用“蛇形命名”（*snake case*）作为函数和变量名的常规风格。蛇形命名所有字母都是小写字母，并以下划线分隔单词。下面给出一个包含函数定义例子的程序：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 fn main() {
@@ -23,20 +18,11 @@ fn another_function() {
 }
 ```
 
-Function definitions in Rust start with `fn` and have a set of parentheses
-after the function name. The curly braces tell the compiler where the function
-body begins and ends.
+Rust 中的函数定义以 `fn` 开头，并在函数名后面有一对圆括号。大括号告诉编译器函数体开始和结束的位置。
 
-We can call any function we’ve defined by entering its name followed by a set
-of parentheses. Because `another_function` is defined in the program, it can be
-called from inside the `main` function. Note that we defined `another_function`
-*after* the `main` function in the source code; we could have defined it before
-as well. Rust doesn’t care where you define your functions, only that they’re
-defined somewhere.
+我们可以通过输入函数名称并连着一组圆括号来调用我们定义的任何函数。因为在程序中定义了 `another_function`，所以可以从 `main` 函数中调用它。注意我们在源代码中定义的 `another_function` 在 `main` 函数之后；当然我们也可以在 `main` 函数前面定义它。Rust 不在乎您定义函数的位置，只在乎函数已经在某个地方被定义过。
 
-Let’s start a new binary project named *functions* to explore functions
-further. Place the `another_function` example in *src/main.rs* and run it. You
-should see the following output:
+我们新建一个名为 `functions` 的二进制项目来进一步探索函数。将 `another_function` 示例放在 `src / main.rs` 中并运行它。您将看到以下输出：
 
 ```text
 $ cargo run
@@ -46,9 +32,7 @@ Hello, world!
 Another function.
 ```
 
-The lines execute in the order in which they appear in the `main` function.
-First, the “Hello, world!” message prints, and then `another_function` is
-called and its message is printed.
+在 `main` 函数中，代码行按出现的先后顺序执行。首先，打印“Hello，world！”消息，然后调用 `another_function`，并打印其消息。
 
 ### Function Parameters
 
