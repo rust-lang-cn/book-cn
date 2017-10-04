@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/rust-lang/book.svg?branch=master)](https://travis-ci.org/rust-lang/book)
 
 > Chinese translation of [The Rust Programming Language][book-en]  
-> 持续翻译中...
+> 持续翻译中...  
+> 注：此仓库不再更新翻译，因本书已经有了[其他的翻译版本](https://github.com/KaiserY/trpl-zh-cn)。
 
 [book-en]: https://github.com/rust-lang/book
 
