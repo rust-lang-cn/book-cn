@@ -1,34 +1,21 @@
-# Final Project: Building a Multithreaded Web Server
+# 最后的项目: 构建多线程 Web 服务器
 
-It’s been a long journey, but we’ve reached the end of the book. In this
-chapter, we’ll build one more project together to demonstrate some of the
-concepts we covered in the final chapters, as well as recap some earlier
-lessons.
+这是一次漫长的旅途，不过我们到达了本书的结束。在本章中，我们将一同构建另一个项目，来展示最后几章所学，同时复习更早的章节。
 
-For our final project, we’ll make a web server that says “hello” and looks like
-Figure 20-1 in a web browser.
+作为最后的项目，我们将要实现一个返回 “hello” 的 web server，它在浏览器中看起来就如图例 20-1 所示：
 
 ![hello from rust](img/trpl20-01.png)
 
-<span class="caption">Figure 20-1: Our final shared project</span>
+<span class="caption">图例 20-1: 我们最后将一起分享的项目</span>
 
-Here is the plan to build the web server:
+如下是我们将怎样构建此 web server 的计划：
 
-1. Learn a bit about TCP and HTTP.
-2. Listen for TCP connections on a socket.
-3. Parse a small number of HTTP requests.
-4. Create a proper HTTP response.
-5. Improve the throughput of our server with a thread pool.
+1. 学习一些 TCP 与 HTTP 知识
+2. 在套接字（socket）上监听 TCP 请求
+3. 解析少量的 HTTP 请求
+4. 创建一个合适的 HTTP 响应
+5. 通过线程池改善 server 的吞吐量
 
-But before we get started, we should mention one detail: the method we’ll use
-won’t be the best way to build a web server with Rust. A number of
-production-ready crates are available on [crates.io](https://crates.io/) that
-provide more complete web server and thread pool implementations than we’ll
-build.
+不过在开始之前，需要提到一点细节：这里使用的方法并不是使用 Rust 构建 web server 最好的方法。[crates.io](https://crates.io/) 上有很多可用于生产环境的 crate，它们提供了比我们所要编写的更为完整的 web server 和线程池实现。
 
-However, our intention in this chapter is to help you learn, not to take the
-easy route. Because Rust is a systems programming language, we can choose the
-level of abstraction we want to work with and can go to a lower level than is
-possible or practical in other languages. We’ll write the basic HTTP server and
-thread pool manually so you can learn the general ideas and techniques behind
-the crates you might use in the future.
+然而，本章的目的在于学习，而不是走捷径。因为 Rust 是一个系统编程语言，我们能够选择处理什么层次的抽象，并能够选择比其他语言可能或可用的层次更低的层次。因此我们将自己编写一个基础的 HTTP server 和线程池，以便学习将来可能用到的 crate 背后的通用理念和技术。

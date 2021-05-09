@@ -1,220 +1,264 @@
-## Graceful Shutdown and Cleanup
+## 优雅停机与清理
 
-The code in Listing 20-20 is responding to requests asynchronously through the
-use of a thread pool, as we intended. We get some warnings about the `workers`,
-`id`, and `thread` fields that we’re not using in a direct way that reminds us
-we’re not cleaning up anything. When we use the less elegant <span
-class="keystroke">ctrl-c</span> method to halt the main thread, all other
-threads are stopped immediately as well, even if they’re in the middle of
-serving a request.
+示例 20-21 中的代码如期通过使用线程池异步的响应请求。这里有一些警告说 `workers`、`id` 和 `thread` 字段没有直接被使用，这提醒了我们并没有清理所有的内容。当使用不那么优雅的 <span class="keystroke">ctrl-c</span> 终止主线程时，所有其他线程也会立刻停止，即便它们正处于处理请求的过程中。
 
-Now we’ll implement the `Drop` trait to call `join` on each of the threads in
-the pool so they can finish the requests they’re working on before closing.
-Then we’ll implement a way to tell the threads they should stop accepting new
-requests and shut down. To see this code in action, we’ll modify our server to
-accept only two requests before gracefully shutting down its thread pool.
+现在我们要为 `ThreadPool` 实现 `Drop` trait 对线程池中的每一个线程调用 `join`，这样这些线程将会执行完他们的请求。接着会为 `ThreadPool` 实现一个告诉线程他们应该停止接收新请求并结束的方式。为了实践这些代码，修改 server 在优雅停机（graceful shutdown）之前只接受两个请求。
 
-### Implementing the `Drop` Trait on `ThreadPool`
+### 为 `ThreadPool` 实现 `Drop` Trait
 
-Let’s start with implementing `Drop` on our thread pool. When the pool is
-dropped, our threads should all join to make sure they finish their work.
-Listing 20-22 shows a first attempt at a `Drop` implementation; this code won’t
-quite work yet.
+现在开始为线程池实现 `Drop`。当线程池被丢弃时，应该 join 所有线程以确保他们完成其操作。示例 20-23 展示了 `Drop` 实现的第一次尝试；这些代码还不能够编译：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-22/src/lib.rs:here}}
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            worker.thread.join().unwrap();
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 20-22: Joining each thread when the thread pool
-goes out of scope</span>
+<span class="caption">示例 20-23: 当线程池离开作用域时 join 每个线程</span>
 
-First, we loop through each of the thread pool `workers`. We use `&mut` for
-this because `self` is a mutable reference, and we also need to be able to
-mutate `worker`. For each worker, we print a message saying that this
-particular worker is shutting down, and then we call `join` on that worker’s
-thread. If the call to `join` fails, we use `unwrap` to make Rust panic and go
-into an ungraceful shutdown.
+这里首先遍历线程池中的每个 `workers`。这里使用了 `&mut` 因为 `self` 本身是一个可变引用而且也需要能够修改 `worker`。对于每一个线程，会打印出说明信息表明此特定 worker 正在关闭，接着在 worker 线程上调用 `join`。如果 `join` 调用失败，通过 `unwrap` 使得 panic 并进行不优雅的关闭。
 
-Here is the error we get when we compile this code:
+如下是尝试编译代码时得到的错误：
 
-```console
-{{#include ../listings/ch20-web-server/listing-20-22/output.txt}}
+```text
+error[E0507]: cannot move out of borrowed content
+  --> src/lib.rs:65:13
+   |
+65 |             worker.thread.join().unwrap();
+   |             ^^^^^^ cannot move out of borrowed content
 ```
 
-The error tells us we can’t call `join` because we only have a mutable borrow
-of each `worker` and `join` takes ownership of its argument. To solve this
-issue, we need to move the thread out of the `Worker` instance that owns
-`thread` so `join` can consume the thread. We did this in Listing 17-15: if
-`Worker` holds an `Option<thread::JoinHandle<()>>` instead, we can call the
-`take` method on the `Option` to move the value out of the `Some` variant and
-leave a `None` variant in its place. In other words, a `Worker` that is running
-will have a `Some` variant in `thread`, and when we want to clean up a
-`Worker`, we’ll replace `Some` with `None` so the `Worker` doesn’t have a
-thread to run.
+这告诉我们并不能调用 `join`，因为只有每一个 `worker` 的可变借用，而 `join` 获取其参数的所有权。为了解决这个问题，需要一个方法将 `thread` 移动出拥有其所有权的 `Worker` 实例以便 `join` 可以消费这个线程。示例 17-15 中我们曾见过这么做的方法：如果 `Worker` 存放的是 `Option<thread::JoinHandle<()>`，就可以在 `Option` 上调用 `take` 方法将值从 `Some` 成员中移动出来而对 `None` 成员不做处理。换句话说，正在运行的 `Worker` 的 `thread` 将是 `Some` 成员值，而当需要清理 worker 时，将 `Some` 替换为 `None`，这样 worker 就没有可以运行的线程了。
 
-So we know we want to update the definition of `Worker` like this:
+为此需要更新 `Worker` 的定义为如下：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-04-update-worker-definition/src/lib.rs:here}}
+```rust
+# use std::thread;
+struct Worker {
+    id: usize,
+    thread: Option<thread::JoinHandle<()>>,
+}
 ```
 
-Now let’s lean on the compiler to find the other places that need to change.
-Checking this code, we get two errors:
+现在依靠编译器来找出其他需要修改的地方。check 代码会得到两个错误：
 
-```console
-{{#include ../listings/ch20-web-server/no-listing-04-update-worker-definition/output.txt}}
+```text
+error[E0599]: no method named `join` found for type
+`std::option::Option<std::thread::JoinHandle<()>>` in the current scope
+  --> src/lib.rs:65:27
+   |
+65 |             worker.thread.join().unwrap();
+   |                           ^^^^
+
+error[E0308]: mismatched types
+  --> src/lib.rs:89:13
+   |
+89 |             thread,
+   |             ^^^^^^
+   |             |
+   |             expected enum `std::option::Option`, found struct
+   `std::thread::JoinHandle`
+   |             help: try using a variant of the expected type: `Some(thread)`
+   |
+   = note: expected type `std::option::Option<std::thread::JoinHandle<()>>`
+              found type `std::thread::JoinHandle<_>`
 ```
 
-Let’s address the second error, which points to the code at the end of
-`Worker::new`; we need to wrap the `thread` value in `Some` when we create a
-new `Worker`. Make the following changes to fix this error:
+让我们修复第二个错误，它指向 `Worker::new` 结尾的代码；当新建 `Worker` 时需要将 `thread` 值封装进 `Some`。做出如下改变以修复问题：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-05-fix-worker-new/src/lib.rs:here}}
+impl Worker {
+    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
+        // --snip--
+
+        Worker {
+            id,
+            thread: Some(thread),
+        }
+    }
+}
 ```
 
-The first error is in our `Drop` implementation. We mentioned earlier that we
-intended to call `take` on the `Option` value to move `thread` out of `worker`.
-The following changes will do so:
+第一个错误位于 `Drop` 实现中。之前提到过要调用 `Option` 上的 `take` 将 `thread` 移动出 `worker`。如下改变会修复问题：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-06-fix-threadpool-drop/src/lib.rs:here}}
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
+    }
+}
 ```
 
-As discussed in Chapter 17, the `take` method on `Option` takes the `Some`
-variant out and leaves `None` in its place. We’re using `if let` to destructure
-the `Some` and get the thread; then we call `join` on the thread. If a worker’s
-thread is already `None`, we know that worker has already had its thread
-cleaned up, so nothing happens in that case.
+如第十七章我们见过的，`Option` 上的 `take` 方法会取出 `Some` 而留下 `None`。使用 `if let` 解构 `Some` 并得到线程，接着在线程上调用 `join`。如果 worker 的线程已然是 `None`，就知道此时这个 worker 已经清理了其线程所以无需做任何操作。
 
-### Signaling to the Threads to Stop Listening for Jobs
+### 向线程发送信号使其停止接收任务
 
-With all the changes we’ve made, our code compiles without any warnings. But
-the bad news is this code doesn’t function the way we want it to yet. The key
-is the logic in the closures run by the threads of the `Worker` instances: at
-the moment, we call `join`, but that won’t shut down the threads because they
-`loop` forever looking for jobs. If we try to drop our `ThreadPool` with our
-current implementation of `drop`, the main thread will block forever waiting
-for the first thread to finish.
+有了所有这些修改，代码就能编译且没有任何警告。不过也有坏消息，这些代码还不能以我们期望的方式运行。问题的关键在于 `Worker` 中分配的线程所运行的闭包中的逻辑：调用 `join` 并不会关闭线程，因为他们一直 `loop` 来寻找任务。如果采用这个实现来尝试丢弃 `ThreadPool` ，则主线程会永远阻塞在等待第一个线程结束上。
 
-To fix this problem, we’ll modify the threads so they listen for either a `Job`
-to run or a signal that they should stop listening and exit the infinite loop.
-Instead of `Job` instances, our channel will send one of these two enum
-variants.
+为了修复这个问题，修改线程既监听是否有 `Job` 运行也要监听一个应该停止监听并退出无限循环的信号。所以通道将发送这个枚举的两个成员之一而不是 `Job` 实例：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
-```rust,noplayground
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-07-define-message-enum/src/lib.rs:here}}
+```rust
+# struct Job;
+enum Message {
+    NewJob(Job),
+    Terminate,
+}
 ```
 
-This `Message` enum will either be a `NewJob` variant that holds the `Job` the
-thread should run, or it will be a `Terminate` variant that will cause the
-thread to exit its loop and stop.
+`Message` 枚举要么是存放了线程需要运行的 `Job` 的 `NewJob` 成员，要么是会导致线程退出循环并终止的 `Terminate` 成员。
 
-We need to adjust the channel to use values of type `Message` rather than type
-`Job`, as shown in Listing 20-23.
+同时需要修改通道来使用 `Message` 类型值而不是 `Job`，如示例 20-24 所示：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-23/src/lib.rs:here}}
+pub struct ThreadPool {
+    workers: Vec<Worker>,
+    sender: mpsc::Sender<Message>,
+}
+
+// --snip--
+
+impl ThreadPool {
+    // --snip--
+
+    pub fn execute<F>(&self, f: F)
+        where
+            F: FnOnce() + Send + 'static
+    {
+        let job = Box::new(f);
+
+        self.sender.send(Message::NewJob(job)).unwrap();
+    }
+}
+
+// --snip--
+
+impl Worker {
+    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) ->
+        Worker {
+
+        let thread = thread::spawn(move ||{
+            loop {
+                let message = receiver.lock().unwrap().recv().unwrap();
+
+                match message {
+                    Message::NewJob(job) => {
+                        println!("Worker {} got a job; executing.", id);
+
+                        job();
+                    },
+                    Message::Terminate => {
+                        println!("Worker {} was told to terminate.", id);
+
+                        break;
+                    },
+                }
+            }
+        });
+
+        Worker {
+            id,
+            thread: Some(thread),
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 20-23: Sending and receiving `Message` values and
-exiting the loop if a `Worker` receives `Message::Terminate`</span>
+<span class="caption">示例 20-24: 收发 `Message` 值并在 `Worker` 收到 `Message::Terminate` 时退出循环</span>
 
-To incorporate the `Message` enum, we need to change `Job` to `Message` in two
-places: the definition of `ThreadPool` and the signature of `Worker::new`. The
-`execute` method of `ThreadPool` needs to send jobs wrapped in the
-`Message::NewJob` variant. Then, in `Worker::new` where a `Message` is received
-from the channel, the job will be processed if the `NewJob` variant is
-received, and the thread will break out of the loop if the `Terminate` variant
-is received.
+为了适用 `Message` 枚举需要将两个地方的 `Job` 修改为 `Message`：`ThreadPool` 的定义和 `Worker::new` 的签名。`ThreadPool` 的 `execute` 方法需要发送封装进 `Message::NewJob` 成员的任务。然后，在 `Worker::new` 中当从通道接收 `Message` 时，当获取到 `NewJob`成员会处理任务而收到 `Terminate` 成员则会退出循环。
 
-With these changes, the code will compile and continue to function in the same
-way as it did after Listing 20-20. But we’ll get a warning because we aren’t
-creating any messages of the `Terminate` variety. Let’s fix this warning by
-changing our `Drop` implementation to look like Listing 20-24.
+通过这些修改，代码再次能够编译并继续按照示例 20-21 之后相同的行为运行。不过还是会得到一个警告，因为并没有创建任何 `Terminate` 成员的消息。如示例 20-25 所示修改 `Drop` 实现来修复此问题：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-24/src/lib.rs:here}}
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        println!("Sending terminate message to all workers.");
+
+        for _ in &mut self.workers {
+            self.sender.send(Message::Terminate).unwrap();
+        }
+
+        println!("Shutting down all workers.");
+
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 20-24: Sending `Message::Terminate` to the
-workers before calling `join` on each worker thread</span>
+<span class="caption">示例 20-25：在对每个 worker 线程调用 `join` 之前向 worker 发送 `Message::Terminate`</span>
 
-We’re now iterating over the workers twice: once to send one `Terminate`
-message for each worker and once to call `join` on each worker’s thread. If we
-tried to send a message and `join` immediately in the same loop, we couldn’t
-guarantee that the worker in the current iteration would be the one to get the
-message from the channel.
+现在遍历了 worker 两次，一次向每个 worker 发送一个 `Terminate` 消息，一个调用每个 worker 线程上的 `join`。如果尝试在同一循环中发送消息并立即 join 线程，则无法保证当前迭代的 worker 是从通道收到终止消息的 worker。
 
-To better understand why we need two separate loops, imagine a scenario with
-two workers. If we used a single loop to iterate through each worker, on the
-first iteration a terminate message would be sent down the channel and `join`
-called on the first worker’s thread. If that first worker was busy processing a
-request at that moment, the second worker would pick up the terminate message
-from the channel and shut down. We would be left waiting on the first worker to
-shut down, but it never would because the second thread picked up the terminate
-message. Deadlock!
+为了更好的理解为什么需要两个分开的循环，想象一下只有两个 worker 的场景。如果在一个单独的循环中遍历每个 worker，在第一次迭代中向通道发出终止消息并对第一个 worker 线程调用 `join`。如果此时第一个 worker 正忙于处理请求，那么第二个 worker 会收到终止消息并停止。我们会一直等待第一个 worker 结束，不过它永远也不会结束因为第二个线程接收了终止消息。死锁！
 
-To prevent this scenario, we first put all of our `Terminate` messages on the
-channel in one loop; then we join on all the threads in another loop. Each
-worker will stop receiving requests on the channel once it gets a terminate
-message. So, we can be sure that if we send the same number of terminate
-messages as there are workers, each worker will receive a terminate message
-before `join` is called on its thread.
+为了避免此情况，首先在一个循环中向通道发出所有的 `Terminate` 消息，接着在另一个循环中 join 所有的线程。每个 worker 一旦收到终止消息即会停止从通道接收消息，意味着可以确保如果发送同 worker 数相同的终止消息，在 join 之前每个线程都会收到一个终止消息。
 
-To see this code in action, let’s modify `main` to accept only two requests
-before gracefully shutting down the server, as shown in Listing 20-25.
+为了实践这些代码，如示例 20-26 所示修改 `main` 在优雅停机 server 之前只接受两个请求：
 
-<span class="filename">Filename: src/bin/main.rs</span>
+<span class="filename">文件名: src/bin/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-25/src/bin/main.rs:here}}
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let pool = ThreadPool::new(4);
+
+    for stream in listener.incoming().take(2) {
+        let stream = stream.unwrap();
+
+        pool.execute(|| {
+            handle_connection(stream);
+        });
+    }
+
+    println!("Shutting down.");
+}
 ```
 
-<span class="caption">Listing 20-25: Shut down the server after serving two
-requests by exiting the loop</span>
+<span class="caption">示例 20-26: 在处理两个请求之后通过退出循环来停止 server</span>
 
-You wouldn’t want a real-world web server to shut down after serving only two
-requests. This code just demonstrates that the graceful shutdown and cleanup is
-in working order.
+你不会希望真实世界的 web server 只处理两次请求就停机了，这只是为了展示优雅停机和清理处于正常工作状态。
 
-The `take` method is defined in the `Iterator` trait and limits the iteration
-to the first two items at most. The `ThreadPool` will go out of scope at the
-end of `main`, and the `drop` implementation will run.
+`take` 方法定义于 `Iterator` trait，这里限制循环最多头 2 次。`ThreadPool` 会在 `main` 的结尾离开作用域，而且还会看到 `drop` 实现的运行。
 
-Start the server with `cargo run`, and make three requests. The third request
-should error, and in your terminal you should see output similar to this:
+使用 `cargo run` 启动 server，并发起三个请求。第三个请求应该会失败，而终端的输出应该看起来像这样：
 
-<!-- manual-regeneration
-cd listings/ch20-web-server/listing-20-25
-cargo run
-curl http://127.0.0.1:7878
-curl http://127.0.0.1:7878
-curl http://127.0.0.1:7878
-third request will error because server will have shut down
-copy output below
-Can't automate because the output depends on making requests
--->
-
-```console
+```text
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.0s
-     Running `target/debug/main`
+    Finished dev [unoptimized + debuginfo] target(s) in 1.0 secs
+     Running `target/debug/hello`
 Worker 0 got a job; executing.
 Worker 3 got a job; executing.
 Shutting down.
@@ -230,56 +274,187 @@ Shutting down worker 2
 Shutting down worker 3
 ```
 
-You might see a different ordering of workers and messages printed. We can see
-how this code works from the messages: workers 0 and 3 got the first two
-requests, and then on the third request, the server stopped accepting
-connections. When the `ThreadPool` goes out of scope at the end of `main`, its
-`Drop` implementation kicks in, and the pool tells all workers to terminate.
-The workers each print a message when they see the terminate message, and then
-the thread pool calls `join` to shut down each worker thread.
+可能会出现不同顺序的 worker 和信息输出。可以从信息中看到服务是如何运行的： worker 0 和 worker 3 获取了头两个请求，接着在第三个请求时，我们停止接收连接。当 `ThreadPool` 在 `main` 的结尾离开作用域时，其 `Drop` 实现开始工作，线程池通知所有线程终止。每个 worker 在收到终止消息时会打印出一个信息，接着线程池调用 `join` 来终止每一个 worker 线程。
 
-Notice one interesting aspect of this particular execution: the `ThreadPool`
-sent the terminate messages down the channel, and before any worker received
-the messages, we tried to join worker 0. Worker 0 had not yet received the
-terminate message, so the main thread blocked waiting for worker 0 to finish.
-In the meantime, each of the workers received the termination messages. When
-worker 0 finished, the main thread waited for the rest of the workers to
-finish. At that point, they had all received the termination message and were
-able to shut down.
+这个特定的运行过程中一个有趣的地方在于：注意我们向通道中发出终止消息，而在任何线程收到消息之前，就尝试 join worker 0 了。worker 0 还没有收到终止消息，所以主线程阻塞直到 worker 0 结束。与此同时，每一个线程都收到了终止消息。一旦 worker 0 结束，主线程就等待其他 worker 结束，此时他们都已经收到终止消息并能够停止了。
 
-Congrats! We’ve now completed our project; we have a basic web server that uses
-a thread pool to respond asynchronously. We’re able to perform a graceful
-shutdown of the server, which cleans up all the threads in the pool.
+恭喜！现在我们完成了这个项目，也有了一个使用线程池异步响应请求的基础 web server。我们能对 server 执行优雅停机，它会清理线程池中的所有线程。
 
-Here’s the full code for reference:
+如下是完整的代码参考：
 
-<span class="filename">Filename: src/bin/main.rs</span>
+<span class="filename">文件名: src/bin/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-08-final-code/src/bin/main.rs}}
+use hello::ThreadPool;
+
+use std::io::prelude::*;
+use std::net::TcpListener;
+use std::net::TcpStream;
+use std::fs;
+use std::thread;
+use std::time::Duration;
+
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let pool = ThreadPool::new(4);
+
+    for stream in listener.incoming().take(2) {
+        let stream = stream.unwrap();
+
+        pool.execute(|| {
+            handle_connection(stream);
+        });
+    }
+
+    println!("Shutting down.");
+}
+
+fn handle_connection(mut stream: TcpStream) {
+    let mut buffer = [0; 1024];
+    stream.read(&mut buffer).unwrap();
+
+    let get = b"GET / HTTP/1.1\r\n";
+    let sleep = b"GET /sleep HTTP/1.1\r\n";
+
+    let (status_line, filename) = if buffer.starts_with(get) {
+        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+    } else if buffer.starts_with(sleep) {
+        thread::sleep(Duration::from_secs(5));
+        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
+    };
+
+    let contents = fs::read_to_string(filename).unwrap();
+
+    let response = format!("{}{}", status_line, contents);
+
+    stream.write(response.as_bytes()).unwrap();
+    stream.flush().unwrap();
+}
 ```
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
-```rust,noplayground
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-08-final-code/src/lib.rs}}
+```rust
+use std::thread;
+use std::sync::mpsc;
+use std::sync::Arc;
+use std::sync::Mutex;
+
+enum Message {
+    NewJob(Job),
+    Terminate,
+}
+
+pub struct ThreadPool {
+    workers: Vec<Worker>,
+    sender: mpsc::Sender<Message>,
+}
+
+type Job = Box<dyn FnOnce() + Send + 'static>;
+
+impl ThreadPool {
+    /// 创建线程池。
+    ///
+    /// 线程池中线程的数量。
+    ///
+    /// # Panics
+    ///
+    /// `new` 函数在 size 为 0 时会 panic。
+    pub fn new(size: usize) -> ThreadPool {
+        assert!(size > 0);
+
+        let (sender, receiver) = mpsc::channel();
+
+        let receiver = Arc::new(Mutex::new(receiver));
+
+        let mut workers = Vec::with_capacity(size);
+
+        for id in 0..size {
+            workers.push(Worker::new(id, Arc::clone(&receiver)));
+        }
+
+        ThreadPool {
+            workers,
+            sender,
+        }
+    }
+
+    pub fn execute<F>(&self, f: F)
+        where
+            F: FnOnce() + Send + 'static
+    {
+        let job = Box::new(f);
+
+        self.sender.send(Message::NewJob(job)).unwrap();
+    }
+}
+
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        println!("Sending terminate message to all workers.");
+
+        for _ in &mut self.workers {
+            self.sender.send(Message::Terminate).unwrap();
+        }
+
+        println!("Shutting down all workers.");
+
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
+    }
+}
+
+struct Worker {
+    id: usize,
+    thread: Option<thread::JoinHandle<()>>,
+}
+
+impl Worker {
+    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) ->
+        Worker {
+
+        let thread = thread::spawn(move ||{
+            loop {
+                let message = receiver.lock().unwrap().recv().unwrap();
+
+                match message {
+                    Message::NewJob(job) => {
+                        println!("Worker {} got a job; executing.", id);
+
+                        job();
+                    },
+                    Message::Terminate => {
+                        println!("Worker {} was told to terminate.", id);
+
+                        break;
+                    },
+                }
+            }
+        });
+
+        Worker {
+            id,
+            thread: Some(thread),
+        }
+    }
+}
 ```
 
-We could do more here! If you want to continue enhancing this project, here are
-some ideas:
+这里还有很多可以做的事！如果你希望继续增强这个项目，如下是一些点子：
 
-* Add more documentation to `ThreadPool` and its public methods.
-* Add tests of the library’s functionality.
-* Change calls to `unwrap` to more robust error handling.
-* Use `ThreadPool` to perform some task other than serving web requests.
-* Find a thread pool crate on [crates.io](https://crates.io/) and implement a
-  similar web server using the crate instead. Then compare its API and
-  robustness to the thread pool we implemented.
+- 为 `ThreadPool` 和其公有方法增加更多文档
+- 为库的功能增加测试
+- 将 `unwrap` 调用改为更健壮的错误处理
+- 使用 `ThreadPool` 进行其他不同于处理网络请求的任务
+- 在 [crates.io](https://crates.io/) 上寻找一个线程池 crate 并使用它实现一个类似的 web server，将其 API 和鲁棒性与我们的实现做对比
 
-## Summary
+## 总结
 
-Well done! You’ve made it to the end of the book! We want to thank you for
-joining us on this tour of Rust. You’re now ready to implement your own Rust
-projects and help with other peoples’ projects. Keep in mind that there is a
-welcoming community of other Rustaceans who would love to help you with any
-challenges you encounter on your Rust journey.
+好极了！你结束了本书的学习！由衷感谢你同我们一道加入这次 Rust 之旅。现在你已经准备好出发并实现自己的 Rust 项目并帮助他人了。请不要忘记我们的社区，这里有其他 Rustaceans 正乐于帮助你迎接 Rust 之路上的任何挑战。

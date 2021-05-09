@@ -2,8 +2,16 @@
 
 *由 Steve Klabnik 和 Carol Nichols，以及来自 Rust 社区贡献者撰写*
 
-本书的版本假设你使用 Rust 1.52 或在所有项目中的 *Cargo.toml* 添加 `edition = "2018"` 指明使用 Rust 2018 版之后的更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust，并参阅新的[附录 E][editions]<!-- ignore
---> 来获取有关版本的信息。
+> 中文翻译注（Chinese translation of the [The Rust Programming Language][book-website]）：<br>
+> 1. 《Rust 程序设计语言》(The Rust Programming Language 中文版) 翻译自 [The Rust Programming Language][book-website]，查看此书的 [Github 翻译项目][book-cn]。<br>
+> 2. 本书已有由 [KaiserY 翻译完的版本](https://github.com/KaiserY/trpl-zh-cn)，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续将跟随 Rust 官方的英文版本更新。<br>
+> 3. 许可协议：跟随英文原书使用 MIT 和 Apache 2.0 双许可授权。
+> 
+
+[book-website]: https://doc.rust-lang.org/book
+[book-cn]: https://github.com/rust-lang-cn/book-cn
+
+本书的版本假设你使用 Rust 1.52 或在所有项目中的 *Cargo.toml* 添加 `edition = "2018"` 指明使用 Rust 2018 版之后的更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust，并参阅新的[附录 E][editions]<!-- ignore --> 来获取有关版本的信息。
 
 2018 版的 Rust 语言包含许多改进，使Rust更符合人体工程学且更易于学习。本书的迭代更新过程包含许多更改并反映了这些改进：
 

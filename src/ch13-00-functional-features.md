@@ -1,24 +1,14 @@
-# Functional Language Features: Iterators and Closures
+# Rust 中的函数式语言功能：迭代器与闭包
 
-Rust’s design has taken inspiration from many existing languages and
-techniques, and one significant influence is *functional programming*.
-Programming in a functional style often includes using functions as values by
-passing them in arguments, returning them from other functions, assigning them
-to variables for later execution, and so forth.
+Rust 的设计灵感来源于很多现存的语言和技术。其中一个显著的影响就是 **函数式编程**（*functional programming*）。函数式编程风格通常包含将函数作为参数值或其他函数的返回值、将函数赋值给变量以供之后执行等等。
 
-In this chapter, we won’t debate the issue of what functional programming is or
-isn’t but will instead discuss some features of Rust that are similar to
-features in many languages often referred to as functional.
+本章我们不会讨论函数式编程是或不是什么的问题，而是展示 Rust 的一些在功能上与其他被认为是函数式语言类似的特性。
 
-More specifically, we’ll cover:
+更具体的，我们将要涉及：
 
-* *Closures*, a function-like construct you can store in a variable
-* *Iterators*, a way of processing a series of elements
-* How to use these two features to improve the I/O project in Chapter 12
-* The performance of these two features (Spoiler alert: they’re faster than you
-  might think!)
+* **闭包**（*Closures*），一个可以储存在变量里的类似函数的结构
+* **迭代器**（*Iterators*），一种处理元素序列的方式
+* 如何使用这些功能来改进第十二章的 I/O 项目。
+* 这两个功能的性能。（**剧透警告：** 他们的速度超乎你的想象！）
 
-Other Rust features, such as pattern matching and enums, which we’ve covered in
-other chapters, are influenced by the functional style as well. Mastering
-closures and iterators is an important part of writing idiomatic, fast Rust
-code, so we’ll devote this entire chapter to them.
+还有其它受函数式风格影响的 Rust 功能，比如模式匹配和枚举，这些已经在其他章节中讲到过了。掌握闭包和迭代器则是编写符合语言风格的高性能 Rust 代码的重要一环，所以我们将专门用一整章来讲解他们。

@@ -1,236 +1,256 @@
-## Developing the Library’s Functionality with Test-Driven Development
+## 采用测试驱动开发完善库的功能
 
-Now that we’ve extracted the logic into *src/lib.rs* and left the argument
-collecting and error handling in *src/main.rs*, it’s much easier to write tests
-for the core functionality of our code. We can call functions directly with
-various arguments and check return values without having to call our binary
-from the command line. Feel free to write some tests for the functionality in
-the `Config::new` and `run` functions on your own.
+现在我们将逻辑提取到了 *src/lib.rs* 并将所有的参数解析和错误处理留在了 *src/main.rs* 中，为代码的核心功能编写测试将更加容易。我们可以直接使用多种参数调用函数并检查返回值而无需从命令行运行二进制文件了。如果你愿意的话，请自行为 `Config::new` 和 `run` 函数的功能编写一些测试。
 
-In this section, we’ll add the searching logic to the `minigrep` program by
-using the Test-driven development (TDD) process. This software development
-technique follows these steps:
+在这一部分，我们将遵循测试驱动开发（Test Driven Development, TDD）的模式来逐步增加 `minigrep` 的搜索逻辑。这是一个软件开发技术，它遵循如下步骤：
 
-1. Write a test that fails and run it to make sure it fails for the reason you
-   expect.
-2. Write or modify just enough code to make the new test pass.
-3. Refactor the code you just added or changed and make sure the tests
-   continue to pass.
-4. Repeat from step 1!
+1. 编写一个失败的测试，并运行它以确保它失败的原因是你所期望的。
+2. 编写或修改足够的代码来使新的测试通过。
+3. 重构刚刚增加或修改的代码，并确保测试仍然能通过。
+4. 从步骤 1 开始重复！
 
-This process is just one of many ways to write software, but TDD can help drive
-code design as well. Writing the test before you write the code that makes the
-test pass helps to maintain high test coverage throughout the process.
+这只是众多编写软件的方法之一，不过 TDD 有助于驱动代码的设计。在编写能使测试通过的代码之前编写测试有助于在开发过程中保持高测试覆盖率。
 
-We’ll test drive the implementation of the functionality that will actually do
-the searching for the query string in the file contents and produce a list of
-lines that match the query. We’ll add this functionality in a function called
-`search`.
+我们将测试驱动实现实际在文件内容中搜索查询字符串并返回匹配的行示例的功能。我们将在一个叫做 `search` 的函数中增加这些功能。
 
-### Writing a Failing Test
+### 编写失败测试
 
-Because we don’t need them anymore, let’s remove the `println!` statements from
-*src/lib.rs* and *src/main.rs* that we used to check the program’s behavior.
-Then, in *src/lib.rs*, we’ll add a `tests` module with a test function, as we
-did in [Chapter 11][ch11-anatomy]<!-- ignore -->. The test function specifies
-the behavior we want the `search` function to have: it will take a query and
-the text to search for the query in, and it will return only the lines from the
-text that contain the query. Listing 12-15 shows this test, which won’t compile
-yet.
+去掉 *src/lib.rs* 和 *src/main.rs* 中用于检查程序行为的 `println!` 语句，因为不再真正需要他们了。接着我们会像 [第十一章][ch11-anatomy] 那样增加一个 `test` 模块和一个测试函数。测试函数指定了 `search` 函数期望拥有的行为：它会获取一个需要查询的字符串和用来查询的文本，并只会返回包含请求的文本行。示例 12-15 展示了这个测试，它还不能编译：
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-15/src/lib.rs:here}}
+```rust
+# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+#      vec![]
+# }
+#
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(
+            vec!["safe, fast, productive."],
+            search(query, contents)
+        );
+    }
+}
 ```
 
-<span class="caption">Listing 12-15: Creating a failing test for the `search`
-function we wish we had</span>
+<span class="caption">示例 12-15：创建一个我们期望的 `search` 函数的失败测试</span>
 
-This test searches for the string `"duct"`. The text we’re searching is three
-lines, only one of which contains `"duct"`. We assert that the value returned
-from the `search` function contains only the line we expect.
+这里选择使用 `"duct"` 作为这个测试中需要搜索的字符串。用来搜索的文本有三行，其中只有一行包含 `"duct"`。我们断言 `search` 函数的返回值只包含期望的那一行。
 
-We aren’t able to run this test and watch it fail because the test doesn’t even
-compile: the `search` function doesn’t exist yet! So now we’ll add just enough
-code to get the test to compile and run by adding a definition of the `search`
-function that always returns an empty vector, as shown in Listing 12-16. Then
-the test should compile and fail because an empty vector doesn’t match a vector
-containing the line `"safe, fast, productive."`
+我们还不能运行这个测试并看到它失败，因为它甚至都还不能编译：`search` 函数还不存在呢！我们将增加足够的代码来使其能够编译：一个总是会返回空 vector 的 `search` 函数定义，如示例 12-16 所示。然后这个测试应该能够编译并因为空 vector 并不匹配一个包含一行 `"safe, fast, productive."` 的 vector 而失败。
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
-```rust,noplayground
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-16/src/lib.rs:here}}
+```rust
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    vec![]
+}
 ```
 
-<span class="caption">Listing 12-16: Defining just enough of the `search`
-function so our test will compile</span>
+<span class="caption">示例 12-16：刚好足够使测试通过编译的 `search` 函数定义</span>
 
-Notice that we need an explicit lifetime `'a` defined in the signature of
-`search` and used with the `contents` argument and the return value. Recall in
-[Chapter 10][ch10-lifetimes]<!-- ignore --> that the lifetime parameters
-specify which argument lifetime is connected to the lifetime of the return
-value. In this case, we indicate that the returned vector should contain string
-slices that reference slices of the argument `contents` (rather than the
-argument `query`).
+注意需要在 `search` 的签名中定义一个显式生命周期 `'a` 并用于 `contents` 参数和返回值。回忆一下 [第十章][ch10-lifetimes] 中讲到生命周期参数指定哪个参数的生命周期与返回值的生命周期相关联。在这个例子中，我们表明返回的 vector 中应该包含引用参数 `contents`（而不是参数`query`） slice 的字符串 slice。
 
-In other words, we tell Rust that the data returned by the `search` function
-will live as long as the data passed into the `search` function in the
-`contents` argument. This is important! The data referenced *by* a slice needs
-to be valid for the reference to be valid; if the compiler assumes we’re making
-string slices of `query` rather than `contents`, it will do its safety checking
-incorrectly.
+换句话说，我们告诉 Rust 函数 `search` 返回的数据将与 `search` 函数中的参数 `contents` 的数据存在的一样久。这是非常重要的！为了使这个引用有效那么 **被** slice 引用的数据也需要保持有效；如果编译器认为我们是在创建 `query` 而不是 `contents` 的字符串 slice，那么安全检查将是不正确的。
 
-If we forget the lifetime annotations and try to compile this function, we’ll
-get this error:
+如果尝试不用生命周期编译的话，我们将得到如下错误：
 
-```console
-{{#include ../listings/ch12-an-io-project/output-only-02-missing-lifetimes/output.txt}}
+```text
+error[E0106]: missing lifetime specifier
+ --> src/lib.rs:5:51
+  |
+5 | pub fn search(query: &str, contents: &str) -> Vec<&str> {
+  |                                                   ^ expected lifetime
+parameter
+  |
+  = help: this function's return type contains a borrowed value, but the
+  signature does not say whether it is borrowed from `query` or `contents`
 ```
 
-Rust can’t possibly know which of the two arguments we need, so we need to tell
-it. Because `contents` is the argument that contains all of our text and we
-want to return the parts of that text that match, we know `contents` is the
-argument that should be connected to the return value using the lifetime syntax.
+Rust 不可能知道我们需要的是哪一个参数，所以需要告诉它。因为参数 `contents` 包含了所有的文本而且我们希望返回匹配的那部分文本，所以我们知道 `contents` 是应该要使用生命周期语法来与返回值相关联的参数。
 
-Other programming languages don’t require you to connect arguments to return
-values in the signature. Although this might seem strange, it will get easier
-over time. You might want to compare this example with the [“Validating
-References with Lifetimes”][validating-references-with-lifetimes]<!-- ignore
---> section in Chapter 10.
+其他语言中并不需要你在函数签名中将参数与返回值相关联。所以这么做可能仍然感觉有些陌生，随着时间的推移这将会变得越来越容易。你可能想要将这个例子与第十章中 [“生命周期与引用有效性”][validating-references-with-lifetimes] 部分做对比。
 
-Now let’s run the test:
+现在运行测试：
 
-```console
-{{#include ../listings/ch12-an-io-project/listing-12-16/output.txt}}
+```text
+$ cargo test
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+--warnings--
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43 secs
+     Running target/debug/deps/minigrep-abcabcabc
+
+running 1 test
+test tests::one_result ... FAILED
+
+failures:
+
+---- tests::one_result stdout ----
+        thread 'tests::one_result' panicked at 'assertion failed: `(left ==
+right)`
+left: `["safe, fast, productive."]`,
+right: `[]`)', src/lib.rs:48:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+
+failures:
+    tests::one_result
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
 ```
 
-Great, the test fails, exactly as we expected. Let’s get the test to pass!
+好的，测试失败了，这正是我们所期望的。修改代码来让测试通过吧！
 
-### Writing Code to Pass the Test
+### 编写使测试通过的代码
 
-Currently, our test is failing because we always return an empty vector. To fix
-that and implement `search`, our program needs to follow these steps:
+目前测试之所以会失败是因为我们总是返回一个空的 vector。为了修复并实现 `search`，我们的程序需要遵循如下步骤：
 
-* Iterate through each line of the contents.
-* Check whether the line contains our query string.
-* If it does, add it to the list of values we’re returning.
-* If it doesn’t, do nothing.
-* Return the list of results that match.
+* 遍历内容的每一行文本。
+* 查看这一行是否包含要搜索的字符串。
+* 如果有，将这一行加入列表返回值中。
+* 如果没有，什么也不做。
+* 返回匹配到的结果列表
 
-Let’s work through each step, starting with iterating through lines.
+让我们一步一步的来，从遍历每行开始。
 
-#### Iterating Through Lines with the `lines` Method
+#### 使用 `lines` 方法遍历每一行
 
-Rust has a helpful method to handle line-by-line iteration of strings,
-conveniently named `lines`, that works as shown in Listing 12-17. Note this
-won’t compile yet.
+Rust 有一个有助于一行一行遍历字符串的方法，出于方便它被命名为 `lines`，它如示例 12-17 这样工作。注意这还不能编译：
 
-<span class="filename">Filename: src/lib.rs</span>
-
-```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-17/src/lib.rs:here}}
-```
-
-<span class="caption">Listing 12-17: Iterating through each line in `contents`
-</span>
-
-The `lines` method returns an iterator. We’ll talk about iterators in depth in
-[Chapter 13][ch13-iterators]<!-- ignore -->, but recall that you saw this way of using an
-iterator in [Listing 3-5][ch3-iter]<!-- ignore -->, where we used a `for` loop
-with an iterator to run some code on each item in a collection.
-
-#### Searching Each Line for the Query
-
-Next, we’ll check whether the current line contains our query string.
-Fortunately, strings have a helpful method named `contains` that does this for
-us! Add a call to the `contains` method in the `search` function, as shown in
-Listing 12-18. Note this still won’t compile yet.
-
-<span class="filename">Filename: src/lib.rs</span>
-
-```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-18/src/lib.rs:here}}
-```
-
-<span class="caption">Listing 12-18: Adding functionality to see whether the
-line contains the string in `query`</span>
-
-#### Storing Matching Lines
-
-We also need a way to store the lines that contain our query string. For that,
-we can make a mutable vector before the `for` loop and call the `push` method
-to store a `line` in the vector. After the `for` loop, we return the vector, as
-shown in Listing 12-19.
-
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:here}}
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    for line in contents.lines() {
+        // do something with line
+    }
+}
 ```
 
-<span class="caption">Listing 12-19: Storing the lines that match so we can
-return them</span>
+<span class="caption">示例 12-17：遍历 `contents` 的每一行</span>
 
-Now the `search` function should return only the lines that contain `query`,
-and our test should pass. Let’s run the test:
+`lines` 方法返回一个迭代器。[第十三章][ch13-iterators] 会深入了解迭代器，不过我们已经在 [示例 3-5][ch3-iter] 中见过使用迭代器的方法了，在那里使用了一个 `for` 循环和迭代器在一个集合的每一项上运行了一些代码。
 
-```console
-{{#include ../listings/ch12-an-io-project/listing-12-19/output.txt}}
-```
+#### 用查询字符串搜索每一行
 
-Our test passed, so we know it works!
+接下来将会增加检查当前行是否包含查询字符串的功能。幸运的是，字符串类型为此也有一个叫做 `contains` 的实用方法！如示例 12-18 所示在 `search` 函数中加入 `contains` 方法调用。注意这仍然不能编译：
 
-At this point, we could consider opportunities for refactoring the
-implementation of the search function while keeping the tests passing to
-maintain the same functionality. The code in the search function isn’t too bad,
-but it doesn’t take advantage of some useful features of iterators. We’ll
-return to this example in [Chapter 13][ch13-iterators]<!-- ignore -->, where we’ll
-explore iterators in detail, and look at how to improve it.
-
-#### Using the `search` Function in the `run` Function
-
-Now that the `search` function is working and tested, we need to call `search`
-from our `run` function. We need to pass the `config.query` value and the
-`contents` that `run` reads from the file to the `search` function. Then `run`
-will print each line returned from `search`:
-
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">文件名: src/lib.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/src/lib.rs:here}}
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    for line in contents.lines() {
+        if line.contains(query) {
+            // do something with line
+        }
+    }
+}
 ```
 
-We’re still using a `for` loop to return each line from `search` and print it.
+<span class="caption">示例 12-18：增加检查文本行是否包含 `query` 中字符串的功能</span>
 
-Now the entire program should work! Let’s try it out, first with a word that
-should return exactly one line from the Emily Dickinson poem, “frog”:
+#### 存储匹配的行
 
-```console
-{{#include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/output.txt}}
+我们还需要一个方法来存储包含查询字符串的行。为此可以在 `for` 循环之前创建一个可变的 vector 并调用 `push` 方法在 vector 中存放一个 `line`。在 `for` 循环之后，返回这个 vector，如示例 12-19 所示：
+
+<span class="filename">文件名: src/lib.rs</span>
+
+```rust,ignore
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
 ```
 
-Cool! Now let’s try a word that will match multiple lines, like “body”:
+<span class="caption">示例 12-19：储存匹配的行以便可以返回他们</span>
 
-```console
-{{#include ../listings/ch12-an-io-project/output-only-03-multiple-matches/output.txt}}
+现在 `search` 函数应该返回只包含 `query` 的那些行，而测试应该会通过。让我们运行测试：
+
+```text
+$ cargo test
+--snip--
+running 1 test
+test tests::one_result ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-And finally, let’s make sure that we don’t get any lines when we search for a
-word that isn’t anywhere in the poem, such as “monomorphization”:
+测试通过了，它可以工作了！
 
-```console
-{{#include ../listings/ch12-an-io-project/output-only-04-no-matches/output.txt}}
+现在正是可以考虑重构的时机，在保证测试通过，保持功能不变的前提下重构 `search` 函数。`search` 函数中的代码并不坏，不过并没有利用迭代器的一些实用功能。第十三章将回到这个例子并深入探索迭代器并看看如何改进代码。
+
+#### 在 `run` 函数中使用 `search` 函数
+
+现在 `search` 函数是可以工作并测试通过了的，我们需要实际在 `run` 函数中调用 `search`。需要将 `config.query` 值和 `run` 从文件中读取的 `contents` 传递给 `search` 函数。接着 `run` 会打印出 `search` 返回的每一行：
+
+<span class="filename">文件名: src/lib.rs</span>
+
+```rust,ignore
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
+
+    for line in search(&config.query, &contents) {
+        println!("{}", line);
+    }
+
+    Ok(())
+}
 ```
 
-Excellent! We’ve built our own mini version of a classic tool and learned a lot
-about how to structure applications. We’ve also learned a bit about file input
-and output, lifetimes, testing, and command line parsing.
+这里仍然使用了 `for` 循环获取了 `search` 返回的每一行并打印出来。
 
-To round out this project, we’ll briefly demonstrate how to work with
-environment variables and how to print to standard error, both of which are
-useful when you’re writing command line programs.
+现在整个程序应该可以工作了！让我们试一试，首先使用一个只会在艾米莉·狄金森的诗中返回一行的单词 “frog”：
+
+```text
+$ cargo run frog poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.38 secs
+     Running `target/debug/minigrep frog poem.txt`
+How public, like a frog
+```
+
+好的！现在试试一个会匹配多行的单词，比如 “body”：
+
+```text
+$ cargo run body poem.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep body poem.txt`
+I’m nobody! Who are you?
+Are you nobody, too?
+How dreary to be somebody!
+```
+
+最后，让我们确保搜索一个在诗中哪里都没有的单词时不会得到任何行，比如 "monomorphization"：
+
+```text
+$ cargo run monomorphization poem.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep monomorphization poem.txt`
+```
+
+非常好！我们创建了一个属于自己的迷你版经典工具，并学习了很多如何组织程序的知识。我们还学习了一些文件输入输出、生命周期、测试和命令行解析的内容。
+
+为了使这个项目更丰满，我们将简要的展示如何处理环境变量和打印到标准错误，这两者在编写命令行程序时都很有用。
 
 [validating-references-with-lifetimes]:
 ch10-03-lifetime-syntax.html#validating-references-with-lifetimes

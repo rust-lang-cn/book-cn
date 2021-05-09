@@ -1,56 +1,21 @@
-# Smart Pointers
+# 智能指针
 
-A *pointer* is a general concept for a variable that contains an address in
-memory. This address refers to, or “points at,” some other data. The most
-common kind of pointer in Rust is a reference, which you learned about in
-Chapter 4. References are indicated by the `&` symbol and borrow the value they
-point to. They don’t have any special capabilities other than referring to
-data. Also, they don’t have any overhead and are the kind of pointer we use
-most often.
+**指针** （*pointer*）是一个包含内存地址的变量的通用概念。这个地址引用，或 “指向”（points at）一些其他数据。Rust 中最常见的指针是第四章介绍的 **引用**（*reference*）。引用以 `&` 符号为标志并借用了他们所指向的值。除了引用数据没有任何其他特殊功能。它们也没有任何额外开销，所以应用得最多。
 
-*Smart pointers*, on the other hand, are data structures that not only act like
-a pointer but also have additional metadata and capabilities. The concept of
-smart pointers isn’t unique to Rust: smart pointers originated in C++ and exist
-in other languages as well. In Rust, the different smart pointers defined in
-the standard library provide functionality beyond that provided by references.
-One example that we’ll explore in this chapter is the *reference counting*
-smart pointer type. This pointer enables you to have multiple owners of data by
-keeping track of the number of owners and, when no owners remain, cleaning up
-the data.
+另一方面，**智能指针**（*smart pointers*）是一类数据结构，他们的表现类似指针，但是也拥有额外的元数据和功能。智能指针的概念并不为 Rust 所独有；其起源于 C++ 并存在于其他语言中。Rust 标准库中不同的智能指针提供了多于引用的额外功能。本章将会探索的一个例子便是 **引用计数** （*reference counting*）智能指针类型，其允许数据有多个所有者。引用计数智能指针记录总共有多少个所有者，并当没有任何所有者时负责清理数据。
 
-In Rust, which uses the concept of ownership and borrowing, an additional
-difference between references and smart pointers is that references are
-pointers that only borrow data; in contrast, in many cases, smart pointers
-*own* the data they point to.
+在 Rust 中，普通引用和智能指针的一个额外的区别是引用是一类只借用数据的指针；相反，在大部分情况下，智能指针 **拥有** 他们指向的数据。
 
-We’ve already encountered a few smart pointers in this book, such as `String`
-and `Vec<T>` in Chapter 8, although we didn’t call them smart pointers at the
-time. Both these types count as smart pointers because they own some memory and
-allow you to manipulate it. They also have metadata (such as their capacity)
-and extra capabilities or guarantees (such as with `String` ensuring its data
-will always be valid UTF-8).
+实际上本书中已经出现过一些智能指针，比如第八章的 `String` 和 `Vec<T>`，虽然当时我们并不这么称呼它们。这些类型都属于智能指针因为它们拥有一些数据并允许你修改它们。它们也带有元数据（比如他们的容量）和额外的功能或保证（`String` 的数据总是有效的 UTF-8 编码）。
 
-Smart pointers are usually implemented using structs. The characteristic that
-distinguishes a smart pointer from an ordinary struct is that smart pointers
-implement the `Deref` and `Drop` traits. The `Deref` trait allows an instance
-of the smart pointer struct to behave like a reference so you can write code
-that works with either references or smart pointers. The `Drop` trait allows
-you to customize the code that is run when an instance of the smart pointer
-goes out of scope. In this chapter, we’ll discuss both traits and demonstrate
-why they’re important to smart pointers.
+智能指针通常使用结构体实现。智能指针区别于常规结构体的显著特性在于其实现了 `Deref` 和 `Drop` trait。`Deref` trait 允许智能指针结构体实例表现的像引用一样，这样就可以编写既用于引用、又用于智能指针的代码。`Drop` trait 允许我们自定义当智能指针离开作用域时运行的代码。本章会讨论这些 trait 以及为什么对于智能指针来说他们很重要。
 
-Given that the smart pointer pattern is a general design pattern used
-frequently in Rust, this chapter won’t cover every existing smart pointer. Many
-libraries have their own smart pointers, and you can even write your own. We’ll
-cover the most common smart pointers in the standard library:
+考虑到智能指针是一个在 Rust 经常被使用的通用设计模式，本章并不会覆盖所有现存的智能指针。很多库都有自己的智能指针而你也可以编写属于你自己的智能指针。这里将会讲到的是来自标准库中最常用的一些：
 
-* `Box<T>` for allocating values on the heap
-* `Rc<T>`, a reference counting type that enables multiple ownership
-* `Ref<T>` and `RefMut<T>`, accessed through `RefCell<T>`, a type that enforces
-  the borrowing rules at runtime instead of compile time
+* `Box<T>`，用于在堆上分配值
+* `Rc<T>`，一个引用计数类型，其数据可以有多个所有者
+* `Ref<T>` 和 `RefMut<T>`，通过 `RefCell<T>` 访问。（ `RefCell<T>` 是一个在运行时而不是在编译时执行借用规则的类型）。
 
-In addition, we’ll cover the *interior mutability* pattern where an immutable
-type exposes an API for mutating an interior value. We’ll also discuss
-*reference cycles*: how they can leak memory and how to prevent them.
+另外我们会涉及 **内部可变性**（*interior mutability*）模式，这是不可变类型暴露出改变其内部值的 API。我们也会讨论 **引用循环**（*reference cycles*）会如何泄漏内存，以及如何避免。
 
-Let’s dive in!
+让我们开始吧！

@@ -1,22 +1,12 @@
-## Packages and Crates
+## 包和 crate
 
-The first parts of the module system we’ll cover are packages and crates. A
-crate is a binary or library. The *crate root* is a source file that the Rust
-compiler starts from and makes up the root module of your crate (we’ll explain
-modules in depth in the [“Defining Modules to Control Scope and
-Privacy”][modules]<!-- ignore --> section). A *package* is one or more crates
-that provide a set of functionality. A package contains a *Cargo.toml* file
-that describes how to build those crates.
+模块系统的第一部分，我们将介绍包和 crate。crate 是一个二进制项或者库。*crate root* 是一个源文件，Rust 编译器以它为起始点，并构成你的 crate 的根模块（我们将在 “[定义模块来控制作用域与私有性](https://github.com/rust-lang/book/blob/master/src/ch07-02-defining-modules-to-control-scope-and-privacy.md)” 一节深入解读）。*包*（*package*） 是提供一系列功能的一个或者多个 crate。一个包会包含有一个 *Cargo.toml* 文件，阐述如何去构建这些 crate。
 
-Several rules determine what a package can contain. A package *must* contain
-zero or one library crates, and no more. It can contain as many binary crates
-as you’d like, but it must contain at least one crate (either library or
-binary).
+包中所包含的内容由几条规则来确立。一个包中至多 **只能** 包含一个库 crate(library crate)；包中可以包含任意多个二进制 crate(binary crate)；包中至少包含一个 crate，无论是库的还是二进制的。
 
-Let’s walk through what happens when we create a package. First, we enter the
-command `cargo new`:
+让我们来看看创建包的时候会发生什么。首先，我们输入命令 `cargo new`：
 
-```console
+```text
 $ cargo new my-project
      Created binary (application) `my-project` package
 $ ls my-project
@@ -26,39 +16,12 @@ $ ls my-project/src
 main.rs
 ```
 
-When we entered the command, Cargo created a *Cargo.toml* file, giving us a
-package. Looking at the contents of *Cargo.toml*, there’s no mention of
-*src/main.rs* because Cargo follows a convention that *src/main.rs* is the
-crate root of a binary crate with the same name as the package. Likewise, Cargo
-knows that if the package directory contains *src/lib.rs*, the package contains
-a library crate with the same name as the package, and *src/lib.rs* is its
-crate root. Cargo passes the crate root files to `rustc` to build the library
-or binary.
+当我们输入了这条命令，Cargo 会给我们的包创建一个 *Cargo.toml* 文件。查看 *Cargo.toml* 的内容，会发现并没有提到 *src/main.rs*，因为 Cargo 遵循的一个约定：*src/main.rs* 就是一个与包同名的二进制 crate 的 crate 根。同样的，Cargo 知道如果包目录中包含 *src/lib.rs*，则包带有与其同名的库 crate，且 *src/lib.rs* 是 crate 根。crate 根文件将由 Cargo 传递给 `rustc` 来实际构建库或者二进制项目。
 
-Here, we have a package that only contains *src/main.rs*, meaning it only
-contains a binary crate named `my-project`. If a package contains *src/main.rs*
-and *src/lib.rs*, it has two crates: a library and a binary, both with the same
-name as the package. A package can have multiple binary crates by placing files
-in the *src/bin* directory: each file will be a separate binary crate.
+在此，我们有了一个只包含 *src/main.rs* 的包，意味着它只含有一个名为 `my-project` 的二进制 crate。如果一个包同时含有 *src/main.rs* 和 *src/lib.rs*，则它有两个 crate：一个库和一个二进制项，且名字都与包相同。通过将文件放在 *src/bin* 目录下，一个包可以拥有多个二进制 crate：每个 *src/bin* 下的文件都会被编译成一个独立的二进制 crate。
 
-A crate will group related functionality together in a scope so the
-functionality is easy to share between multiple projects. For example, the
-`rand` crate we used in [Chapter 2][rand]<!-- ignore --> provides functionality
-that generates random numbers. We can use that functionality in our own
-projects by bringing the `rand` crate into our project’s scope. All the
-functionality provided by the `rand` crate is accessible through the crate’s
-name, `rand`.
+一个 crate 会将一个作用域内的相关功能分组到一起，使得该功能可以很方便地在多个项目之间共享。举一个例子，我们在 [第二章](https://github.com/rust-lang/book/blob/master/src/ch02-00-guessing-game-tutorial.md#generating-a-random-number) 使用的 `rand` crate 提供了生成随机数的功能。通过将 `rand` crate 加入到我们项目的作用域中，我们就可以在自己的项目中使用该功能。`rand` crate 提供的所有功能都可以通过该 crate 的名字：`rand` 进行访问。
 
-Keeping a crate’s functionality in its own scope clarifies whether particular
-functionality is defined in our crate or the `rand` crate and prevents
-potential conflicts. For example, the `rand` crate provides a trait named
-`Rng`. We can also define a `struct` named `Rng` in our own crate. Because a
-crate’s functionality is namespaced in its own scope, when we add `rand` as a
-dependency, the compiler isn’t confused about what the name `Rng` refers to. In
-our crate, it refers to the `struct Rng` that we defined. We would access the
-`Rng` trait from the `rand` crate as `rand::Rng`.
+将一个 crate 的功能保持在其自身的作用域中，可以知晓一些特定的功能是在我们的 crate 中定义的还是在 `rand` crate 中定义的，这可以防止潜在的冲突。例如，`rand` crate 提供了一个名为 `Rng` 的特性（trait）。我们还可以在我们自己的 crate 中定义一个名为 `Rng` 的 `struct`。因为一个 crate 的功能是在自身的作用域进行命名的，当我们将 `rand` 作为一个依赖，编译器不会混淆 `Rng` 这个名字的指向。在我们的 crate 中，它指向的是我们自己定义的 `struct Rng`。我们可以通过 `rand::Rng` 这一方式来访问 `rand` crate 中的 `Rng` 特性（trait）。
 
-Let’s move on and talk about the module system!
-
-[modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
-[rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
+接下来让我们来说一说模块系统！

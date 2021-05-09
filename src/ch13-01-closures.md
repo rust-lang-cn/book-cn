@@ -1,243 +1,250 @@
-## Closures: Anonymous Functions that Can Capture Their Environment
+## 闭包：可以捕获环境的匿名函数
 
-Rust’s closures are anonymous functions you can save in a variable or pass as
-arguments to other functions. You can create the closure in one place and then
-call the closure to evaluate it in a different context. Unlike functions,
-closures can capture values from the scope in which they’re defined. We’ll
-demonstrate how these closure features allow for code reuse and behavior
-customization.
+Rust 的 **闭包**（*closures*）是可以保存进变量或作为参数传递给其他函数的匿名函数。可以在一个地方创建闭包，然后在不同的上下文中执行闭包运算。不同于函数，闭包允许捕获调用者作用域中的值。我们将展示闭包的这些功能如何复用代码和自定义行为。
 
-### Creating an Abstraction of Behavior with Closures
+### 使用闭包创建行为的抽象
 
-Let’s work on an example of a situation in which it’s useful to store a closure
-to be executed later. Along the way, we’ll talk about the syntax of closures,
-type inference, and traits.
+让我们来看一个存储稍后要执行的闭包的示例。其间我们会讨论闭包的语法、类型推断和 trait。
 
-Consider this hypothetical situation: we work at a startup that’s making an app
-to generate custom exercise workout plans. The backend is written in Rust, and
-the algorithm that generates the workout plan takes into account many factors,
-such as the app user’s age, body mass index, exercise preferences, recent
-workouts, and an intensity number they specify. The actual algorithm used isn’t
-important in this example; what’s important is that this calculation takes a
-few seconds. We want to call this algorithm only when we need to and only call
-it once so we don’t make the user wait more than necessary.
+考虑一下这个假定的场景：我们在一个通过 app 生成自定义健身计划的初创企业工作。其后端使用 Rust 编写，而生成健身计划的算法需要考虑很多不同的因素，比如用户的年龄、身体质量指数（Body Mass Index）、用户喜好、最近的健身活动和用户指定的强度系数。本例中实际的算法并不重要，重要的是这个计算只花费几秒钟。我们只希望在需要时调用算法，并且只希望调用一次，这样就不会让用户等得太久。
 
-We’ll simulate calling this hypothetical algorithm with the function
-`simulated_expensive_calculation` shown in Listing 13-1, which will print
-`calculating slowly...`, wait for two seconds, and then return whatever number
-we passed in.
+这里将通过调用 `simulated_expensive_calculation` 函数来模拟调用假定的算法，如示例 13-1 所示，它会打印出 `calculating slowly...`，等待两秒，并接着返回传递给它的数字：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs:here}}
+use std::thread;
+use std::time::Duration;
+
+fn simulated_expensive_calculation(intensity: u32) -> u32 {
+    println!("calculating slowly...");
+    thread::sleep(Duration::from_secs(2));
+    intensity
+}
 ```
 
-<span class="caption">Listing 13-1: A function to stand in for a hypothetical
-calculation that takes about 2 seconds to run</span>
+<span class="caption">示例 13-1：一个用来代替假定计算的函数，它大约会执行两秒钟</span>
 
-Next is the `main` function, which contains the parts of the workout app
-important for this example. This function represents the code that the app will
-call when a user asks for a workout plan. Because the interaction with the
-app’s frontend isn’t relevant to the use of closures, we’ll hardcode values
-representing inputs to our program and print the outputs.
+接下来，`main` 函数中将会包含本例的健身 app 中的重要部分。这代表当用户请求健身计划时 app 会调用的代码。因为与 app 前端的交互与闭包的使用并不相关，所以我们将硬编码代表程序输入的值并打印输出。
 
-The required inputs are these:
+所需的输入有这些：
 
-* An intensity number from the user, which is specified when they request
-  a workout to indicate whether they want a low-intensity workout or a
-  high-intensity workout
-* A random number that will generate some variety in the workout plans
+* 一个来自用户的 intensity 数字，请求健身计划时指定，它代表用户喜好低强度还是高强度健身。
+* 一个随机数，其会在健身计划中生成变化。
 
-The output will be the recommended workout plan. Listing 13-2 shows the `main`
-function we’ll use.
+程序的输出将会是建议的锻炼计划。示例 13-2 展示了我们将要使用的 `main` 函数：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-02/src/main.rs:here}}
+fn main() {
+    let simulated_user_specified_value = 10;
+    let simulated_random_number = 7;
+
+    generate_workout(
+        simulated_user_specified_value,
+        simulated_random_number
+    );
+}
+# fn generate_workout(intensity: u32, random_number: u32) {}
 ```
 
-<span class="caption">Listing 13-2: A `main` function with hardcoded values to
-simulate user input and random number generation</span>
+<span class="caption">示例 13-2：`main` 函数包含了用于 `generate_workout` 函数的模拟用户输入和模拟随机数输入</span>
 
-We’ve hardcoded the variable `simulated_user_specified_value` as 10 and the
-variable `simulated_random_number` as 7 for simplicity’s sake; in an actual
-program, we’d get the intensity number from the app frontend, and we’d use the
-`rand` crate to generate a random number, as we did in the Guessing Game
-example in Chapter 2. The `main` function calls a `generate_workout` function
-with the simulated input values.
+出于简单考虑这里硬编码了 `simulated_user_specified_value` 变量的值为 10 和 `simulated_random_number` 变量的值为 7；一个实际的程序会从 app 前端获取强度系数并使用 `rand` crate 来生成随机数，正如第二章的猜猜看游戏所做的那样。`main` 函数使用模拟的输入值调用 `generate_workout` 函数：
 
-Now that we have the context, let’s get to the algorithm. The function
-`generate_workout` in Listing 13-3 contains the business logic of the
-app that we’re most concerned with in this example. The rest of the code
-changes in this example will be made to this function.
+现在有了执行上下文，让我们编写算法。示例 13-3 中的 `generate_workout` 函数包含本例中我们最关心的 app 业务逻辑。本例中余下的代码修改都将在这个函数中进行：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-03/src/main.rs:here}}
+# use std::thread;
+# use std::time::Duration;
+#
+# fn simulated_expensive_calculation(num: u32) -> u32 {
+#     println!("calculating slowly...");
+#     thread::sleep(Duration::from_secs(2));
+#     num
+# }
+#
+fn generate_workout(intensity: u32, random_number: u32) {
+    if intensity < 25 {
+        println!(
+            "Today, do {} pushups!",
+            simulated_expensive_calculation(intensity)
+        );
+        println!(
+            "Next, do {} situps!",
+            simulated_expensive_calculation(intensity)
+        );
+    } else {
+        if random_number == 3 {
+            println!("Take a break today! Remember to stay hydrated!");
+        } else {
+            println!(
+                "Today, run for {} minutes!",
+                simulated_expensive_calculation(intensity)
+            );
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 13-3: The business logic that prints the workout
-plans based on the inputs and calls to the `simulated_expensive_calculation`
-function</span>
+<span class="caption">示例 13-3：程序的业务逻辑，它根据输入并调用 `simulated_expensive_calculation` 函数来打印出健身计划</span>
 
-The code in Listing 13-3 has multiple calls to the slow calculation function.
-The first `if` block calls `simulated_expensive_calculation` twice, the `if`
-inside the outer `else` doesn’t call it at all, and the code inside the
-second `else` case calls it once.
+示例 13-3 中的代码有多处调用了慢计算函数 `simulated_expensive_calculation` 。第一个 `if` 块调用了 `simulated_expensive_calculation` 两次， `else` 中的 `if` 没有调用它，而第二个 `else` 中的代码调用了它一次。
 
-The desired behavior of the `generate_workout` function is to first check
-whether the user wants a low-intensity workout (indicated by a number less than
-25) or a high-intensity workout (a number of 25 or greater).
+`generate_workout` 函数的期望行为是首先检查用户需要低强度（由小于 25 的系数表示）锻炼还是高强度（25 或以上）锻炼。
 
-Low-intensity workout plans will recommend a number of push-ups and sit-ups
-based on the complex algorithm we’re simulating.
+低强度锻炼计划会根据由 `simulated_expensive_calculation` 函数所模拟的复杂算法建议一定数量的俯卧撑和仰卧起坐。
 
-If the user wants a high-intensity workout, there’s some additional logic: if
-the value of the random number generated by the app happens to be 3, the app
-will recommend a break and hydration. If not, the user will get a number of
-minutes of running based on the complex algorithm.
+如果用户需要高强度锻炼，这里有一些额外的逻辑：如果 app 生成的随机数刚好是 3，app 相反会建议用户稍做休息并补充水分。如果不是，则用户会从复杂算法中得到数分钟跑步的高强度锻炼计划。
 
-This code works the way the business wants it to now, but let’s say the data
-science team decides that we need to make some changes to the way we call the
-`simulated_expensive_calculation` function in the future. To simplify the
-update when those changes happen, we want to refactor this code so it calls the
-`simulated_expensive_calculation` function only once. We also want to cut the
-place where we’re currently unnecessarily calling the function twice without
-adding any other calls to that function in the process. That is, we don’t want
-to call it if the result isn’t needed, and we still want to call it only once.
+现在这份代码能够应对我们的需求了，但数据科学部门的同学告知我们将来会对调用 `simulated_expensive_calculation` 的方式做出一些改变。为了在要做这些改动的时候简化更新步骤，我们将重构代码来让它只调用 `simulated_expensive_calculation` 一次。同时还希望去掉目前多余的连续两次函数调用，并不希望在计算过程中增加任何其他此函数的调用。也就是说，我们不希望在完全无需其结果的情况调用函数，不过仍然希望只调用函数一次。
 
-#### Refactoring Using Functions
+#### 使用函数重构
 
-We could restructure the workout program in many ways. First, we’ll try
-extracting the duplicated call to the `simulated_expensive_calculation`
-function into a variable, as shown in Listing 13-4.
+有多种方法可以重构此程序。我们首先尝试的是将重复的 `simulated_expensive_calculation` 函数调用提取到一个变量中，如示例 13-4 所示：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-04/src/main.rs:here}}
+# use std::thread;
+# use std::time::Duration;
+#
+# fn simulated_expensive_calculation(num: u32) -> u32 {
+#     println!("calculating slowly...");
+#     thread::sleep(Duration::from_secs(2));
+#     num
+# }
+#
+fn generate_workout(intensity: u32, random_number: u32) {
+    let expensive_result =
+        simulated_expensive_calculation(intensity);
+
+    if intensity < 25 {
+        println!(
+            "Today, do {} pushups!",
+            expensive_result
+        );
+        println!(
+            "Next, do {} situps!",
+            expensive_result
+        );
+    } else {
+        if random_number == 3 {
+            println!("Take a break today! Remember to stay hydrated!");
+        } else {
+            println!(
+                "Today, run for {} minutes!",
+                expensive_result
+            );
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 13-4: Extracting the calls to
-`simulated_expensive_calculation` to one place and storing the result in the
-`expensive_result` variable</span>
+<span class="caption">示例 13-4：将 `simulated_expensive_calculation` 调用提取到一个位置，并将结果储存在变量 `expensive_result` 中</span>
 
-This change unifies all the calls to `simulated_expensive_calculation` and
-solves the problem of the first `if` block unnecessarily calling the function
-twice. Unfortunately, we’re now calling this function and waiting for the
-result in all cases, which includes the inner `if` block that doesn’t use the
-result value at all.
+这个修改统一了 `simulated_expensive_calculation` 调用并解决了第一个 `if` 块中不必要的两次调用函数的问题。不幸的是，现在所有的情况下都需要调用函数并等待结果，包括那个完全不需要这一结果的内部 `if` 块。
 
-We want to refer to `simulated_expensive_calculation` only once in
-`generate_workout`, but defer the expensive calculation to only where
-we actually need the result. This is a use case for closures!
+我们希望能够在程序的一个位置指定某些代码，并只在程序的某处实际需要结果的时候 **执行** 这些代码。这正是闭包的用武之地！
 
-#### Refactoring with Closures to Store Code
+#### 重构使用闭包储存代码
 
-Instead of always calling the `simulated_expensive_calculation` function before
-the `if` blocks, we can define a closure and store the *closure* in a variable
-rather than storing the result of the function call, as shown in Listing 13-5.
-We can actually move the whole body of `simulated_expensive_calculation` within
-the closure we’re introducing here.
+不同于总是在 `if` 块之前调用 `simulated_expensive_calculation` 函数并储存其结果，我们可以定义一个闭包并将其储存在变量中，如示例 13-5 所示。实际上可以选择将整个 `simulated_expensive_calculation` 函数体移动到这里引入的闭包中：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-05/src/main.rs:here}}
+# use std::thread;
+# use std::time::Duration;
+#
+let expensive_closure = |num| {
+    println!("calculating slowly...");
+    thread::sleep(Duration::from_secs(2));
+    num
+};
+# expensive_closure(5);
 ```
 
-<span class="caption">Listing 13-5: Defining a closure and storing it in the
-`expensive_closure` variable</span>
+<span class="caption">示例 13-5：定义一个闭包并储存到变量 `expensive_closure` 中</span>
 
-The closure definition comes after the `=` to assign it to the variable
-`expensive_closure`. To define a closure, we start with a pair of vertical
-pipes (`|`), inside which we specify the parameters to the closure; this syntax
-was chosen because of its similarity to closure definitions in Smalltalk and
-Ruby. This closure has one parameter named `num`: if we had more than one
-parameter, we would separate them with commas, like `|param1, param2|`.
+闭包定义是 `expensive_closure` 赋值的 `=` 之后的部分。闭包的定义以一对竖线（`|`）开始，在竖线中指定闭包的参数；之所以选择这个语法是因为它与 Smalltalk 和 Ruby 的闭包定义类似。这个闭包有一个参数 `num`；如果有多于一个参数，可以使用逗号分隔，比如 `|param1, param2|`。
 
-After the parameters, we place curly brackets that hold the body of the
-closure—these are optional if the closure body is a single expression. The end
-of the closure, after the curly brackets, needs a semicolon to complete the
-`let` statement. The value returned from the last line in the closure body
-(`num`) will be the value returned from the closure when it’s called, because
-that line doesn’t end in a semicolon; just as in function bodies.
+参数之后是存放闭包体的大括号 —— 如果闭包体只有一行则大括号是可以省略的。大括号之后闭包的结尾，需要用于 `let` 语句的分号。因为闭包体的最后一行没有分号（正如函数体一样），所以闭包体（`num`）最后一行的返回值作为调用闭包时的返回值 。
 
-Note that this `let` statement means `expensive_closure` contains the
-*definition* of an anonymous function, not the *resulting value* of calling the
-anonymous function. Recall that we’re using a closure because we want to define
-the code to call at one point, store that code, and call it at a later point;
-the code we want to call is now stored in `expensive_closure`.
+注意这个 `let` 语句意味着 `expensive_closure` 包含一个匿名函数的 **定义**，不是调用匿名函数的 **返回值**。回忆一下使用闭包的原因是我们需要在一个位置定义代码，储存代码，并在之后的位置实际调用它；期望调用的代码现在储存在 `expensive_closure` 中。
 
-With the closure defined, we can change the code in the `if` blocks to call the
-closure to execute the code and get the resulting value. We call a closure like
-we do a function: we specify the variable name that holds the closure
-definition and follow it with parentheses containing the argument values we
-want to use, as shown in Listing 13-6.
+定义了闭包之后，可以改变 `if` 块中的代码来调用闭包以执行代码并获取结果值。调用闭包类似于调用函数；指定存放闭包定义的变量名并后跟包含期望使用的参数的括号，如示例 13-6 所示：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs:here}}
+# use std::thread;
+# use std::time::Duration;
+#
+fn generate_workout(intensity: u32, random_number: u32) {
+    let expensive_closure = |num| {
+        println!("calculating slowly...");
+        thread::sleep(Duration::from_secs(2));
+        num
+    };
+
+    if intensity < 25 {
+        println!(
+            "Today, do {} pushups!",
+            expensive_closure(intensity)
+        );
+        println!(
+            "Next, do {} situps!",
+            expensive_closure(intensity)
+        );
+    } else {
+        if random_number == 3 {
+            println!("Take a break today! Remember to stay hydrated!");
+        } else {
+            println!(
+                "Today, run for {} minutes!",
+                expensive_closure(intensity)
+            );
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 13-6: Calling the `expensive_closure` we’ve
-defined</span>
+<span class="caption">示例 13-6：调用定义的 `expensive_closure`</span>
 
-Now how to perform the expensive calculation is defined in only one
-place, and we’re only executing that code where we need the results.
+现在耗时的计算只在一个地方被调用，并只会在需要结果的时候执行改代码。
 
-However, we’ve reintroduced one of the problems from Listing 13-3: we’re still
-calling the closure twice in the first `if` block, which will call the
-expensive code twice and make the user wait twice as long as they need to. We
-could fix this problem by creating a variable local to that `if` block to hold
-the result of calling the closure, but closures provide us with another
-solution. We’ll talk about that solution in a bit. But first let’s talk about
-why there aren’t type annotations in the closure definition and the traits
-involved with closures.
+然而，我们又重新引入了示例 13-3 中的问题：仍然在第一个 `if` 块中调用了闭包两次，这调用了慢计算代码两次而使得用户需要多等待一倍的时间。可以通过在 `if` 块中创建一个本地变量存放闭包调用的结果来解决这个问题，不过闭包可以提供另外一种解决方案。我们稍后会讨论这个方案，不过目前让我们首先讨论一下为何闭包定义中和所涉及的 trait 中没有类型注解。
 
-### Closure Type Inference and Annotation
+### 闭包类型推断和注解
 
-Closures don’t require you to annotate the types of the parameters or the
-return value like `fn` functions do. Type annotations are required on functions
-because they’re part of an explicit interface exposed to your users. Defining
-this interface rigidly is important for ensuring that everyone agrees on what
-types of values a function uses and returns. But closures aren’t used in an
-exposed interface like this: they’re stored in variables and used without
-naming them and exposing them to users of our library.
+闭包不要求像 `fn` 函数那样在参数和返回值上注明类型。函数中需要类型注解是因为他们是暴露给用户的显式接口的一部分。严格的定义这些接口对于保证所有人都认同函数使用和返回值的类型来说是很重要的。但是闭包并不用于这样暴露在外的接口：他们储存在变量中并被使用，不用命名他们或暴露给库的用户调用。
 
-Closures are usually short and relevant only within a narrow context rather
-than in any arbitrary scenario. Within these limited contexts, the compiler is
-reliably able to infer the types of the parameters and the return type, similar
-to how it’s able to infer the types of most variables.
+闭包通常很短，并只关联于小范围的上下文而非任意情境。在这些有限制的上下文中，编译器能可靠的推断参数和返回值的类型，类似于它是如何能够推断大部分变量的类型一样。
 
-Making programmers annotate the types in these small, anonymous functions would
-be annoying and largely redundant with the information the compiler already has
-available.
+强制在这些小的匿名函数中注明类型是很恼人的，并且与编译器已知的信息存在大量的重复。
 
-As with variables, we can add type annotations if we want to increase
-explicitness and clarity at the cost of being more verbose than is strictly
-necessary. Annotating the types for the closure we defined in Listing 13-5
-would look like the definition shown in Listing 13-7.
+类似于变量，如果相比严格的必要性你更希望增加明确性并变得更啰嗦，可以选择增加类型注解；为示例 13-5 中定义的闭包标注类型将看起来像示例 13-7 中的定义：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs:here}}
+# use std::thread;
+# use std::time::Duration;
+#
+let expensive_closure = |num: u32| -> u32 {
+    println!("calculating slowly...");
+    thread::sleep(Duration::from_secs(2));
+    num
+};
 ```
 
-<span class="caption">Listing 13-7: Adding optional type annotations of the
-parameter and return value types in the closure</span>
+<span class="caption">示例 13-7：为闭包的参数和返回值增加可选的类型注解</span>
 
-With type annotations added, the syntax of closures looks more similar to the
-syntax of functions. The following is a vertical comparison of the syntax for
-the definition of a function that adds 1 to its parameter and a closure that
-has the same behavior. We’ve added some spaces to line up the relevant parts.
-This illustrates how closure syntax is similar to function syntax except for
-the use of pipes and the amount of syntax that is optional:
+有了类型注解闭包的语法就更类似函数了。如下是一个对其参数加一的函数的定义与拥有相同行为闭包语法的纵向对比。这里增加了一些空格来对齐相应部分。这展示了闭包语法如何类似于函数语法，除了使用竖线而不是括号以及几个可选的语法之外：
 
 ```rust,ignore
 fn  add_one_v1   (x: u32) -> u32 { x + 1 }
@@ -246,312 +253,322 @@ let add_one_v3 = |x|             { x + 1 };
 let add_one_v4 = |x|               x + 1  ;
 ```
 
-The first line shows a function definition, and the second line shows a fully
-annotated closure definition. The third line removes the type annotations from
-the closure definition, and the fourth line removes the brackets, which are
-optional because the closure body has only one expression. These are all valid
-definitions that will produce the same behavior when they’re called. Calling
-the closures is required for `add_one_v3` and `add_one_v4` to be able to
-compile because the types will be inferred from their usage.
+第一行展示了一个函数定义，而第二行展示了一个完整标注的闭包定义。第三行闭包定义中省略了类型注解，而第四行去掉了可选的大括号，因为闭包体只有一行。这些都是有效的闭包定义，并在调用时产生相同的行为。
 
-Closure definitions will have one concrete type inferred for each of their
-parameters and for their return value. For instance, Listing 13-8 shows the
-definition of a short closure that just returns the value it receives as a
-parameter. This closure isn’t very useful except for the purposes of this
-example. Note that we haven’t added any type annotations to the definition: if
-we then try to call the closure twice, using a `String` as an argument the
-first time and a `u32` the second time, we’ll get an error.
+闭包定义会为每个参数和返回值推断一个具体类型。例如，示例 13-8 中展示了仅仅将参数作为返回值的简短的闭包定义。除了作为示例的目的这个闭包并不是很实用。注意其定义并没有增加任何类型注解：如果尝试调用闭包两次，第一次使用 `String` 类型作为参数而第二次使用 `u32`，则会得到一个错误：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-08/src/main.rs:here}}
+let example_closure = |x| x;
+
+let s = example_closure(String::from("hello"));
+let n = example_closure(5);
 ```
 
-<span class="caption">Listing 13-8: Attempting to call a closure whose types
-are inferred with two different types</span>
+<span class="caption">示例 13-8：尝试调用一个被推断为两个不同类型的闭包</span>
 
-The compiler gives us this error:
+编译器给出如下错误：
 
-```console
-{{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}
+```text
+error[E0308]: mismatched types
+ --> src/main.rs
+  |
+  | let n = example_closure(5);
+  |                         ^ expected struct `std::string::String`, found
+  integer
+  |
+  = note: expected type `std::string::String`
+             found type `{integer}`
 ```
 
-The first time we call `example_closure` with the `String` value, the compiler
-infers the type of `x` and the return type of the closure to be `String`. Those
-types are then locked into the closure in `example_closure`, and we get a type
-error if we try to use a different type with the same closure.
+第一次使用 `String` 值调用 `example_closure` 时，编译器推断 `x` 和此闭包返回值的类型为 `String`。接着这些类型被锁定进闭包 `example_closure` 中，如果尝试对同一闭包使用不同类型则会得到类型错误。
 
-### Storing Closures Using Generic Parameters and the `Fn` Traits
+### 使用带有泛型和 `Fn` trait 的闭包
 
-Let’s return to our workout generation app. In Listing 13-6, our code was still
-calling the expensive calculation closure more times than it needed to. One
-option to solve this issue is to save the result of the expensive closure in a
-variable for reuse and use the variable in each place we need the result,
-instead of calling the closure again. However, this method could result in a
-lot of repeated code.
+回到我们的健身计划生成 app ，在示例 13-6 中的代码仍然把慢计算闭包调用了比所需更多的次数。解决这个问题的一个方法是在全部代码中的每一个需要多个慢计算闭包结果的地方，可以将结果保存进变量以供复用，这样就可以使用变量而不是再次调用闭包。但是这样就会有很多重复的保存结果变量的地方。
 
-Fortunately, another solution is available to us. We can create a struct that
-will hold the closure and the resulting value of calling the closure. The
-struct will execute the closure only if we need the resulting value, and it
-will cache the resulting value so the rest of our code doesn’t have to be
-responsible for saving and reusing the result. You may know this pattern as
-*memoization* or *lazy evaluation*.
+幸运的是，还有另一个可用的方案。可以创建一个存放闭包和调用闭包结果的结构体。该结构体只会在需要结果时执行闭包，并会缓存结果值，这样余下的代码就不必再负责保存结果并可以复用该值。你可能见过这种模式被称 *memoization* 或 *lazy evaluation* *（惰性求值）*。
 
-To make a struct that holds a closure, we need to specify the type of the
-closure, because a struct definition needs to know the types of each of its
-fields. Each closure instance has its own unique anonymous type: that is, even
-if two closures have the same signature, their types are still considered
-different. To define structs, enums, or function parameters that use closures,
-we use generics and trait bounds, as we discussed in Chapter 10.
+为了让结构体存放闭包，我们需要指定闭包的类型，因为结构体定义需要知道其每一个字段的类型。每一个闭包实例有其自己独有的匿名类型：也就是说，即便两个闭包有着相同的签名，他们的类型仍然可以被认为是不同。为了定义使用闭包的结构体、枚举或函数参数，需要像第十章讨论的那样使用泛型和 trait bound。
 
-The `Fn` traits are provided by the standard library. All closures implement at
-least one of the traits: `Fn`, `FnMut`, or `FnOnce`. We’ll discuss the
-difference between these traits in the [“Capturing the Environment with
-Closures”](#capturing-the-environment-with-closures)<!-- ignore --> section; in
-this example, we can use the `Fn` trait.
+`Fn` 系列 trait 由标准库提供。所有的闭包都实现了 trait `Fn`、`FnMut` 或 `FnOnce` 中的一个。在 [“闭包会捕获其环境”](#闭包会捕获其环境) 部分我们会讨论这些 trait 的区别；在这个例子中可以使用 `Fn` trait。
 
-We add types to the `Fn` trait bound to represent the types of the parameters
-and return values the closures must have to match this trait bound. In this
-case, our closure has a parameter of type `u32` and returns a `u32`, so the
-trait bound we specify is `Fn(u32) -> u32`.
+为了满足 `Fn` trait bound 我们增加了代表闭包所必须的参数和返回值类型的类型。在这个例子中，闭包有一个 `u32` 的参数并返回一个 `u32`，这样所指定的 trait bound 就是 `Fn(u32) -> u32`。
 
-Listing 13-9 shows the definition of the `Cacher` struct that holds a closure
-and an optional result value.
+示例 13-9 展示了存放了闭包和一个 Option 结果值的 `Cacher` 结构体的定义：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-09/src/main.rs:here}}
+struct Cacher<T>
+    where T: Fn(u32) -> u32
+{
+    calculation: T,
+    value: Option<u32>,
+}
 ```
 
-<span class="caption">Listing 13-9: Defining a `Cacher` struct that holds a
-closure in `calculation` and an optional result in `value`</span>
+<span class="caption">示例 13-9：定义一个 `Cacher` 结构体来在 `calculation` 中存放闭包并在 `value` 中存放 Option 值</span>
 
-The `Cacher` struct has a `calculation` field of the generic type `T`. The
-trait bounds on `T` specify that it’s a closure by using the `Fn` trait. Any
-closure we want to store in the `calculation` field must have one `u32`
-parameter (specified within the parentheses after `Fn`) and must return a
-`u32` (specified after the `->`).
+结构体 `Cacher` 有一个泛型  `T` 的字段 `calculation`。`T` 的 trait bound 指定了 `T` 是一个使用 `Fn` 的闭包。任何我们希望储存到 `Cacher` 实例的 `calculation` 字段的闭包必须有一个 `u32` 参数（由 `Fn` 之后的括号的内容指定）并必须返回一个 `u32`（由 `->` 之后的内容）。
 
-> Note: Functions can implement all three of the `Fn` traits too. If what we
-> want to do doesn’t require capturing a value from the environment, we can use
-> a function rather than a closure where we need something that implements an
-> `Fn` trait.
+> 注意：函数也都实现了这三个 `Fn` trait。如果不需要捕获环境中的值，则可以使用实现了 `Fn` trait 的函数而不是闭包。
 
-The `value` field is of type `Option<u32>`. Before we execute the closure,
-`value` will be `None`. When code using a `Cacher` asks for the *result* of the
-closure, the `Cacher` will execute the closure at that time and store the
-result within a `Some` variant in the `value` field. Then if the code asks for
-the result of the closure again, instead of executing the closure again, the
-`Cacher` will return the result held in the `Some` variant.
+字段 `value` 是 `Option<u32>` 类型的。在执行闭包之前，`value` 将是 `None`。如果使用 `Cacher` 的代码请求闭包的结果，这时会执行闭包并将结果储存在 `value` 字段的 `Some` 成员中。接着如果代码再次请求闭包的结果，这时不再执行闭包，而是会返回存放在 `Some` 成员中的结果。
 
-The logic around the `value` field we’ve just described is defined in Listing
-13-10.
+刚才讨论的有关 `value` 字段逻辑定义于示例 13-10：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
+# struct Cacher<T>
+#     where T: Fn(u32) -> u32
+# {
+#     calculation: T,
+#     value: Option<u32>,
+# }
+#
+impl<T> Cacher<T>
+    where T: Fn(u32) -> u32
+{
+    fn new(calculation: T) -> Cacher<T> {
+        Cacher {
+            calculation,
+            value: None,
+        }
+    }
+
+    fn value(&mut self, arg: u32) -> u32 {
+        match self.value {
+            Some(v) => v,
+            None => {
+                let v = (self.calculation)(arg);
+                self.value = Some(v);
+                v
+            },
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 13-10: The caching logic of `Cacher`</span>
+<span class="caption">示例 13-10：`Cacher` 的缓存逻辑</span>
 
-We want `Cacher` to manage the struct fields’ values rather than letting the
-calling code potentially change the values in these fields directly, so these
-fields are private.
+`Cacher` 结构体的字段是私有的，因为我们希望 `Cacher` 管理这些值而不是任由调用代码潜在的直接改变他们。
 
-The `Cacher::new` function takes a generic parameter `T`, which we’ve defined
-as having the same trait bound as the `Cacher` struct. Then `Cacher::new`
-returns a `Cacher` instance that holds the closure specified in the
-`calculation` field and a `None` value in the `value` field, because we haven’t
-executed the closure yet.
+`Cacher::new` 函数获取一个泛型参数 `T`，它定义于 `impl` 块上下文中并与 `Cacher`  结构体有着相同的 trait bound。`Cacher::new` 返回一个在 `calculation` 字段中存放了指定闭包和在 `value` 字段中存放了 `None` 值的 `Cacher` 实例，因为我们还未执行闭包。
 
-When the calling code needs the result of evaluating the closure, instead of
-calling the closure directly, it will call the `value` method. This method
-checks whether we already have a resulting value in `self.value` in a `Some`;
-if we do, it returns the value within the `Some` without executing the closure
-again.
+当调用代码需要闭包的执行结果时，不同于直接调用闭包，它会调用 `value` 方法。这个方法会检查 `self.value` 是否已经有了一个 `Some` 的结果值；如果有，它返回 `Some` 中的值并不会再次执行闭包。
 
-If `self.value` is `None`, the code calls the closure stored in
-`self.calculation`, saves the result in `self.value` for future use, and
-returns the value as well.
+如果 `self.value` 是 `None`，则会调用 `self.calculation` 中储存的闭包，将结果保存到 `self.value` 以便将来使用，并同时返回结果值。
 
-Listing 13-11 shows how we can use this `Cacher` struct in the function
-`generate_workout` from Listing 13-6.
+示例 13-11 展示了如何在示例 13-6 的 `generate_workout` 函数中利用 `Cacher` 结构体：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
+# use std::thread;
+# use std::time::Duration;
+#
+# struct Cacher<T>
+#     where T: Fn(u32) -> u32
+# {
+#     calculation: T,
+#     value: Option<u32>,
+# }
+#
+# impl<T> Cacher<T>
+#     where T: Fn(u32) -> u32
+# {
+#     fn new(calculation: T) -> Cacher<T> {
+#         Cacher {
+#             calculation,
+#             value: None,
+#         }
+#     }
+#
+#     fn value(&mut self, arg: u32) -> u32 {
+#         match self.value {
+#             Some(v) => v,
+#             None => {
+#                 let v = (self.calculation)(arg);
+#                 self.value = Some(v);
+#                 v
+#             },
+#         }
+#     }
+# }
+#
+fn generate_workout(intensity: u32, random_number: u32) {
+    let mut expensive_result = Cacher::new(|num| {
+        println!("calculating slowly...");
+        thread::sleep(Duration::from_secs(2));
+        num
+    });
+
+    if intensity < 25 {
+        println!(
+            "Today, do {} pushups!",
+            expensive_result.value(intensity)
+        );
+        println!(
+            "Next, do {} situps!",
+            expensive_result.value(intensity)
+        );
+    } else {
+        if random_number == 3 {
+            println!("Take a break today! Remember to stay hydrated!");
+        } else {
+            println!(
+                "Today, run for {} minutes!",
+                expensive_result.value(intensity)
+            );
+        }
+    }
+}
 ```
 
-<span class="caption">Listing 13-11: Using `Cacher` in the `generate_workout`
-function to abstract away the caching logic</span>
+<span class="caption">示例 13-11：在 `generate_workout` 函数中利用 `Cacher` 结构体来抽象出缓存逻辑</span>
 
-Instead of saving the closure in a variable directly, we save a new instance of
-`Cacher` that holds the closure. Then, in each place we want the result, we
-call the `value` method on the `Cacher` instance. We can call the `value`
-method as many times as we want, or not call it at all, and the expensive
-calculation will be run a maximum of once.
+不同于直接将闭包保存进一个变量，我们保存一个新的 `Cacher` 实例来存放闭包。接着，在每一个需要结果的地方，调用 `Cacher` 实例的 `value` 方法。可以调用 `value` 方法任意多次，或者一次也不调用，而慢计算最多只会运行一次。
 
-Try running this program with the `main` function from Listing 13-2. Change the
-values in the `simulated_user_specified_value` and `simulated_random_number`
-variables to verify that in all the cases in the various `if` and `else`
-blocks, `calculating slowly...` appears only once and only when needed. The
-`Cacher` takes care of the logic necessary to ensure we aren’t calling the
-expensive calculation more than we need to so `generate_workout` can focus on
-the business logic.
+尝试使用示例 13-2 中的 `main` 函数来运行这段程序，并改变 `simulated_user_specified_value` 和 `simulated_random_number` 变量中的值来验证在所有情况下在多个 `if` 和 `else` 块中，闭包打印的 `calculating slowly...` 只会在需要时出现并只会出现一次。`Cacher` 负责确保不会调用超过所需的慢计算所需的逻辑，这样 `generate_workout` 就可以专注业务逻辑了。
 
-### Limitations of the `Cacher` Implementation
+### `Cacher` 实现的限制
 
-Caching values is a generally useful behavior that we might want to use in
-other parts of our code with different closures. However, there are two
-problems with the current implementation of `Cacher` that would make reusing it
-in different contexts difficult.
+值缓存是一种更加广泛的实用行为，我们可能希望在代码中的其他闭包中也使用他们。然而，目前 `Cacher` 的实现存在两个小问题，这使得在不同上下文中复用变得很困难。
 
-The first problem is that a `Cacher` instance assumes it will always get the
-same value for the parameter `arg` to the `value` method. That is, this test of
-`Cacher` will fail:
+第一个问题是 `Cacher` 实例假设对于 `value` 方法的任何 `arg` 参数值总是会返回相同的值。也就是说，这个 `Cacher` 的测试会失败：
 
 ```rust,ignore,panics
-{{#rustdoc_include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/src/lib.rs:here}}
+#[test]
+fn call_with_different_values() {
+    let mut c = Cacher::new(|a| a);
+
+    let v1 = c.value(1);
+    let v2 = c.value(2);
+
+    assert_eq!(v2, 2);
+}
 ```
 
-This test creates a new `Cacher` instance with a closure that returns the value
-passed into it. We call the `value` method on this `Cacher` instance with an
-`arg` value of 1 and then an `arg` value of 2, and we expect the call to
-`value` with the `arg` value of 2 to return 2.
+这个测试使用返回传递给它的值的闭包创建了一个新的 `Cacher` 实例。使用为 1 的 `arg` 和为 2 的 `arg` 调用 `Cacher` 实例的 `value` 方法，同时我们期望使用为 2 的 `arg` 调用 `value` 会返回 2。
 
-Run this test with the `Cacher` implementation in Listing 13-9 and Listing
-13-10, and the test will fail on the `assert_eq!` with this message:
+使用示例 13-9 和示例 13-10 的 `Cacher` 实现运行测试，它会在 `assert_eq!` 失败并显示如下信息：
 
-```console
-{{#include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/output.txt}}
+```text
+thread 'call_with_different_values' panicked at 'assertion failed: `(left == right)`
+  left: `1`,
+ right: `2`', src/main.rs
 ```
 
-The problem is that the first time we called `c.value` with 1, the `Cacher`
-instance saved `Some(1)` in `self.value`. Thereafter, no matter what we pass into
-the `value` method, it will always return 1.
+这里的问题是第一次使用 1 调用 `c.value`，`Cacher` 实例将 `Some(1)` 保存进 `self.value`。在这之后，无论传递什么值调用 `value`，它总是会返回 1。
 
-Try modifying `Cacher` to hold a hash map rather than a single value. The keys
-of the hash map will be the `arg` values that are passed in, and the values of
-the hash map will be the result of calling the closure on that key. Instead of
-looking at whether `self.value` directly has a `Some` or a `None` value, the
-`value` function will look up the `arg` in the hash map and return the value if
-it’s present. If it’s not present, the `Cacher` will call the closure and save
-the resulting value in the hash map associated with its `arg` value.
+尝试修改 `Cacher` 存放一个哈希 map 而不是单独一个值。哈希 map 的 key 将是传递进来的 `arg` 值，而 value 则是对应 key 调用闭包的结果值。相比之前检查 `self.value` 直接是 `Some` 还是 `None` 值，现在 `value` 函数会在哈希 map 中寻找 `arg`，如果找到的话就返回其对应的值。如果不存在，`Cacher` 会调用闭包并将结果值保存在哈希 map 对应 `arg` 值的位置。
 
-The second problem with the current `Cacher` implementation is that it only
-accepts closures that take one parameter of type `u32` and return a `u32`. We
-might want to cache the results of closures that take a string slice and return
-`usize` values, for example. To fix this issue, try introducing more generic
-parameters to increase the flexibility of the `Cacher` functionality.
+当前 `Cacher` 实现的第二个问题是它的应用被限制为只接受获取一个 `u32` 值并返回一个 `u32` 值的闭包。比如说，我们可能需要能够缓存一个获取字符串 slice 并返回 `usize` 值的闭包的结果。请尝试引入更多泛型参数来增加 `Cacher` 功能的灵活性。
 
-### Capturing the Environment with Closures
+### 闭包会捕获其环境
 
-In the workout generator example, we only used closures as inline anonymous
-functions. However, closures have an additional capability that functions don’t
-have: they can capture their environment and access variables from the scope in
-which they’re defined.
+在健身计划生成器的例子中，我们只将闭包作为内联匿名函数来使用。不过闭包还有另一个函数所没有的功能：他们可以捕获其环境并访问其被定义的作用域的变量。
 
-Listing 13-12 has an example of a closure stored in the `equal_to_x` variable
-that uses the `x` variable from the closure’s surrounding environment.
+示例 13-12 有一个储存在 `equal_to_x` 变量中闭包的例子，它使用了闭包环境中的变量 `x`：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/main.rs}}
+fn main() {
+    let x = 4;
+
+    let equal_to_x = |z| z == x;
+
+    let y = 4;
+
+    assert!(equal_to_x(y));
+}
 ```
 
-<span class="caption">Listing 13-12: Example of a closure that refers to a
-variable in its enclosing scope</span>
+<span class="caption">示例 13-12：一个引用了其周围作用域中变量的闭包示例</span>
 
-Here, even though `x` is not one of the parameters of `equal_to_x`, the
-`equal_to_x` closure is allowed to use the `x` variable that’s defined in the
-same scope that `equal_to_x` is defined in.
+这里，即便 `x` 并不是 `equal_to_x` 的一个参数，`equal_to_x` 闭包也被允许使用变量 `x`，因为它与 `equal_to_x` 定义于相同的作用域。
 
-We can’t do the same with functions; if we try with the following example, our
-code won’t compile:
+函数则不能做到同样的事，如果尝试如下例子，它并不能编译：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/src/main.rs}}
+fn main() {
+    let x = 4;
+
+    fn equal_to_x(z: i32) -> bool { z == x }
+
+    let y = 4;
+
+    assert!(equal_to_x(y));
+}
 ```
 
-We get an error:
+这会得到一个错误：
 
-```console
-{{#include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/output.txt}}
+```text
+error[E0434]: can't capture dynamic environment in a fn item; use the || { ...
+} closure form instead
+ --> src/main.rs
+  |
+4 |     fn equal_to_x(z: i32) -> bool { z == x }
+  |                                          ^
 ```
 
-The compiler even reminds us that this only works with closures!
+编译器甚至会提示我们这只能用于闭包！
 
-When a closure captures a value from its environment, it uses memory to store
-the values for use in the closure body. This use of memory is overhead that we
-don’t want to pay in more common cases where we want to execute code that
-doesn’t capture its environment. Because functions are never allowed to capture
-their environment, defining and using functions will never incur this overhead.
+当闭包从环境中捕获一个值，闭包会在闭包体中储存这个值以供使用。这会使用内存并产生额外的开销，在更一般的场景中，当我们不需要闭包来捕获环境时，我们不希望产生这些开销。因为函数从未允许捕获环境，定义和使用函数也就从不会有这些额外开销。
 
-Closures can capture values from their environment in three ways, which
-directly map to the three ways a function can take a parameter: taking
-ownership, borrowing mutably, and borrowing immutably. These are encoded in the
-three `Fn` traits as follows:
+闭包可以通过三种方式捕获其环境，他们直接对应函数的三种获取参数的方式：获取所有权，可变借用和不可变借用。这三种捕获值的方式被编码为如下三个 `Fn` trait：
 
-* `FnOnce` consumes the variables it captures from its enclosing scope, known
-  as the closure’s *environment*. To consume the captured variables, the
-  closure must take ownership of these variables and move them into the closure
-  when it is defined. The `Once` part of the name represents the fact that the
-  closure can’t take ownership of the same variables more than once, so it can
-  be called only once.
-* `FnMut` can change the environment because it mutably borrows values.
-* `Fn` borrows values from the environment immutably.
+* `FnOnce` 消费从周围作用域捕获的变量，闭包周围的作用域被称为其 **环境**，*environment*。为了消费捕获到的变量，闭包必须获取其所有权并在定义闭包时将其移动进闭包。其名称的 `Once` 部分代表了闭包不能多次获取相同变量的所有权的事实，所以它只能被调用一次。
+* `FnMut` 获取可变的借用值所以可以改变其环境
+* `Fn` 从其环境获取不可变的借用值
 
-When you create a closure, Rust infers which trait to use based on how the
-closure uses the values from the environment. All closures implement `FnOnce`
-because they can all be called at least once. Closures that don’t move the
-captured variables also implement `FnMut`, and closures that don’t need mutable
-access to the captured variables also implement `Fn`. In Listing 13-12, the
-`equal_to_x` closure borrows `x` immutably (so `equal_to_x` has the `Fn` trait)
-because the body of the closure only needs to read the value in `x`.
+当创建一个闭包时，Rust 根据其如何使用环境中变量来推断我们希望如何引用环境。由于所有闭包都可以被调用至少一次，所以所有闭包都实现了 `FnOnce` 。那些并没有移动被捕获变量的所有权到闭包内的闭包也实现了 `FnMut` ，而不需要对被捕获的变量进行可变访问的闭包则也实现了 `Fn` 。 在示例 13-12 中，`equal_to_x` 闭包不可变的借用了 `x`（所以 `equal_to_x` 具有 `Fn` trait），因为闭包体只需要读取 `x` 的值。
 
-If you want to force the closure to take ownership of the values it uses in the
-environment, you can use the `move` keyword before the parameter list. This
-technique is mostly useful when passing a closure to a new thread to move the
-data so it’s owned by the new thread.
+如果你希望强制闭包获取其使用的环境值的所有权，可以在参数列表前使用 `move` 关键字。这个技巧在将闭包传递给新线程以便将数据移动到新线程中时最为实用。
 
-> Note: `move` closures may still implement `Fn` or `FnMut`, even though
-> they capture variables by move. This is because the traits implemented by a
-> closure type are determined by what the closure does with captured values,
-> not how it captures them. The `move` keyword only specifies the latter.
+第十六章讨论并发时会展示更多 `move` 闭包的例子，不过现在这里修改了示例 13-12 中的代码（作为演示），在闭包定义中增加 `move` 关键字并使用 vector 代替整型，因为整型可以被拷贝而不是移动；注意这些代码还不能编译：
 
-We’ll have more examples of `move` closures in Chapter 16 when we talk about
-concurrency. For now, here’s the code from Listing 13-12 with the `move`
-keyword added to the closure definition and using vectors instead of integers,
-because integers can be copied rather than moved; note that this code will not
-yet compile.
-
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch13-functional-features/no-listing-03-move-closures/src/main.rs}}
+fn main() {
+    let x = vec![1, 2, 3];
+
+    let equal_to_x = move |z| z == x;
+
+    println!("can't use x here: {:?}", x);
+
+    let y = vec![1, 2, 3];
+
+    assert!(equal_to_x(y));
+}
 ```
 
-We receive the following error:
+这个例子并不能编译，会产生以下错误：
 
-```console
-{{#include ../listings/ch13-functional-features/no-listing-03-move-closures/output.txt}}
+```text
+error[E0382]: use of moved value: `x`
+ --> src/main.rs:6:40
+  |
+4 |     let equal_to_x = move |z| z == x;
+  |                      -------- value moved (into closure) here
+5 |
+6 |     println!("can't use x here: {:?}", x);
+  |                                        ^ value used here after move
+  |
+  = note: move occurs because `x` has type `std::vec::Vec<i32>`, which does not
+  implement the `Copy` trait
 ```
 
-The `x` value is moved into the closure when the closure is defined, because we
-added the `move` keyword. The closure then has ownership of `x`, and `main`
-isn’t allowed to use `x` anymore in the `println!` statement. Removing
-`println!` will fix this example.
+`x` 被移动进了闭包，因为闭包使用 `move` 关键字定义。接着闭包获取了 `x` 的所有权，同时 `main` 就不再允许在 `println!` 语句中使用 `x` 了。去掉 `println!` 即可修复问题。
 
-Most of the time when specifying one of the `Fn` trait bounds, you can start
-with `Fn` and the compiler will tell you if you need `FnMut` or `FnOnce` based
-on what happens in the closure body.
+大部分需要指定一个 `Fn` 系列 trait bound 的时候，可以从 `Fn` 开始，而编译器会根据闭包体中的情况告诉你是否需要 `FnMut` 或 `FnOnce`。
 
-To illustrate situations where closures that can capture their environment are
-useful as function parameters, let’s move on to our next topic: iterators.
+为了展示闭包作为函数参数时捕获其环境的作用，让我们继续下一个主题：迭代器。

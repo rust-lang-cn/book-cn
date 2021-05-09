@@ -1,11 +1,4 @@
-# Using Structs to Structure Related Data
+# 使用结构体组织相关联的数据
 
-A *struct*, or *structure*, is a custom data type that lets you name and
-package together multiple related values that make up a meaningful group. If
-you’re familiar with an object-oriented language, a *struct* is like an
-object’s data attributes. In this chapter, we’ll compare and contrast tuples
-with structs, demonstrate how to use structs, and discuss how to define methods
-and associated functions to specify behavior associated with a struct’s data.
-Structs and enums (discussed in Chapter 6) are the building blocks for creating
-new types in your program’s domain to take full advantage of Rust’s compile
-time type checking.
+*struct*，或者 *structure*，是一个自定义数据类型，允许你命名和包装多个相关的值，从而形成一个有意义的组合。如果你熟悉一门面向对象语言，*struct* 就像对象中的数据属性。在本章中，我们会对比元组与结构体的异同，演示结构体的用法，并讨论如何在结构体上定义方法和关联函数来指定与结构体数据相关的行为。你可以在程序中基于结构体和枚举（*enum*）（在第六章介绍）创建新类型，以充分利用 Rust 的编译时类型检查。
+

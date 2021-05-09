@@ -1,41 +1,32 @@
-## Appendix D - Useful Development Tools
+## 附录 D：实用开发工具
 
-In this appendix, we talk about some useful development tools that the Rust
-project provides. We’ll look at automatic formatting, quick ways to apply
-warning fixes, a linter, and integrating with IDEs.
+本附录，我们将讨论 Rust 项目提供的用于开发 Rust 代码的工具。
 
-### Automatic Formatting with `rustfmt`
+### 通过 `rustfmt` 自动格式化
 
-The `rustfmt` tool reformats your code according to the community code style.
-Many collaborative projects use `rustfmt` to prevent arguments about which
-style to use when writing Rust: everyone formats their code using the tool.
+`rustfmt` 工具根据社区代码风格格式化代码。很多项目使用 `rustfmt` 来避免编写 Rust 风格的争论：所有人都用这个工具格式化代码！
 
-To install `rustfmt`, enter the following:
+安装 `rustfmt`：
 
-```console
+```text
 $ rustup component add rustfmt
 ```
 
-This command gives you `rustfmt` and `cargo-fmt`, similar to how Rust gives you
-both `rustc` and `cargo`. To format any Cargo project, enter the following:
+这会提供 `rustfmt` 和 `cargo-fmt`，类似于 Rust 同时安装 `rustc` 和 `cargo`。为了格式化整个 Cargo 项目：
 
-```console
+```text
 $ cargo fmt
 ```
 
-Running this command reformats all the Rust code in the current crate. This
-should only change the code style, not the code semantics. For more information
-on `rustfmt`, see [its documentation][rustfmt].
+运行此命令会格式化当前 crate 中所有的 Rust 代码。这应该只会改变代码风格，而不是代码语义。请查看 [该文档][rustfmt] 了解 `rustfmt` 的更多信息。
 
-[rustfmt]: https://github.com/rust-lang/rustfmt
+[rustfmt]: https://github.com/rust-lang-nursery/rustfmt
 
-### Fix Your Code with `rustfix`
+### 通过 `rustfix` 修复代码
 
-The rustfix tool is included with Rust installations and can automatically fix
-some compiler warnings. If you’ve written code in Rust, you’ve probably seen
-compiler warnings. For example, consider this code:
+如果你编写过 Rust 代码，那么你可能见过编译器警告。例如，考虑如下代码：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
 fn do_something() {}
@@ -47,10 +38,9 @@ fn main() {
 }
 ```
 
-Here, we’re calling the `do_something` function 100 times, but we never use the
-variable `i` in the body of the `for` loop. Rust warns us about that:
+这里调用了 `do_something` 函数 100 次，不过从未在 `for` 循环体中使用变量 `i`。Rust 会警告说：
 
-```console
+```text
 $ cargo build
    Compiling myprogram v0.1.0 (file:///projects/myprogram)
 warning: unused variable: `i`
@@ -64,22 +54,18 @@ warning: unused variable: `i`
     Finished dev [unoptimized + debuginfo] target(s) in 0.50s
 ```
 
-The warning suggests that we use `_i` as a name instead: the underscore
-indicates that we intend for this variable to be unused. We can automatically
-apply that suggestion using the `rustfix` tool by running the command `cargo
-fix`:
+警告中建议使用 `_i` 名称：下划线表明该变量有意不使用。我们可以通过 `cargo fix` 命令使用 `rustfix` 工具来自动采用该建议：
 
-```console
+```text
 $ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
-When we look at *src/main.rs* again, we’ll see that `cargo fix` has changed the
-code:
+如果再次查看 *src/main.rs*，会发现 `cargo fix` 修改了代码：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
 fn do_something() {}
@@ -91,32 +77,29 @@ fn main() {
 }
 ```
 
-The `for` loop variable is now named `_i`, and the warning no longer appears.
+现在 `for` 循环变量变为 `_i`，警告也不再出现。
 
-You can also use the `cargo fix` command to transition your code between
-different Rust editions. Editions are covered in Appendix E.
+`cargo fix` 命令可以用于在不同 Rust 版本间迁移代码。版本在附录 E 中介绍。
 
-### More Lints with Clippy
+### 通过 `clippy` 提供更多 lint 功能
 
-The Clippy tool is a collection of lints to analyze your code so you can catch
-common mistakes and improve your Rust code.
+`clippy` 工具是一系列 lint 的集合，用于捕捉常见错误和改进 Rust 代码。
 
-To install Clippy, enter the following:
+安装 `clippy`：
 
-```console
+```text
 $ rustup component add clippy
 ```
 
-To run Clippy’s lints on any Cargo project, enter the following:
+对任何 Cargo 项目运行 clippy 的 lint：
 
-```console
+```text
 $ cargo clippy
 ```
 
-For example, say you write a program that uses an approximation of a
-mathematical constant, such as pi, as this program does:
+例如，如果程序使用了如 pi 这样数学常数的近似值，如下：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -126,7 +109,7 @@ fn main() {
 }
 ```
 
-Running `cargo clippy` on this project results in this error:
+在此项目上运行 `cargo clippy` 会导致这个错误：
 
 ```text
 error: approximate value of `f{32, 64}::consts::PI` found. Consider using it directly
@@ -139,12 +122,9 @@ error: approximate value of `f{32, 64}::consts::PI` found. Consider using it dir
   = help: for further information visit https://rust-lang-nursery.github.io/rust-clippy/master/index.html#approx_constant
 ```
 
-This error lets you know that Rust has this constant defined more precisely and
-that your program would be more correct if you used the constant instead. You
-would then change your code to use the `PI` constant. The following code
-doesn’t result in any errors or warnings from Clippy:
+这告诉我们 Rust 定义了更为精确的常量，而如果使用了这些常量程序将更加准确。如下代码就不会导致 `clippy` 产生任何错误或警告：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -154,30 +134,27 @@ fn main() {
 }
 ```
 
-For more information on Clippy, see [its documentation][clippy].
+请查看 [其文档][clippy] 来了解 `clippy` 的更多信息。
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 
-### IDE Integration Using the Rust Language Server
+### 使用 Rust Language Server 的 IDE 集成
 
-To help IDE integration, the Rust project distributes the *Rust Language
-Server* (`rls`). This tool speaks the [Language Server
-Protocol][lsp], which is a specification for IDEs and programming
-languages to communicate with each other. Different clients can use the `rls`,
-such as [the Rust plug-in for Visual Studio Code][vscode].
+为了帮助 IDE 集成，Rust 项目分发了 `rls`，其为 Rust Language Server 的缩写。这个工具采用 [Language Server Protocol][lsp]，这是一个 IDE 与编程语言沟通的规格说明。`rls` 可以用于不同的客户端，比如 [Visual Studio: Code 的 Rust 插件][vscode]。
 
 [lsp]: http://langserver.org/
 [vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust
 
-To install the `rls`, enter the following:
+`rls` 工具的质量还未达到发布 1.0 版本的水平，不过目前有一个可用的预览版。请尝试使用并告诉我们它如何！
 
-```console
+安装 `rls`：
+
+```text
 $ rustup component add rls
 ```
 
-Then install the language server support in your particular IDE; you’ll gain
-abilities such as autocompletion, jump to definition, and inline errors.
+接着为特定的 IDE 安装 language server 支持，如此便会获得如自动补全、跳转到定义和 inline error 之类的功能。
 
-For more information on the `rls`, see [its documentation][rls].
+请查看 [其文档][rls] 来了解 `rls` 的更多信息。
 
 [rls]: https://github.com/rust-lang/rls

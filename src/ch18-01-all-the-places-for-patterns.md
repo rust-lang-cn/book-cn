@@ -1,15 +1,10 @@
-## All the Places Patterns Can Be Used
+## 所有可能会用到模式的位置
 
-Patterns pop up in a number of places in Rust, and you’ve been using them a lot
-without realizing it! This section discusses all the places where patterns are
-valid.
+模式出现在 Rust 的很多地方。你已经在不经意间使用了很多模式！本部分是一个所有有效模式位置的参考。
 
-### `match` Arms
+### `match` 分支
 
-As discussed in Chapter 6, we use patterns in the arms of `match` expressions.
-Formally, `match` expressions are defined as the keyword `match`, a value to
-match on, and one or more match arms that consist of a pattern and an
-expression to run if the value matches that arm’s pattern, like this:
+如第六章所讨论的，一个模式常用的位置是 `match` 表达式的分支。在形式上 `match` 表达式由 `match` 关键字、用于匹配的值和一个或多个分支构成，这些分支包含一个模式和在值匹配分支的模式时运行的表达式：
 
 ```text
 match VALUE {
@@ -19,221 +14,181 @@ match VALUE {
 }
 ```
 
-One requirement for `match` expressions is that they need to be *exhaustive* in
-the sense that all possibilities for the value in the `match` expression must
-be accounted for. One way to ensure you’ve covered every possibility is to have
-a catchall pattern for the last arm: for example, a variable name matching any
-value can never fail and thus covers every remaining case.
+`match` 表达式必须是 **穷尽**（*exhaustive*）的，意为 `match` 表达式所有可能的值都必须被考虑到。一个确保覆盖每个可能值的方法是在最后一个分支使用捕获所有的模式：比如，一个匹配任何值的名称永远也不会失败，因此可以覆盖所有匹配剩下的情况。
 
-A particular pattern `_` will match anything, but it never binds to a variable,
-so it’s often used in the last match arm. The `_` pattern can be useful when
-you want to ignore any value not specified, for example. We’ll cover the `_`
-pattern in more detail in the [“Ignoring Values in a
-Pattern”][ignoring-values-in-a-pattern]<!-- ignore --> section later in this
-chapter.
+有一个特定的模式 `_` 可以匹配所有情况，不过它从不绑定任何变量。这在例如希望忽略任何未指定值的情况很有用。本章之后的 [“忽略模式中的值”][ignoring-values-in-a-pattern]  部分会详细介绍 `_` 模式的更多细节。
 
-### Conditional `if let` Expressions
+### `if let` 条件表达式
 
-In Chapter 6 we discussed how to use `if let` expressions mainly as a shorter
-way to write the equivalent of a `match` that only matches one case.
-Optionally, `if let` can have a corresponding `else` containing code to run if
-the pattern in the `if let` doesn’t match.
+第六章讨论过了 `if let` 表达式，以及它是如何主要用于编写等同于只关心一个情况的 `match` 语句简写的。`if let` 可以对应一个可选的带有代码的 `else` 在 `if let` 中的模式不匹配时运行。
 
-Listing 18-1 shows that it’s also possible to mix and match `if let`, `else
-if`, and `else if let` expressions. Doing so gives us more flexibility than a
-`match` expression in which we can express only one value to compare with the
-patterns. Also, the conditions in a series of `if let`, `else if`, `else if
-let` arms aren’t required to relate to each other.
+示例 18-1 展示了也可以组合并匹配 `if let`、`else if` 和 `else if let` 表达式。这相比 `match` 表达式一次只能将一个值与模式比较提供了更多灵活性；一系列 `if let`、`else if`、`else if let` 分支并不要求其条件相互关联。
 
-The code in Listing 18-1 shows a series of checks for several conditions that
-decide what the background color should be. For this example, we’ve created
-variables with hardcoded values that a real program might receive from user
-input.
+示例 18-1 中的代码展示了一系列针对不同条件的检查来决定背景颜色应该是什么。为了达到这个例子的目的，我们创建了硬编码值的变量，在真实程序中则可能由询问用户获得。
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-01/src/main.rs}}
+fn main() {
+    let favorite_color: Option<&str> = None;
+    let is_tuesday = false;
+    let age: Result<u8, _> = "34".parse();
+
+    if let Some(color) = favorite_color {
+        println!("Using your favorite color, {}, as the background", color);
+    } else if is_tuesday {
+        println!("Tuesday is green day!");
+    } else if let Ok(age) = age {
+        if age > 30 {
+            println!("Using purple as the background color");
+        } else {
+            println!("Using orange as the background color");
+        }
+    } else {
+        println!("Using blue as the background color");
+    }
+}
 ```
 
-<span class="caption">Listing 18-1: Mixing `if let`, `else if`, `else if let`,
-and `else`</span>
+<span class="caption">示例 18-1: 结合 `if let`、`else if`、`else if let` 以及 `else`</span>
 
-If the user specifies a favorite color, that color is the background color. If
-today is Tuesday, the background color is green. If the user specifies
-their age as a string and we can parse it as a number successfully, the color
-is either purple or orange depending on the value of the number. If none of
-these conditions apply, the background color is blue.
+如果用户指定了中意的颜色，将使用其作为背景颜色。如果今天是星期二，背景颜色将是绿色。如果用户指定了他们的年龄字符串并能够成功将其解析为数字的话，我们将根据这个数字使用紫色或者橙色。最后，如果没有一个条件符合，背景颜色将是蓝色：
 
-This conditional structure lets us support complex requirements. With the
-hardcoded values we have here, this example will print `Using purple as the
-background color`.
+这个条件结构允许我们支持复杂的需求。使用这里硬编码的值，例子会打印出 `Using purple as the background color`。
 
-You can see that `if let` can also introduce shadowed variables in the same way
-that `match` arms can: the line `if let Ok(age) = age` introduces a new
-shadowed `age` variable that contains the value inside the `Ok` variant. This
-means we need to place the `if age > 30` condition within that block: we can’t
-combine these two conditions into `if let Ok(age) = age && age > 30`. The
-shadowed `age` we want to compare to 30 isn’t valid until the new scope starts
-with the curly bracket.
+注意 `if let` 也可以像 `match` 分支那样引入覆盖变量：`if let Ok(age) = age` 引入了一个新的覆盖变量 `age`，它包含 `Ok` 成员中的值。这意味着 `if age > 30` 条件需要位于这个代码块内部；不能将两个条件组合为 `if let Ok(age) = age && age > 30`，因为我们希望与 30 进行比较的被覆盖的 `age` 直到大括号开始的新作用域才是有效的。
 
-The downside of using `if let` expressions is that the compiler doesn’t check
-exhaustiveness, whereas with `match` expressions it does. If we omitted the
-last `else` block and therefore missed handling some cases, the compiler would
-not alert us to the possible logic bug.
+`if let` 表达式的缺点在于其穷尽性没有为编译器所检查，而 `match` 表达式则检查了。如果去掉最后的 `else` 块而遗漏处理一些情况，编译器也不会警告这类可能的逻辑错误。
 
-### `while let` Conditional Loops
+### `while let` 条件循环
 
-Similar in construction to `if let`, the `while let` conditional loop allows a
-`while` loop to run for as long as a pattern continues to match. The example in
-Listing 18-2 shows a `while let` loop that uses a vector as a stack and prints
-the values in the vector in the opposite order in which they were pushed.
+一个与 `if let` 结构类似的是 `while let` 条件循环，它允许只要模式匹配就一直进行 `while` 循环。示例 18-2 展示了一个使用 `while let` 的例子，它使用 vector 作为栈并以先进后出的方式打印出 vector 中的值：
 
 ```rust
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-02/src/main.rs:here}}
+let mut stack = Vec::new();
+
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+while let Some(top) = stack.pop() {
+    println!("{}", top);
+}
 ```
 
-<span class="caption">Listing 18-2: Using a `while let` loop to print values
-for as long as `stack.pop()` returns `Some`</span>
+<span class="caption">列表 18-2: 使用 `while let` 循环只要 `stack.pop()` 返回 `Some` 就打印出其值</span>
 
-This example prints 3, 2, and then 1. The `pop` method takes the last element
-out of the vector and returns `Some(value)`. If the vector is empty, `pop`
-returns `None`. The `while` loop continues running the code in its block as
-long as `pop` returns `Some`. When `pop` returns `None`, the loop stops. We can
-use `while let` to pop every element off our stack.
+这个例子会打印出 3、2 接着是 1。`pop` 方法取出 vector 的最后一个元素并返回 `Some(value)`。如果 vector 是空的，它返回 `None`。`while` 循环只要 `pop` 返回 `Some` 就会一直运行其块中的代码。一旦其返回 `None`，`while` 循环停止。我们可以使用 `while let` 来弹出栈中的每一个元素。
 
-### `for` Loops
+### `for` 循环
 
-In Chapter 3, we mentioned that the `for` loop is the most common loop
-construction in Rust code, but we haven’t yet discussed the pattern that `for`
-takes. In a `for` loop, the pattern is the value that directly follows the
-keyword `for`, so in `for x in y` the `x` is the pattern.
+如同第三章所讲的，`for` 循环是 Rust 中最常见的循环结构，不过还没有讲到的是 `for` 可以获取一个模式。在 `for` 循环中，模式是 `for` 关键字直接跟随的值，正如 `for x in y` 中的 `x`。
 
-Listing 18-3 demonstrates how to use a pattern in a `for` loop to destructure,
-or break apart, a tuple as part of the `for` loop.
+示例 18-3 中展示了如何使用 `for` 循环来解构，或拆开一个元组作为 `for` 循环的一部分：
 
 ```rust
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-03/src/main.rs:here}}
+let v = vec!['a', 'b', 'c'];
+
+for (index, value) in v.iter().enumerate() {
+    println!("{} is at index {}", value, index);
+}
 ```
 
-<span class="caption">Listing 18-3: Using a pattern in a `for` loop to
-destructure a tuple</span>
+<span class="caption">列表 18-3: 在 `for` 循环中使用模式来解构元组</span>
 
-The code in Listing 18-3 will print the following:
+示例 18-3 的代码会打印出：
 
-```console
-{{#include ../listings/ch18-patterns-and-matching/listing-18-03/output.txt}}
+```text
+a is at index 0
+b is at index 1
+c is at index 2
 ```
 
-We use the `enumerate` method to adapt an iterator to produce a value and that
-value’s index in the iterator, placed into a tuple. The first value produced is
-the tuple `(0, 'a')`. When this value is matched to the pattern `(index,
-value)`, `index` will be `0` and `value` will be `'a'`, printing the first line
-of the output.
+这里使用 `enumerate` 方法适配一个迭代器来产生一个值和其在迭代器中的索引，他们位于一个元组中。第一个 `enumerate` 调用会产生元组 `(0, 'a')`。当这个值匹配模式 `(index, value)`，`index` 将会是 0 而 `value` 将会是  `'a'`，并打印出第一行输出。
 
-### `let` Statements
+### `let` 语句
 
-Prior to this chapter, we had only explicitly discussed using patterns with
-`match` and `if let`, but in fact, we’ve used patterns in other places as well,
-including in `let` statements. For example, consider this straightforward
-variable assignment with `let`:
+在本章之前，我们只明确的讨论过通过 `match` 和 `if let` 使用模式，不过事实上也在别地地方使用过模式，包括 `let` 语句。例如，考虑一下这个直白的 `let` 变量赋值：
 
 ```rust
 let x = 5;
 ```
 
-Throughout this book, we’ve used `let` like this hundreds of times, and
-although you might not have realized it, you were using patterns! More
-formally, a `let` statement looks like this:
+本书进行了不下百次这样的操作，不过你可能没有发觉，这正是在使用模式！`let` 语句更为正式的样子如下：
 
 ```text
 let PATTERN = EXPRESSION;
 ```
 
-In statements like `let x = 5;` with a variable name in the `PATTERN` slot, the
-variable name is just a particularly simple form of a pattern. Rust compares
-the expression against the pattern and assigns any names it finds. So in the
-`let x = 5;` example, `x` is a pattern that means “bind what matches here to
-the variable `x`.” Because the name `x` is the whole pattern, this pattern
-effectively means “bind everything to the variable `x`, whatever the value is.”
+像 `let x = 5;` 这样的语句中变量名位于 `PATTERN` 位置，变量名不过是形式特别朴素的模式。我们将表达式与模式比较，并为任何找到的名称赋值。所以例如 `let x = 5;` 的情况，`x` 是一个模式代表 “将匹配到的值绑定到变量 x”。同时因为名称 `x` 是整个模式，这个模式实际上等于 “将任何值绑定到变量 `x`，不管值是什么”。
 
-To see the pattern matching aspect of `let` more clearly, consider Listing
-18-4, which uses a pattern with `let` to destructure a tuple.
+为了更清楚的理解 `let` 的模式匹配方面的内容，考虑示例 18-4 中使用 `let` 和模式解构一个元组：
 
 ```rust
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-04/src/main.rs:here}}
+let (x, y, z) = (1, 2, 3);
 ```
 
-<span class="caption">Listing 18-4: Using a pattern to destructure a tuple and
-create three variables at once</span>
+<span class="caption">示例 18-4: 使用模式解构元组并一次创建三个变量</span>
 
-Here, we match a tuple against a pattern. Rust compares the value `(1, 2, 3)`
-to the pattern `(x, y, z)` and sees that the value matches the pattern, so Rust
-binds `1` to `x`, `2` to `y`, and `3` to `z`. You can think of this tuple
-pattern as nesting three individual variable patterns inside it.
+这里将一个元组与模式匹配。Rust 会比较值 `(1, 2, 3)` 与模式 `(x, y, z)` 并发现此值匹配这个模式。在这个例子中，将会把 `1` 绑定到 `x`，`2` 绑定到 `y` 并将 `3` 绑定到 `z`。你可以将这个元组模式看作是将三个独立的变量模式结合在一起。
 
-If the number of elements in the pattern doesn’t match the number of elements
-in the tuple, the overall type won’t match and we’ll get a compiler error. For
-example, Listing 18-5 shows an attempt to destructure a tuple with three
-elements into two variables, which won’t work.
+如果模式中元素的数量不匹配元组中元素的数量，则整个类型不匹配，并会得到一个编译时错误。例如，示例 18-5 展示了尝试用两个变量解构三个元素的元组，这是不行的：
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-05/src/main.rs:here}}
+let (x, y) = (1, 2, 3);
 ```
 
-<span class="caption">Listing 18-5: Incorrectly constructing a pattern whose
-variables don’t match the number of elements in the tuple</span>
+<span class="caption">示例 18-5: 一个错误的模式结构，其中变量的数量不符合元组中元素的数量</span>
 
-Attempting to compile this code results in this type error:
+尝试编译这段代码会给出如下类型错误：
 
-```console
-{{#include ../listings/ch18-patterns-and-matching/listing-18-05/output.txt}}
+```text
+error[E0308]: mismatched types
+ --> src/main.rs:2:9
+  |
+2 |     let (x, y) = (1, 2, 3);
+  |         ^^^^^^ expected a tuple with 3 elements, found one with 2 elements
+  |
+  = note: expected type `({integer}, {integer}, {integer})`
+             found type `(_, _)`
 ```
 
-If we wanted to ignore one or more of the values in the tuple, we could use `_`
-or `..`, as you’ll see in the [“Ignoring Values in a
-Pattern”][ignoring-values-in-a-pattern]<!-- ignore --> section. If the problem
-is that we have too many variables in the pattern, the solution is to make the
-types match by removing variables so the number of variables equals the number
-of elements in the tuple.
+如果希望忽略元组中一个或多个值，也可以使用 `_` 或 `..`，如 [“忽略模式中的值”][ignoring-values-in-a-pattern]  部分所示。如果问题是模式中有太多的变量，则解决方法是通过去掉变量使得变量数与元组中元素数相等。
 
-### Function Parameters
+### 函数参数
 
-Function parameters can also be patterns. The code in Listing 18-6, which
-declares a function named `foo` that takes one parameter named `x` of type
-`i32`, should by now look familiar.
+函数参数也可以是模式。列表 18-6 中的代码声明了一个叫做 `foo` 的函数，它获取一个 `i32` 类型的参数 `x`，现在这看起来应该很熟悉：
 
 ```rust
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-06/src/main.rs:here}}
+fn foo(x: i32) {
+    // 代码
+}
 ```
 
-<span class="caption">Listing 18-6: A function signature uses patterns in the
-parameters</span>
+<span class="caption">列表 18-6: 在参数中使用模式的函数签名</span>
 
-The `x` part is a pattern! As we did with `let`, we could match a tuple in a
-function’s arguments to the pattern. Listing 18-7 splits the values in a tuple
-as we pass it to a function.
+`x` 部分就是一个模式！类似于之前对 `let` 所做的，可以在函数参数中匹配元组。列表 18-7 将传递给函数的元组拆分为值：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名: src/main.rs</span>
 
 ```rust
-{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-07/src/main.rs}}
+fn print_coordinates(&(x, y): &(i32, i32)) {
+    println!("Current location: ({}, {})", x, y);
+}
+
+fn main() {
+    let point = (3, 5);
+    print_coordinates(&point);
+}
 ```
 
-<span class="caption">Listing 18-7: A function with parameters that destructure
-a tuple</span>
+<span class="caption">列表 18-7: 一个在参数中解构元组的函数</span>
 
-This code prints `Current location: (3, 5)`. The values `&(3, 5)` match the
-pattern `&(x, y)`, so `x` is the value `3` and `y` is the value `5`.
+这会打印出 `Current location: (3, 5)`。值 `&(3, 5)` 会匹配模式 `&(x, y)`，如此 `x` 得到了值 `3`，而 `y`得到了值 `5`。
 
-We can also use patterns in closure parameter lists in the same way as in
-function parameter lists, because closures are similar to functions, as
-discussed in Chapter 13.
+因为如第十三章所讲闭包类似于函数，也可以在闭包参数列表中使用模式。
 
-At this point, you’ve seen several ways of using patterns, but patterns don’t
-work the same in every place we can use them. In some places, the patterns must
-be irrefutable; in other circumstances, they can be refutable. We’ll discuss
-these two concepts next.
+现在我们见过了很多使用模式的方式了，不过模式在每个使用它的地方并不以相同的方式工作；在一些地方，模式必须是 *irrefutable* 的，意味着他们必须匹配所提供的任何值。在另一些情况，他们则可以是 refutable 的。接下来让我们讨论这两个概念。
 
 [ignoring-values-in-a-pattern]:
 ch18-03-pattern-syntax.html#ignoring-values-in-a-pattern
