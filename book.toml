@@ -6,5 +6,5 @@ language = "zh-CN"
 
 [output.html]
 additional-css = ["ferris.css", "theme/2018-edition.css"]
-additional-js = ["ferris.js"]
+additional-js = ["ferris.js", "language.js"]
 git-repository-url = "https://github.com/rust-lang-cn/book-cn"
