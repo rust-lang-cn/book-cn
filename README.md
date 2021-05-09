@@ -2,10 +2,14 @@
 
 ![Build Status](https://github.com/rust-lang-cn/book-cn/workflows/CI/badge.svg)
 
-> Chinese translation of [The Rust Programming Language][github-en]  
-> 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书。
+> Chinese translation of [The Rust Programming Language][github-en]<br>
+> 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书。<br>
+>
+> 本仓库翻译内容包括 Rust 中文翻译项目组本身的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn] 和 [budshome/trpl-zh-cn] 等译本），我们尽可能避免不必要的重复劳动。
 
 [github-en]: https://github.com/rust-lang/book
+[KaiserY]: https://github.com:KaiserY/trpl-zh-cn
+[budshome]: https://github.com:budshome/trpl-zh-cn
 
 [可以从 No Starch Press 购买本书英文版][nostarch]。
 
@@ -85,33 +89,6 @@ $ mdbook test
 [contrib-cn]: https://github.com/rust-lang-cn/book-cn/blob/master/CONTRIBUTING.md
 [contrib]: https://github.com/rust-lang/book/blob/master/CONTRIBUTING.md
 
-## Graphviz dot
-
-> 译注：Graphviz 是一种图形绘制工具，使用 dot 语言来编写绘制
-
-这主要是给 Carol 参考的，因为她不得不检查这些内容（原文：This is mostly for Carol's reference because she keeps having to look it up）。
-
-我们使用 [Graphviz](http://graphviz.org/) 来绘制一些书中需要的图表。这些文件的源文件位于 `dot` 目录中。要将 `dot` 文件转换成 `svg` 文件，如转换 `dot/trpl04-01.dot` 文件，运行：
-
-```
-$ dot dot/trpl04-01.dot -Tsvg > src/img/trpl04-01.svg
-```
-
-在生成的 SVG 中，从 `svg` 元素中删除了宽度和高度属性，并将 `viewBox` 属性设置成 `0.00 0.00 1000.00 1000.00` 或其他不会截断图像的值。
-
-## 拼写检查（仅对英文检查起作用）
-
-要扫描源文件的拼写错误，可以使用 `spellcheck.sh` 脚本。这需要一个带有有效单词的字典文件，由 `dictionary.txt` 提供。如果脚本产生了一个假阳性（比如说，你使用了 `BTreeMap` 单词，但脚本认为无效），就需要将这个单词添加到 `dictionary.txt` 文件（保持排序的顺序以确保一致性）。
-
-## 将 Windows 换行符转换为 Unix 的
-
-这主要是给 Carol 参考，因为她不得不检查不规范的换行符。（原文：This is mostly for Carol's reference because she keeps having to look it up.）
-
-```
-$ tr -d '\015' < DOS-file > UNIX-file
-```
-
-
 ## 翻译
 
 我们很乐意翻译这本书！请参阅[“翻译”][Translations]标签（在[英文原仓库][github-en]）以加入当前正在进行的工作。新建一个 Issue，开始使用新语言！在我们合并任何内容之前，我们正在等待 [mdbook 对多种语言的支持][mdbook support]，只要支持后将随时可以开始！
@@ -122,4 +99,4 @@ $ tr -d '\015' < DOS-file > UNIX-file
 
 ## 拼写检查
 
-要扫描源文件是否存在拼写错误，可以使用 `ci` 目录中的脚本 `spellcheck.sh`。这需要一个有效词词典，该词典为 `ci/dictionary.txt`。如果脚本产生误报（例如，使用了词语 `BTreeMap` 被脚本认为无效），则需要在 `ci/dictionary.txt` 中添加该单词（保持排序顺序以保持一致性）。
+要扫描源文件是否存在拼写错误，可以使用 `ci` 目录中的脚本 `spellcheck.sh`。这需要一个带有有效单词的字典文件，由 `ci/dictionary.txt` 提供。如果脚本产生误报（例如，使用了词语 `BTreeMap` 被脚本认为无效），则需要在 `ci/dictionary.txt` 中添加该单词（保持排序顺序以确保一致性）。
