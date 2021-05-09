@@ -1,41 +1,15 @@
-# Foreword
+# 前言
 
-It wasn’t always so clear, but the Rust programming language is fundamentally
-about *empowerment*: no matter what kind of code you are writing now, Rust
-empowers you to reach farther, to program with confidence in a wider variety of
-domains than you did before.
+并非一直都那么清晰，但是 Rust 编程语言从根本上讲就是关于**赋能**的：无论您现在正在编写哪种代码，Rust 都使您能够走得更远，并可以比以前更自信地在更广泛的领域中进行编程。
 
-Take, for example, “systems-level” work that deals with low-level details of
-memory management, data representation, and concurrency. Traditionally, this
-realm of programming is seen as arcane, accessible only to a select few who
-have devoted the necessary years learning to avoid its infamous pitfalls. And
-even those who practice it do so with caution, lest their code be open to
-exploits, crashes, or corruption.
+例如，“系统级”工作处理内存管理、数据表示和并发性的底层细节。传统上，这种编程领域被视为不可思议的事情，只有为数不多的那些已经花费了必要时间来学习避免其臭名昭著的缺陷的少数人才能涉及。即使是那些实践它的人也要谨慎行事，以免他们的代码容易受到攻击，崩溃或损坏。
 
-Rust breaks down these barriers by eliminating the old pitfalls and providing a
-friendly, polished set of tools to help you along the way. Programmers who need
-to “dip down” into lower-level control can do so with Rust, without taking on
-the customary risk of crashes or security holes, and without having to learn
-the fine points of a fickle toolchain. Better yet, the language is designed to
-guide you naturally towards reliable code that is efficient in terms of speed
-and memory usage.
+Rust 消除了旧的陷阱，并提供了一套友好、精致的工具来帮助您解决问题，从而打破了这些障碍。那些需要“深入”到较底层控制的程序员可以使用 Rust 来做到这一点，而不必担心崩溃或安全​​漏洞的惯常风险，也不必学习纷繁复杂的工具链的内容。更棒的是，Rust 语言旨在引导你自然地转向在速度和内存使用方面高效且可靠的代码。
 
-Programmers who are already working with low-level code can use Rust to raise
-their ambitions. For example, introducing parallelism in Rust is a relatively
-low-risk operation: the compiler will catch the classical mistakes for you. And
-you can tackle more aggressive optimizations in your code with the confidence
-that you won’t accidentally introduce crashes or vulnerabilities.
+已经在使用底层代码的开发者可以使用 Rust 来提高自己的抱负。例如，在 Rust 中引入并行性是一个相对低风险的操作：编译器将为你捕获典型的错误。而且，你可以确信不会意外引入崩溃或漏洞，从而可以在代码中进行更积极的优化。
 
-But Rust isn’t limited to low-level systems programming. It’s expressive and
-ergonomic enough to make CLI apps, web servers, and many other kinds of code
-quite pleasant to write — you’ll find simple examples of both later in the
-book. Working with Rust allows you to build skills that transfer from one
-domain to another; you can learn Rust by writing a web app, then apply those
-same skills to target your Raspberry Pi.
+但是 Rust 不仅限于底层系统编程。它具有足够的表达力和人体工程学特性，可以使命令行应用程序、Web 服务器和许多其他类型的代码编写起来非常令人愉快——在本书后面的部分中，您将找到这前两种应用的简单示例代码。使用 Rust 来工作可让你建立从一个领域转移到另一个领域的技能；您可以通过编写网络应用程序来学习 Rust，同样地可以将这些技能应用于树莓派（Raspberry Pi，属于嵌入式方面）开发。
 
-This book fully embraces the potential of Rust to empower its users. It’s a
-friendly and approachable text intended to help you level up not just your
-knowledge of Rust, but also your reach and confidence as a programmer in
-general. So dive in, get ready to learn—and welcome to the Rust community!
+本书充分体现了 Rust 增强用户编程能力的潜力。本书使用通俗易懂的表达，不仅帮助你掌握 Rust 的知识，而且还可以提高你作为开发者的影响力和信心。因此，现在就开始学习，并欢迎加入 Rust 社区！
 
-— Nicholas Matsakis and Aaron Turon
+—— Nicholas Matsakis 和 Aaron Turon
