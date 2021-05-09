@@ -1,105 +1,88 @@
-## Write to `stderr` Instead of `stdout`
+## Writing Error Messages to Standard Error Instead of Standard Output
 
-Right now, we're writing all of our output to the terminal with `println!`.
-This works, but most terminals provide two kinds of output: "standard out" is
-used for most information, but "standard error" is used for error messages. This
-makes it easier to do things like "Print error messages to my terminal, but
-write other output to a file."
+At the moment, we’re writing all of our output to the terminal using the
+`println!` macro. Most terminals provide two kinds of output: *standard
+output* (`stdout`) for general information and *standard error* (`stderr`)
+for error messages. This distinction enables users to choose to direct the
+successful output of a program to a file but still print error messages to the
+screen.
 
-We can see that our program is only capable of printing to `stdout` by
-redirecting it to a file using `>` on the command line, and running our program
-without any arguments, which causes an error:
+The `println!` macro is only capable of printing to standard output, so we
+have to use something else to print to standard error.
 
-```text
+### Checking Where Errors Are Written
+
+First, let’s observe how the content printed by `minigrep` is currently being
+written to standard output, including any error messages we want to write to
+standard error instead. We’ll do that by redirecting the standard output stream
+to a file while also intentionally causing an error. We won’t redirect the
+standard error stream, so any content sent to standard error will continue to
+display on the screen.
+
+Command line programs are expected to send error messages to the standard error
+stream so we can still see error messages on the screen even if we redirect the
+standard output stream to a file. Our program is not currently well-behaved:
+we’re about to see that it saves the error message output to a file instead!
+
+The way to demonstrate this behavior is by running the program with `>` and the
+filename, *output.txt*, that we want to redirect the standard output stream to.
+We won’t pass any arguments, which should cause an error:
+
+```console
 $ cargo run > output.txt
 ```
 
-The `>` syntax tells the shell to write the contents of standard out to
-*output.txt* instead of the screen. However, if we open *output.txt* after
-running we'll see our error message:
+The `>` syntax tells the shell to write the contents of standard output to
+*output.txt* instead of the screen. We didn’t see the error message we were
+expecting printed to the screen, so that means it must have ended up in the
+file. This is what *output.txt* contains:
 
 ```text
 Problem parsing arguments: not enough arguments
 ```
 
-We'd like this to be printed to the screen instead, and only have the output
-from a successful run end up in the file if we run our program this way. Let's
-change how error messages are printed as shown in Listing 12-17:
+Yup, our error message is being printed to standard output. It’s much more
+useful for error messages like this to be printed to standard error so only
+data from a successful run ends up in the file. We’ll change that.
 
-<figure>
+### Printing Errors to Standard Error
+
+We’ll use the code in Listing 12-24 to change how error messages are printed.
+Because of the refactoring we did earlier in this chapter, all the code that
+prints error messages is in one function, `main`. The standard library provides
+the `eprintln!` macro that prints to the standard error stream, so let’s change
+the two places we were calling `println!` to print errors to use `eprintln!`
+instead.
+
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-extern crate greprs;
-
-use std::env;
-use std::process;
-use std::io::prelude::*;
-
-use greprs::Config;
-
-fn main() {
-    let mut stderr = std::io::stderr();
-    let args: Vec<String> = env::args().collect();
-
-    let config = Config::new(&args).unwrap_or_else(|err| {
-        writeln!(
-            &mut stderr,
-            "Problem parsing arguments: {}",
-            err
-        ).expect("Could not write to stderr");
-
-        process::exit(1);
-    });
-
-    if let Err(e) = greprs::run(config) {
-
-        writeln!(
-            &mut stderr,
-            "Application error: {}",
-            e
-        ).expect("Could not write to stderr");
-
-        process::exit(1);
-    }
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
 ```
 
-<figcaption>
+<span class="caption">Listing 12-24: Writing error messages to standard error
+instead of standard output using `eprintln!`</span>
 
-Listing 12-17: Writing error messages to `stderr` instead of `stdout`
+After changing `println!` to `eprintln!`, let’s run the program again in the
+same way, without any arguments and redirecting standard output with `>`:
 
-</figcaption>
-</figure>
-
-<!-- Will add ghosting and wingdings in libreoffice /Carol -->
-
-Rust does not have a convenient function like `println!` for writing to
-standard error. Instead, we use the `writeln!` macro, which is sort of like
-`println!`, but it takes an extra argument. The first thing we pass to it is
-what to write to. We can acquire a handle to standard error through the
-`std::io::stderr` function. We give a mutable reference to `stderr` to
-`writeln!`; we need it to be mutable so we can write to it! The second and
-third arguments to `writeln!` are like the first and second arguments to
-`println!`: a format string and any variables we're interpolating.
-
-Let's try running the program again in the same way, without any arguments and
-redirecting `stdout` with `>`:
-
-```text
+```console
 $ cargo run > output.txt
 Problem parsing arguments: not enough arguments
 ```
 
-Now we see our error on the screen, but `output.txt` contains nothing. If we
-try it again with arguments that work:
+Now we see the error onscreen and *output.txt* contains nothing, which is the
+behavior we expect of command line programs.
 
-```text
+Let’s run the program again with arguments that don’t cause an error but still
+redirect standard output to a file, like so:
+
+```console
 $ cargo run to poem.txt > output.txt
 ```
 
-We'll see no output to our terminal, but `output.txt` will contain
-our results:
+We won’t see any output to the terminal, and *output.txt* will contain our
+results:
 
 <span class="filename">Filename: output.txt</span>
 
@@ -108,16 +91,18 @@ Are you nobody, too?
 How dreary to be somebody!
 ```
 
+This demonstrates that we’re now using standard output for successful output
+and standard error for error output as appropriate.
+
 ## Summary
 
-In this chapter, we've covered how to do common I/O operations in a Rust
-context. By using command line arguments, files, environment variables, and the
-ability to write to `stderr`, you're now prepared to write command line
-applications. By using the concepts from previous chapters, your code will be
-well-organized, be able to store data effectively in the appropriate data
-structures, handle errors nicely, and be well tested. We also saw a real-world
-scenario where lifetime annotations are needed to ensure references are
-always valid.
+This chapter recapped some of the major concepts you’ve learned so far and
+covered how to perform common I/O operations in Rust. By using command line
+arguments, files, environment variables, and the `eprintln!` macro for printing
+errors, you’re now prepared to write command line applications. By using the
+concepts in previous chapters, your code will be well organized, store data
+effectively in the appropriate data structures, handle errors nicely, and be
+well tested.
 
-Next, let's explore how to make use of some features of Rust that were
-influenced by functional languages: closures and iterators.
+Next, we’ll explore some Rust features that were influenced by functional
+languages: closures and iterators.

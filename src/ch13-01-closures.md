@@ -1,256 +1,557 @@
-## Closures
+## Closures: Anonymous Functions that Can Capture Their Environment
 
-Rust gives you the ability to define *closures*, which are similar to
-functions. Instead of starting with a technical definition, let's see what
-closures look like, syntactically, and then we'll return to defining what they
-are. Listing 13-1 shows a small closure whose definition is assigned to the
-variable `add_one`, which we can then use to call the closure:
+Rust’s closures are anonymous functions you can save in a variable or pass as
+arguments to other functions. You can create the closure in one place and then
+call the closure to evaluate it in a different context. Unlike functions,
+closures can capture values from the scope in which they’re defined. We’ll
+demonstrate how these closure features allow for code reuse and behavior
+customization.
 
-<figure>
+### Creating an Abstraction of Behavior with Closures
+
+Let’s work on an example of a situation in which it’s useful to store a closure
+to be executed later. Along the way, we’ll talk about the syntax of closures,
+type inference, and traits.
+
+Consider this hypothetical situation: we work at a startup that’s making an app
+to generate custom exercise workout plans. The backend is written in Rust, and
+the algorithm that generates the workout plan takes into account many factors,
+such as the app user’s age, body mass index, exercise preferences, recent
+workouts, and an intensity number they specify. The actual algorithm used isn’t
+important in this example; what’s important is that this calculation takes a
+few seconds. We want to call this algorithm only when we need to and only call
+it once so we don’t make the user wait more than necessary.
+
+We’ll simulate calling this hypothetical algorithm with the function
+`simulated_expensive_calculation` shown in Listing 13-1, which will print
+`calculating slowly...`, wait for two seconds, and then return whatever number
+we passed in.
+
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let add_one = |x| x + 1;
-
-    let five = add_one(4);
-
-    assert_eq!(5, five);
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs:here}}
 ```
 
-<figcaption>
+<span class="caption">Listing 13-1: A function to stand in for a hypothetical
+calculation that takes about 2 seconds to run</span>
 
-Listing 13-1: A closure that takes one parameter and adds one to it, assigned to
-the variable `add_one`
+Next is the `main` function, which contains the parts of the workout app
+important for this example. This function represents the code that the app will
+call when a user asks for a workout plan. Because the interaction with the
+app’s frontend isn’t relevant to the use of closures, we’ll hardcode values
+representing inputs to our program and print the outputs.
 
-</figcaption>
-</figure>
+The required inputs are these:
 
-The closure definition, on the first line, shows that the closure takes one
-parameter named `x`. Parameters to closures go in between vertical pipes (`|`).
+* An intensity number from the user, which is specified when they request
+  a workout to indicate whether they want a low-intensity workout or a
+  high-intensity workout
+* A random number that will generate some variety in the workout plans
 
-This is a minimal closure with only one expression as its body. Listing 13-2 has
-a closure with a bit more complexity:
+The output will be the recommended workout plan. Listing 13-2 shows the `main`
+function we’ll use.
 
-<figure>
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let calculate = |a, b| {
-        let mut result = a * 2;
-
-        result += b;
-
-        result
-    };
-
-    assert_eq!(7, calculate(2, 3)); // 2 * 2 + 3 == 7
-    assert_eq!(13, calculate(4, 5)); // 4 * 2 + 5 == 13
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-02/src/main.rs:here}}
 ```
 
-<figcaption>
+<span class="caption">Listing 13-2: A `main` function with hardcoded values to
+simulate user input and random number generation</span>
 
-Listing 13-2: A closure with two parameters and multiple expressions in its body
+We’ve hardcoded the variable `simulated_user_specified_value` as 10 and the
+variable `simulated_random_number` as 7 for simplicity’s sake; in an actual
+program, we’d get the intensity number from the app frontend, and we’d use the
+`rand` crate to generate a random number, as we did in the Guessing Game
+example in Chapter 2. The `main` function calls a `generate_workout` function
+with the simulated input values.
 
-</figcaption>
-</figure>
+Now that we have the context, let’s get to the algorithm. The function
+`generate_workout` in Listing 13-3 contains the business logic of the
+app that we’re most concerned with in this example. The rest of the code
+changes in this example will be made to this function.
 
-We can use curly brackets to define a closure body with more than one
-expression.
-
-You'll notice a few things about closures that are different from functions
-defined with the `fn` keyword. The first difference is that we did not need to
-annotate the types of the parameters the closure takes or the value it returns.
-We can choose to add type annotations if we want; Listing 13-3 shows the
-closure from Listing 13-1 with annotations for the parameter's and return
-value's types:
-
-<figure>
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let add_one = |x: i32| -> i32 { x + 1 };
-
-    assert_eq!(2, add_one(1));
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-03/src/main.rs:here}}
 ```
 
-<figcaption>
+<span class="caption">Listing 13-3: The business logic that prints the workout
+plans based on the inputs and calls to the `simulated_expensive_calculation`
+function</span>
 
-Listing 13-3: A closure definition with optional parameter and return value
-type annotations
+The code in Listing 13-3 has multiple calls to the slow calculation function.
+The first `if` block calls `simulated_expensive_calculation` twice, the `if`
+inside the outer `else` doesn’t call it at all, and the code inside the
+second `else` case calls it once.
 
-</figcaption>
-</figure>
+The desired behavior of the `generate_workout` function is to first check
+whether the user wants a low-intensity workout (indicated by a number less than
+25) or a high-intensity workout (a number of 25 or greater).
 
-The syntax of closures and functions looks more similar with type annotations.
-Let's compare the different ways we can specify closures with the syntax for
-defining a function more directly. We've added some spaces here to line up the
-relevant parts:
+Low-intensity workout plans will recommend a number of push-ups and sit-ups
+based on the complex algorithm we’re simulating.
+
+If the user wants a high-intensity workout, there’s some additional logic: if
+the value of the random number generated by the app happens to be 3, the app
+will recommend a break and hydration. If not, the user will get a number of
+minutes of running based on the complex algorithm.
+
+This code works the way the business wants it to now, but let’s say the data
+science team decides that we need to make some changes to the way we call the
+`simulated_expensive_calculation` function in the future. To simplify the
+update when those changes happen, we want to refactor this code so it calls the
+`simulated_expensive_calculation` function only once. We also want to cut the
+place where we’re currently unnecessarily calling the function twice without
+adding any other calls to that function in the process. That is, we don’t want
+to call it if the result isn’t needed, and we still want to call it only once.
+
+#### Refactoring Using Functions
+
+We could restructure the workout program in many ways. First, we’ll try
+extracting the duplicated call to the `simulated_expensive_calculation`
+function into a variable, as shown in Listing 13-4.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-04/src/main.rs:here}}
+```
+
+<span class="caption">Listing 13-4: Extracting the calls to
+`simulated_expensive_calculation` to one place and storing the result in the
+`expensive_result` variable</span>
+
+This change unifies all the calls to `simulated_expensive_calculation` and
+solves the problem of the first `if` block unnecessarily calling the function
+twice. Unfortunately, we’re now calling this function and waiting for the
+result in all cases, which includes the inner `if` block that doesn’t use the
+result value at all.
+
+We want to refer to `simulated_expensive_calculation` only once in
+`generate_workout`, but defer the expensive calculation to only where
+we actually need the result. This is a use case for closures!
+
+#### Refactoring with Closures to Store Code
+
+Instead of always calling the `simulated_expensive_calculation` function before
+the `if` blocks, we can define a closure and store the *closure* in a variable
+rather than storing the result of the function call, as shown in Listing 13-5.
+We can actually move the whole body of `simulated_expensive_calculation` within
+the closure we’re introducing here.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-05/src/main.rs:here}}
+```
+
+<span class="caption">Listing 13-5: Defining a closure and storing it in the
+`expensive_closure` variable</span>
+
+The closure definition comes after the `=` to assign it to the variable
+`expensive_closure`. To define a closure, we start with a pair of vertical
+pipes (`|`), inside which we specify the parameters to the closure; this syntax
+was chosen because of its similarity to closure definitions in Smalltalk and
+Ruby. This closure has one parameter named `num`: if we had more than one
+parameter, we would separate them with commas, like `|param1, param2|`.
+
+After the parameters, we place curly brackets that hold the body of the
+closure—these are optional if the closure body is a single expression. The end
+of the closure, after the curly brackets, needs a semicolon to complete the
+`let` statement. The value returned from the last line in the closure body
+(`num`) will be the value returned from the closure when it’s called, because
+that line doesn’t end in a semicolon; just as in function bodies.
+
+Note that this `let` statement means `expensive_closure` contains the
+*definition* of an anonymous function, not the *resulting value* of calling the
+anonymous function. Recall that we’re using a closure because we want to define
+the code to call at one point, store that code, and call it at a later point;
+the code we want to call is now stored in `expensive_closure`.
+
+With the closure defined, we can change the code in the `if` blocks to call the
+closure to execute the code and get the resulting value. We call a closure like
+we do a function: we specify the variable name that holds the closure
+definition and follow it with parentheses containing the argument values we
+want to use, as shown in Listing 13-6.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs:here}}
+```
+
+<span class="caption">Listing 13-6: Calling the `expensive_closure` we’ve
+defined</span>
+
+Now how to perform the expensive calculation is defined in only one
+place, and we’re only executing that code where we need the results.
+
+However, we’ve reintroduced one of the problems from Listing 13-3: we’re still
+calling the closure twice in the first `if` block, which will call the
+expensive code twice and make the user wait twice as long as they need to. We
+could fix this problem by creating a variable local to that `if` block to hold
+the result of calling the closure, but closures provide us with another
+solution. We’ll talk about that solution in a bit. But first let’s talk about
+why there aren’t type annotations in the closure definition and the traits
+involved with closures.
+
+### Closure Type Inference and Annotation
+
+Closures don’t require you to annotate the types of the parameters or the
+return value like `fn` functions do. Type annotations are required on functions
+because they’re part of an explicit interface exposed to your users. Defining
+this interface rigidly is important for ensuring that everyone agrees on what
+types of values a function uses and returns. But closures aren’t used in an
+exposed interface like this: they’re stored in variables and used without
+naming them and exposing them to users of our library.
+
+Closures are usually short and relevant only within a narrow context rather
+than in any arbitrary scenario. Within these limited contexts, the compiler is
+reliably able to infer the types of the parameters and the return type, similar
+to how it’s able to infer the types of most variables.
+
+Making programmers annotate the types in these small, anonymous functions would
+be annoying and largely redundant with the information the compiler already has
+available.
+
+As with variables, we can add type annotations if we want to increase
+explicitness and clarity at the cost of being more verbose than is strictly
+necessary. Annotating the types for the closure we defined in Listing 13-5
+would look like the definition shown in Listing 13-7.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs:here}}
+```
+
+<span class="caption">Listing 13-7: Adding optional type annotations of the
+parameter and return value types in the closure</span>
+
+With type annotations added, the syntax of closures looks more similar to the
+syntax of functions. The following is a vertical comparison of the syntax for
+the definition of a function that adds 1 to its parameter and a closure that
+has the same behavior. We’ve added some spaces to line up the relevant parts.
+This illustrates how closure syntax is similar to function syntax except for
+the use of pipes and the amount of syntax that is optional:
 
 ```rust,ignore
-fn  add_one_v1   (x: i32) -> i32 { x + 1 }  // a function
-let add_one_v2 = |x: i32| -> i32 { x + 1 }; // the full syntax for a closure
-let add_one_v3 = |x|             { x + 1 }; // a closure eliding types
-let add_one_v4 = |x|               x + 1  ; // without braces
+fn  add_one_v1   (x: u32) -> u32 { x + 1 }
+let add_one_v2 = |x: u32| -> u32 { x + 1 };
+let add_one_v3 = |x|             { x + 1 };
+let add_one_v4 = |x|               x + 1  ;
 ```
 
-The reason type annotations are not required for defining a closure but are
-required for defining a function is that functions are part of an explicit
-interface exposed to your users, so defining this interface rigidly is
-important for ensuring that everyone agrees on what types of values a function
-uses and returns. Closures aren't used in an exposed interface like this,
-though: they're stored in bindings and called directly. Being forced to
-annotate the types would be a significant ergonomic loss for little advantage.
+The first line shows a function definition, and the second line shows a fully
+annotated closure definition. The third line removes the type annotations from
+the closure definition, and the fourth line removes the brackets, which are
+optional because the closure body has only one expression. These are all valid
+definitions that will produce the same behavior when they’re called. Calling
+the closures is required for `add_one_v3` and `add_one_v4` to be able to
+compile because the types will be inferred from their usage.
 
-Closure definitions do have one type inferred for each of their parameters and
-for their return value. For instance, if we call the closure without type
-annotations from Listing 13-1 using an `i8`, we'll get an error if we then try
-to call the same closure with an `i32`:
+Closure definitions will have one concrete type inferred for each of their
+parameters and for their return value. For instance, Listing 13-8 shows the
+definition of a short closure that just returns the value it receives as a
+parameter. This closure isn’t very useful except for the purposes of this
+example. Note that we haven’t added any type annotations to the definition: if
+we then try to call the closure twice, using a `String` as an argument the
+first time and a `u32` the second time, we’ll get an error.
 
 <span class="filename">Filename: src/main.rs</span>
 
-```rust,ignore
-let add_one = |x| x + 1;
-
-let five = add_one(4i8);
-assert_eq!(5i8, five);
-
-let three = add_one(2i32);
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-08/src/main.rs:here}}
 ```
+
+<span class="caption">Listing 13-8: Attempting to call a closure whose types
+are inferred with two different types</span>
 
 The compiler gives us this error:
 
-```text
-error[E0308]: mismatched types
- -->
-  |
-7 | let three = add_one(2i32);
-  |                     ^^^^ expected i8, found i32
+```console
+{{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}
 ```
 
-Since closures' types can be inferred reliably since they're called directly,
-it would be tedious if we were required to annotate their types.
+The first time we call `example_closure` with the `String` value, the compiler
+infers the type of `x` and the return type of the closure to be `String`. Those
+types are then locked into the closure in `example_closure`, and we get a type
+error if we try to use a different type with the same closure.
 
-Another reason to have a different syntax from functions for closures is that
-they have different behavior than functions: closures possess an *environment*.
+### Storing Closures Using Generic Parameters and the `Fn` Traits
 
-### Closures Can Reference Their Environment
+Let’s return to our workout generation app. In Listing 13-6, our code was still
+calling the expensive calculation closure more times than it needed to. One
+option to solve this issue is to save the result of the expensive closure in a
+variable for reuse and use the variable in each place we need the result,
+instead of calling the closure again. However, this method could result in a
+lot of repeated code.
 
-We've learned that functions can only use variables that are in scope, either
-by being `const` or being declared as parameters. Closures can do more: they're
-allowed to access variables from their enclosing scope. Listing 13-4 has an
-example of a closure in the variable `equal_to_x` that uses the variable `x`
-from the closure's surrounding environment:
+Fortunately, another solution is available to us. We can create a struct that
+will hold the closure and the resulting value of calling the closure. The
+struct will execute the closure only if we need the resulting value, and it
+will cache the resulting value so the rest of our code doesn’t have to be
+responsible for saving and reusing the result. You may know this pattern as
+*memoization* or *lazy evaluation*.
 
-<figure>
+To make a struct that holds a closure, we need to specify the type of the
+closure, because a struct definition needs to know the types of each of its
+fields. Each closure instance has its own unique anonymous type: that is, even
+if two closures have the same signature, their types are still considered
+different. To define structs, enums, or function parameters that use closures,
+we use generics and trait bounds, as we discussed in Chapter 10.
+
+The `Fn` traits are provided by the standard library. All closures implement at
+least one of the traits: `Fn`, `FnMut`, or `FnOnce`. We’ll discuss the
+difference between these traits in the [“Capturing the Environment with
+Closures”](#capturing-the-environment-with-closures)<!-- ignore --> section; in
+this example, we can use the `Fn` trait.
+
+We add types to the `Fn` trait bound to represent the types of the parameters
+and return values the closures must have to match this trait bound. In this
+case, our closure has a parameter of type `u32` and returns a `u32`, so the
+trait bound we specify is `Fn(u32) -> u32`.
+
+Listing 13-9 shows the definition of the `Cacher` struct that holds a closure
+and an optional result value.
+
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = 4;
-
-    let equal_to_x = |z| z == x;
-
-    let y = 4;
-
-    assert!(equal_to_x(y));
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-09/src/main.rs:here}}
 ```
 
-<figcaption>
+<span class="caption">Listing 13-9: Defining a `Cacher` struct that holds a
+closure in `calculation` and an optional result in `value`</span>
 
-Listing 13-4: Example of a closure that refers to a variable in its enclosing
-scope
+The `Cacher` struct has a `calculation` field of the generic type `T`. The
+trait bounds on `T` specify that it’s a closure by using the `Fn` trait. Any
+closure we want to store in the `calculation` field must have one `u32`
+parameter (specified within the parentheses after `Fn`) and must return a
+`u32` (specified after the `->`).
 
-</figcaption>
-</figure>
+> Note: Functions can implement all three of the `Fn` traits too. If what we
+> want to do doesn’t require capturing a value from the environment, we can use
+> a function rather than a closure where we need something that implements an
+> `Fn` trait.
 
-Here, even though `x` is not one of the parameters of `equal_to_x`, the
-`equal_to_x` closure is allowed to use `x`, since `x` is a variable defined in
-the scope that `equal_to_x` is defined. We aren't allowed to do the same thing
-that Listing 13-4 does with functions; let's see what happens if we try:
+The `value` field is of type `Option<u32>`. Before we execute the closure,
+`value` will be `None`. When code using a `Cacher` asks for the *result* of the
+closure, the `Cacher` will execute the closure at that time and store the
+result within a `Some` variant in the `value` field. Then if the code asks for
+the result of the closure again, instead of executing the closure again, the
+`Cacher` will return the result held in the `Some` variant.
+
+The logic around the `value` field we’ve just described is defined in Listing
+13-10.
 
 <span class="filename">Filename: src/main.rs</span>
 
-```rust,ignore
-fn main() {
-    let x = 4;
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
+```
 
-    fn equal_to_x(z: i32) -> bool { z == x }
+<span class="caption">Listing 13-10: The caching logic of `Cacher`</span>
 
-    let y = 4;
+We want `Cacher` to manage the struct fields’ values rather than letting the
+calling code potentially change the values in these fields directly, so these
+fields are private.
 
-    assert!(equal_to_x(y));
-}
+The `Cacher::new` function takes a generic parameter `T`, which we’ve defined
+as having the same trait bound as the `Cacher` struct. Then `Cacher::new`
+returns a `Cacher` instance that holds the closure specified in the
+`calculation` field and a `None` value in the `value` field, because we haven’t
+executed the closure yet.
+
+When the calling code needs the result of evaluating the closure, instead of
+calling the closure directly, it will call the `value` method. This method
+checks whether we already have a resulting value in `self.value` in a `Some`;
+if we do, it returns the value within the `Some` without executing the closure
+again.
+
+If `self.value` is `None`, the code calls the closure stored in
+`self.calculation`, saves the result in `self.value` for future use, and
+returns the value as well.
+
+Listing 13-11 shows how we can use this `Cacher` struct in the function
+`generate_workout` from Listing 13-6.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
+```
+
+<span class="caption">Listing 13-11: Using `Cacher` in the `generate_workout`
+function to abstract away the caching logic</span>
+
+Instead of saving the closure in a variable directly, we save a new instance of
+`Cacher` that holds the closure. Then, in each place we want the result, we
+call the `value` method on the `Cacher` instance. We can call the `value`
+method as many times as we want, or not call it at all, and the expensive
+calculation will be run a maximum of once.
+
+Try running this program with the `main` function from Listing 13-2. Change the
+values in the `simulated_user_specified_value` and `simulated_random_number`
+variables to verify that in all the cases in the various `if` and `else`
+blocks, `calculating slowly...` appears only once and only when needed. The
+`Cacher` takes care of the logic necessary to ensure we aren’t calling the
+expensive calculation more than we need to so `generate_workout` can focus on
+the business logic.
+
+### Limitations of the `Cacher` Implementation
+
+Caching values is a generally useful behavior that we might want to use in
+other parts of our code with different closures. However, there are two
+problems with the current implementation of `Cacher` that would make reusing it
+in different contexts difficult.
+
+The first problem is that a `Cacher` instance assumes it will always get the
+same value for the parameter `arg` to the `value` method. That is, this test of
+`Cacher` will fail:
+
+```rust,ignore,panics
+{{#rustdoc_include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/src/lib.rs:here}}
+```
+
+This test creates a new `Cacher` instance with a closure that returns the value
+passed into it. We call the `value` method on this `Cacher` instance with an
+`arg` value of 1 and then an `arg` value of 2, and we expect the call to
+`value` with the `arg` value of 2 to return 2.
+
+Run this test with the `Cacher` implementation in Listing 13-9 and Listing
+13-10, and the test will fail on the `assert_eq!` with this message:
+
+```console
+{{#include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/output.txt}}
+```
+
+The problem is that the first time we called `c.value` with 1, the `Cacher`
+instance saved `Some(1)` in `self.value`. Thereafter, no matter what we pass into
+the `value` method, it will always return 1.
+
+Try modifying `Cacher` to hold a hash map rather than a single value. The keys
+of the hash map will be the `arg` values that are passed in, and the values of
+the hash map will be the result of calling the closure on that key. Instead of
+looking at whether `self.value` directly has a `Some` or a `None` value, the
+`value` function will look up the `arg` in the hash map and return the value if
+it’s present. If it’s not present, the `Cacher` will call the closure and save
+the resulting value in the hash map associated with its `arg` value.
+
+The second problem with the current `Cacher` implementation is that it only
+accepts closures that take one parameter of type `u32` and return a `u32`. We
+might want to cache the results of closures that take a string slice and return
+`usize` values, for example. To fix this issue, try introducing more generic
+parameters to increase the flexibility of the `Cacher` functionality.
+
+### Capturing the Environment with Closures
+
+In the workout generator example, we only used closures as inline anonymous
+functions. However, closures have an additional capability that functions don’t
+have: they can capture their environment and access variables from the scope in
+which they’re defined.
+
+Listing 13-12 has an example of a closure stored in the `equal_to_x` variable
+that uses the `x` variable from the closure’s surrounding environment.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/main.rs}}
+```
+
+<span class="caption">Listing 13-12: Example of a closure that refers to a
+variable in its enclosing scope</span>
+
+Here, even though `x` is not one of the parameters of `equal_to_x`, the
+`equal_to_x` closure is allowed to use the `x` variable that’s defined in the
+same scope that `equal_to_x` is defined in.
+
+We can’t do the same with functions; if we try with the following example, our
+code won’t compile:
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/src/main.rs}}
 ```
 
 We get an error:
 
-```text
-error[E0434]: can't capture dynamic environment in a fn item; use the || { ... }
-closure form instead
- -->
-  |
-4 |     fn equal_to_x(z: i32) -> bool { z == x }
-  |                                          ^
+```console
+{{#include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/output.txt}}
 ```
 
 The compiler even reminds us that this only works with closures!
 
-Creating closures that capture values from their environment is mostly used in
-the context of starting new threads. We'll show some more examples and explain
-more detail about this feature of closures in Chapter 16 when we talk about
-concurrency.
+When a closure captures a value from its environment, it uses memory to store
+the values for use in the closure body. This use of memory is overhead that we
+don’t want to pay in more common cases where we want to execute code that
+doesn’t capture its environment. Because functions are never allowed to capture
+their environment, defining and using functions will never incur this overhead.
 
-### Closures as Function Parameters Using the `Fn` Traits
+Closures can capture values from their environment in three ways, which
+directly map to the three ways a function can take a parameter: taking
+ownership, borrowing mutably, and borrowing immutably. These are encoded in the
+three `Fn` traits as follows:
 
-While we can bind closures to variables, that's not the most useful thing we
-can do with them. We can also define functions that have closures as parameters
-by using the `Fn` traits. Here's an example of a function named `call_with_one`
-whose signature has a closure as a parameter:
+* `FnOnce` consumes the variables it captures from its enclosing scope, known
+  as the closure’s *environment*. To consume the captured variables, the
+  closure must take ownership of these variables and move them into the closure
+  when it is defined. The `Once` part of the name represents the fact that the
+  closure can’t take ownership of the same variables more than once, so it can
+  be called only once.
+* `FnMut` can change the environment because it mutably borrows values.
+* `Fn` borrows values from the environment immutably.
 
-```rust
-fn call_with_one<F>(some_closure: F) -> i32
-    where F: Fn(i32) -> i32 {
+When you create a closure, Rust infers which trait to use based on how the
+closure uses the values from the environment. All closures implement `FnOnce`
+because they can all be called at least once. Closures that don’t move the
+captured variables also implement `FnMut`, and closures that don’t need mutable
+access to the captured variables also implement `Fn`. In Listing 13-12, the
+`equal_to_x` closure borrows `x` immutably (so `equal_to_x` has the `Fn` trait)
+because the body of the closure only needs to read the value in `x`.
 
-    some_closure(1)
-}
+If you want to force the closure to take ownership of the values it uses in the
+environment, you can use the `move` keyword before the parameter list. This
+technique is mostly useful when passing a closure to a new thread to move the
+data so it’s owned by the new thread.
 
-let answer = call_with_one(|x| x + 2);
+> Note: `move` closures may still implement `Fn` or `FnMut`, even though
+> they capture variables by move. This is because the traits implemented by a
+> closure type are determined by what the closure does with captured values,
+> not how it captures them. The `move` keyword only specifies the latter.
 
-assert_eq!(3, answer);
+We’ll have more examples of `move` closures in Chapter 16 when we talk about
+concurrency. For now, here’s the code from Listing 13-12 with the `move`
+keyword added to the closure definition and using vectors instead of integers,
+because integers can be copied rather than moved; note that this code will not
+yet compile.
+
+<span class="filename">Filename: src/main.rs</span>
+
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch13-functional-features/no-listing-03-move-closures/src/main.rs}}
 ```
 
-We pass the closure `|x| x + 2`, to `call_with_one`, and `call_with_one` calls
-that closure with `1` as an argument. The return value of the call to
-`some_closure` is then returned from `call_with_one`.
+We receive the following error:
 
-The signature of `call_with_one` is using the `where` syntax discussed in the
-Traits section of Chapter 10. The `some_closure` parameter has the generic type
-`F`, which in the `where` clause is defined as having the trait bounds
-`Fn(i32) -> i32`. The `Fn` trait represents a closure, and we can add types to
-the `Fn` trait to represent a specific type of closure. In this case, our
-closure has a parameter of type `i32` and returns an `i32`, so the generic bound
-we specify is `Fn(i32) -> i32`.
+```console
+{{#include ../listings/ch13-functional-features/no-listing-03-move-closures/output.txt}}
+```
 
-Specifying a function signature that contains a closure requires the use of
-generics and trait bounds. Each closure has a unique type, so we can't write
-the type of a closure directly, we have to use generics.
+The `x` value is moved into the closure when the closure is defined, because we
+added the `move` keyword. The closure then has ownership of `x`, and `main`
+isn’t allowed to use `x` anymore in the `println!` statement. Removing
+`println!` will fix this example.
 
-`Fn` isn't the only trait bound available for specifying closures, however.
-There are three: `Fn`, `FnMut`, and `FnOnce`. This continues the patterns of
-threes we've seen elsewhere in Rust: borrowing, borrowing mutably, and
-ownership. Using `Fn` specifies that the closure used may only borrow values in
-its environment. To specify a closure that mutates the environment, use
-`FnMut`, and if the closure takes ownership of the environment, `FnOnce`. Most
-of the time, you can start with `Fn`, and the compiler will tell you if you
-need `FnMut` or `FnOnce` based on what happens when the function calls the
-closure.
+Most of the time when specifying one of the `Fn` trait bounds, you can start
+with `Fn` and the compiler will tell you if you need `FnMut` or `FnOnce` based
+on what happens in the closure body.
 
-To illustrate a situation where it's useful for a function to have a parameter
-that's a closure, let's move on to our next topic: iterators.
+To illustrate situations where closures that can capture their environment are
+useful as function parameters, let’s move on to our next topic: iterators.

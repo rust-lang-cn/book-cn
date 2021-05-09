@@ -7,8 +7,8 @@ rev=$(git rev-parse --short HEAD)
 cd book
 
 git init
-git config user.name "Aaklo Xu"
-git config user.email "aakloxu@gmail.com"
+git config user.name "Aaran Xu"
+git config user.email "aaranxu@outlook.com"
 
 git remote add upstream "git@github.com:rust-lang-cn/book-cn.git"
 git fetch upstream

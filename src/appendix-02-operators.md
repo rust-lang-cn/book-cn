@@ -1,195 +1,205 @@
-## Operators
+## Appendix B: Operators and Symbols
 
-### Unary operator expressions
+This appendix contains a glossary of Rust’s syntax, including operators and
+other symbols that appear by themselves or in the context of paths, generics,
+trait bounds, macros, attributes, comments, tuples, and brackets.
 
-Rust defines the following unary operators. They are all written as prefix
-operators, before the expression they apply to.
+### Operators
 
-* `-`
-  : Negation. Signed integer types and floating-point types support negation. It
-    is an error to apply negation to unsigned types; for example, the compiler
-    rejects `-1u32`.
-* `*`
-  : Dereference. When applied to a pointer, it denotes the pointed-to location.
-    For pointers to mutable locations, the resulting value can be assigned to.
-    On non-pointer types, it calls the `deref` method of the `std::ops::Deref`
-    trait, or the `deref_mut` method of the `std::ops::DerefMut` trait (if
-    implemented by the type and required for an outer expression that will or
-    could mutate the dereference), and produces the result of dereferencing the
-    `&` or `&mut` borrowed pointer returned from the overload method.
-* `!`
-  : Logical negation. On the boolean type, this flips between `true` and
-    `false`. On integer types, this inverts the individual bits in the
-    two's complement representation of the value.
-* `&` and `&mut`
-  : Borrowing. When applied to a value, these operators produce a
-    reference (pointer) to that value. The value is also placed into
-    a borrowed state for the duration of the reference. For a shared
-    borrow (`&`), this implies that the value may not be mutated, but
-    it may be read or shared again. For a mutable borrow (`&mut`), the
-    value may not be accessed in any way until the borrow expires.
+Table B-1 contains the operators in Rust, an example of how the operator would
+appear in context, a short explanation, and whether that operator is
+overloadable. If an operator is overloadable, the relevant trait to use to
+overload that operator is listed.
 
-### Binary operator expressions
+<span class="caption">Table B-1: Operators</span>
 
-Binary operators expressions are given in order of operator precedence.
+| Operator | Example | Explanation | Overloadable? |
+|----------|---------|-------------|---------------|
+| `!` | `ident!(...)`, `ident!{...}`, `ident![...]` | Macro expansion | |
+| `!` | `!expr` | Bitwise or logical complement | `Not` |
+| `!=` | `var != expr` | Nonequality comparison | `PartialEq` |
+| `%` | `expr % expr` | Arithmetic remainder | `Rem` |
+| `%=` | `var %= expr` | Arithmetic remainder and assignment | `RemAssign` |
+| `&` | `&expr`, `&mut expr` | Borrow | |
+| `&` | `&type`, `&mut type`, `&'a type`, `&'a mut type` | Borrowed pointer type | |
+| `&` | `expr & expr` | Bitwise AND | `BitAnd` |
+| `&=` | `var &= expr` | Bitwise AND and assignment | `BitAndAssign` |
+| `&&` | `expr && expr` | Short-circuiting logical AND | |
+| `*` | `expr * expr` | Arithmetic multiplication | `Mul` |
+| `*=` | `var *= expr` | Arithmetic multiplication and assignment | `MulAssign` |
+| `*` | `*expr` | Dereference | |
+| `*` | `*const type`, `*mut type` | Raw pointer | |
+| `+` | `trait + trait`, `'a + trait` | Compound type constraint | |
+| `+` | `expr + expr` | Arithmetic addition | `Add` |
+| `+=` | `var += expr` | Arithmetic addition and assignment | `AddAssign` |
+| `,` | `expr, expr` | Argument and element separator | |
+| `-` | `- expr` | Arithmetic negation | `Neg` |
+| `-` | `expr - expr` | Arithmetic subtraction | `Sub` |
+| `-=` | `var -= expr` | Arithmetic subtraction and assignment | `SubAssign` |
+| `->` | `fn(...) -> type`, <code>&vert;...&vert; -> type</code> | Function and closure return type | |
+| `.` | `expr.ident` | Member access | |
+| `..` | `..`, `expr..`, `..expr`, `expr..expr` | Right-exclusive range literal | |
+| `..=` | `..=expr`, `expr..=expr` | Right-inclusive range literal | |
+| `..` | `..expr` | Struct literal update syntax | |
+| `..` | `variant(x, ..)`, `struct_type { x, .. }` | “And the rest” pattern binding | |
+| `...` | `expr...expr` | In a pattern: inclusive range pattern | |
+| `/` | `expr / expr` | Arithmetic division | `Div` |
+| `/=` | `var /= expr` | Arithmetic division and assignment | `DivAssign` |
+| `:` | `pat: type`, `ident: type` | Constraints | |
+| `:` | `ident: expr` | Struct field initializer | |
+| `:` | `'a: loop {...}` | Loop label | |
+| `;` | `expr;` | Statement and item terminator | |
+| `;` | `[...; len]` | Part of fixed-size array syntax | |
+| `<<` | `expr << expr` | Left-shift | `Shl` |
+| `<<=` | `var <<= expr` | Left-shift and assignment | `ShlAssign` |
+| `<` | `expr < expr` | Less than comparison | `PartialOrd` |
+| `<=` | `expr <= expr` | Less than or equal to comparison | `PartialOrd` |
+| `=` | `var = expr`, `ident = type` | Assignment/equivalence | |
+| `==` | `expr == expr` | Equality comparison | `PartialEq` |
+| `=>` | `pat => expr` | Part of match arm syntax | |
+| `>` | `expr > expr` | Greater than comparison | `PartialOrd` |
+| `>=` | `expr >= expr` | Greater than or equal to comparison | `PartialOrd` |
+| `>>` | `expr >> expr` | Right-shift | `Shr` |
+| `>>=` | `var >>= expr` | Right-shift and assignment | `ShrAssign` |
+| `@` | `ident @ pat` | Pattern binding | |
+| `^` | `expr ^ expr` | Bitwise exclusive OR | `BitXor` |
+| `^=` | `var ^= expr` | Bitwise exclusive OR and assignment | `BitXorAssign` |
+| <code>&vert;</code> | <code>pat &vert; pat</code> | Pattern alternatives | |
+| <code>&vert;</code> | <code>expr &vert; expr</code> | Bitwise OR | `BitOr` |
+| <code>&vert;=</code> | <code>var &vert;= expr</code> | Bitwise OR and assignment | `BitOrAssign` |
+| <code>&vert;&vert;</code> | <code>expr &vert;&vert; expr</code> | Short-circuiting logical OR | |
+| `?` | `expr?` | Error propagation | |
 
-#### Arithmetic operators
+### Non-operator Symbols
 
-Binary arithmetic expressions are syntactic sugar for calls to built-in traits,
-defined in the `std::ops` module of the `std` library. This means arithmetic
-operators can be overridden for user-defined types. The default meaning of the
-operators on standard types is given here.
+The following list contains all non-letters that don’t function as operators;
+that is, they don’t behave like a function or method call.
 
-* `+`
-  : Addition and array/string concatenation.
-    Calls the `add` method on the `std::ops::Add` trait.
-* `-`
-  : Subtraction.
-    Calls the `sub` method on the `std::ops::Sub` trait.
-* `*`
-  : Multiplication.
-    Calls the `mul` method on the `std::ops::Mul` trait.
-* `/`
-  : Quotient.
-    Calls the `div` method on the `std::ops::Div` trait.
-* `%`
-  : Remainder.
-    Calls the `rem` method on the `std::ops::Rem` trait.
+Table B-2 shows symbols that appear on their own and are valid in a variety of
+locations.
 
-Note that Rust does not have a built-in operator for exponential (power)
-calculation; see the `pow` method on the numeric types.
+<span class="caption">Table B-2: Stand-Alone Syntax</span>
 
-#### Bitwise operators
+| Symbol | Explanation |
+|--------|-------------|
+| `'ident` | Named lifetime or loop label |
+| `...u8`, `...i32`, `...f64`, `...usize`, etc. | Numeric literal of specific type |
+| `"..."` | String literal |
+| `r"..."`, `r#"..."#`, `r##"..."##`, etc. | Raw string literal, escape characters not processed |
+| `b"..."` | Byte string literal; constructs a `[u8]` instead of a string |
+| `br"..."`, `br#"..."#`, `br##"..."##`, etc. | Raw byte string literal, combination of raw and byte string literal |
+| `'...'` | Character literal |
+| `b'...'` | ASCII byte literal |
+| <code>&vert;...&vert; expr</code> | Closure |
+| `!` | Always empty bottom type for diverging functions |
+| `_` | “Ignored” pattern binding; also used to make integer literals readable |
 
-Like the arithmetic operators, bitwise operators are syntactic sugar for calls
-to methods of built-in traits. This means bitwise operators can be overridden
-for user-defined types. The default meaning of the operators on standard types
-is given here. Bitwise `&`, `|` and `^` applied to boolean arguments are
-equivalent to logical `&&`, `||` and `!=` evaluated in non-lazy fashion.
+Table B-3 shows symbols that appear in the context of a path through the module
+hierarchy to an item.
 
-* `&`
-  : Bitwise AND.
-    Calls the `bitand` method of the `std::ops::BitAnd` trait.
-* `|`
-  : Bitwise inclusive OR.
-    Calls the `bitor` method of the `std::ops::BitOr` trait.
-* `^`
-  : Bitwise exclusive OR.
-    Calls the `bitxor` method of the `std::ops::BitXor` trait.
-* `<<`
-  : Left shift.
-    Calls the `shl` method of the `std::ops::Shl` trait.
-* `>>`
-  : Right shift (arithmetic).
-    Calls the `shr` method of the `std::ops::Shr` trait.
+<span class="caption">Table B-3: Path-Related Syntax</span>
 
-#### Lazy boolean operators
+| Symbol | Explanation |
+|--------|-------------|
+| `ident::ident` | Namespace path |
+| `::path` | Path relative to the crate root (i.e., an explicitly absolute path) |
+| `self::path` | Path relative to the current module (i.e., an explicitly relative path).
+| `super::path` | Path relative to the parent of the current module |
+| `type::ident`, `<type as trait>::ident` | Associated constants, functions, and types |
+| `<type>::...` | Associated item for a type that cannot be directly named (e.g., `<&T>::...`, `<[T]>::...`, etc.) |
+| `trait::method(...)` | Disambiguating a method call by naming the trait that defines it |
+| `type::method(...)` | Disambiguating a method call by naming the type for which it’s defined |
+| `<type as trait>::method(...)` | Disambiguating a method call by naming the trait and type |
 
-The operators `||` and `&&` may be applied to operands of boolean type. The
-`||` operator denotes logical 'or', and the `&&` operator denotes logical
-'and'. They differ from `|` and `&` in that the right-hand operand is only
-evaluated when the left-hand operand does not already determine the result of
-the expression. That is, `||` only evaluates its right-hand operand when the
-left-hand operand evaluates to `false`, and `&&` only when it evaluates to
-`true`.
+Table B-4 shows symbols that appear in the context of using generic type
+parameters.
 
-#### Comparison operators
+<span class="caption">Table B-4: Generics</span>
 
-Comparison operators are, like the arithmetic operators and bitwise operators,
-syntactic sugar for calls to built-in traits. This means that comparison
-operators can be overridden for user-defined types. The default meaning of the
-operators on standard types is given here.
+| Symbol | Explanation |
+|--------|-------------|
+| `path<...>` | Specifies parameters to generic type in a type (e.g., `Vec<u8>`) |
+| `path::<...>`, `method::<...>` | Specifies parameters to generic type, function, or method in an expression; often referred to as turbofish (e.g., `"42".parse::<i32>()`) |
+| `fn ident<...> ...` | Define generic function |
+| `struct ident<...> ...` | Define generic structure |
+| `enum ident<...> ...` | Define generic enumeration |
+| `impl<...> ...` | Define generic implementation |
+| `for<...> type` | Higher-ranked lifetime bounds |
+| `type<ident=type>` | A generic type where one or more associated types have specific assignments (e.g., `Iterator<Item=T>`) |
 
-* `==`
-  : Equal to.
-    Calls the `eq` method on the `std::cmp::PartialEq` trait.
-* `!=`
-  : Unequal to.
-    Calls the `ne` method on the `std::cmp::PartialEq` trait.
-* `<`
-  : Less than.
-    Calls the `lt` method on the `std::cmp::PartialOrd` trait.
-* `>`
-  : Greater than.
-    Calls the `gt` method on the `std::cmp::PartialOrd` trait.
-* `<=`
-  : Less than or equal.
-    Calls the `le` method on the `std::cmp::PartialOrd` trait.
-* `>=`
-  : Greater than or equal.
-    Calls the `ge` method on the `std::cmp::PartialOrd` trait.
+Table B-5 shows symbols that appear in the context of constraining generic type
+parameters with trait bounds.
 
-#### Type cast expressions
+<span class="caption">Table B-5: Trait Bound Constraints</span>
 
-A type cast expression is denoted with the binary operator `as`.
+| Symbol | Explanation |
+|--------|-------------|
+| `T: U` | Generic parameter `T` constrained to types that implement `U` |
+| `T: 'a` | Generic type `T` must outlive lifetime `'a` (meaning the type cannot transitively contain any references with lifetimes shorter than `'a`) |
+| `T : 'static` | Generic type `T` contains no borrowed references other than `'static` ones |
+| `'b: 'a` | Generic lifetime `'b` must outlive lifetime `'a` |
+| `T: ?Sized` | Allow generic type parameter to be a dynamically sized type |
+| `'a + trait`, `trait + trait` | Compound type constraint |
 
-Executing an `as` expression casts the value on the left-hand side to the type
-on the right-hand side.
+Table B-6 shows symbols that appear in the context of calling or defining
+macros and specifying attributes on an item.
 
-An example of an `as` expression:
+<span class="caption">Table B-6: Macros and Attributes</span>
 
-```rust
-# fn sum(values: &[f64]) -> f64 { 0.0 }
-# fn len(values: &[f64]) -> i32 { 0 }
+| Symbol | Explanation |
+|--------|-------------|
+| `#[meta]` | Outer attribute |
+| `#![meta]` | Inner attribute |
+| `$ident` | Macro substitution |
+| `$ident:kind` | Macro capture |
+| `$(…)…` | Macro repetition |
+| `ident!(...)`, `ident!{...}`, `ident![...]` | Macro invocation |
 
-fn average(values: &[f64]) -> f64 {
-    let sum: f64 = sum(values);
-    let size: f64 = len(values) as f64;
-    sum / size
-}
-```
+Table B-7 shows symbols that create comments.
 
-Some of the conversions which can be done through the `as` operator
-can also be done implicitly at various points in the program, such as
-argument passing and assignment to a `let` binding with an explicit
-type. Implicit conversions are limited to "harmless" conversions that
-do not lose information and which have minimal or no risk of
-surprising side-effects on the dynamic execution semantics.
+<span class="caption">Table B-7: Comments</span>
 
-#### Assignment expressions
+| Symbol | Explanation |
+|--------|-------------|
+| `//` | Line comment |
+| `//!` | Inner line doc comment |
+| `///` | Outer line doc comment |
+| `/*...*/` | Block comment |
+| `/*!...*/` | Inner block doc comment |
+| `/**...*/` | Outer block doc comment |
 
-An *assignment expression* consists of a pattern followed by an equals
-sign (`=`) and an expression.
+Table B-8 shows symbols that appear in the context of using tuples.
 
-Evaluating an assignment expression either copies or
-moves its right-hand operand to its left-hand
-operand.
+<span class="caption">Table B-8: Tuples</span>
 
-```
-# let mut x = 0;
-# let y = 0;
-x = y;
-```
+| Symbol | Explanation |
+|--------|-------------|
+| `()` | Empty tuple (aka unit), both literal and type |
+| `(expr)` | Parenthesized expression |
+| `(expr,)` | Single-element tuple expression |
+| `(type,)` | Single-element tuple type |
+| `(expr, ...)` | Tuple expression |
+| `(type, ...)` | Tuple type |
+| `expr(expr, ...)` | Function call expression; also used to initialize tuple `struct`s and tuple `enum` variants |
+| `expr.0`, `expr.1`, etc. | Tuple indexing |
 
-#### Compound assignment expressions
+Table B-9 shows the contexts in which curly braces are used.
 
-The `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, and `>>` operators may be
-composed with the `=` operator. The expression `lval OP= val` is equivalent to
-`lval = lval OP val`. For example, `x = x + 1` may be written as `x += 1`.
+<span class="caption">Table B-9: Curly Brackets</span>
 
-Any such expression always has the `unit` type.
+| Context | Explanation |
+|---------|-------------|
+| `{...}` | Block expression |
+| `Type {...}` | `struct` literal |
 
-#### Operator precedence
+Table B-10 shows the contexts in which square brackets are used.
 
-The precedence of Rust binary operators is ordered as follows, going from
-strong to weak:
+<span class="caption">Table B-10: Square Brackets</span>
 
-```text
-as :
-* / %
-+ -
-<< >>
-&
-^
-|
-== != < > <= >=
-&&
-||
-.. ...
-<-
-=
-```
-
-Operators at the same precedence level are evaluated left-to-right. Unary
-operators have the same precedence level and are stronger than any of the
-binary operators.
+| Context | Explanation |
+|---------|-------------|
+| `[...]` | Array literal |
+| `[expr; len]` | Array literal containing `len` copies of `expr` |
+| `[type; len]` | Array type containing `len` instances of `type` |
+| `expr[expr]` | Collection indexing. Overloadable (`Index`, `IndexMut`) |
+| `expr[..]`, `expr[a..]`, `expr[..b]`, `expr[a..b]` | Collection indexing pretending to be collection slicing, using `Range`, `RangeFrom`, `RangeTo`, or `RangeFull` as the “index” |
