@@ -5,8 +5,8 @@
 > 中文翻译注（Chinese translation of the [The Rust Programming Language][book-website]）：<br>
 > 1. 《Rust 程序设计语言》(The Rust Programming Language 中文版) 翻译自 [The Rust Programming Language][book-website]，查看此书的 [Github 翻译项目][book-cn]。<br>
 > 2. 本书已有由 [KaiserY 翻译完的版本](https://github.com/KaiserY/trpl-zh-cn)，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续将跟随 Rust 官方的英文版本更新。<br>
-> 3. 许可协议：跟随英文原书使用 MIT 和 Apache 2.0 双许可授权。
-> 
+> 3. 许可协议：跟随英文原书使用 MIT 和 Apache 2.0 双许可授权。<br>
+> 4. <span style="color:red;">本站支持文档中英文切换</span>，点击页面右上角处可以切换到相同章节的英文页面。
 
 [book-website]: https://doc.rust-lang.org/book
 [book-cn]: https://github.com/rust-lang-cn/book-cn
