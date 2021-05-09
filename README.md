@@ -1,31 +1,43 @@
 # Rust 程序设计语言
 
-[![Build Status](https://travis-ci.org/rust-lang/book.svg?branch=master)](https://travis-ci.org/rust-lang/book)
+![Build Status](https://github.com/rust-lang-cn/book-cn/workflows/CI/badge.svg)
 
-> Chinese translation of [The Rust Programming Language][book-en]  
-> 持续翻译中...  
-> 注：此仓库不再更新翻译，因本书已经有了[其他的翻译版本](https://github.com/KaiserY/trpl-zh-cn)。
+> Chinese translation of [The Rust Programming Language][github-en]  
+> 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书。
 
-[book-en]: https://github.com/rust-lang/book
+[github-en]: https://github.com/rust-lang/book
 
-这是新版的《Rust 程序设计语言》，上一版是放在 [Rust 主代码库][src]中。如果想阅读上一版文档，可在[官网][prod]上直接查阅。
+[可以从 No Starch Press 购买本书英文版][nostarch]。
 
-[src]: https://github.com/rust-lang/rust/tree/master/src/doc/book
-[prod]: https://doc.rust-lang.org/book/
+中文译版注：
 
-如果你想看当前版本的内容，可[点击这里阅读][html-cn]（英文原版在 [Gihub pages][html] 上）。
+1. 中文出版书名为《Rust 权威指南》，可以在中文线上或线下购书平台购买。
+2. 出版的版本翻译独立于本仓库翻译。
 
-[html-cn]: https://rustwiki.org/zh-CN/book
-[html]: http://rust-lang.github.io/book/
+[nostarch]: https://nostarch.com/rust
 
-## 要求
+在线上可以[阅读中文版][book-cn]或[阅读英文版][book-en]。另外英文版在线阅读可以选择 [stable]、[beta] 和 [nightly] 三个不同的分支版本，这几个分支版本可能滞后于[英文仓库]的最新内容。
 
-构建这本书需要 [mdBook] >= v0.0.13。执行以下命令安装：
+[book-cn]: https://rustwiki.org/zh-CN/book
+[book-en]: https://doc.rust-lang.org/book/
+[stable]: https://doc.rust-lang.org/stable/book/
+[beta]: https://doc.rust-lang.org/beta/book/
+[nightly]: https://doc.rust-lang.org/nightly/book/
+
+## 依赖
+
+构建这本书需要 [mdBook] 。执行以下命令安装：
 
 [mdBook]: https://github.com/azerupi/mdBook
 
-```
+```bash
 $ cargo install mdbook
+```
+
+或指定安装版本：
+
+```bash
+$ cargo install mdbook --vers [version-num]
 ```
 
 ## 构建
@@ -39,15 +51,25 @@ $ mdbook build
 输出内容存放在 `book` 子目录中。可使用浏览器打开来查看内容。
 
 _Firefox:_
-```
-$ firefox book/index.html           # Linux
-$ open -a "Firefox" book/index.html # OS X
+```bash
+$ firefox book/index.html                       # Linux
+$ open -a "Firefox" book/index.html             # OS X
+$ Start-Process "firefox.exe" .\book\index.html # Windows (PowerShell)
+$ start firefox.exe .\book\index.html           # Windows (Cmd)
 ```
 
 _Chrome:_
+```bash
+$ google-chrome book/index.html                 # Linux
+$ open -a "Google Chrome" book/index.html       # OS X
+$ Start-Process "chrome.exe" .\book\index.html  # Windows (PowerShell)
+$ start chrome.exe .\book\index.html            # Windows (Cmd)
 ```
-$ google-chrome book/index.html           # Linux
-$ open -a "Google Chrome" book/index.html # OS X
+
+To run the tests:
+
+```bash
+$ mdbook test
 ```
 
 运行测试:
@@ -62,22 +84,6 @@ $ mdbook test
 
 [contrib-cn]: https://github.com/rust-lang-cn/book-cn/blob/master/CONTRIBUTING.md
 [contrib]: https://github.com/rust-lang/book/blob/master/CONTRIBUTING.md
-
-## No Starch
-
-> 译注：No Starch 是美国的一家出版社
-
-本书（英文原版）将由 No Starch 出版社出版，我们先在这里更新迭代，再将文本发送到 No Starch。然后他们进一步编辑，最后我们将内容取回来。
-
-所以这里有一个 *nostarch* 目录，对应 No Starch 系统的文本。
-
-当我们开始和 No Starch 配合使用 Word 文档后，我们还会在 *nostarch/odt* 目录中核对这些内容并加到库中。要将文本从 Word 文档中提取成 Markdown 格式，以便追踪线上书籍（即本书）的变更记录：
-
-1. 在 LibreOffice 打开 doc 文件
-1. 接受所有跟踪的更改
-1. 另存为 Microsoft Word 2007-2013 XML (.docx) 文件到 *tmp* 目录
-1. 运行 `./doc-to-md.sh`
-1. 检查 *nostarch* 目录中的 Markdown 文件所做的更改，并适当地将变更的内容复制到 *src* 目录。
 
 ## Graphviz dot
 
@@ -104,3 +110,16 @@ $ dot dot/trpl04-01.dot -Tsvg > src/img/trpl04-01.svg
 ```
 $ tr -d '\015' < DOS-file > UNIX-file
 ```
+
+
+## 翻译
+
+我们很乐意翻译这本书！请参阅[“翻译”][Translations]标签（在[英文原仓库][github-en]）以加入当前正在进行的工作。新建一个 Issue，开始使用新语言！在我们合并任何内容之前，我们正在等待 [mdbook 对多种语言的支持][mdbook support]，只要支持后将随时可以开始！
+
+[github-en]: https://github.com/rust-lang/book
+[Translations]: https://github.com/rust-lang/book/issues?q=is%3Aopen+is%3Aissue+label%3ATranslations
+[mdbook support]: https://github.com/rust-lang-nursery/mdBook/issues/5
+
+## 拼写检查
+
+要扫描源文件是否存在拼写错误，可以使用 `ci` 目录中的脚本 `spellcheck.sh`。这需要一个有效词词典，该词典为 `ci/dictionary.txt`。如果脚本产生误报（例如，使用了词语 `BTreeMap` 被脚本认为无效），则需要在 `ci/dictionary.txt` 中添加该单词（保持排序顺序以保持一致性）。
