@@ -55,6 +55,7 @@ $ mdbook build
 输出内容存放在 `book` 子目录中。可使用浏览器打开来查看内容。
 
 _Firefox:_
+
 ```bash
 $ firefox book/index.html                       # Linux
 $ open -a "Firefox" book/index.html             # OS X
@@ -63,6 +64,7 @@ $ start firefox.exe .\book\index.html           # Windows (Cmd)
 ```
 
 _Chrome:_
+
 ```bash
 $ google-chrome book/index.html                 # Linux
 $ open -a "Google Chrome" book/index.html       # OS X
@@ -70,15 +72,9 @@ $ Start-Process "chrome.exe" .\book\index.html  # Windows (PowerShell)
 $ start chrome.exe .\book\index.html            # Windows (Cmd)
 ```
 
-To run the tests:
-
-```bash
-$ mdbook test
-```
-
 运行测试:
 
-```
+```bash
 $ mdbook test
 ```
 
