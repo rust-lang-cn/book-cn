@@ -10,7 +10,7 @@
 [github-en]: https://github.com/rust-lang/book
 [KaiserY]: https://github.com/KaiserY/trpl-zh-cn
 
-可以从 [No Starch Press 购买本书英文版][nostarch]。
+可以从 [No Starch 出版社购买本书英文纸质版][nostarch]。
 
 中文译版注：
 
