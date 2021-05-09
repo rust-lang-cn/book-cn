@@ -100,3 +100,14 @@ $ mdbook test
 ## 拼写检查
 
 要扫描源文件是否存在拼写错误，可以使用 `ci` 目录中的脚本 `spellcheck.sh`。这需要一个带有有效单词的字典文件，由 `ci/dictionary.txt` 提供。如果脚本产生误报（例如，使用了词语 `BTreeMap` 被脚本认为无效），则需要在 `ci/dictionary.txt` 中添加该单词（保持排序顺序以确保一致性）。
+
+## 授权协议
+
+《Rust 程序设计语言》（中文版与英文版 The Rust Programming Language 均） 使用以下两种协议的任一种进行授权：
+
+* Apache 2.0 授权协议，（[LICENSE-APACHE](LICENSE-APACHE) 或 http://www.apache.org/licenses/LICENSE-2.0）
+* MIT 授权协议 ([LICENSE-MIT](LICENSE-MIT) 或 http://opensource.org/licenses/MIT)
+
+可以根据自己选择来定。
+
+除非您有另外说明，否则您在本仓库提交的任何贡献均按上述方式进行双重许可授权，就如 Apache 2.0 协议所规定那样，而无需附加任何其他条款或条件。
