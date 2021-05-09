@@ -5,11 +5,11 @@
 > Chinese translation of [The Rust Programming Language][github-en]<br>
 > 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书。<br>
 >
-> 本仓库翻译内容包括 Rust 中文翻译项目组本身的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn] 和 [budshome/trpl-zh-cn] 等译本），我们尽可能避免不必要的重复劳动。
+> 本仓库翻译内容包括 Rust 中文翻译项目组本身的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn][KaiserY] 和 [budshome/trpl-zh-cn][budshome] 等译本），我们尽可能避免不必要的重复劳动。
 
 [github-en]: https://github.com/rust-lang/book
-[KaiserY]: https://github.com:KaiserY/trpl-zh-cn
-[budshome]: https://github.com:budshome/trpl-zh-cn
+[KaiserY]: https://github.com/KaiserY/trpl-zh-cn
+[budshome]: https://github.com/budshome/trpl-zh-cn
 
 [可以从 No Starch Press 购买本书英文版][nostarch]。
 
