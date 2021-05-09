@@ -11,11 +11,11 @@
 [KaiserY]: https://github.com/KaiserY/trpl-zh-cn
 [budshome]: https://github.com/budshome/trpl-zh-cn
 
-[可以从 No Starch Press 购买本书英文版][nostarch]。
+可以从 [No Starch Press 购买本书英文版][nostarch]。
 
 中文译版注：
 
-1. 中文出版书名为《Rust 权威指南》，可以在中文线上或线下购书平台购买。
+1. 中文出版书名为《Rust 权威指南》，可以在线上或线下购书平台购买。
 2. 出版的版本翻译独立于本仓库翻译。
 
 [nostarch]: https://nostarch.com/rust
