@@ -1,6 +1,7 @@
 (function () {
   var url = window.location.href;
   var host = window.location.host;
+  var home_url = window.location.protocol + '//' + window.location.host;
 
   var search = {
     en: "/en/",
@@ -15,6 +16,7 @@
 
   var link = "";
   var word = "";
+  var home = "Home";
 
   if (url.indexOf(search.en) != -1 && url.indexOf(search.en) === (url.indexOf(host) + host.length)) {
     link = url.replace(search.en, replaceWith.en);
@@ -22,12 +24,20 @@
   } else if (url.indexOf(search.zh_CN) != -1 && url.indexOf(search.zh_CN) === (url.indexOf(host) + host.length)) {
     link = url.replace(search.zh_CN, replaceWith.zh_CN);
     word = "English";
+	home = "首页";
   }
 
-  var node = '<a href="' + link + '"><i id="print-button" class="fa fa-language"> ' + word + '</i></a>';
+  var home_node = '';
+  if (window.location.protocol == 'http:' || window.location.protocol == 'https:') {
+    home_node = '<a href="' + home_url + '" title="' + home + '" aria-label="' + home + '"><i id="go-back-homepage" class="fa fa-home"></i></a>';
+  }
+  var lang_node = '';
+  if (link != '') {
+    lang_node = '<a href="' + link + '"><i id="change-language" class="fa fa-language"> ' + word + '</i></a>';
+  }
   var insertNode = document.getElementsByClassName('right-buttons');
-  if (insertNode.length > 0 && link != "") {
+  if (insertNode.length > 0) {
     var html = insertNode[0].innerHTML;
-    insertNode[0].innerHTML = html + node;
+    insertNode[0].innerHTML = home_node + html + lang_node;
   }
 })()  
