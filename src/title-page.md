@@ -35,7 +35,3 @@ HTML 格式可从 [https://rustwiki.org/zh-CN/book/](https://rustwiki.org/zh-CN/
 [install]: ch01-01-installation.html
 [editions]: appendix-05-editions.html
 [nsprust]: https://nostarch.com/rust
-
-<script>
-  var default_homepage_md = "title-page.md";
-</script>
