@@ -4,4 +4,4 @@
 
 * 在 Linux、macOS 和 Windows 上安装 Rust
 * 编写一个打印 `Hello, world!` 的程序
-* 使用 Rust 的包管理器和构建系统 `cargo`
+* 使用 `cargo`，这是 Rust 的包管理器和构建系统
