@@ -1,72 +1,78 @@
 ## 安装
 
-使用 Rust 的第一步就是安装它。运行本章的命令需要联网，因为要从网络上下载 Rust。
+第一步是安装 Rust。运行本章的命令需要联网，因为要从网络上下载 Rust。
 
-我们将使用终端来显示一些命令，这些行都以 `$` 符号开头。`$` 符号不需要键入，它们在那里表示每个命令的起始。网上很多教程和示例都遵循这个约定：`$` 表示命令以普通用户运行，`#` 表示命令以管理员用户运行。不以 `$` 开头的行通常表示上一个命令的输出内容。
+第一步是安装 Rust。我们将通过 `rustup` 来下载 Rust，这是一个管理 Rust 版本和相关工具的命令行工具。您需要互联网连接才能下载。
 
-### 在 Linux 或 Mac 上安装
+> 注意：如果你出于某些原因不想用 `rustup`，请参阅 [Rust 安装页面](https://www.rust-lang.org/zh-CN/tools/install)的其他安装选项。
 
-如果您使用的是 Linux 或 Mac，您只需打开一个终端并输入：
+下面步骤将安装 Rust 编译器的最新稳定版本。Rust 的稳定性保证可确保本书中所有能编译的示例在更新的 Rust 版本中能够继续通过编译。不同版本之间的输出可能会略有不同，因为 Rust 经常会改进错误消息和警告。也就是说，任何通过这些步骤安装的较新稳定版本的 Rust 应该都可以正常运行本书的内容。
 
-```text
-$ curl https://sh.rustup.rs -sSf | sh
+### 命令行符号
+
+> 在本章以及整本书中，我们将展示一些在终端中使用的命令。在终端中输入的行均以 `$` 开头，你不需输入 `$` 字符；它表示每个命令的开始。不以 `$` 开头的行通常表示上一个命令的输出内容。另外，专用于 PowerShell 的示例将使用 `>` 而不是 `$`。
+
+### 在 Linux 或 macOS 上安装 `rustup`
+
+如果你使用的是 Linux 或 macOS，打开终端并输入下面命令：
+
+```console
+$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
-这将下载一个脚本并开始安装。系统可能会提示您输入密码。如果一切顺利，您将会看到：
+这个命令将下载一个脚本并开始安装 `rustup` 工具，此工具将安装 `Rust` 的最新稳定版本。可能会提示你输入密码。如果安装成功，将出现下面这行：
 
 ```text
 Rust is installed now. Great!
 ```
 
-当然，若是你不认可 `curl | sh` 模式，你可以以你喜欢的方式下载，检查，再运行脚本。
+此外，你需要某种类型的链接器。很可能链接器已经安装好，但是当你尝试编译 Rust 程序并收到提示链接器无法执行的错误时，这意味着你的系统上未安装链接器，你需要手动安装一个链接器。C 编译器通常带有正确的链接器。查阅平台的相关文档，以了解如何安装 C 编译器。另外，一些常见的 Rust 包依赖于 C 代码，并且需要 C 编译器。因此，很值得立即安装一个。
 
-### 在 Windows 上安装
+### 在 Windows 上安装 `rustup`
 
-在 Windows 上，请到 [https://rustup.rs](https://rustup.rs/)<!-- ignore --> 网站上按照说明下载 rustup-init.exe。双击运行并按照提示装好。
+在 Windows 上，访问 [https://www.rust-lang.org/tools/install][install] 页面并按照说明安装 Rust。在安装过程的某个步骤，你可能会收到一条消息，提示你还需要适用于 Visual Studio 2013 或更高版本的 C++ 的构建工具（C++ build tools）。获取这些构建工具的最简单方法是安装 [Visual Studio 2019 的构建工具][visualstudio]。当被问及要安装哪些内容时，请确保已选择 “C++ build tools”，并包括 Windows 10 SDK 和英文语言包。
 
-在本书其余地方用到的 Windows 特定的命令都假定您使用的是 `cmd` 作为 `shell`。如果使用不同的 `shell`，很可能运行的命令与 Linux 和 Mac 的命令一样。要是都不能工作，请参考您正在使用的 shell 说明文档。
+[install]: https://www.rust-lang.org/tools/install
+[visualstudio]: https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
-### 自定义安装
+本书的其余部分使用的命令行在 `cmd.exe` 和 `PowerShell` 中都可以运行。如果有特定差异，我们将说明使用哪个。
 
-如果你出于某些原因而不喜欢使用 rustup.rs，请参阅 [Rust 安装说明页](https://www.rust-lang.org/install.html)的其他选项。
+### 更新和卸载
 
-### 卸载
+通过 `rustup` 安装 Rust 后，更新到最新版本很简单。在 shell 中运行以下更新命令：
 
-卸载 Rust 和安装 Rust 一样简单。在你的 shell 中运行卸载脚本：
+```console
+$ rustup update
+```
 
-```text
+要卸载 `Rust` 和 `rustup`，在 shell 中运行以下卸载命令：
+
+```console
 $ rustup self uninstall
 ```
 
 ### 疑难解答
 
-如果已经安装好 Rust，你可以打开一个 shell，并键入：
+要检查是否正确安装了 Rust，可打开 shell 并输入下面这行：
 
-```text
+```console
 $ rustc --version
 ```
 
-你将看到版本号，提交的哈希值（commit hash），以及提交日期。对于安装好的最新稳定版，该命令输出内容的格式类似这样：
+你应该看到最新发布的稳定版本的版本号、提交哈希值和提交日期，如下所示格式：
 
 ```text
 rustc x.y.z (abcabcabc yyyy-mm-dd)
 ```
 
-若你看到这些内容，则说明 Rust 已经安装成功！恭喜！
+如果你看到此信息，则说明您已成功安装 Rust！如果没看到此信息，并且你使用的是 Windows，请检查 Rust 是否在 `%PATH%` 系统变量中。如果都正确，但 `Rust` 仍然无法正常工作，那么你可以在很多地方获得帮助。最简单的是去 [Rust 官方 Discord][discord] 的 #beginners 频道 。在这里，你可以和其他 Rustacean（Rust 用户，自嘲的昵称）聊天并寻求帮助。其他不错的资源还有 [Rust 用户论坛][users] 和 [Stack Overflow][stackoverflow]。
 
-要是看不到这些输出内容，且你正在使用 Windows，请检查 Rust 是否已经加入到 `%PATH%` 系统变量中。
-
-如果还是不能工作，你可以在一些地方寻求帮助。最简单的方式就是使用 [irc.mozilla.org 上的 #rust 频道][irc]<!-- ignore -->，可以通过 [Mibbit][mibbit] 访问。进入该频道，你就和其他的 Rustaceans（我们称呼自己的昵称，译注：指 Rust 程序员或爱好者）交流，他们会帮助你。其他不错的资源还有 [Rust 用户论坛][users] 和 [Stack Overflow][stackoverflow]。
-
-[irc]: irc://irc.mozilla.org/#rust
-[mibbit]: http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust
+[discord]: https://discord.gg/rust-lang
 [users]: https://users.rust-lang.org/
-[stackoverflow]: http://stackoverflow.com/questions/tagged/rust
+[stackoverflow]: https://stackoverflow.com/questions/tagged/rust
 
 ### 本地文档
 
-安装程序还包括文档的副本存放在本地，可以方便地离线阅读。运行 `rustup doc` 让浏览器上打开本地文档。(译注：自 Rust Stable 1.14.0 版本后，Rust 安装程序默认不再自带本地文档，需要添加本地文档的话，需要执行 `rustup component list` 查看 rust-docs 是否高亮，若无的话，则需要通过命令手动安装 `rustup component add rust-docs`，装好后 `rustup doc` 就可用了。参见[reddit][rustup-issue])
+Rust 的安装还自带文档的本地副本，可以方便地离线阅读。运行 `rustup doc` 让浏览器打开本地文档。
 
-[rustup-issue]: https://www.reddit.com/r/rust/comments/5jv5lm/is_rustup_docs_broken_for_other_people/
-
-遇到标准库提供的类型或函数不知道怎么用时，可在 API 文档找到相关的说明。
+每当遇到标准库提供的类型或函数不知道怎么用时，都可以在 API 文档中查找到！
