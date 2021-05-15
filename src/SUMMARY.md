@@ -20,7 +20,7 @@
     - [注释](ch03-04-comments.md)
     - [控制流](ch03-05-control-flow.md)
 
-- [了解所有权](ch04-00-understanding-ownership.md)
+- [认识所有权](ch04-00-understanding-ownership.md)
     - [什么是所有权？](ch04-01-what-is-ownership.md)
     - [引用和借用](ch04-02-references-and-borrowing.md)
     - [切片 slice](ch04-03-slices.md)
