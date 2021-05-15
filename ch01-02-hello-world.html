@@ -1,276 +1,340 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="zh-CN" class="sidebar-visible no-js light">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Hello, World! - Rust 程序设计语言</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-        <base href="">
-
-        <link rel="stylesheet" href="book.css">
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
+        <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
-        <!-- MathJax -->
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
 
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
+        
     </head>
-    <body class="light">
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme = localStorage.getItem('theme');
-            if (theme == null) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var sidebar = localStorage.getItem('sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="ch01-00-introduction.html"><strong>1.</strong> 简介</a></li><li><ul class="section"><li><a href="ch01-01-installation.html"><strong>1.1.</strong> 安装</a></li><li><a href="ch01-02-hello-world.html" class="active"><strong>1.2.</strong> Hello, World!</a></li></ul></li><li><a href="ch02-00-guessing-game-tutorial.html"><strong>2.</strong> 猜数字游戏</a></li><li><a href="ch03-00-common-programming-concepts.html"><strong>3.</strong> 通用编程概念</a></li><li><ul class="section"><li><a href="ch03-01-variables-and-mutability.html"><strong>3.1.</strong> 变量和可变性</a></li><li><a href="ch03-02-data-types.html"><strong>3.2.</strong> 数据类型</a></li><li><a href="ch03-03-how-functions-work.html"><strong>3.3.</strong> 函数是如何工作的</a></li><li><a href="ch03-04-comments.html"><strong>3.4.</strong> 注释</a></li><li><a href="ch03-05-control-flow.html"><strong>3.5.</strong> 控制流</a></li></ul></li><li><a href="ch04-00-understanding-ownership.html"><strong>4.</strong> 了解所有权</a></li><li><ul class="section"><li><a href="ch04-01-what-is-ownership.html"><strong>4.1.</strong> 什么是所有权？</a></li><li><a href="ch04-02-references-and-borrowing.html"><strong>4.2.</strong> 引用和借用</a></li><li><a href="ch04-03-slices.html"><strong>4.3.</strong> 切片 slice</a></li></ul></li><li><a href="ch05-00-structs.html"><strong>5.</strong> 结构体</a></li><li><ul class="section"><li><a href="ch05-01-method-syntax.html"><strong>5.1.</strong> 方法语法</a></li></ul></li><li><a href="ch06-00-enums.html"><strong>6.</strong> 枚举和模式匹配</a></li><li><ul class="section"><li><a href="ch06-01-defining-an-enum.html"><strong>6.1.</strong> 定义枚举</a></li><li><a href="ch06-02-match.html"><strong>6.2.</strong> <code>match</code> 控制流运算符</a></li><li><a href="ch06-03-if-let.html"><strong>6.3.</strong> <code>if let</code> 简单控制流</a></li></ul></li><li><a href="ch07-00-modules.html"><strong>7.</strong> Modules</a></li><li><ul class="section"><li><a href="ch07-01-mod-and-the-filesystem.html"><strong>7.1.</strong> <code>mod</code> and the Filesystem</a></li><li><a href="ch07-02-controlling-visibility-with-pub.html"><strong>7.2.</strong> Controlling Visibility with <code>pub</code></a></li><li><a href="ch07-03-importing-names-with-use.html"><strong>7.3.</strong> Importing Names with <code>use</code></a></li></ul></li><li><a href="ch08-00-fundamental-collections.html"><strong>8.</strong> Fundamental Collections</a></li><li><ul class="section"><li><a href="ch08-01-vectors.html"><strong>8.1.</strong> Vectors</a></li><li><a href="ch08-02-strings.html"><strong>8.2.</strong> Strings</a></li><li><a href="ch08-03-hash-maps.html"><strong>8.3.</strong> Hash Maps</a></li></ul></li><li><a href="ch09-00-error-handling.html"><strong>9.</strong> Error Handling</a></li><li><ul class="section"><li><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong>9.1.</strong> Unrecoverable Errors with <code>panic!</code></a></li><li><a href="ch09-02-recoverable-errors-with-result.html"><strong>9.2.</strong> Recoverable Errors with <code>Result</code></a></li><li><a href="ch09-03-to-panic-or-not-to-panic.html"><strong>9.3.</strong> To <code>panic!</code> or Not To <code>panic!</code></a></li></ul></li><li><a href="ch10-00-generics.html"><strong>10.</strong> Generics</a></li><li><ul class="section"><li><a href="ch10-01-syntax.html"><strong>10.1.</strong> Syntax</a></li><li><a href="ch10-02-traits.html"><strong>10.2.</strong> Traits</a></li><li><a href="ch10-03-lifetime-syntax.html"><strong>10.3.</strong> Lifetime syntax</a></li></ul></li><li><a href="ch11-00-testing.html"><strong>11.</strong> Testing</a></li><li><ul class="section"><li><a href="ch11-01-writing-tests.html"><strong>11.1.</strong> Writing tests</a></li><li><a href="ch11-02-running-tests.html"><strong>11.2.</strong> Running tests</a></li><li><a href="ch11-03-test-organization.html"><strong>11.3.</strong> Test Organization</a></li></ul></li><li><a href="ch12-00-an-io-project.html"><strong>12.</strong> An I/O Project</a></li><li><ul class="section"><li><a href="ch12-01-accepting-command-line-arguments.html"><strong>12.1.</strong> Accepting Command Line Arguments</a></li><li><a href="ch12-02-reading-a-file.html"><strong>12.2.</strong> Reading a File</a></li><li><a href="ch12-03-improving-error-handling-and-modularity.html"><strong>12.3.</strong> Improving Error Handling and Modularity</a></li><li><a href="ch12-04-testing-the-librarys-functionality.html"><strong>12.4.</strong> Testing the Library's Functionality</a></li><li><a href="ch12-05-working-with-environment-variables.html"><strong>12.5.</strong> Working with Environment Variables</a></li><li><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong>12.6.</strong> Writing to <code>stderr</code> instead of <code>stdout</code></a></li></ul></li><li><a href="ch13-00-functional-features.html"><strong>13.</strong> Functional Language Features in Rust</a></li><li><ul class="section"><li><a href="ch13-01-closures.html"><strong>13.1.</strong> Closures</a></li><li><a href="ch13-02-iterators.html"><strong>13.2.</strong> Iterators</a></li><li><a href="ch13-03-improving-our-io-project.html"><strong>13.3.</strong> Improving our I/O Project</a></li><li><a href="ch13-04-performance.html"><strong>13.4.</strong> Performance</a></li></ul></li><li><a href="ch14-00-more-about-cargo.html"><strong>14.</strong> More about Cargo and Crates.io</a></li><li><ul class="section"><li><a href="ch14-01-release-profiles.html"><strong>14.1.</strong> Release Profiles</a></li><li><a href="ch14-02-publishing-to-crates-io.html"><strong>14.2.</strong> Publishing a Crate to Crates.io</a></li><li><a href="ch14-03-cargo-workspaces.html"><strong>14.3.</strong> Cargo Workspaces</a></li><li><a href="ch14-04-installing-binaries.html"><strong>14.4.</strong> Installing Binaries from Crates.io with <code>cargo install</code></a></li><li><a href="ch14-05-extending-cargo.html"><strong>14.5.</strong> Extending Cargo with Custom Commands</a></li></ul></li><li><a href="ch15-00-smart-pointers.html"><strong>15.</strong> Smart Pointers</a></li><li><a href="ch16-00-concurrency.html"><strong>16.</strong> Concurrency</a></li><li><a href="ch17-00-oop.html"><strong>17.</strong> Is Rust OOP?</a></li><li><a href="ch18-00-patterns.html"><strong>18.</strong> Patterns</a></li><li><a href="ch19-00-more-lifetimes.html"><strong>19.</strong> More Lifetimes</a></li><li><a href="ch20-00-advanced-types.html"><strong>20.</strong> Advanced Type System Features</a></li><li><a href="appendix-00.html"><strong>21.</strong> Appendix</a></li><li><ul class="section"><li><a href="appendix-01-keywords.html"><strong>21.1.</strong> Keywords</a></li><li><a href="appendix-02-operators.html"><strong>21.2.</strong> Operators</a></li><li><a href="appendix-03-derivable-traits.html"><strong>21.3.</strong> Derivable Traits</a></li><li><a href="appendix-04-nightly-rust.html"><strong>21.4.</strong> Nightly Rust</a></li><li><a href="appendix-05-macros.html"><strong>21.5.</strong> Macros</a></li></ul></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Rust 程序设计语言</a></li><li class="chapter-item expanded affix "><a href="foreword.html">前言</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">简介</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> 入门指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html" class="active"><strong aria-hidden="true">1.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hello, Cargo!</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> 猜数字游戏</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> 通用编程概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> 变量和可变性</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> 数据类型</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> 函数</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> 控制流</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> 认识所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> 什么是所有权？</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> 引用和借用</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> 切片 slice</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> 使用结构体组织关联数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> 定义和举例说明结构体</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> 使用结构体的代码例子</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> 方法语法</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> 枚举和模式匹配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> 定义枚举</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> match 控制流运算符</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> if let 简单控制流</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> 使用包、Crate 和模块管理不断增长的项目</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> 包和 crate</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> 定义模块来控制作用域与私有性</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> 路径用于引用模块树中的项</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> 使用 use 关键字将名称引入作用域</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> 将模块分割进不同文件</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> 常见集合</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> vector</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> 哈希 map</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> panic! 与不可恢复的错误</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Result 与可恢复的错误</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> panic! 还是不 panic!</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> 泛型、trait 与生命周期</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> 泛型数据类型</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> trait：定义共享的行为</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> 生命周期与引用有效性</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> 测试</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> 编写测试</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> 运行测试</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> 测试的组织结构</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> 一个 I/O 项目：构建命令行程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> 接受命令行参数</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> 读取文件</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> 重构以改进模块化与错误处理</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> 采用测试驱动开发完善库的功能</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> 处理环境变量</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> 将错误信息输出到标准错误而不是标准输出</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Rust 中的函数式语言功能：迭代器与闭包</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> 闭包：可以捕获其环境的匿名函数</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> 使用迭代器处理元素序列</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> 改进之前的 I/O 项目</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> 性能比较：循环对迭代器</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> 更多关于 Cargo 和 Crates.io 的内容</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> 采用发布配置自定义构建</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo 工作空间</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> 使用 cargo install 从 Crates.io 安装二进制文件</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo 自定义扩展命令</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> 智能指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Box&lt;T&gt; 指向堆上数据，并且可确定大小</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> 通过 Deref trait 将智能指针当作常规引用处理</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Drop Trait 运行清理代码</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Rc&lt;T&gt; 引用计数智能指针</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; 与内部可变性模式</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> 引用循环与内存泄漏是安全的</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> 无畏并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> 消息传递</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> 共享状态</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> 可扩展的并发：Sync 与 Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Rust 的面向对象编程特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> 面向对象语言的特点</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> 为使用不同类型的值而设计的 trait 对象</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> 面向对象设计模式的实现</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> 模式用来匹配值的结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> 所有可能会用到模式的位置</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Refutability：何时模式可能会匹配失败</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> 模式的全部语法</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> 高级特征</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> 不安全的 Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> 高级 trait</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> 高级类型</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> 高级函数与闭包</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> 宏</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> 最后的项目: 构建多线程 web server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> 单线程 web server</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> 将单线程 server 变为多线程 server</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> 优雅停机与清理</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - 关键字</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - 运算符与符号</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - 可派生的 trait</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - 实用开发工具</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - 版本</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - 本书译本</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Rust 是如何开发的与 “Nightly Rust”</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar" class="menu-bar">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
                     </div>
 
                     <h1 class="menu-title">Rust 程序设计语言</h1>
 
                     <div class="right-buttons">
-                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/book-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/book-cn/edit/master/src/ch01-02-hello-world.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+                        
+
                     </div>
                 </div>
 
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <a class="header" href="ch01-02-hello-world.html#hello-world" name="hello-world"><h2>Hello, World!</h2></a>
+                    <main>
+                        <h2 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h2>
 <p>现在我们已经安装好了 Rust，接着我们编写第一个 Rust 程序。按照传统，在学习一门新语言时都会编写一个输出“Hello, world!”（你好，世界）的小程序，本章我们也是如此。</p>
 <blockquote>
-<p>注意：本书假定你已经熟悉基本的命令行。Rust 本身对编辑器、工具或代码存放的位置都没有特别要求。所以要是你更喜欢 IDE 而不是命令行的话，可以随意选用你喜爱的 IDE。</p>
+<p>注意：本书假定你已经熟悉基本的命令行。Rust 本身对编辑器、工具或代码存放的位置都没有特殊要求。所以要是你更喜欢 IDE 而不是命令行的话，可以随意选用你喜爱的 IDE。目前很多 IDE 都提供了一定程度的 Rust 支持。有关详细信息，请查看 IDE 的文档。最近，Rust 团队一直致力于提供出色的 IDE 支持，并且在这方面取得了迅速的进步！</p>
 </blockquote>
-<a class="header" href="ch01-02-hello-world.html#创建项目文件" name="创建项目文件"><h3>创建项目文件</h3></a>
-<p>首先，创建一个文件来存放 Rust 代码。Rust 不关心代码存放的地方，但对于本书，我们建议在系统用户的家目录（home）下创建一个 <em>projects</em> 文件夹，并保存你的所有项目。打开终端并输入以下命令为此特定项目创建目录：</p>
-<p>Linux 或 Mac:</p>
-<pre><code class="language-text">$ mkdir ~/projects
+<h3 id="创建项目目录"><a class="header" href="#创建项目目录">创建项目目录</a></h3>
+<p>首先，创建一个目录来存储您的Rust代码。对于Rust驻留代码的位置来说，这无关紧要，但是对于本书中的练习和项目，我们建议在主目录中创建一个项目目录，并将所有项目保留在此目录中。</p>
+<p>对于Windows上的Linux，macOS和PowerShell，请输入以下命令：</p>
+<p>首先，创建一个文件来存放 Rust 代码。Rust 不关心代码存放的地方，这无关紧要，但对于本书中的练习和项目，我们建议在操作系统的主目录（home，在 Windows 下即用户目录）下创建一个 <em>projects</em> 目录，并保存你的所有项目。</p>
+<p>打开终端，输入以下命令以创建 <em>projects</em> 项目目录，以及此项目目录里面的 “Hello, world!” 项目目录。</p>
+<p>对于 Linux、macOS 和 Windows 上的 PowerShell，请输入以下命令：</p>
+<pre><code class="language-console">$ mkdir ~/projects
 $ cd ~/projects
 $ mkdir hello_world
 $ cd hello_world
 </code></pre>
-<p>Windows:</p>
-<pre><code class="language-cmd">&gt; mkdir %USERPROFILE%\projects
-&gt; cd %USERPROFILE%\projects
+<p>对于 Windows CMD，输入以下内容：</p>
+<pre><code class="language-cmd">&gt; mkdir &quot;%USERPROFILE%\projects&quot;
+&gt; cd /d &quot;%USERPROFILE%\projects&quot;
 &gt; mkdir hello_world
 &gt; cd hello_world
 </code></pre>
-<a class="header" href="ch01-02-hello-world.html#编写和运行-rust-程序" name="编写和运行-rust-程序"><h3>编写和运行 Rust 程序</h3></a>
+<h3 id="编写和运行-rust-程序"><a class="header" href="#编写和运行-rust-程序">编写和运行 Rust 程序</a></h3>
 <p>接下来，创建一个源文件并命名为 <em>main.rs</em>。Rust 文件通常以 <em>.rs</em> 扩展名结尾。如果文件名中使用了多个单词，请使用下划线将它们隔开。例如，采用 <em>hello_world.rs</em> 而不是 <em>helloworld.rs</em>。</p>
 <p>现在打开刚创建好的 <em>main.rs</em> 文件，然后键入以下代码：</p>
 <p><span class="filename">文件名：main.rs</span></p>
-<pre><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     println!(&quot;Hello, world!&quot;);
 }
-</code></pre>
-<p>保存文件，然后返回到终端窗口。在 Linux 或 OSX 上，输入以下命令：</p>
-<pre><code class="language-text">$ rustc main.rs
+</code></pre></pre>
+<p><span class="caption">示例 1-1：一个打印 <code>Hello, world!</code> 的程序</span></p>
+<p>保存文件，然后返回到终端窗口。在 Linux 或 macOS 上，输入以下命令：</p>
+<pre><code class="language-console">$ rustc main.rs
 $ ./main
 Hello, world!
 </code></pre>
-<p>在 Windows 上，运行 <code>.\main.exe</code> 而不是 <code>./main</code>。不管哪个操作系统，你都应该看到 <code>Hello, world!</code> 打印到了终端上。要是你做到了，那么祝贺你！你已经正式编写了一个 Rust 程序！欢迎进入 Rust 大家庭。</p>
-<a class="header" href="ch01-02-hello-world.html#rust-程序的详解" name="rust-程序的详解"><h3>Rust 程序的详解</h3></a>
-<p>现在我们来深入了解 “Hello, world!” 程序的细节。这是 Rutt 代码的主体结构（Here's the first piece of the puzzle）：</p>
-<pre><code class="language-rust">fn main() {
+<p>在 Windows 上，输入 <code>.\main.exe</code> 来代替 <code>./main</code>：</p>
+<pre><code class="language-powershell">&gt; rustc main.rs
+&gt; .\main.exe
+Hello, world!
+</code></pre>
+<p>不管你使用哪种操作系统，该字符串 <code>Hello, world!</code> 都应打印到了终端上。如果看不到此输出，请参考“安装”小节的 <a href="ch01-01-installation.html#troubleshooting">“疑难解答”</a><!-- ignore --> 部分，以获得帮助。</p>
+<p>如果 <code>Hello, world!</code> 打印成功，那么祝贺你！你已经正式编写了一个 Rust 程序。你已经成为了一名 Rust 程序员——欢迎加入 Rust 大家庭！</p>
+<h3 id="rust-程序的详解"><a class="header" href="#rust-程序的详解">Rust 程序的详解</a></h3>
+<h3 id="rust-程序剖析"><a class="header" href="#rust-程序剖析">Rust 程序剖析</a></h3>
+<p>让我们详细回顾一下 “Hello, world!” 程序发生了什么。这是难题的第一部分：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
 
 }
+</code></pre></pre>
+<p>这几行定义了 Rust 的函数。<code>main</code> 函数（也称为主函数）很特殊：它始终是每个可执行 Rust 程序中运行的第一个代码。第一行声明一个名为 <code>main</code> 的函数，不带参数也没有返回值。如果有参数，那么它们的名字会放到括号内，它们将放在括号 <code>()</code> 内。</p>
+<p>另外，请注意，函数主体用大括号 <code>{}</code> 括起来。Rust 需要函数体的所有内容都被括号包围起来。一种好的代码风格是将左大括号放在函数声明的同一行，且之间带有一个空格。</p>
+<p>如果想在 Rust 项目中坚持标准代码风格，则可以使用自动格式化程序工具 <code>rustfmt</code> 来将代码格式化为特定风格。Rust 团队已将此工具包含在标准 Rust 发行版中（如 <code>rustc</code>），因此它应该已经安装在你的计算机上！更多相关详细信息，请查看在线文档。</p>
+<p><code>main</code> 函数内部是以下代码：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    println!(&quot;Hello, world!&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>该行完成了此小程序中的所有工作：它将文本打印到屏幕上。这里有 4 个要注意的重要细节。</p>
+<p>首先，Rust 风格的缩进使用 4 个空格，而不是制表符。</p>
+<p>其次，<code>println!</code> 调用 Rust 宏。如果改为调用函数，则应该将其输入为 <code>println</code>（不含 <code>!</code>）。我们将在第 19 章中更详细地讨论 Rust 宏。现在只需要知道，当看到一个 <code>!</code>，则意味着调用的是宏而不是普通的函数。</p>
+<p>第三，您看到 <code>&quot;Hello, world!&quot;</code> 字符串。我们将这个字符串作为参数传递给 <code>println!</code>，接着 <code>println!</code> 将字符串打印到屏幕上。</p>
+<p>第四，我们用分号（<code>;</code>）结束该行，这表明该表达式已结束，下一个表达式已准备好开始。Rust 代码的大多数行都以一个 <code>;</code> 结尾。</p>
+<h3 id="编译和运行是独立的步骤"><a class="header" href="#编译和运行是独立的步骤">编译和运行是独立的步骤</a></h3>
+<p>刚才我们运行一个新创建的程序。现在我们将分解这个过程，并检查每个步骤。</p>
+<p>在运行 Rust 程序之前，必须使用 Rust 编译器来编译它，输入 <code>rustc</code> 命令并传入源文件的名称，如下所示：</p>
+<pre><code class="language-console">$ rustc main.rs
 </code></pre>
-<p>这几行定义了 Rust 中的函数。<code>main</code> 函数（也称为主函数）很特别：它是每个可执行的 Rust 程序的入口。第一行说：“我声明了一个名为 <code>main</code> 的函数，不带参数也没有返回值。”如果有参数，那么它们的名字会放到括号内，<code>(</code> 和 <code>)</code>。</p>
-<p>另外注意到函数体包裹在大括号 <code>{</code> 和 <code>}</code> 中。Rust 需要函数体的所有内容都被括号包围起来。一种好的编程风格是将左大括号放在函数声明的同一行，且之间带有一个空格。</p>
-<p><code>main</code> 函数的内部：</p>
-<pre><code class="language-rust">    println!(&quot;Hello, world!&quot;);
-</code></pre>
-<p>此行执行了这个小程序的所有工作：将文本打印到屏幕上。这里有很多细节需要注意。第一点是 Rust 的风格是使用 4 个空格而不是制表符作为缩进。</p>
-<p>第二个重要部分是 <code>println!</code>。这是在调用 Rust <strong>宏</strong>（<em>macro</em>），其中宏展示了 Rust 是如何元编程（metaprogramming）的。如果调用的是函数，那看起来类似这样：<code>println</code>（没有 <code>!</code>）。我们将在第 24 章详细讨论 Rust 的宏，但现在只需要知道，当看到一个 <code>!</code>，则意味着调用的是宏而不是普通的函数。</p>
-<p>接下来是 <code>&quot;Hello, world!&quot;</code>，这是一个<strong>字符串</strong>（<em>string</em>）。我们将这个字符串作为参数传递给 <code>println!</code>，接着 <code>println!</code> 将字符串打印到屏幕上。就是如此简单！</p>
-<p>本行以分号（<code>;</code>）结尾。<code>;</code> 表示此表达式已结束，并且准备开始下一行。Rust 的大多数行都以一个 <code>;</code> 结尾。</p>
-<a class="header" href="ch01-02-hello-world.html#编译和运行是独立的步骤" name="编译和运行是独立的步骤"><h3>编译和运行是独立的步骤</h3></a>
-<p>在“编写和运行 Rust 程序”小节中，我们展示了如何运行一个新创建的程序。现在我们将分解这个过程，并检查每个步骤。</p>
-<p>在运行 Rust 程序之前，你必须编译它。可以使用 Rust 编译器，输入 <code>rustc</code> 命令并传入源文件的名称，如下所示：</p>
-<pre><code class="language-text">$ rustc main.rs
-</code></pre>
-<p>如果有 C 或 C++ 语言基础，你会注意到这点和 <code>gcc</code> 或 <code>clang</code> 类似。编译成功后，Rust 就会输出一个二进制可执行文件，在 Linux 或 OSX 上输入 <code>ls</code> 命令将看到这些文件，如下所示：</p>
-<pre><code class="language-text">$ ls
+<p>如果有 C 或 C++ 语言基础，你会注意到这点和 <code>gcc</code> 或 <code>clang</code> 类似。编译成功后，Rust 就会输出一个二进制可执行文件。</p>
+<p>在 Linux、macOS 或 Windows 的 PowerShell 中，可通过输入 <code>ls</code> 命令来查看可执行文件。在 Linux 和 macOS 中，你将看到两个文件。使用 Windows 的 PowerShell，你将看到与使用 CMD 相同的三个文件。</p>
+<pre><code class="language-console">$ ls
 main  main.rs
 </code></pre>
-<p>在 Windows，需要输入：</p>
+<p>对于 Windows 的 CMD，可输入以下内容：</p>
 <pre><code class="language-cmd">&gt; dir /B %= the /B option says to only show the file names =%
 main.exe
+main.pdb
 main.rs
 </code></pre>
-<p>这里显示了两个文件：源代码文件（扩展名为 <em>.rs</em>），可执行文件（在 Windows 上格式为 <em>main.exe</em>，其他系统为 <em>main</em>）。还剩下要做的就是运行 <em>main</em> 或 <em>main.exe</em> 文件，像这样：</p>
-<pre><code class="language-text">$ ./main  # or .\main.exe on Windows
+<p>这显示了带有.rs扩展名的源代码文件，可执行文件（在Windows上是main.exe，在所有其他平台上是main），以及在使用Windows时，包含一个带有.pdb扩展名的调试信息的文件。在这里，运行main或main.exe文件，如下所示：</p>
+<p>这里显示了扩展名为 <em>.rs</em> 的源代码文件和可执行文件（在 Windows 上为 <em>main.exe</em>，其他系统为 <em>main</em>），以及在使用 Windows 时，包含一个带有 <code>.pdb</code> 扩展名的调试信息的文件。在这里，运行 <code>main</code> 或 <code>main.exe</code> 文件，如下所示：</p>
+<pre><code class="language-console">$ ./main # or .\main.exe on Windows
 </code></pre>
-<p>如果 <em>main.rs</em> 是 “Hello, world!”程序，这将会打印 <code>Hello, world!</code> 到终端上。</p>
-<p>如果你只用过动态语言，如 Ruby、Python 或 JavaScript，你很可能不习惯分开多个步骤来编译和运行程序的方式。Rust 是一门<strong>预编译</strong>(<em>ahead-of-time compiled</em>)语言，这意味着你可以编译一个程序，将编译后的可执行文件给别人，即使他们没有安装 Rust 也可以运行程序。如果你给某人 <code>.rb</code>、<code>.py</code> 或 <code>.js</code> 文件，那就是另外一种情形，对方也需要分别安装对应 Ruby、Python 或 JavaScript 的语言实现，但只需要一条命令来编译和运行程序。一切都是语言设计权衡的结果。</p>
-<p>使用 <code>rustc</code> 编译对简单的程序可以轻松胜任，但随着项目的增长，你将会想要管理项目中所有相关内容，并想让其他用户和项目能够容易共享你的代码。接下来，我们将引入一个名为 Cargo 的工具，这将帮助你学会编写真实开发环境的 Rust 程序。</p>
-<a class="header" href="ch01-02-hello-world.html#使用-cargo" name="使用-cargo"><h2>使用 Cargo</h2></a>
-<p>Cargo 是 Rust 的构建系统和包管理器，Rustaceans 使用 Cargo 来管理他们的 Rust 项目，因为它使很多任务变得更容易。例如，Cargo 负责构建代码，下载项目代码依赖的库，以及构建这些库。我们将项目代码需要的库称为<strong>依赖</strong>（<em>dependency</em>）。</p>
-<p>最简单的 Rust 程序，比如我们到目前为止编写的程序，没有任何依赖，所以现在你只能用到 Cargo 负责构建代码的那部分功能。随着你编写更复杂的 Rust 程序，你将需要增加依赖，如果你开始使用 Cargo，那将会更容易做到。</p>
-<p>既然绝大多数 Rust 项目都使用 Cargo，我们也将假设您在本书的剩下部分都使用它。如果你使用安装的章节提到的官方安装方式，那么 Cargo 将会随着 Rust 一块安装。如果你通过其他方式安装 Rust，你可以通过在终端中键入以下内容来检查是否安装了 Cargo：</p>
-<pre><code class="language-text">$ cargo --version
-</code></pre>
-<p>如果能看到一个版本号，那相当棒！如果是见到类似这样的错误 <code>command not found</code>，那就阅读你选择安装方式的文档，以确定如何单独安装 Cargo。</p>
-<a class="header" href="ch01-02-hello-world.html#hello-cargo" name="hello-cargo"><h3>Hello, Cargo!</h3></a>
-<p>我们使用 Cargo 创建一个新的项目，并看看它与前面的 <code>hello_world</code> 项目有什么不同。回到你的项目目录（或者你自己选定的存放代码的位置）：</p>
-<p>Linux 和 Mac:</p>
-<pre><code class="language-text">$ cd ~/projects
-</code></pre>
-<p>Windows:</p>
-<pre><code class="language-cmd">&gt; cd %USERPROFILE%\projects
-</code></pre>
-<p>然后在任一操作系统中运行：</p>
-<pre><code class="language-text">$ cargo new hello_cargo --bin
-$ cd hello_cargo
-</code></pre>
-<p>我们将 <code>-bin</code> 参数传给了 <code>cargo new</code>，因为我们的目标是创建一个可执行的应用程序，而不是一个库。可执行文件二进制可执行文件，通常只称作<strong>二进制文件</strong>。我们将 <code>hello_cargo</code> 作为项目的名称，Cargo 在一个同名的目录中创建了相关文件，然后我们可以进到目录内。</p>
-<p>如果我们在 <em>hello_cargo</em> 目录中列出文件，我们可以看到 Cargo 为我们生成了两个文件和一个目录：一个 <em>Cargo.toml</em>，以及一个带有 <em>main.rs</em> 文件的 <em>src</em> 目录。它还为我们在 <em>hello_cargo</em> 目录中初始化了一个新的 git 仓库，以及一个 <em>.gitignore</em> 文件；你可以通过使用 <code>--vcs</code> 标志更改成使用其他版本控制系统或不使用版本控制系统。</p>
-<p>在您选择的文本编辑器中打开 <em>Cargo.toml</em>。它的内容看起来类似这样：</p>
-<p><span class="filename">文件：Cargo.toml</span></p>
-<pre><code class="language-toml">[package]
-name = &quot;hello_cargo&quot;
-version = &quot;0.1.0&quot;
-authors = [&quot;Your Name &lt;you@example.com&gt;&quot;]
+<p>如果 <em>main.rs</em> 是 “Hello, world!” 程序，这将会打印 <code>Hello, world!</code> 到终端上。</p>
+<p>如果你只更熟悉动态语言，如 Ruby、Python 或 JavaScript，你很可能不习惯分开多个步骤来编译和运行程序的方式。Rust 是一门<strong>预编译</strong>(<em>ahead-of-time compiled</em>)语言，这意味着你可以编译一个程序，将编译后的可执行文件给别人，即使他们没有安装 Rust 也可以运行程序。如果你为其他人提供 <code>.rb</code>、<code>.py</code> 或 <code>.js</code> 文件，那么对方也需要分别安装对应 Ruby、Python 或 JavaScript 的语言支持环境。但是在这些语言中，只需要一条命令来编译和运行程序。一切都是语言设计权衡的结果。</p>
+<p>使用 <code>rustc</code> 编译对简单的程序可以轻松胜任，但随着项目的增长，你将会想要管理项目中所有相关内容，并想让其他用户和项目能够容易共享你的代码。接下来，我们将引入 Cargo 工具，这将帮助你学会编写真实开发环境的 Rust 程序。</p>
 
-[dependencies]
-</code></pre>
-<p>此文件采用 <a href="https://github.com/toml-lang/toml"><em>TOML</em></a><!-- ignore --> (Tom's Obvious, Minimal Language) 格式。TOML 类似于 INI，但有一些额外的好处，并用作 Cargo 的配置格式。</p>
-<p>第一行 <code>[package]</code> 是一个小节标题，表示下面语句正在配置包。当我们向此文件添加更多信息时，我们将添加其他小节。</p>
-<p>接下来的三行设置了 Cargo 需要查看的三个配置点，以便知道它应该编译你的程序：程序名称，版本号，编写作者。Cargo 将从您的环境中获取您的姓名和电子邮件信息。如果信息有误，请修正并保存文件。</p>
-<p>最后一行 <code>[dependencies]</code> 是另一个小节的开始，此节可列出项目将要依赖的任意 <em>crates</em>（这是我们对 Rust 代码的包的称呼），从而让 Cargo 知道下载和编译这些内容。我们在此项目不需要任何 cretes，但下一章节中的猜数字游戏就需要了。</p>
-<p>现在我们来看看 <em>src/main.rs</em>:</p>
-<p><span class="filename">文件名：src/main.rs</span></p>
-<pre><code class="language-rust">fn main() {
-    println!(&quot;Hello, world!&quot;);
-}
-</code></pre>
-<p>Cargo 生成了一个“Hello, world!”，就像我们前面编写过的一样。所以这一部分是一样的。之前的项目和 Cargo 生成的项目之间的差异，我们目前看到的是：</p>
-<ul>
-<li>我们的代码放在 <em>src</em> 目录中</li>
-<li>项目的顶层包含一个 <em>Cargo.toml</em> 配置文件</li>
-</ul>
-<p>Cargo 期望您的源文件位于 <em>src</em> 目录中，以便顶层项目目录只存放 READMEs（说明文档）、license（许可证信息）、配置文件，以及任何与代码无关的其他内容。像这样，Cargo 可以保持项目美观且整洁。物各有其位，物各在其位（原文：There's a place for everything, and everything is in its place）。</p>
-<p>如果你启动了一个不使用 Cargo 的项目，正如我们在 <em>hello_world</em> 目录中的项目所做的一样，你可以通过将源代码移动到 <em>src</em> 目录并创建一个合适的 <em>Cargo.toml</em>，就可以达到和 Cargo 创建的项目一样。</p>
-<a class="header" href="ch01-02-hello-world.html#构建并运行一个-cargo-项目" name="构建并运行一个-cargo-项目"><h3>构建并运行一个 Cargo 项目</h3></a>
-<p>现在我们来看看通过 Cargo 构建和运行 “Hello Wrold” 程序不同之处。为此，请输入以下命令：</p>
-<pre><code class="language-text">$ cargo build
-   Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
-</code></pre>
-<p>这应该已经在 <em>target/debug/hello_cargo</em>（或 Windows 上的 <em>target\debug\hello_cargo.exe</em>）中创建了一个可执行文件，您可以使用此命令运行：</p>
-<pre><code class="language-text">$ ./target/debug/hello_cargo # or .\target\debug\hello_cargo.exe on Windows
-Hello, world!
-</code></pre>
-<p>如果一切顺利，“Hello, world!” 将再次打印到终端。</p>
-<p>第一次运行 <code>cargo build</code> 也会触发 Cargo 在顶层目录创建一个名为 <em>Cargo.lock</em> 的新文件，其格式如下：</p>
-<p><span class="filename">文件名： Cargo.lock</span></p>
-<pre><code class="language-toml">[root]
-name = &quot;hello_cargo&quot;
-version = &quot;0.1.0&quot;
-</code></pre>
-<p>Cargo 使用 <em>Cargo.lock</em> 来保持跟踪应用程序中的依赖关系。本项目没有依赖，所以内容有点少。实际上，你不需要自己接触这个文件；交给 Cargo 处理就可以了。</p>
-<p>我们刚刚使用 <code>cargo build</code> 构建项目并使用 <code>./target/debug/hello_cargo</code>来运行，其实我们也可以使用 <code>cargo run</code> 来编译并运行：</p>
-<pre><code class="language-text">$ cargo run
-     Running `target/debug/hello_cargo`
-Hello, world!
-</code></pre>
-<p>注意，这一次我们并没有见到输出结果告诉我们 Cargo 正在编译 <code>hello_cargo</code>。Cargo 推断出文件并没有改变，所以它只是运行二进制文件。如果你修改了源代码，Cargo 将在运行它之前重新构建项目，你会看到像这样的内容：</p>
-<pre><code class="language-text">$ cargo run
-   Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
-     Running `target/debug/hello_cargo`
-Hello, world!
-</code></pre>
-<p>所以现在我们看到了更多的差异：</p>
-<ul>
-<li>不使用 <code>rustc</code>，而使用 <code>cargo build</code> 构建项目（或使用 <code>cargo run</code> 一次性构建并运行）</li>
-<li>Cargo 构建的结果不和代码放在同一目录，而是将它放到 <em>target/debug</em> 目录中。</li>
-</ul>
-<p>使用 Cargo 的另一个优点是无论您用什么操作系统，命令都是相同的。所以到了这点，我们将不再为 Linux 或 Mac 提供特定的指令。</p>
-<a class="header" href="ch01-02-hello-world.html#为发布构建" name="为发布构建"><h3>为发布构建</h3></a>
-<p>当您的项目最终准备发布时，你可以使用 <code>cargo build --release</code> 加上优化来编译项目。这将在 <em>target/release</em> （而不是在 <em>target/debug</em>）上创建一个可执行文件。这些优化可以使 Rust 代码运行更快，但打开它们后会使程序的编译时间变得更长。这就是有两个不同的配置文件的原因：一个用于开发，适用于快速重新构建和频繁更新的情况；另一个用于构建最终的程序，交付给用户，不考虑重新构建，且希望运行尽可能快。如果你要对代码运行进行基准测试，请确保运行 <code>cargo build --release</code> 并使用 <em>target/release</em> 的可执行文件进行基准测试。</p>
-<a class="header" href="ch01-02-hello-world.html#约定使用-cargo" name="约定使用-cargo"><h3>约定使用 Cargo</h3></a>
-<p>在简单项目中，Cargo 相比仅仅使用 <code>rustc</code> 并没有提供太多价值，但持续使用后将会证明它的价值所在。在由多个 crates 组成的复杂项目，使用 Cargo 整合构建则明显更加便利。有了 Cargo，你只需运行 <code>cargo build</code>，它就会恰当的方式工作。即使本项目很简单，但它也用到了很多真正的实用工具，并可用于后续使用 Rust 的开发中。事实上，您可以使用以下命令开始使用几乎所有要处理的 Rust 项目：</p>
-<pre><code class="language-text">$ git clone someurl.com/someproject
-$ cd someproject
-$ cargo build
-</code></pre>
-<blockquote>
-<p>注意：如果你想了解 Cargo 的更多详情，请查看官方的 <a href="http://doc.crates.io/guide.html">Cargo 指南</a>，这涵盖了它所有的特性。</p>
-</blockquote>
+                    </main>
 
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch01-01-installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch01-03-hello-cargo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
+            </div>
 
-                <!-- Mobile navigation buttons -->
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="ch01-01-installation.html" class="mobile-nav-chapters previous">
+                    <a rel="prev" href="ch01-01-installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="ch02-00-guessing-game-tutorial.html" class="mobile-nav-chapters next">
+                    <a rel="next" href="ch01-03-hello-cargo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
-
-            </div>
-
-            
-                <a href="ch01-01-installation.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-
-            
-                <a href="ch02-00-guessing-game-tutorial.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            </nav>
 
         </div>
 
-
-        <!-- Local fallback for Font Awesome -->
-        <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
-        </script>
-
-        <!-- Livereload script (if served using the cli tool) -->
         
 
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="ferris.js"></script>
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
     </body>
 </html>
