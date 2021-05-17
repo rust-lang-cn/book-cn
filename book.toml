@@ -13,3 +13,4 @@ edit-url-template = "https://github.com/rust-lang-cn/book-cn/edit/master/{path}"
 
 [output.html.redirect]
 "ch01-00-introduction.html" = "ch00-00-introduction.html"
+"ch05-01-method-syntax.html" = "ch05-03-method-syntax.html"
