@@ -1,5 +1,5 @@
 [book]
-title = "Rust 程序设计语言"
+title = "Rust 程序设计语言 中文版"
 description = "Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。"
 author = "Steve Klabnik and Carol Nichols, with Contributions from the Rust Community"
 translator = "Rust 中文翻译项目组，Rust 中文社区"
