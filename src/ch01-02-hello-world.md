@@ -134,8 +134,6 @@ main.rs
 
 这显示了带有.rs扩展名的源代码文件，可执行文件（在Windows上是main.exe，在所有其他平台上是main），以及在使用Windows时，包含一个带有.pdb扩展名的调试信息的文件。在这里，运行main或main.exe文件，如下所示：
 
-这里显示了扩展名为 *.rs* 的源代码文件和可执行文件（在 Windows 上为 *main.exe*，其他系统为 *main*），以及在使用 Windows 时，包含一个带有 `.pdb` 扩展名的调试信息的文件。在这里，运行 `main` 或 `main.exe` 文件，如下所示：
-
 ```console
 $ ./main # or .\main.exe on Windows
 ```
