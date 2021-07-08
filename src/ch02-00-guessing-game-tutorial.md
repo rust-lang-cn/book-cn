@@ -329,7 +329,7 @@ $ cargo update
 ```toml
 [dependencies]
 
-rand = "0.6.0"
+rand = "0.9.0"
 ```
 
 下一次运行 `cargo build` 时，Cargo 会从 registry 更新可用的 crate，并根据你指定的新版本重新计算。
