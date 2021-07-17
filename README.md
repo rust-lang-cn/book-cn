@@ -89,7 +89,7 @@ $ mdbook test
 您的帮助，我们将感激不尽(We'd love your help)！请参见 [CONTRIBUTING.md][contrib-cn]（英文原项目参与贡献指引 [CONTRIBUTING-EN.md][contrib]）。
 
 [contrib-cn]: https://github.com/rust-lang-cn/book-cn/blob/master/CONTRIBUTING.md
-[contrib]: https://github.com/rust-lang/book/blob/master/CONTRIBUTING.md
+[contrib]: https://github.com/rust-lang/book/blob/main/CONTRIBUTING.md
 
 ## 翻译
 
