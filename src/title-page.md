@@ -4,7 +4,7 @@
 
 > 中文翻译注（Chinese translation of the [The Rust Programming Language][book-website]）：
 >
-> 1. **本站翻译已部分更新至 Rust 1.52 版**，这是目前网上最新的版本，最后更新时间 2021 年 5 月 17 日。
+> 1. **本站翻译已部分更新至 Rust 1.53 版**，这是目前网上最新的版本，最后更新时间 2021 年 7 月 17 日。
 > 2. 《Rust 程序设计语言》(The Rust Programming Language 中文版) 翻译自 [The Rust Programming Language][book-website]，查看此书的 [Github 翻译项目][book-cn]。
 > 3. 本书已有由 [KaiserY 翻译完的版本](https://github.com/KaiserY/trpl-zh-cn)，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续 Rust 中文翻译项目组将跟随 Rust 官方的英文版本更新。
 > 4. 许可协议：跟随英文原书使用 MIT 和 Apache 2.0 双许可授权。
