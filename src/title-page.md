@@ -14,7 +14,7 @@
 [book-website]: https://doc.rust-lang.org/book
 [book-cn]: https://github.com/rust-lang-cn/book-cn
 
-本书的版本假设你使用 Rust 1.52 或在所有项目中的 *Cargo.toml* 添加 `edition = "2018"` 指明使用 Rust 2018 版之后的更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust，并参阅新的[附录 E][editions]<!-- ignore --> 来获取有关版本的信息。
+本书的版本假设你使用 Rust 1.53 或在所有项目中的 *Cargo.toml* 添加 `edition = "2018"` 指明使用 Rust 2018 版之后的更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust，并参阅新的[附录 E][editions]<!-- ignore --> 来获取有关版本的信息。
 
 2018 版的 Rust 语言包含许多改进，使Rust更符合人体工程学且更易于学习。本书的迭代更新过程包含许多更改并反映了这些改进：
 
