@@ -247,7 +247,7 @@ fn main() {
 
 ### 解引用强制多态如何与可变性交互
 
-类似于如何使用 `Deref` trait 重载不可变引用的 `*` 运算符，Rust 提供了 `DerefMut` trait 用于重载可变引用的 `*` 运算符。
+类似于使用 `Deref` trait 重载不可变引用的 `*` 运算符，Rust 提供了 `DerefMut` trait 用于重载可变引用的 `*` 运算符。
 
 Rust 在发现类型和 trait 实现满足三种情况时会进行解引用强制多态：
 
