@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>消息传递 - Rust 程序设计语言</title>
+        <title>消息传递 - Rust 程序设计语言 中文版</title>
         
         
 
@@ -131,7 +131,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 程序设计语言</h1>
+                    <h1 class="menu-title">Rust 程序设计语言 中文版</h1>
 
                     <div class="right-buttons">
                         
@@ -319,7 +319,7 @@ Got: thread
 
 let (tx, rx) = mpsc::channel();
 
-let tx1 = mpsc::Sender::clone(&amp;tx);
+let tx1 = tx.clone();
 thread::spawn(move || {
     let vals = vec![
         String::from(&quot;hi&quot;),

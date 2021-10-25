@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>定义模块来控制作用域与私有性 - Rust 程序设计语言</title>
+        <title>定义模块来控制作用域与私有性 - Rust 程序设计语言 中文版</title>
         
         
 
@@ -131,7 +131,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 程序设计语言</h1>
+                    <h1 class="menu-title">Rust 程序设计语言 中文版</h1>
 
                     <div class="right-buttons">
                         
@@ -203,6 +203,24 @@
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p><span class="caption">示例 7-1：一个包含着含有函数的其他模块们的 <code>front_of_house</code> 模块</span></p>
+<p>我们用关键字 <code>mod</code> 定义一个模块，指定模块的名字（在示例中为 <code>front_of_house</code>），并用大括号包围模块的主体。我们可以在模块中包含其他模块，就像本示例中的 <code>hosting</code> 和 <code>serving</code> 模块。模块中也可以包含其他项，比如结构体、枚举、常量、trait，或者像示例 7-1 一样——包含函数。</p>
+<p>通过使用模块，我们可以把相关的定义组织起来，并通过模块命名来解释为什么它们之间有相关性。使用这部分代码的程序员可以更方便的循着这种分组找到自己需要的定义，而不需要通览所有。编写这部分代码的程序员通过分组知道该把新功能放在哪里以便继续让程序保持组织性。</p>
+<p>之前我们提到，<em>src/main.rs</em> 和 <em>src/lib.rs</em> 被称为 crate 根。如此称呼的原因是，这两个文件中任意一个的内容会构成名为 <code>crate</code> 的模块，且该模块位于 crate 的被称为 <em>模块树</em> 的模块结构的根部（&quot;at the root of the crate’s module structure&quot;）。</p>
+<p>示例 7-2 展示了示例 7-1 所对应的模块树。</p>
+<pre><code class="language-text">crate
+ └── front_of_house
+     ├── hosting
+     │   ├── add_to_waitlist
+     │   └── seat_at_table
+     └── serving
+         ├── take_order
+         ├── serve_order
+         └── take_payment
+</code></pre>
+<p><span class="caption">示例 7-2：示例 7-1 中代码对应的模块树</span></p>
+<p>这个树展示了模块间是如何相互嵌套的（比如，<code>hosting</code> 嵌套在 <code>front_of_house</code> 内部）。这个树还展示了一些模块互为 <em>兄弟</em> ，即它们被定义在同一模块内（<code>hosting</code> 和 <code>serving</code> 都定义在 <code>front_of_house</code> 内）。继续使用家族比喻，如果模块A包含在模块B的内部，我们称模块A是模块B的 <em>孩子</em> 且模块B是模块A的 <em>父辈</em> 。注意整个模块树的根位于名为 <code>crate</code> 的隐式模块下。</p>
+<p>模块树或许让你想起了电脑上文件系统的目录树。这是一个非常恰当的比喻！就像文件系统中的目录那样，你应使用模块来组织你的代码。而且就像一个目录中的文件那样，我们需要一个找到我们的模块的方式。</p>
 
                     </main>
 

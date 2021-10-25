@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Rust 程序设计语言</title>
+        <title>Rust 程序设计语言 中文版</title>
         
         <meta name="robots" content="noindex" />
         
@@ -133,7 +133,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 程序设计语言</h1>
+                    <h1 class="menu-title">Rust 程序设计语言 中文版</h1>
 
                     <div class="right-buttons">
                         
@@ -180,7 +180,7 @@
 <blockquote>
 <p>中文翻译注（Chinese translation of the <a href="https://doc.rust-lang.org/book">The Rust Programming Language</a>）：</p>
 <ol>
-<li><strong>本站翻译已部分更新至 Rust 1.52 版</strong>，这是目前网上最新的版本，最后更新时间 2021 年 5 月 17 日。</li>
+<li><strong>本站翻译已部分更新至 Rust 1.53 版</strong>，这是目前网上最新的版本，最后更新时间 2021 年 7 月 17 日。</li>
 <li>《Rust 程序设计语言》(The Rust Programming Language 中文版) 翻译自 <a href="https://doc.rust-lang.org/book">The Rust Programming Language</a>，查看此书的 <a href="https://github.com/rust-lang-cn/book-cn">Github 翻译项目</a>。</li>
 <li>本书已有由 <a href="https://github.com/KaiserY/trpl-zh-cn">KaiserY 翻译完的版本</a>，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续 Rust 中文翻译项目组将跟随 Rust 官方的英文版本更新。</li>
 <li>许可协议：跟随英文原书使用 MIT 和 Apache 2.0 双许可授权。</li>
@@ -188,7 +188,7 @@
 <li>若发现本页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开本页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！</li>
 </ol>
 </blockquote>
-<p>本书的版本假设你使用 Rust 1.52 或在所有项目中的 <em>Cargo.toml</em> 添加 <code>edition = &quot;2018&quot;</code> 指明使用 Rust 2018 版之后的更高版本。请参阅第 1 章的<a href="ch01-01-installation.html">“安装”</a><!-- ignore -->部分来安装或更新 Rust，并参阅新的<a href="appendix-05-editions.html">附录 E</a><!-- ignore --> 来获取有关版本的信息。</p>
+<p>本书的版本假设你使用 Rust 1.53 或在所有项目中的 <em>Cargo.toml</em> 添加 <code>edition = &quot;2018&quot;</code> 指明使用 Rust 2018 版之后的更高版本。请参阅第 1 章的<a href="ch01-01-installation.html">“安装”</a><!-- ignore -->部分来安装或更新 Rust，并参阅新的<a href="appendix-05-editions.html">附录 E</a><!-- ignore --> 来获取有关版本的信息。</p>
 <p>2018 版的 Rust 语言包含许多改进，使Rust更符合人体工程学且更易于学习。本书的迭代更新过程包含许多更改并反映了这些改进：</p>
 <ul>
 <li>第 7 章“使用程序包，crate 和模块管理不断增长的项目”已被大部分重写。这使得 2018 版中的模块系统和路径工作方式更加一致。</li>
@@ -391,7 +391,6 @@ main.pdb
 main.rs
 </code></pre>
 <p>这显示了带有.rs扩展名的源代码文件，可执行文件（在Windows上是main.exe，在所有其他平台上是main），以及在使用Windows时，包含一个带有.pdb扩展名的调试信息的文件。在这里，运行main或main.exe文件，如下所示：</p>
-<p>这里显示了扩展名为 <em>.rs</em> 的源代码文件和可执行文件（在 Windows 上为 <em>main.exe</em>，其他系统为 <em>main</em>），以及在使用 Windows 时，包含一个带有 <code>.pdb</code> 扩展名的调试信息的文件。在这里，运行 <code>main</code> 或 <code>main.exe</code> 文件，如下所示：</p>
 <pre><code class="language-console">$ ./main # or .\main.exe on Windows
 </code></pre>
 <p>如果 <em>main.rs</em> 是 “Hello, world!” 程序，这将会打印 <code>Hello, world!</code> 到终端上。</p>
@@ -824,7 +823,7 @@ as a guide to creating the hypothetical output shown here -->
 <p>如果要使用 <code>rand</code> 版本 <code>0.9.0</code> 或 <code>0.9.x</code> 系列中的任何版本，则必须像这样更新 <em>Cargo.toml</em> 文件：</p>
 <pre><code class="language-toml">[dependencies]
 
-rand = &quot;0.6.0&quot;
+rand = &quot;0.9.0&quot;
 </code></pre>
 <p>下一次运行 <code>cargo build</code> 时，Cargo 会从 registry 更新可用的 crate，并根据你指定的新版本重新计算。</p>
 <p>第 14 章会讲到 <a href="http://doc.crates.io">Cargo</a><!-- ignore --> 及其<a href="http://doc.crates.io/crates-io.html">生态系统</a><!-- ignore --> 的更多内容，不过目前你只需要了解这么多。通过 Cargo 复用库代码非常容易，因此 Rustacean 能够编写出由很多包组装而成的更轻巧的项目。</p>
@@ -1820,17 +1819,17 @@ fn plus_one(x: i32) -&gt; i32 {
 <p>注释也可以放在包含代码的行后面：</p>
 <p><span class="filename">文件名：src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let lucky_number = 7; // 我今天感觉好幸运。
+    let lucky_number = 7; // 我感觉今天好幸运
 }
 </code></pre></pre>
 <p>不过下面的这种格式会更常见，将注释放到需要解释的代码的上面单独一行：</p>
 <p><span class="filename">文件名：src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    // 我今天感觉好幸运。
+    // 我感觉今天好幸运
     let lucky_number = 7;
 }
 </code></pre></pre>
-<p>这就是注释的全部内容，这些内容并不复杂。</p>
+<p>Rust 还具有另一种注释，即文档注释，我们将在第 14 章的“将 crate 发布到 Crates.io” 章节中进行讨论。</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="控制流"><a class="header" href="#控制流">控制流</a></h2>
 <p>根据条件是否为真来决定是否执行某些代码，以及根据条件是否为真来重复运行一段代码是大部分编程语言的基本组成部分。Rust 代码中最常见的用来控制执行流的结构是 <code>if</code> 表达式和循环。</p>
 <h3 id="if-表达式"><a class="header" href="#if-表达式"><code>if</code> 表达式</a></h3>
@@ -2098,7 +2097,7 @@ the value is: 50
 </ul>
 <p>当你准备好继续的时候，让我们讨论一个其他语言中 <strong>并不</strong> 常见的概念：所有权（ownership）。</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="认识所有权"><a class="header" href="#认识所有权">认识所有权</a></h1>
-<p>所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全。因此，理解 Rust 中所有权如何工作是十分重要的。本章，我们将讲到所有权以及相关功能：借用、slice 以及 Rust 如何在内存中布局数据。</p>
+<p>所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收器（garbage collector）即可保证内存安全。因此，理解 Rust 中所有权的运作方式非常重要。在本章中，我们将讨论所有权以及相关功能：借用、slice 以及 Rust 如何在内存中存放数据。</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="什么是所有权"><a class="header" href="#什么是所有权">什么是所有权？</a></h2>
 <p>Rust 的核心功能（之一）是 <strong>所有权</strong>（<em>ownership</em>）。虽然该功能很容易解释，但它对语言的其他部分有着深刻的影响。</p>
 <p>所有运行的程序都必须管理其使用计算机内存的方式。一些语言中具有垃圾回收机制，在程序运行时不断地寻找不再使用的内存；在另一些语言中，程序员必须亲自分配和释放内存。Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。在运行时，所有权系统的任何功能都不会减慢程序。</p>
@@ -3894,6 +3893,24 @@ main.rs
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p><span class="caption">示例 7-1：一个包含着含有函数的其他模块们的 <code>front_of_house</code> 模块</span></p>
+<p>我们用关键字 <code>mod</code> 定义一个模块，指定模块的名字（在示例中为 <code>front_of_house</code>），并用大括号包围模块的主体。我们可以在模块中包含其他模块，就像本示例中的 <code>hosting</code> 和 <code>serving</code> 模块。模块中也可以包含其他项，比如结构体、枚举、常量、trait，或者像示例 7-1 一样——包含函数。</p>
+<p>通过使用模块，我们可以把相关的定义组织起来，并通过模块命名来解释为什么它们之间有相关性。使用这部分代码的程序员可以更方便的循着这种分组找到自己需要的定义，而不需要通览所有。编写这部分代码的程序员通过分组知道该把新功能放在哪里以便继续让程序保持组织性。</p>
+<p>之前我们提到，<em>src/main.rs</em> 和 <em>src/lib.rs</em> 被称为 crate 根。如此称呼的原因是，这两个文件中任意一个的内容会构成名为 <code>crate</code> 的模块，且该模块位于 crate 的被称为 <em>模块树</em> 的模块结构的根部（&quot;at the root of the crate’s module structure&quot;）。</p>
+<p>示例 7-2 展示了示例 7-1 所对应的模块树。</p>
+<pre><code class="language-text">crate
+ └── front_of_house
+     ├── hosting
+     │   ├── add_to_waitlist
+     │   └── seat_at_table
+     └── serving
+         ├── take_order
+         ├── serve_order
+         └── take_payment
+</code></pre>
+<p><span class="caption">示例 7-2：示例 7-1 中代码对应的模块树</span></p>
+<p>这个树展示了模块间是如何相互嵌套的（比如，<code>hosting</code> 嵌套在 <code>front_of_house</code> 内部）。这个树还展示了一些模块互为 <em>兄弟</em> ，即它们被定义在同一模块内（<code>hosting</code> 和 <code>serving</code> 都定义在 <code>front_of_house</code> 内）。继续使用家族比喻，如果模块A包含在模块B的内部，我们称模块A是模块B的 <em>孩子</em> 且模块B是模块A的 <em>父辈</em> 。注意整个模块树的根位于名为 <code>crate</code> 的隐式模块下。</p>
+<p>模块树或许让你想起了电脑上文件系统的目录树。这是一个非常恰当的比喻！就像文件系统中的目录那样，你应使用模块来组织你的代码。而且就像一个目录中的文件那样，我们需要一个找到我们的模块的方式。</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="路径用于引用模块树中的项"><a class="header" href="#路径用于引用模块树中的项">路径用于引用模块树中的项</a></h2>
 <p>来看一下 Rust 如何在模块树中找到一个项的位置，我们使用路径的方式，就像在文件系统使用路径一样。如果我们想要调用一个函数，我们需要知道它的路径。</p>
 <p>路径有两种形式：</p>
@@ -8300,7 +8317,7 @@ fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 13-6：调用定义的 <code>expensive_closure</code></span></p>
-<p>现在耗时的计算只在一个地方被调用，并只会在需要结果的时候执行改代码。</p>
+<p>现在耗时的计算只在一个地方被调用，并只会在需要结果的时候执行该代码。</p>
 <p>然而，我们又重新引入了示例 13-3 中的问题：仍然在第一个 <code>if</code> 块中调用了闭包两次，这调用了慢计算代码两次而使得用户需要多等待一倍的时间。可以通过在 <code>if</code> 块中创建一个本地变量存放闭包调用的结果来解决这个问题，不过闭包可以提供另外一种解决方案。我们稍后会讨论这个方案，不过目前让我们首先讨论一下为何闭包定义中和所涉及的 trait 中没有类型注解。</p>
 <h3 id="闭包类型推断和注解"><a class="header" href="#闭包类型推断和注解">闭包类型推断和注解</a></h3>
 <p>闭包不要求像 <code>fn</code> 函数那样在参数和返回值上注明类型。函数中需要类型注解是因为他们是暴露给用户的显式接口的一部分。严格的定义这些接口对于保证所有人都认同函数使用和返回值的类型来说是很重要的。但是闭包并不用于这样暴露在外的接口：他们储存在变量中并被使用，不用命名他们或暴露给库的用户调用。</p>
@@ -9065,7 +9082,7 @@ $ cargo build --release
     Finished release [optimized] target(s) in 0.0 secs
 </code></pre>
 <p>构建输出中的 <code>dev</code> 和 <code>release</code> 表明编译器在使用不同的配置。</p>
-<p>当项目的 <em>Cargo.toml</em> 文件中没有任何 <code>[profile.*]</code> 部分的时候，Cargo 会对每一个配置都采用默认设置。通过增加任何希望定制的配置对应的 <code>[profile.*]</code> 部分，我们可以选择覆盖任意默认设置的子集。例如，如下是 <code>dev</code> 和 <code>release</code> 配置的 <code>opt-level</code> 设置的默认值：</p>
+<p>当项目的 <em>Cargo.toml</em> 文件中没有任何 <code>[profile.*]</code> 部分的时候，Cargo 会对每一个配置都采用默认设置。通过在<code>[profile.*]</code>对应的部分中增加任何定制的配置，我们可以覆盖任意默认设置的子集。例如，如下是 <code>dev</code> 和 <code>release</code> 配置的 <code>opt-level</code> 设置的默认值：</p>
 <p><span class="filename">文件名: Cargo.toml</span></p>
 <pre><code class="language-toml">[profile.dev]
 opt-level = 0
@@ -9082,8 +9099,8 @@ opt-level = 1
 <p>这会覆盖默认的设置 <code>0</code>。现在运行 <code>cargo build</code> 时，Cargo 将会使用 <code>dev</code> 的默认配置加上定制的 <code>opt-level</code>。因为 <code>opt-level</code> 设置为 <code>1</code>，Cargo 会比默认进行更多的优化，但是没有发布构建那么多。</p>
 <p>对于每个配置的设置和其默认值的完整列表，请查看 <a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-profile-sections">Cargo 的文档</a></p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="将-crate-发布到-cratesio"><a class="header" href="#将-crate-发布到-cratesio">将 crate 发布到 Crates.io</a></h2>
-<p>我们曾经在项目中使用 <a href="https://crates.io">crates.io</a><!-- ignore --> 上的包作为依赖，不过你也可以通过发布自己的包来向它人分享代码。<a href="https://crates.io">crates.io</a><!-- ignore --> 用来分发包的源代码，所以它主要托管开源代码。</p>
-<p>Rust 和 Cargo 有一些帮助它人更方便找到和使用你发布的包的功能。我们将介绍一些这样的功能，接着讲到如何发布一个包。</p>
+<p>我们曾经在项目中使用 <a href="https://crates.io">crates.io</a><!-- ignore --> 上的包作为依赖，不过你也可以通过发布自己的包来向别人分享代码。<a href="https://crates.io">crates.io</a><!-- ignore --> 用来分发包的源代码，所以它主要托管开源代码。</p>
+<p>Rust 和 Cargo 有一些帮助别人更方便找到和使用你发布的包的功能。我们将介绍一些这样的功能，接着讲到如何发布一个包。</p>
 <h3 id="编写有用的文档注释"><a class="header" href="#编写有用的文档注释">编写有用的文档注释</a></h3>
 <p>准确的包文档有助于其他用户理解如何以及何时使用他们，所以花一些时间编写文档是值得的。第三章中我们讨论了如何使用两斜杠 <code>//</code> 注释 Rust 代码。Rust 也有特定的用于文档的注释类型，通常被称为 <strong>文档注释</strong>（<em>documentation comments</em>），他们会生成 HTML 文档。这些 HTML 展示公有 API 文档注释的内容，他们意在让对库感兴趣的程序员理解如何 <strong>使用</strong> 这个 crate，而不是它是如何被 <strong>实现</strong> 的。</p>
 <p>文档注释使用三斜杠 <code>///</code> 而不是两斜杆以支持 Markdown 注解来格式化文本。文档注释就位于需要文档的项的之前。示例 14-1 展示了一个 <code>my_crate</code> crate 中 <code>add_one</code> 函数的文档注释：</p>
@@ -9126,7 +9143,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 </code></pre>
 <p>现在尝试改变函数或例子来使例子中的 <code>assert_eq!</code> 产生 panic。再次运行 <code>cargo test</code>，你将会看到文档测试捕获到了例子与代码不再同步！</p>
 <h4 id="注释包含项的结构"><a class="header" href="#注释包含项的结构">注释包含项的结构</a></h4>
-<p>还有另一种风格的文档注释，<code>//!</code>，这为包含注释的项，而不是位于注释之后的项增加文档。这通常用于 crate 根文件（通常是 <em>src/lib.rs</em>）或模块的根文件为 crate 或模块整体提供文档。</p>
+<p>还有另一种风格的文档注释，<code>//!</code>，为包含注释的项添加文档，而不是为注释之后的项增加文档。通常用于 crate 根文件（通常是 <em>src/lib.rs</em>）或模块的根文件，为 crate 或模块整体提供文档。</p>
 <p>作为一个例子，如果我们希望增加描述包含 <code>add_one</code> 函数的 <code>my_crate</code> crate 目的的文档，可以在 <em>src/lib.rs</em> 开头增加以 <code>//!</code> 开头的注释，如示例 14-2 所示：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">//! # My Crate
@@ -9198,7 +9215,7 @@ fn main() {
 }
 </code></pre>
 <p><span class="caption">示例 14-4：一个通过导出内部结构使用 <code>art</code> crate 中项的 crate</span></p>
-<p>示例 14-4 中使用 <code>art</code> crate 代码的作者不得不搞清楚 <code>PrimaryColor</code> 位于 <code>kinds</code> 模块而 <code>mix</code> 位于 <code>utils</code> 模块。<code>art</code> crate 的模块结构相比使用它的开发者来说对编写它的开发者更有意义。其内部的 <code>kinds</code> 模块和 <code>utils</code> 模块的组织结构并没有对尝试理解如何使用它的人提供任何有价值的信息。<code>art</code> crate 的模块结构因不得不搞清楚所需的内容在何处和必须在 <code>use</code> 语句中指定模块名称而显得混乱和不便。</p>
+<p>示例 14-4 中使用<code>art</code> crate 代码的作者不得不搞清楚 <code>PrimaryColor</code> 位于 <code>kinds</code> 模块、<code>mix</code> 位于 <code>utils</code> 模块。<code>art</code> crate 的模块结构对编写它的开发者更有意义，而不是使用者。对尝试如何使用它的人来说，其内部的 <code>kinds</code> 模块和 <code>utils</code> 模块的组织结构并没有提供任何有价值的信息。<code>art</code> crate 的模块结构因不得不搞清楚所需的内容在何处，以及必须在 <code>use</code> 语句中指定模块名称而显得混乱和不便。</p>
 <p>为了从公有 API 中去掉 crate 的内部组织，我们可以采用示例 14-3 中的 <code>art</code> crate 并增加 <code>pub use</code> 语句来重导出项到顶层结构，如示例 14-5 所示：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">//! # Art
@@ -9637,7 +9654,7 @@ fn main() {
 <p>我们将要构建的 <code>MyBox&lt;T&gt;</code> 类型与真正的 <code>Box&lt;T&gt;</code> 有一个很大的区别：我们的版本不会在堆上储存数据。这个例子重点关注 <code>Deref</code>，所以其数据实际存放在何处，相比其类似指针的行为来说不算重要。</p>
 </blockquote>
 <h3 id="通过解引用运算符追踪指针的值"><a class="header" href="#通过解引用运算符追踪指针的值">通过解引用运算符追踪指针的值</a></h3>
-<p>常规引用是一个指针类型，一种理解指针的方式是将其看成指向储存在其他某处值的箭头。在示例 15-6 中，创建了一个 <code>i32</code> 值的引用，接着使用解引用运算符来跟踪所引用的数据：</p>
+<p>常规引用是一个指针类型，一种理解指针的方式是将其看成指向储存在其他某处值的箭头。在示例 15-6 中，创建了一个 <code>i32</code> 值的引用y，接着使用解引用运算符来解出y所引用的值：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = 5;
@@ -9647,8 +9664,8 @@ fn main() {
     assert_eq!(5, *y);
 }
 </code></pre></pre>
-<p><span class="caption">示例 15-6：使用解引用运算符来跟踪 <code>i32</code> 值的引用</span></p>
-<p>变量 <code>x</code> 存放了一个 <code>i32</code> 值 <code>5</code>。<code>y</code> 等于 <code>x</code> 的一个引用。可以断言 <code>x</code> 等于 <code>5</code>。然而，如果希望对 <code>y</code> 的值做出断言，必须使用 <code>*y</code> 来追踪引用所指向的值（也就是 <strong>解引用</strong>）。一旦解引用了 <code>y</code>，就可以访问 <code>y</code> 所指向的整型值并可以与 <code>5</code> 做比较。</p>
+<p><span class="caption">示例 15-6：使用解引用运算符来解出 <code>i32</code> 值的引用所指向的值</span></p>
+<p>变量 <code>x</code> 存放了一个 <code>i32</code> 值 <code>5</code>。<code>y</code> 等于 <code>x</code> 的一个引用。可以断言 <code>x</code> 等于 <code>5</code>。然而，如果希望对 <code>y</code> 的值做出断言，必须使用 <code>*y</code> 来解出引用所指向的值（也就是 <strong>解引用</strong>）。一旦解引用了 <code>y</code>，就可以访问 <code>y</code> 所指向的整型值并可以与 <code>5</code> 做比较。</p>
 <p>相反如果尝试编写 <code>assert_eq!(5, y);</code>，则会得到如下编译错误：</p>
 <pre><code class="language-text">error[E0277]: can't compare `{integer}` with `&amp;{integer}`
  --&gt; src/main.rs:6:5
@@ -9659,7 +9676,7 @@ fn main() {
   = help: the trait `std::cmp::PartialEq&lt;&amp;{integer}&gt;` is not implemented for
   `{integer}`
 </code></pre>
-<p>不允许比较数字的引用与数字，因为它们是不同的类型。必须使用解引用运算符追踪引用所指向的值。</p>
+<p>不允许比较数字的引用与数字，因为它们是不同的类型。必须使用解引用运算符解出引用所指向的值。</p>
 <h3 id="像引用一样使用-boxt"><a class="header" href="#像引用一样使用-boxt">像引用一样使用 <code>Box&lt;T&gt;</code></a></h3>
 <p>可以使用 <code>Box&lt;T&gt;</code> 代替引用来重写示例 15-6 中的代码，解引用运算符也一样能工作，如示例 15-7 所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -9740,7 +9757,18 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 <p><code>deref</code> 方法返回值的引用，以及 <code>*(y.deref())</code> 括号外边的普通解引用仍为必须的原因在于所有权。如果 <code>deref</code> 方法直接返回值而不是值的引用，其值（的所有权）将被移出 <code>self</code>。在这里以及大部分使用解引用运算符的情况下我们并不希望获取 <code>MyBox&lt;T&gt;</code> 内部值的所有权。</p>
 <p>注意，每次当我们在代码中使用 <code>*</code> 时， <code>*</code> 运算符都被替换成了先调用 <code>deref</code> 方法再接着使用 <code>*</code> 解引用的操作，且只会发生一次，不会对 <code>*</code> 操作符无限递归替换，解引用出上面 <code>i32</code> 类型的值就停止了，这个值与示例 15-9 中 <code>assert_eq!</code> 的 <code>5</code> 相匹配。</p>
 <h3 id="函数和方法的隐式解引用强制多态"><a class="header" href="#函数和方法的隐式解引用强制多态">函数和方法的隐式解引用强制多态</a></h3>
-<p><strong>解引用强制多态</strong>（<em>deref coercions</em>）是 Rust 在函数或方法传参上的一种便利。其将实现了 <code>Deref</code> 的类型的引用转换为原始类型通过 <code>Deref</code> 所能够转换的类型的引用。当这种特定类型的引用作为实参传递给和形参类型不同的函数或方法时，解引用强制多态将自动发生。这时会有一系列的 <code>deref</code> 方法被调用，把我们提供的类型转换成了参数所需的类型。</p>
+<p><strong>解引用强制多态</strong>（<em>deref coercions</em>）是 Rust 在函数或方法传参上的一种便利。解引用强制多态只能工作在实现了Deref trait的类型上。解引用强制多态将一种类型（A）隐式转换为另外一种类型（B）的引用，因为A类型实现了Deref trait，并且其关联类型是B类型。比如，解引用强制多态可以将&amp;String转换为&amp;str，因为类型String实现了Deref trait并且其关联类型是str。代码如下：</p>
+<pre><code class="language-rust ignore does_not_compile">#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+impl ops::Deref for String {
+    type Target = str;
+
+    #[inline]
+    fn deref(&amp;self) -&gt; &amp;str {
+        unsafe { str::from_utf8_unchecked(&amp;self.vec) }
+    }
+}
+</code></pre>
+<p>当我们将特定类型的值的引用作为参数传递给函数或方法，但是被传递的值的引用与函数或方法中定义的参数类型不匹配时，会发生解引用强制多态。这时会有一系列的 <code>deref</code> 方法被调用，把我们提供的参数类型转换成函数或方法需要的参数类型。</p>
 <p>解引用强制多态的加入使得 Rust 程序员编写函数和方法调用时无需增加过多显式使用 <code>&amp;</code> 和 <code>*</code> 的引用和解引用。这个功能也使得我们可以编写更多同时作用于引用或智能指针的代码。</p>
 <p>作为展示解引用强制多态的实例，让我们使用示例 15-8 中定义的 <code>MyBox&lt;T&gt;</code>，以及示例 15-10 中增加的 <code>Deref</code> 实现。示例 15-11 展示了一个有着字符串 slice 参数的函数定义：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -9817,7 +9845,7 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 <p><code>(*m)</code> 将 <code>MyBox&lt;String&gt;</code> 解引用为 <code>String</code>。接着 <code>&amp;</code> 和 <code>[..]</code> 获取了整个 <code>String</code> 的字符串 slice 来匹配 <code>hello</code> 的签名。没有解引用强制多态所有这些符号混在一起将更难以读写和理解。解引用强制多态使得 Rust 自动的帮我们处理这些转换。</p>
 <p>当所涉及到的类型定义了 <code>Deref</code> trait，Rust 会分析这些类型并使用任意多次 <code>Deref::deref</code> 调用以获得匹配参数的类型。这些解析都发生在编译时，所以利用解引用强制多态并没有运行时惩罚！</p>
 <h3 id="解引用强制多态如何与可变性交互"><a class="header" href="#解引用强制多态如何与可变性交互">解引用强制多态如何与可变性交互</a></h3>
-<p>类似于如何使用 <code>Deref</code> trait 重载不可变引用的 <code>*</code> 运算符，Rust 提供了 <code>DerefMut</code> trait 用于重载可变引用的 <code>*</code> 运算符。</p>
+<p>类似于使用 <code>Deref</code> trait 重载不可变引用的 <code>*</code> 运算符，Rust 提供了 <code>DerefMut</code> trait 用于重载可变引用的 <code>*</code> 运算符。</p>
 <p>Rust 在发现类型和 trait 实现满足三种情况时会进行解引用强制多态：</p>
 <ul>
 <li>当 <code>T: Deref&lt;Target=U&gt;</code> 时从 <code>&amp;T</code> 到 <code>&amp;U</code>。</li>
@@ -10915,7 +10943,7 @@ Got: thread
 
 let (tx, rx) = mpsc::channel();
 
-let tx1 = mpsc::Sender::clone(&amp;tx);
+let tx1 = tx.clone();
 thread::spawn(move || {
     let vals = vec![
         String::from(&quot;hi&quot;),
@@ -13357,7 +13385,7 @@ let s2: str = &quot;How's it going?&quot;;
 <p>那么该怎么办呢？你已经知道了这种问题的答案：<code>s1</code> 和 <code>s2</code> 的类型是 <code>&amp;str</code> 而不是 <code>str</code>。如果你回想第四章 <a href="ch04-03-slices.html#string-slices">“字符串 slice”</a>  部分，slice 数据结储存了开始位置和 slice 的长度。</p>
 <p>所以虽然 <code>&amp;T</code> 是一个储存了 <code>T</code> 所在的内存位置的单个值，<code>&amp;str</code> 则是 <strong>两个</strong> 值：<code>str</code> 的地址和其长度。这样，<code>&amp;str</code> 就有了一个在编译时可以知道的大小：它是 <code>usize</code> 长度的两倍。也就是说，我们总是知道 <code>&amp;str</code> 的大小，而无论其引用的字符串是多长。这里是 Rust 中动态大小类型的常规用法：他们有一些额外的元信息来储存动态信息的大小。这引出了动态大小类型的黄金规则：必须将动态大小类型的值置于某种指针之后。</p>
 <p>可以将 <code>str</code> 与所有类型的指针结合：比如 <code>Box&lt;str&gt;</code> 或 <code>Rc&lt;str&gt;</code>。事实上，之前我们已经见过了，不过是另一个动态大小类型：trait。每一个 trait 都是一个可以通过 trait 名称来引用的动态大小类型。在第十七章 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分，我们提到了为了将 trait 用于 trait 对象，必须将他们放入指针之后，比如 <code>&amp;dyn Trait</code> 或 <code>Box&lt;dyn Trait&gt;</code>（<code>Rc&lt;dyn Trait&gt;</code> 也可以）。</p>
-<p>为了处理 DST，Rust 有一个特定的 trait 来决定一个类型的大小是否在编译时可知：这就是 <code>Sized</code> trait。这个 trait 自动为编译器在编译时就知道大小的类型实现。另外，Rust 隐式的为每一个泛型函数增加了 <code>Sized</code> bound。也就是说，对于如下泛型函数定义：</p>
+<p>为了处理 DST，Rust 有一个特定的 trait 来确定一个类型的大小是否在编译时可知：这就是 <code>Sized</code> trait。这个 trait 自动为编译器在编译时就知道其大小的类型实现。另外，Rust 隐式的为每一个泛型函数增加了 <code>Sized</code> bound。也就是说，对于如下泛型函数定义：</p>
 <pre><code class="language-rust ignore">fn generic&lt;T&gt;(t: T) {
     // --snip--
 }

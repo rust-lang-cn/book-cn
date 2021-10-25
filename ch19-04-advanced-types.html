@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>高级类型 - Rust 程序设计语言</title>
+        <title>高级类型 - Rust 程序设计语言 中文版</title>
         
         
 
@@ -131,7 +131,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 程序设计语言</h1>
+                    <h1 class="menu-title">Rust 程序设计语言 中文版</h1>
 
                     <div class="right-buttons">
                         
@@ -340,7 +340,7 @@ let s2: str = &quot;How's it going?&quot;;
 <p>那么该怎么办呢？你已经知道了这种问题的答案：<code>s1</code> 和 <code>s2</code> 的类型是 <code>&amp;str</code> 而不是 <code>str</code>。如果你回想第四章 <a href="ch04-03-slices.html#string-slices">“字符串 slice”</a>  部分，slice 数据结储存了开始位置和 slice 的长度。</p>
 <p>所以虽然 <code>&amp;T</code> 是一个储存了 <code>T</code> 所在的内存位置的单个值，<code>&amp;str</code> 则是 <strong>两个</strong> 值：<code>str</code> 的地址和其长度。这样，<code>&amp;str</code> 就有了一个在编译时可以知道的大小：它是 <code>usize</code> 长度的两倍。也就是说，我们总是知道 <code>&amp;str</code> 的大小，而无论其引用的字符串是多长。这里是 Rust 中动态大小类型的常规用法：他们有一些额外的元信息来储存动态信息的大小。这引出了动态大小类型的黄金规则：必须将动态大小类型的值置于某种指针之后。</p>
 <p>可以将 <code>str</code> 与所有类型的指针结合：比如 <code>Box&lt;str&gt;</code> 或 <code>Rc&lt;str&gt;</code>。事实上，之前我们已经见过了，不过是另一个动态大小类型：trait。每一个 trait 都是一个可以通过 trait 名称来引用的动态大小类型。在第十七章 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分，我们提到了为了将 trait 用于 trait 对象，必须将他们放入指针之后，比如 <code>&amp;dyn Trait</code> 或 <code>Box&lt;dyn Trait&gt;</code>（<code>Rc&lt;dyn Trait&gt;</code> 也可以）。</p>
-<p>为了处理 DST，Rust 有一个特定的 trait 来决定一个类型的大小是否在编译时可知：这就是 <code>Sized</code> trait。这个 trait 自动为编译器在编译时就知道大小的类型实现。另外，Rust 隐式的为每一个泛型函数增加了 <code>Sized</code> bound。也就是说，对于如下泛型函数定义：</p>
+<p>为了处理 DST，Rust 有一个特定的 trait 来确定一个类型的大小是否在编译时可知：这就是 <code>Sized</code> trait。这个 trait 自动为编译器在编译时就知道其大小的类型实现。另外，Rust 隐式的为每一个泛型函数增加了 <code>Sized</code> bound。也就是说，对于如下泛型函数定义：</p>
 <pre><code class="language-rust ignore">fn generic&lt;T&gt;(t: T) {
     // --snip--
 }

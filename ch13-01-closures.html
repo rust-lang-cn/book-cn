@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>闭包：可以捕获其环境的匿名函数 - Rust 程序设计语言</title>
+        <title>闭包：可以捕获其环境的匿名函数 - Rust 程序设计语言 中文版</title>
         
         
 
@@ -131,7 +131,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 程序设计语言</h1>
+                    <h1 class="menu-title">Rust 程序设计语言 中文版</h1>
 
                     <div class="right-buttons">
                         
@@ -365,7 +365,7 @@ fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 13-6：调用定义的 <code>expensive_closure</code></span></p>
-<p>现在耗时的计算只在一个地方被调用，并只会在需要结果的时候执行改代码。</p>
+<p>现在耗时的计算只在一个地方被调用，并只会在需要结果的时候执行该代码。</p>
 <p>然而，我们又重新引入了示例 13-3 中的问题：仍然在第一个 <code>if</code> 块中调用了闭包两次，这调用了慢计算代码两次而使得用户需要多等待一倍的时间。可以通过在 <code>if</code> 块中创建一个本地变量存放闭包调用的结果来解决这个问题，不过闭包可以提供另外一种解决方案。我们稍后会讨论这个方案，不过目前让我们首先讨论一下为何闭包定义中和所涉及的 trait 中没有类型注解。</p>
 <h3 id="闭包类型推断和注解"><a class="header" href="#闭包类型推断和注解">闭包类型推断和注解</a></h3>
 <p>闭包不要求像 <code>fn</code> 函数那样在参数和返回值上注明类型。函数中需要类型注解是因为他们是暴露给用户的显式接口的一部分。严格的定义这些接口对于保证所有人都认同函数使用和返回值的类型来说是很重要的。但是闭包并不用于这样暴露在外的接口：他们储存在变量中并被使用，不用命名他们或暴露给库的用户调用。</p>
