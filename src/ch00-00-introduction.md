@@ -73,14 +73,13 @@ Rust 语言也希望能支持很多其他用户，这里提及的只是最大的
 
 <span id="ferris"></span>
 
-学习 Rust 的过程中一个重要的部分是学习如何阅读编译器提供的错误信息：它们会指导你编写出能工作的代码。为此，我们会提供很多不能编译的示例代码，以及各个情况下编译器会展示的错误信息。请注意如果随便输入并运行随机的示例代码，它们可能无法编译！请确保阅读任何你尝试运行的示例周围的内容，检视他们是否有意写错。Ferris 也会帮助你区别那些有意无法工作的代码：
+学习 Rust 的过程中一个重要的部分是学习如何阅读编译器提供的错误信息：它们会指导你编写出能工作的代码。为此，我们会提供很多不能编译的示例，以及各个情况下编译器会展示的错误信息。请注意如果随便输入并运行随机的示例代码，它们可能无法编译！请确保阅读任何你尝试运行的示例周围的内容，检视他们是否有意写错。Ferris 也会帮助你区别那些有意无法工作的代码：
 
-| Ferris                                                                 | 意义                                          |
-|------------------------------------------------------------------------|--------------------------------------------------|
-| <img src="img/ferris/does_not_compile.svg" class="ferris-explain">     | 这些代码不能编译！                      |
-| <img src="img/ferris/panics.svg" class="ferris-explain">               | 这些代码会 panic！                                |
-| <img src="img/ferris/unsafe.svg" class="ferris-explain">               | 这些代码块包含不安全（unsafe）代码。            |
-| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain"> | 这些代码不会产生期望的行为。 |
+| Ferris                                                                                                           | 意义                                          |
+|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| <img src="img/ferris/does_not_compile.svg" class="ferris-explain" alt="Ferris with a question mark"/>            | 这些代码不能编译！                     |
+| <img src="img/ferris/panics.svg" class="ferris-explain" alt="Ferris throwing up their hands"/>                   | 这些代码会 panic！                                |
+| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain" alt="Ferris with one claw up, shrugging"/> | 这些代码没有产生期望的行为。 |
 
 在大部分情况，我们会指引你将任何不能编译的代码纠正为正确版本。
 
