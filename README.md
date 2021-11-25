@@ -11,7 +11,7 @@
 >
 > 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书。
 >
-> 本仓库翻译内容包括 Rust 中文翻译项目组本身的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn][KaiserY] 译本），我们尽可能避免不必要的重复劳动，我们对原译者感激不尽！
+> 本仓库翻译内容包括 Rust 中文翻译项目组本身原有的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn][KaiserY] 译本），我们尽可能避免不必要的重复劳动，我们对原译者感激不尽！
 
 [github-en]: https://github.com/rust-lang/book
 [KaiserY]: https://github.com/KaiserY/trpl-zh-cn
