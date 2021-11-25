@@ -169,7 +169,7 @@ Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示
 
 当你希望将数据分配到栈（stack）而不是堆（heap）时（我们将在第 4 章中进一步讨论栈和堆），或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其的大小允许增长或缩小。如果您不确定是使用数组还是 vector，那就应该使用一个 vector：第 8 章更详细地讨论 vector。
 
-举个例子，在需要知道一年中各个月份名称的程序中，您很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以可以使用数组，因为你知道它总是包含 12 个元素：
+举个例子，在需要知道一年中各个月份名称的程序中，你很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以可以使用数组，因为你知道它总是包含 12 个元素：
 
 ```rust
 let months = ["January", "February", "March", "April", "May", "June", "July",
@@ -214,7 +214,7 @@ let a = [3; 5];
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
 ```
 
-此代码编译成功。如果使用 `cargo run` 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果您输入的是超出数组末尾的数字，例如10，则会看到类似以下的输出：
+此代码编译成功。如果使用 `cargo run` 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果输入的是超出数组末尾的数字，例如10，则会看到类似以下的输出：
 
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
