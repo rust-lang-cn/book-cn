@@ -12,18 +12,16 @@
 > 6. <a href="https://rustwiki.org/zh-CN/book" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，**英文版每天都会自动同步一次官方的最新版本**。
 > 7. 若发现本页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开本页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！
 
-[rust-1.57.0]: https://doc.rust-lang.org/1.57.0/book/
-[rust-nightly]: https://doc.rust-lang.org/nightly/book/
-[book-website]: https://doc.rust-lang.org/book
-[book-cn]: https://github.com/rust-lang-cn/book-cn
-[trpl-translation]: https://rustwiki.org/wiki/translate/other-translation/#the-rust-programing-language
-
 本书的版本假设你使用 Rust 1.57（2021 年 12 月 2 日发布） 或更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust。
 
 HTML 格式可在 [https://rustwiki.org/zh-CN/book/](https://rustwiki.org/zh-CN/book/) 网站上阅读（英文版为：[https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/)）， 而离线阅读可在安装 Rust 后使用 `rustup` 生成（注：目前此命令只生成英文版，需要中文离线版可从[本书的中文翻译 GitHub 仓库][book-cn]上获取） ；运行 `rustup docs --book` 来打开本书。
 
 可以从 [No Starch Press 获得平装图书和电子书格式][nsprust]（注：中文出版书名为《Rust 权威指南》，可从购书平台中购买）。
 
-[install]: ch01-01-installation.html
+[rust-1.57.0]: https://doc.rust-lang.org/1.57.0/book/
+[rust-nightly]: https://doc.rust-lang.org/nightly/book/
+[book-website]: https://doc.rust-lang.org/book
 [book-cn]: https://github.com/rust-lang-cn/book-cn
+[trpl-translation]: https://rustwiki.org/wiki/translate/other-translation/#the-rust-programing-language
+[install]: ch01-01-installation.html
 [nsprust]: https://nostarch.com/rust
