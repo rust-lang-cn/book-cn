@@ -20,7 +20,7 @@
 $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
-这个命令将下载一个脚本并开始安装 `rustup` 工具，此工具将安装 `Rust` 的最新稳定版本。可能会提示你输入密码。如果安装成功，将出现下面这行：
+这个命令将下载一个脚本并开始安装 `rustup` 工具，此工具将安装 Rust 的最新稳定版本。可能会提示你输入密码。如果安装成功，将出现下面这行：
 
 ```text
 Rust is installed now. Great!
@@ -55,7 +55,7 @@ Linux 用户一般应按照相应发行版的文档来安装 GCC 或 Clang。例
 $ rustup update
 ```
 
-要卸载 `Rust` 和 `rustup`，在 shell 中运行以下卸载命令：
+要卸载 Rust 和 `rustup`，在 shell 中运行以下卸载命令：
 
 ```console
 $ rustup self uninstall
