@@ -4,7 +4,7 @@
 
 > 中文翻译注（Chinese translation of the [The Rust Programming Language][book-website]）：
 >
-> 1. **本站翻译已参照最新的 [Rust 1.57.0 版][rust-1.57.0]及[开发版][rust-nightly]进行调整**，这是目前网上最新的中文版本，最后更新时间 2021 年 11 月 26 日。
+> 1. **本站翻译已参照最新的 [Rust 1.57.0 版][rust-1.57.0]及[开发版][rust-nightly]进行调整**，这是目前网上最新的中文版本，最后更新时间 2022 年 1 月 7 日。
 > 2. 《Rust 程序设计语言》(The Rust Programming Language 中文版) 翻译自 [The Rust Programming Language][book-website]，查看此书的 [Github 翻译项目][book-cn]。
 > 3. 《Rust 程序设计语言》中文出版书名为《Rust 权威指南》，参见[“为什么 The Rust Programming Language 在线版书名翻译成《Rust 程序设计语言》”][trpl-translation]。
 > 4. 本书已有由 [KaiserY 翻译完的版本](https://github.com/KaiserY/trpl-zh-cn)，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续 Rust 中文翻译项目组将跟随 Rust 官方的英文版本更新。
@@ -20,7 +20,7 @@
 
 本书的版本假设你使用 Rust 1.57（2021 年 12 月 2 日发布） 或更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust。
 
-HTML 格式可在 [https://rustwiki.org/zh-CN/book/](https://rustwiki.org/zh-CN/book/) 网站上阅读（英文版为：[https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/)）， 而离线阅读可在安装 Rust 后使用 `rustup` 生成（注：目前此命令只生成英文版，需要中文离线版可在 [本书的中文翻译 GitHub 仓库][book-cn] 上下载） ；运行 `rustup docs --book` 来打开本书。
+HTML 格式可在 [https://rustwiki.org/zh-CN/book/](https://rustwiki.org/zh-CN/book/) 网站上阅读（英文版为：[https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/)）， 而离线阅读可在安装 Rust 后使用 `rustup` 生成（注：目前此命令只生成英文版，需要中文离线版可从[本书的中文翻译 GitHub 仓库][book-cn]上获取） ；运行 `rustup docs --book` 来打开本书。
 
 可以从 [No Starch Press 获得平装图书和电子书格式][nsprust]（注：中文出版书名为《Rust 权威指南》，可从购书平台中购买）。
 
