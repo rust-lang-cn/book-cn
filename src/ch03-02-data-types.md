@@ -230,3 +230,6 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 该程序在索引操作中使用无效值时导致**运行时**（*runtime*）错误。程序退出并显示错误消息，未执行后面的 `println!` 语句。当你尝试使用索引访问元素时，Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust会出现 `panic`。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。
 
 这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。 第 9 章将进一步讨论 Rust 的错误处理。
+
+[comparing-the-guess-to-the-secret-number]:
+ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
