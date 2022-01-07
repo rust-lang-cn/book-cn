@@ -4,7 +4,7 @@
 
 > 中文翻译注（Chinese translation of the [The Rust Programming Language][book-website]）：
 >
-> 1. **本站翻译已参照最新的 [Rust 1.56.0 版][rust-1.56.0]及[开发版][rust-nightly]进行调整**，这是目前网上最新的中文版本，最后更新时间 2021 年 11 月 26 日。
+> 1. **本站翻译已参照最新的 [Rust 1.57.0 版][rust-1.57.0]及[开发版][rust-nightly]进行调整**，这是目前网上最新的中文版本，最后更新时间 2021 年 11 月 26 日。
 > 2. 《Rust 程序设计语言》(The Rust Programming Language 中文版) 翻译自 [The Rust Programming Language][book-website]，查看此书的 [Github 翻译项目][book-cn]。
 > 3. 《Rust 程序设计语言》中文出版书名为《Rust 权威指南》，参见[“为什么 The Rust Programming Language 在线版书名翻译成《Rust 程序设计语言》”][trpl-translation]。
 > 4. 本书已有由 [KaiserY 翻译完的版本](https://github.com/KaiserY/trpl-zh-cn)，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续 Rust 中文翻译项目组将跟随 Rust 官方的英文版本更新。
@@ -12,7 +12,7 @@
 > 6. <a href="https://rustwiki.org/zh-CN/book" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，**英文版每天都会自动同步一次官方的最新版本**。
 > 7. 若发现本页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开本页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！
 
-[rust-1.56.0]: https://doc.rust-lang.org/1.56.0/book/
+[rust-1.57.0]: https://doc.rust-lang.org/1.57.0/book/
 [rust-nightly]: https://doc.rust-lang.org/nightly/book/
 [book-website]: https://doc.rust-lang.org/book
 [book-cn]: https://github.com/rust-lang-cn/book-cn
