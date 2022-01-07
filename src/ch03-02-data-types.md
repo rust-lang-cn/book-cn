@@ -233,3 +233,8 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
+[control-flow]: ch03-05-control-flow.html#control-flow
+[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
+[wrapping]: ../std/num/struct.Wrapping.html
+[appendix_b]: appendix-02-operators.md
