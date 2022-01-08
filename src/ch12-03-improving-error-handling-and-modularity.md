@@ -170,7 +170,7 @@ but the index is 1', src/main.rs:25:21
 note: Run with `RUST_BACKTRACE=1` for a backtrace.
 ```
 
-`index out of bounds: the len is 1 but the index is 1` 是一个针对程序员的错误信息，然而这并不能真正帮助终端用户理解发生了什么和他们应该做什么。现在就让我们修复它吧。
+`index out of bounds: the len is 1 but the index is 1` 是一个针对开发者的错误信息，然而这并不能真正帮助终端用户理解发生了什么和他们应该做什么。现在就让我们修复它吧。
 
 #### 改善错误信息
 

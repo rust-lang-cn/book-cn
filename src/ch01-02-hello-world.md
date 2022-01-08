@@ -62,7 +62,7 @@ Hello, world!
 
 不管你使用哪种操作系统，该字符串 `Hello, world!` 都应打印到了终端上。如果看不到此输出，请参考“安装”小节的 [“疑难解答”][troubleshooting]<!-- ignore --> 小节来查找解决方法。
 
-如果 `Hello, world!` 打印成功，那么祝贺你！你已经正式编写了一个 Rust 程序。你已经成为了一名 Rust 程序员——欢迎加入 Rust 大家庭！
+如果 `Hello, world!` 打印成功，那么祝贺你！你已经正式编写了一个 Rust 程序。你已经成为了一名 Rust 开发者——欢迎加入 Rust 大家庭！
 
 ### Rust 程序剖析
 
