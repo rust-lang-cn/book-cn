@@ -152,7 +152,7 @@
                     <main>
                         <h2 id="通过-deref-trait-将智能指针当作常规引用处理"><a class="header" href="#通过-deref-trait-将智能指针当作常规引用处理">通过 <code>Deref</code> trait 将智能指针当作常规引用处理</a></h2>
 <p>实现 <code>Deref</code> trait 允许我们重载 <strong>解引用运算符</strong>（<em>dereference operator</em>）<code>*</code>（与乘法运算符或通配符相区别）。通过这种方式实现 <code>Deref</code> trait 的智能指针可以被当作常规引用来对待，可以编写操作引用的代码并用于智能指针。</p>
-<p>让我们首先看看解引用运算符如何处理常规引用，接着尝试定义我们自己的类似 <code>Box&lt;T&gt;</code> 的类型并看看为何解引用运算符不能像引用一样工作。我们会探索如何实现 <code>Deref</code> trait 使得智能指针以类似引用的方式工作变为可能。最后，我们会讨论 Rust 的 <strong>解引用强制多态</strong>（<em>deref coercions</em>）功能以及它是如何处理引用或智能指针的。</p>
+<p>让我们首先看看解引用运算符如何处理常规引用，接着尝试定义我们自己的类似 <code>Box&lt;T&gt;</code> 的类型并看看为何解引用运算符不能像引用一样工作。我们会探索如何实现 <code>Deref</code> trait 使得智能指针以类似引用的方式工作变为可能。最后，我们会讨论 Rust 的 <strong>解引用强制转换</strong>（<em>deref coercions</em>）功能以及它是如何处理引用或智能指针的。</p>
 <blockquote>
 <p>我们将要构建的 <code>MyBox&lt;T&gt;</code> 类型与真正的 <code>Box&lt;T&gt;</code> 有一个很大的区别：我们的版本不会在堆上储存数据。这个例子重点关注 <code>Deref</code>，所以其数据实际存放在何处，相比其类似指针的行为来说不算重要。</p>
 </blockquote>
@@ -259,8 +259,8 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 <p>Rust 将 <code>*</code> 运算符替换为先调用 <code>deref</code> 方法再进行普通解引用的操作，如此我们便不用担心是否还需手动调用 <code>deref</code> 方法了。Rust 的这个特性可以让我们写出行为一致的代码，无论是面对的是常规引用还是实现了 <code>Deref</code> 的类型。</p>
 <p><code>deref</code> 方法返回值的引用，以及 <code>*(y.deref())</code> 括号外边的普通解引用仍为必须的原因在于所有权。如果 <code>deref</code> 方法直接返回值而不是值的引用，其值（的所有权）将被移出 <code>self</code>。在这里以及大部分使用解引用运算符的情况下我们并不希望获取 <code>MyBox&lt;T&gt;</code> 内部值的所有权。</p>
 <p>注意，每次当我们在代码中使用 <code>*</code> 时， <code>*</code> 运算符都被替换成了先调用 <code>deref</code> 方法再接着使用 <code>*</code> 解引用的操作，且只会发生一次，不会对 <code>*</code> 操作符无限递归替换，解引用出上面 <code>i32</code> 类型的值就停止了，这个值与示例 15-9 中 <code>assert_eq!</code> 的 <code>5</code> 相匹配。</p>
-<h3 id="函数和方法的隐式解引用强制多态"><a class="header" href="#函数和方法的隐式解引用强制多态">函数和方法的隐式解引用强制多态</a></h3>
-<p><strong>解引用强制多态</strong>（<em>deref coercions</em>）是 Rust 在函数或方法传参上的一种便利。解引用强制多态只能工作在实现了Deref trait的类型上。解引用强制多态将一种类型（A）隐式转换为另外一种类型（B）的引用，因为A类型实现了Deref trait，并且其关联类型是B类型。比如，解引用强制多态可以将&amp;String转换为&amp;str，因为类型String实现了Deref trait并且其关联类型是str。代码如下：</p>
+<h3 id="函数和方法的隐式解引用强制转换"><a class="header" href="#函数和方法的隐式解引用强制转换">函数和方法的隐式解引用强制转换</a></h3>
+<p><strong>解引用强制转换</strong>（<em>deref coercions</em>）是 Rust 在函数或方法传参上的一种便利。解引用强制转换只能工作在实现了Deref trait的类型上。解引用强制转换将一种类型（A）隐式转换为另外一种类型（B）的引用，因为A类型实现了Deref trait，并且其关联类型是B类型。比如，解引用强制转换可以将&amp;String转换为&amp;str，因为类型String实现了Deref trait并且其关联类型是str。代码如下：</p>
 <pre><code class="language-rust ignore does_not_compile">#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
 impl ops::Deref for String {
     type Target = str;
@@ -271,9 +271,9 @@ impl ops::Deref for String {
     }
 }
 </code></pre>
-<p>当我们将特定类型的值的引用作为参数传递给函数或方法，但是被传递的值的引用与函数或方法中定义的参数类型不匹配时，会发生解引用强制多态。这时会有一系列的 <code>deref</code> 方法被调用，把我们提供的参数类型转换成函数或方法需要的参数类型。</p>
-<p>解引用强制多态的加入使得 Rust 程序员编写函数和方法调用时无需增加过多显式使用 <code>&amp;</code> 和 <code>*</code> 的引用和解引用。这个功能也使得我们可以编写更多同时作用于引用或智能指针的代码。</p>
-<p>作为展示解引用强制多态的实例，让我们使用示例 15-8 中定义的 <code>MyBox&lt;T&gt;</code>，以及示例 15-10 中增加的 <code>Deref</code> 实现。示例 15-11 展示了一个有着字符串 slice 参数的函数定义：</p>
+<p>当我们将特定类型的值的引用作为参数传递给函数或方法，但是被传递的值的引用与函数或方法中定义的参数类型不匹配时，会发生解引用强制转换。这时会有一系列的 <code>deref</code> 方法被调用，把我们提供的参数类型转换成函数或方法需要的参数类型。</p>
+<p>解引用强制转换的加入使得 Rust 程序员编写函数和方法调用时无需增加过多显式使用 <code>&amp;</code> 和 <code>*</code> 的引用和解引用。这个功能也使得我们可以编写更多同时作用于引用或智能指针的代码。</p>
+<p>作为展示解引用强制转换的实例，让我们使用示例 15-8 中定义的 <code>MyBox&lt;T&gt;</code>，以及示例 15-10 中增加的 <code>Deref</code> 实现。示例 15-11 展示了一个有着字符串 slice 参数的函数定义：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -284,7 +284,7 @@ impl ops::Deref for String {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 15-11：<code>hello</code> 函数有着 <code>&amp;str</code> 类型的参数 <code>name</code></span></p>
-<p>可以使用字符串 slice 作为参数调用 <code>hello</code> 函数，比如 <code>hello(&quot;Rust&quot;);</code>。解引用强制多态使得用 <code>MyBox&lt;String&gt;</code> 类型值的引用调用 <code>hello</code> 成为可能，如示例 15-12 所示：</p>
+<p>可以使用字符串 slice 作为参数调用 <code>hello</code> 函数，比如 <code>hello(&quot;Rust&quot;);</code>。解引用强制转换使得用 <code>MyBox&lt;String&gt;</code> 类型值的引用调用 <code>hello</code> 成为可能，如示例 15-12 所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::ops::Deref;
 </span><span class="boring">
@@ -313,9 +313,9 @@ impl ops::Deref for String {
     hello(&amp;m);
 }
 </code></pre></pre>
-<p><span class="caption">示例 15-12：因为解引用强制多态，使用 <code>MyBox&lt;String&gt;</code> 的引用调用 <code>hello</code> 是可行的</span></p>
+<p><span class="caption">示例 15-12：因为解引用强制转换，使用 <code>MyBox&lt;String&gt;</code> 的引用调用 <code>hello</code> 是可行的</span></p>
 <p>这里使用 <code>&amp;m</code> 调用 <code>hello</code> 函数，其为 <code>MyBox&lt;String&gt;</code> 值的引用。因为示例 15-10 中在 <code>MyBox&lt;T&gt;</code> 上实现了 <code>Deref</code> trait，Rust 可以通过 <code>deref</code> 调用将 <code>&amp;MyBox&lt;String&gt;</code> 变为 <code>&amp;String</code>。标准库中提供了 <code>String</code> 上的 <code>Deref</code> 实现，其会返回字符串 slice，这可以在 <code>Deref</code> 的 API 文档中看到。Rust 再次调用 <code>deref</code> 将 <code>&amp;String</code> 变为 <code>&amp;str</code>，这就符合 <code>hello</code> 函数的定义了。</p>
-<p>如果 Rust 没有实现解引用强制多态，为了使用 <code>&amp;MyBox&lt;String&gt;</code> 类型的值调用 <code>hello</code>，则不得不编写示例 15-13 中的代码来代替示例 15-12：</p>
+<p>如果 Rust 没有实现解引用强制转换，为了使用 <code>&amp;MyBox&lt;String&gt;</code> 类型的值调用 <code>hello</code>，则不得不编写示例 15-13 中的代码来代替示例 15-12：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::ops::Deref;
 </span><span class="boring">
@@ -344,12 +344,12 @@ impl ops::Deref for String {
     hello(&amp;(*m)[..]);
 }
 </code></pre></pre>
-<p><span class="caption">示例 15-13：如果 Rust 没有解引用强制多态则必须编写的代码</span></p>
-<p><code>(*m)</code> 将 <code>MyBox&lt;String&gt;</code> 解引用为 <code>String</code>。接着 <code>&amp;</code> 和 <code>[..]</code> 获取了整个 <code>String</code> 的字符串 slice 来匹配 <code>hello</code> 的签名。没有解引用强制多态所有这些符号混在一起将更难以读写和理解。解引用强制多态使得 Rust 自动的帮我们处理这些转换。</p>
-<p>当所涉及到的类型定义了 <code>Deref</code> trait，Rust 会分析这些类型并使用任意多次 <code>Deref::deref</code> 调用以获得匹配参数的类型。这些解析都发生在编译时，所以利用解引用强制多态并没有运行时惩罚！</p>
-<h3 id="解引用强制多态如何与可变性交互"><a class="header" href="#解引用强制多态如何与可变性交互">解引用强制多态如何与可变性交互</a></h3>
+<p><span class="caption">示例 15-13：如果 Rust 没有解引用强制转换则必须编写的代码</span></p>
+<p><code>(*m)</code> 将 <code>MyBox&lt;String&gt;</code> 解引用为 <code>String</code>。接着 <code>&amp;</code> 和 <code>[..]</code> 获取了整个 <code>String</code> 的字符串 slice 来匹配 <code>hello</code> 的签名。没有解引用强制转换所有这些符号混在一起将更难以读写和理解。解引用强制转换使得 Rust 自动的帮我们处理这些转换。</p>
+<p>当所涉及到的类型定义了 <code>Deref</code> trait，Rust 会分析这些类型并使用任意多次 <code>Deref::deref</code> 调用以获得匹配参数的类型。这些解析都发生在编译时，所以利用解引用强制转换并没有运行时惩罚！</p>
+<h3 id="解引用强制转换如何与可变性交互"><a class="header" href="#解引用强制转换如何与可变性交互">解引用强制转换如何与可变性交互</a></h3>
 <p>类似于使用 <code>Deref</code> trait 重载不可变引用的 <code>*</code> 运算符，Rust 提供了 <code>DerefMut</code> trait 用于重载可变引用的 <code>*</code> 运算符。</p>
-<p>Rust 在发现类型和 trait 实现满足三种情况时会进行解引用强制多态：</p>
+<p>Rust 在发现类型和 trait 实现满足三种情况时会进行解引用强制转换：</p>
 <ul>
 <li>当 <code>T: Deref&lt;Target=U&gt;</code> 时从 <code>&amp;T</code> 到 <code>&amp;U</code>。</li>
 <li>当 <code>T: DerefMut&lt;Target=U&gt;</code> 时从 <code>&amp;mut T</code> 到 <code>&amp;mut U</code>。</li>

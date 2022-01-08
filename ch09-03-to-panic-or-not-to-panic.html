@@ -197,6 +197,7 @@ let home: IpAddr = &quot;127.0.0.1&quot;.parse().unwrap();
 
     match guess.cmp(&amp;secret_number) {
     // --snip--
+    }
 }
 </code></pre>
 <p><code>if</code> 表达式检查了值是否超出范围，告诉用户出了什么问题，并调用 <code>continue</code> 开始下一次循环，请求另一个猜测。<code>if</code> 表达式之后，就可以在知道 <code>guess</code> 在 1 到 100 之间的情况下与秘密数字作比较了。</p>

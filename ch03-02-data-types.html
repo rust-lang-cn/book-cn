@@ -152,7 +152,7 @@
                     <main>
                         <h2 id="数据类型"><a class="header" href="#数据类型">数据类型</a></h2>
 <p>Rust 的每个值都有确切的<strong>数据类型</strong>（<em>data type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。</p>
-<p>请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。编译器通常可以根据值和使用方式推导出我们想要使用的类型。在类型可能是多种情况时，例如在第 2 章的[“比较猜测的数字和秘密数字”][comparing-the-guess-to-the-secret-number]<!-- ignore -->中当我们使用 <code>parse</code> 将<code>String</code> 转换成数值类型时，我们必须加上一个类型标注，如下所示：</p>
+<p>请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。编译器通常可以根据值和使用方式推导出我们想要使用的类型。在类型可能是多种情况时，例如在第 2 章的<a href="ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number">“比较猜测的数字和秘密数字”</a><!-- ignore -->中当我们使用 <code>parse</code> 将<code>String</code> 转换成数值类型时，我们必须加上一个类型标注，如下所示：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -179,7 +179,7 @@ To learn more, run the command again with --verbose.
 <h3 id="标量类型"><a class="header" href="#标量类型">标量类型</a></h3>
 <p><strong>标量</strong>（<em>scalar</em>）类型表示单个值。Rust 有 4 个标量类型：整型、浮点型、布尔型和字符。你可能从其他语言了解过这些类型。下面我们深入了解它们在 Rust 中的用法。</p>
 <h4 id="整数类型"><a class="header" href="#整数类型">整数类型</a></h4>
-<p><strong>整数</strong>（<em>integer</em>）是没有是没有小数部分的数字。我们在第 2 章使用过一个整数类型，即 <code>u32</code> 类型。此类型声明表明了与其相关的值应为 32 位系统的无符号整型（<code>i</code> 是英文单词 <em>integer</em> 的首字母，与之相反的是 <code>u</code>，代表无符号 <code>unsigned</code> 类型）。表 3-1 显示了 Rust 中的内置的整数类型。在有符号和和无符号的列中（例如 <em>i16</em>）的每个定义形式都可用于声明整数类型。</p>
+<p><strong>整数</strong>（<em>integer</em>）是没有小数部分的数字。我们在第 2 章使用过一个整数类型，即 <code>u32</code> 类型。此类型声明表明了与其相关的值应为 32 位系统的无符号整型（<code>i</code> 是英文单词 <em>integer</em> 的首字母，与之相反的是 <code>u</code>，代表无符号 <code>unsigned</code> 类型）。表 3-1 显示了 Rust 中的内置的整数类型。在有符号和和无符号的列中（例如 <em>i16</em>）的每个定义形式都可用于声明整数类型。</p>
 <p><span class="caption">表 3-1: Rust 中的整数类型</span></p>
 <table><thead><tr><th>长度</th><th>有符号类型</th><th>无符号类型</th></tr></thead><tbody>
 <tr><td>8 位</td><td><code>i8</code></td><td><code>u8</code></td></tr>
@@ -193,7 +193,7 @@ To learn more, run the command again with --verbose.
 <p>每个有符号类型规定的数字范围是  -(2<sup>n - 1</sup>) ~ 2<sup>n -
 1</sup> - 1，其中 <code>n</code> 是该定义形式的位长度。所以 <code>i8</code> 可存储数字范围是 -(2<sup>7</sup>) ~ 2<sup>7</sup> - 1，即 -128 ~ 127。无符号类型可以存储的数字范围是 0 ~ 2<sup>n</sup> - 1，所以 <code>u8</code> 能够存储的数字为 0 ~ 2<sup>8</sup> - 1，即 0 ~ 255。</p>
 <p>此外，<code>isize</code> 和 <code>usize</code> 类型取决于程序运行的计算机类型：64 位（如果使用 64 位架构系统）和 32 位（如果使用 32 位架构系统）。</p>
-<p>整型的字面量可以可以写成下表 3-2 中任意一种。注意，除了字节字面量之外的所有的数字字面量都允许使用类型后缀，例如 <code>57u8</code>，还有可以使用 <code>_</code> 作为可视分隔符，如 <code>1_000</code>。</p>
+<p>整型的字面量可以写成下表 3-2 中任意一种。注意，除了字节字面量之外的所有的数字字面量都允许使用类型后缀，例如 <code>57u8</code>，还有可以使用 <code>_</code> 作为可视分隔符，如 <code>1_000</code>。</p>
 <p><span class="caption">表 3-2: Rust 的整型字面量</span></p>
 <table><thead><tr><th>数字字面量</th><th>示例</th></tr></thead><tbody>
 <tr><td>十进制</td><td><code>98_222</code></td></tr>
@@ -205,7 +205,7 @@ To learn more, run the command again with --verbose.
 <p>那么该使用哪种类型的整型呢？如果不确定，Rust 的默认值通常是个不错的选择，整型默认是 <code>i32</code>：这通常是最快的，即便在 64 位系统上也是。<code>isize</code> 和 <code>usize</code> 的主要应用场景是用作某些集合的索引。</p>
 <blockquote>
 <h5 id="整型溢出"><a class="header" href="#整型溢出">整型溢出</a></h5>
-<p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>）。关于这一行为 Rust 有一些有趣的规则。当在 debug 模式编译时，Rust 会检查整型溢出若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用这个术语来表明程序因错误而退出。第 9 章 [“<code>panic!</code> 与不可恢复的错误”][unrecoverable-errors-with-panic]<!-- ignore -->会详细介绍 panic。</p>
+<p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>）。关于这一行为 Rust 有一些有趣的规则。当在 debug 模式编译时，Rust 会检查整型溢出若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用这个术语来表明程序因错误而退出。第 9 章 <a href="ch09-01-unrecoverable-errors-with-panic.html">“<code>panic!</code> 与不可恢复的错误”</a><!-- ignore -->会详细介绍 panic。</p>
 <p>在当使用 <code>--release</code> 参数进行 release 模式构建时，Rust <strong>不</strong>检测溢出。相反当检测到整型溢出时，Rust 会进行一种被称为二进制补码包裹（<em>two’s complement wrapping</em>）的操作。简而言之，大于该类型最大值的数值会被“包裹”成该类型能够支持的对应数字的最小值。比如在 <code>u8</code> 的情况下，256 变成 0，257 变成 1，依此类推。程序不会 panic，但是该变量的值可能不是你期望的值。依赖整型溢出包裹的行为不是一种正确的做法。</p>
 <p>要显式处理溢出的可能性，可以使用标准库针对原始数字类型提供的以下的一系列方法：</p>
 <ul>
@@ -246,7 +246,7 @@ To learn more, run the command again with --verbose.
     let remainder = 43 % 5;
 }
 </code></pre></pre>
-<p>这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。[附录 B][appendix_b]<!-- ignore -->  给出了 Rust 提供的所有运算符的列表。</p>
+<p>这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。<a href="appendix-02-operators.html">附录 B</a><!-- ignore -->  给出了 Rust 提供的所有运算符的列表。</p>
 <h4 id="布尔类型"><a class="header" href="#布尔类型">布尔类型</a></h4>
 <p>和大多数编程语言一样，Rust 中的布尔类型也有两个可能的值：<code>true</code> 和 <code>false</code>。布尔值的大小为 1 个字节。Rust 中的布尔类型使用 <code>bool</code> 指定。例如：</p>
 <p><span class="filename">文件名：src/main.rs</span></p>
@@ -256,7 +256,7 @@ To learn more, run the command again with --verbose.
     let f: bool = false; // 使用显式类型标注
 }
 </code></pre></pre>
-<p>用到布尔值的地方主要是条件语句，如 <code>if</code> 语句。我们将会在[“控制流”][control-flow]<!-- ignore -->章节中介绍 <code>if</code> 在 Rust 中的用法。</p>
+<p>用到布尔值的地方主要是条件语句，如 <code>if</code> 语句。我们将会在<a href="ch03-05-control-flow.html#control-flow">“控制流”</a><!-- ignore -->章节中介绍 <code>if</code> 在 Rust 中的用法。</p>
 <h4 id="字符类型"><a class="header" href="#字符类型">字符类型</a></h4>
 <p>到目前为止，我们只在用数字，不过 Rust 同样也支持字母。Rust 的 <code>char</code> （字符）类型是该语言最原始的字母类型，下面代码展示了使用它的一种方式（注意，<code>char</code> 字面量是用单引号括起来，而字符串字面量是用双引号扩起来）：</p>
 <p><span class="filename">文件名：src/main.rs</span></p>
@@ -266,7 +266,7 @@ To learn more, run the command again with --verbose.
     let heart_eyed_cat = '😻';
 }
 </code></pre></pre>
-<p>Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示的不仅仅是 ASCII。标音字母，中文/日文/韩文的表意文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法的字符类型。Unicode 值的范围从 <code>U+0000</code>~<code>U+D7FF</code> 和 <code>U+E000</code>~<code>U+10FFFF</code>。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章[“使用字符串存储 UTF-8 编码的文本”][strings]<!-- ignore -->中详细讨论这个主题。</p>
+<p>Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示的不仅仅是 ASCII。标音字母，中文/日文/韩文的表意文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法的字符类型。Unicode 值的范围从 <code>U+0000</code>~<code>U+D7FF</code> 和 <code>U+E000</code>~<code>U+10FFFF</code>。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章<a href="ch08-02-strings.html#storing-utf-8-encoded-text-with-strings">“使用字符串存储 UTF-8 编码的文本”</a><!-- ignore -->中详细讨论这个主题。</p>
 <h3 id="复合类型"><a class="header" href="#复合类型">复合类型</a></h3>
 <p><strong>复合类型</strong>（<em>compound type</em>）可以将其他类型的多个值合在一块组成一个类型。Rust 有两种基本的复合类型：元组（tuple）和数组（array）。</p>
 <h4 id="元组类型"><a class="header" href="#元组类型">元组类型</a></h4>
@@ -310,7 +310,7 @@ To learn more, run the command again with --verbose.
 }
 </code></pre></pre>
 <p>当你希望将数据分配到栈（stack）而不是堆（heap）时（我们将在第 4 章中进一步讨论栈和堆），或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其的大小允许增长或缩小。如果您不确定是使用数组还是 vector，那就应该使用一个 vector：第 8 章更详细地讨论 vector。</p>
-<p>举个例子，在需要知道一年中各个月份名称的程序中，您很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以可以使用数组，因为你知道它总是包含 12 个元素：</p>
+<p>举个例子，在需要知道一年中各个月份名称的程序中，你很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以可以使用数组，因为你知道它总是包含 12 个元素：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -374,7 +374,7 @@ fn main() {
     );
 }
 </code></pre>
-<p>此代码编译成功。如果使用 <code>cargo run</code> 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果您输入的是超出数组末尾的数字，例如10，则会看到类似以下的输出：</p>
+<p>此代码编译成功。如果使用 <code>cargo run</code> 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果输入的是超出数组末尾的数字，例如10，则会看到类似以下的输出：</p>
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
 cargo run

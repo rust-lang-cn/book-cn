@@ -151,16 +151,14 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h2>
-<p>现在我们已经安装好了 Rust，接着我们编写第一个 Rust 程序。按照传统，在学习一门新语言时都会编写一个输出“Hello, world!”（你好，世界）的小程序，本章我们也是如此。</p>
+<p>我们已经安装好了 Rust，接着编写第一个 Rust 程序。按照传统，在学习一门新语言时都会编写一个输出“Hello, world!”（你好，世界）的简单程序，本章我们也是如此。</p>
 <blockquote>
 <p>注意：本书假定你已经熟悉基本的命令行。Rust 本身对编辑器、工具或代码存放的位置都没有特殊要求。所以要是你更喜欢 IDE 而不是命令行的话，可以随意选用你喜爱的 IDE。目前很多 IDE 都提供了一定程度的 Rust 支持。有关详细信息，请查看 IDE 的文档。最近，Rust 团队一直致力于提供出色的 IDE 支持，并且在这方面取得了迅速的进步！</p>
 </blockquote>
 <h3 id="创建项目目录"><a class="header" href="#创建项目目录">创建项目目录</a></h3>
-<p>首先，创建一个目录来存储您的Rust代码。对于Rust驻留代码的位置来说，这无关紧要，但是对于本书中的练习和项目，我们建议在主目录中创建一个项目目录，并将所有项目保留在此目录中。</p>
-<p>对于Windows上的Linux，macOS和PowerShell，请输入以下命令：</p>
-<p>首先，创建一个文件来存放 Rust 代码。Rust 不关心代码存放的地方，这无关紧要，但对于本书中的练习和项目，我们建议在操作系统的主目录（home，在 Windows 下即用户目录）下创建一个 <em>projects</em> 目录，并保存你的所有项目。</p>
-<p>打开终端，输入以下命令以创建 <em>projects</em> 项目目录，以及此项目目录里面的 “Hello, world!” 项目目录。</p>
-<p>对于 Linux、macOS 和 Windows 上的 PowerShell，请输入以下命令：</p>
+<p>首先，创建一个存放 Rust 代码的目录。Rust 不关心代码存放的位置，但是对于本书中的练习和项目，我们建议在操作系统的主目录（home，在 Windows 下即用户目录）中创建一个 <em>projects</em> 目录，并保存你的全部项目。</p>
+<p>打开终端，输入下面命令来创建 <em>projects</em> 目录，以在此目录里面创建 “Hello, world!” 项目目录。</p>
+<p>对于 Linux、macOS 和 Windows 的 PowerShell，请输入以下命令：</p>
 <pre><code class="language-console">$ mkdir ~/projects
 $ cd ~/projects
 $ mkdir hello_world
@@ -173,15 +171,15 @@ $ cd hello_world
 &gt; cd hello_world
 </code></pre>
 <h3 id="编写和运行-rust-程序"><a class="header" href="#编写和运行-rust-程序">编写和运行 Rust 程序</a></h3>
-<p>接下来，创建一个源文件并命名为 <em>main.rs</em>。Rust 文件通常以 <em>.rs</em> 扩展名结尾。如果文件名中使用了多个单词，请使用下划线将它们隔开。例如，采用 <em>hello_world.rs</em> 而不是 <em>helloworld.rs</em>。</p>
-<p>现在打开刚创建好的 <em>main.rs</em> 文件，然后键入以下代码：</p>
+<p>接下来，创建一个源文件并命名为 <em>main.rs</em>。Rust 文件通常以 <em>.rs</em> 扩展名结尾。如果文件名中使用了多个单词，请使用下划线将它们隔开。例如，命名为 <em>hello_world.rs</em>，而不是 <em>helloworld.rs</em>。</p>
+<p>现在打开刚创建好的 <em>main.rs</em> 文件，输入示例 1-1 中的代码。</p>
 <p><span class="filename">文件名：main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     println!(&quot;Hello, world!&quot;);
 }
 </code></pre></pre>
 <p><span class="caption">示例 1-1：一个打印 <code>Hello, world!</code> 的程序</span></p>
-<p>保存文件，然后返回到终端窗口。在 Linux 或 macOS 上，输入以下命令：</p>
+<p>保存文件，并回到终端窗口。在 Linux 或 macOS 上，输入以下命令，编译并运行文件：</p>
 <pre><code class="language-console">$ rustc main.rs
 $ ./main
 Hello, world!
@@ -191,11 +189,10 @@ Hello, world!
 &gt; .\main.exe
 Hello, world!
 </code></pre>
-<p>不管你使用哪种操作系统，该字符串 <code>Hello, world!</code> 都应打印到了终端上。如果看不到此输出，请参考“安装”小节的 <a href="ch01-01-installation.html#troubleshooting">“疑难解答”</a><!-- ignore --> 部分，以获得帮助。</p>
+<p>不管你使用哪种操作系统，该字符串 <code>Hello, world!</code> 都应打印到了终端上。如果看不到此输出，请参考“安装”小节的 <a href="ch01-01-installation.html#troubleshooting">“疑难解答”</a><!-- ignore --> 小节来查找解决方法。</p>
 <p>如果 <code>Hello, world!</code> 打印成功，那么祝贺你！你已经正式编写了一个 Rust 程序。你已经成为了一名 Rust 程序员——欢迎加入 Rust 大家庭！</p>
-<h3 id="rust-程序的详解"><a class="header" href="#rust-程序的详解">Rust 程序的详解</a></h3>
 <h3 id="rust-程序剖析"><a class="header" href="#rust-程序剖析">Rust 程序剖析</a></h3>
-<p>让我们详细回顾一下 “Hello, world!” 程序发生了什么。这是难题的第一部分：</p>
+<p>让我们详细回顾一下 “Hello, world!” 程序发生了什么。这是拼图的第一块:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
 
 }
@@ -210,11 +207,11 @@ Hello, world!
 </span>    println!(&quot;Hello, world!&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<p>该行完成了此小程序中的所有工作：它将文本打印到屏幕上。这里有 4 个要注意的重要细节。</p>
+<p>该行完成了此简单程序中的所有工作：它将文本打印到屏幕上。这里有 4 个要注意的重要细节。</p>
 <p>首先，Rust 风格的缩进使用 4 个空格，而不是制表符。</p>
 <p>其次，<code>println!</code> 调用 Rust 宏。如果改为调用函数，则应该将其输入为 <code>println</code>（不含 <code>!</code>）。我们将在第 19 章中更详细地讨论 Rust 宏。现在只需要知道，当看到一个 <code>!</code>，则意味着调用的是宏而不是普通的函数。</p>
-<p>第三，您看到 <code>&quot;Hello, world!&quot;</code> 字符串。我们将这个字符串作为参数传递给 <code>println!</code>，接着 <code>println!</code> 将字符串打印到屏幕上。</p>
-<p>第四，我们用分号（<code>;</code>）结束该行，这表明该表达式已结束，下一个表达式已准备好开始。Rust 代码的大多数行都以一个 <code>;</code> 结尾。</p>
+<p>第三，你看到 <code>&quot;Hello, world!&quot;</code> 字符串。我们将这个字符串作为参数传递给 <code>println!</code>，接着 <code>println!</code> 将字符串打印到屏幕上。</p>
+<p>第四，我们用分号（<code>;</code>，注意这是英文分号）结束该行，这表明该表达式已结束，下一个表达式已准备好开始。Rust 代码的大多数行都以一个 <code>;</code> 结尾。</p>
 <h3 id="编译和运行是独立的步骤"><a class="header" href="#编译和运行是独立的步骤">编译和运行是独立的步骤</a></h3>
 <p>刚才我们运行一个新创建的程序。现在我们将分解这个过程，并检查每个步骤。</p>
 <p>在运行 Rust 程序之前，必须使用 Rust 编译器来编译它，输入 <code>rustc</code> 命令并传入源文件的名称，如下所示：</p>
@@ -231,11 +228,11 @@ main.exe
 main.pdb
 main.rs
 </code></pre>
-<p>这显示了带有.rs扩展名的源代码文件，可执行文件（在Windows上是main.exe，在所有其他平台上是main），以及在使用Windows时，包含一个带有.pdb扩展名的调试信息的文件。在这里，运行main或main.exe文件，如下所示：</p>
+<p>这显示了带有 <em>.rs</em> 扩展名的源代码文件，可执行文件（在 Windows 上是 <em>main.exe</em>，在所有其他平台上是 <em>main</em>），以及在使用 Windows 时包含一个带有 <em>.pdb</em> 扩展名的调试信息的文件。在这里，运行 <em>main</em> 或 <em>main.exe</em> 文件，如下所示：</p>
 <pre><code class="language-console">$ ./main # or .\main.exe on Windows
 </code></pre>
 <p>如果 <em>main.rs</em> 是 “Hello, world!” 程序，这将会打印 <code>Hello, world!</code> 到终端上。</p>
-<p>如果你只更熟悉动态语言，如 Ruby、Python 或 JavaScript，你很可能不习惯分开多个步骤来编译和运行程序的方式。Rust 是一门<strong>预编译</strong>(<em>ahead-of-time compiled</em>)语言，这意味着你可以编译一个程序，将编译后的可执行文件给别人，即使他们没有安装 Rust 也可以运行程序。如果你为其他人提供 <code>.rb</code>、<code>.py</code> 或 <code>.js</code> 文件，那么对方也需要分别安装对应 Ruby、Python 或 JavaScript 的语言支持环境。但是在这些语言中，只需要一条命令来编译和运行程序。一切都是语言设计权衡的结果。</p>
+<p>如果你只熟悉动态语言，如 Ruby、Python 或 JavaScript，你很可能不习惯分多个步骤来编译和运行程序的方式。Rust 是一门<strong>预编译</strong>(<em>ahead-of-time compiled</em>)语言，这意味着你可以编译一个程序，将编译后的可执行文件给别人，即使他们没有安装 Rust 也可以运行程序。如果你为其他人提供 <em>.rb</em>、<em>.py</em> 或 <em>.js</em> 文件，那么对方也需要分别安装对应 Ruby、Python 或 JavaScript 的语言支持环境。但是在这些语言中，只需要一条命令来编译和运行程序。一切都是语言设计权衡的结果。</p>
 <p>使用 <code>rustc</code> 编译对简单的程序可以轻松胜任，但随着项目的增长，你将会想要管理项目中所有相关内容，并想让其他用户和项目能够容易共享你的代码。接下来，我们将引入 Cargo 工具，这将帮助你学会编写真实开发环境的 Rust 程序。</p>
 
                     </main>

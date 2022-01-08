@@ -366,7 +366,7 @@ pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
 hello_macro = { path = &quot;../hello_macro&quot; }
 hello_macro_derive = { path = &quot;../hello_macro/hello_macro_derive&quot; }
 </code></pre>
-<p>把示例 19-38 中的代码放在 <em>src/main.rs</em> ，然后执行 <code>cargo run</code>：其应该打印 <code>Hello, Macro! My name is Pancakes!</code>。其包含了该过程宏中 <code>HelloMacro</code> trait 的实现，而无需 <code>pancakes</code> crate 实现它；<code>#[derive(HelloMacro)]</code> 增加了该 trait 实现。</p>
+<p>把示例 19-30 中的代码放在 <em>src/main.rs</em> ，然后执行 <code>cargo run</code>：其应该打印 <code>Hello, Macro! My name is Pancakes!</code>。其包含了该过程宏中 <code>HelloMacro</code> trait 的实现，而无需 <code>pancakes</code> crate 实现它；<code>#[derive(HelloMacro)]</code> 增加了该 trait 实现。</p>
 <p>接下来，让我们探索一下其他类型的过程宏与自定义派生宏有何区别。</p>
 <h3 id="类属性宏"><a class="header" href="#类属性宏">类属性宏</a></h3>
 <p>类属性宏与自定义派生宏相似，不同于为 <code>derive</code> 属性生成代码，它们允许你创建新的属性。它们也更为灵活；<code>derive</code> 只能用于结构体和枚举；属性还可以用于其它的项，比如函数。作为一个使用类属性宏的例子，可以创建一个名为 <code>route</code> 的属性用于注解 web 应用程序框架（web application framework）的函数：</p>
