@@ -207,6 +207,7 @@ Hmmm
 Hoare
 Hola
 homogenous
+href
 html
 https
 hyperoptimize
@@ -247,6 +248,7 @@ iter
 iterator's
 JavaScript
 JoinHandle
+KaiserY
 Kay's
 kinded
 Klabnik

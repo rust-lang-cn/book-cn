@@ -34,7 +34,7 @@ fn handle_connection(mut stream: TcpStream) {
         stream.write(response.as_bytes()).unwrap();
         stream.flush().unwrap();
     } else {
-        // some other request
+        // 其他请求
     }
 }
 // ANCHOR_END: here

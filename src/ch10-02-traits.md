@@ -415,7 +415,7 @@ impl<T: Display> ToString for T {
 let s = 3.to_string();
 ```
 
-blanket implementation 会出现在 trait 文档的 “Implementers” 部分。
+blanket implementation 会出现在 trait 文档的 “Implementors” 部分。
 
 trait 和 trait bound 让我们使用泛型类型参数来减少重复，并仍然能够向编译器明确指定泛型类型需要拥有哪些行为。因为我们向编译器提供了 trait bound 信息，它就可以检查代码中所用到的具体类型是否提供了正确的行为。在动态类型语言中，如果我们尝试调用一个类型并没有实现的方法，会在运行时出现错误。Rust 将这些错误移动到了编译时，甚至在代码能够运行之前就强迫我们修复错误。另外，我们也无需编写运行时检查行为的代码，因为在编译时就已经检查过了，这样相比其他那些不愿放弃泛型灵活性的语言有更好的性能。
 

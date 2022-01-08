@@ -1,16 +1,16 @@
-## B构建单线程 Web 服务器
+## 构建单线程 Web 服务器
 
-首先让我们创建一个可运行的单线程 web server，不过在开始之前，我们将快速了解一下构建 web server 所涉及到的协议。这些协议的细节超出了本书的范畴，不过一个简单的概括会提供我们所需的信息。
+首先让我们创建一个可运行的单线程 Web 服务器，不过在开始之前，我们将快速了解一下构建 Web 服务器所涉及到的协议。这些协议的细节超出了本书的范畴，不过一个简单的概括会提供我们所需的信息。
 
-web server 中涉及到的两个主要协议是 **超文本传输协议**（*Hypertext Transfer Protocol*，*HTTP*）和 **传输控制协议**（*Transmission Control Protocol*，*TCP*）。这两者都是 **请求-响应**（*request-response*）协议，也就是说，有 **客户端**（*client*）来初始化请求，并有 **服务端**（*server*）监听请求并向客户端提供响应。请求与响应的内容由协议本身定义。
+Web 服务器中涉及到的两个主要协议是 **超文本传输协议**（*Hypertext Transfer Protocol*，*HTTP*）和 **传输控制协议**（*Transmission Control Protocol*，*TCP*）。这两者都是 **请求-响应**（*request-response*）协议，也就是说，有 **客户端**（*client*）来初始化请求，并有 **服务端**（*server*）监听请求并向客户端提供响应。请求与响应的内容由协议本身定义。
 
-TCP 是一个底层协议，它描述了信息如何从一个 server 到另一个的细节，不过其并不指定信息是什么。HTTP 构建于 TCP 之上，它定义了请求和响应的内容。为此，技术上讲可将 HTTP 用于其他协议之上，不过对于绝大部分情况，HTTP 通过 TCP 传输。我们将要做的就是处理 TCP 和 HTTP 请求与响应的原始字节数据。
+TCP 是一个底层协议，它描述了信息如何从一个服务器到另一个的细节，不过其并不指定信息是什么。HTTP 构建于 TCP 之上，它定义了请求和响应的内容。为此，技术上讲可将 HTTP 用于其他协议之上，不过对于绝大部分情况，HTTP 通过 TCP 传输。我们将要做的就是处理 TCP 和 HTTP 请求与响应的原始字节数据。
 
 ### 监听 TCP 连接
 
-所以我们的 web server 所需做的第一件事便是能够监听 TCP 连接。标准库提供了 `std::net` 模块处理这些功能。让我们一如既往新建一个项目：
+我们的 Web 服务器需要监听 TCP 连接，所以这是我们讲解的第一部分内容。标准库提供了 `std::net` 模块处理这些功能。让我们一如既往新建一个项目：
 
-```text
+```console
 $ cargo new hello
      Created binary (application) `hello` project
 $ cd hello
@@ -21,32 +21,21 @@ $ cd hello
 <span class="filename">文件名: src/main.rs</span>
 
 ```rust,no_run
-use std::net::TcpListener;
-
-fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
-
-    for stream in listener.incoming() {
-        let stream = stream.unwrap();
-
-        println!("Connection established!");
-    }
-}
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-01/src/main.rs}}
 ```
-
 <span class="caption">示例 20-1: 监听传入的流并在接收到流时打印信息</span>
 
 `TcpListener` 用于监听 TCP 连接。我们选择监听地址 `127.0.0.1:7878`。将这个地址拆开，冒号之前的部分是一个代表本机的 IP 地址（这个地址在每台计算机上都相同，并不特指作者的计算机），而 `7878` 是端口。选择这个端口出于两个原因：通常 HTTP 接受这个端口而且 7878 在电话上打出来就是 "rust"（译者注：九宫格键盘上的英文）。
 
 在这个场景中 `bind` 函数类似于 `new` 函数，在这里它返回一个新的 `TcpListener` 实例。这个函数叫做 `bind` 是因为，在网络领域，连接到监听端口被称为 “绑定到一个端口”（“binding to a port”）
 
-`bind` 函数返回 `Result<T, E>`，这表明绑定可能会失败，例如，连接 80 端口需要管理员权限（非管理员用户只能监听大于 1024 的端口），所以如果不是管理员尝试连接 80 端口，则会绑定失败。另一个例子是如果运行两个此程序的实例这样会有两个程序监听相同的端口，绑定会失败。因为我们是出于学习目的来编写一个基础的 server，将不用关心处理这类错误，使用 `unwrap` 在出现这些情况时直接停止程序。
+`bind` 函数返回 `Result<T, E>`，这表明绑定可能会失败，例如，连接 80 端口需要管理员权限（非管理员用户只能监听大于 1024 的端口），所以如果不是管理员尝试连接 80 端口，则会绑定失败。另一个例子是如果运行两个此程序的实例这样会有两个程序监听相同的端口，绑定会失败。因为我们是出于学习目的来编写一个基础的服务器，将不用关心处理这类错误，使用 `unwrap` 在出现这些情况时直接停止程序。
 
 `TcpListener` 的 `incoming` 方法返回一个迭代器，它提供了一系列的流（更准确的说是 `TcpStream` 类型的流）。**流**（*stream*）代表一个客户端和服务端之间打开的连接。**连接**（*connection*）代表客户端连接服务端、服务端生成响应以及服务端关闭连接的全部请求 / 响应过程。为此，`TcpStream` 允许我们读取它来查看客户端发送了什么，并可以编写响应。总体来说，这个 `for` 循环会依次处理每个连接并产生一系列的流供我们处理。
 
 目前为止，处理流的过程包含 `unwrap` 调用，如果出现任何错误会终止程序，如果没有任何错误，则打印出信息。下一个示例我们将为成功的情况增加更多功能。当客户端连接到服务端时 `incoming` 方法返回错误是可能的，因为我们实际上没有遍历连接，而是遍历 **连接尝试**（*connection attempts*）。连接可能会因为很多原因不能成功，大部分是操作系统相关的。例如，很多系统限制同时打开的连接数；新连接尝试产生错误，直到一些打开的连接关闭为止。
 
-让我们试试这段代码！首先在终端执行 `cargo run`，接着在浏览器中加载 `127.0.0.1:7878`。浏览器会显示出看起来类似于“连接重置”（“Connection reset”）的错误信息，因为 server 目前并没响应任何数据。但是如果我们观察终端，会发现当浏览器连接 server 时会打印出一系列的信息！
+让我们试试这段代码！首先在终端执行 `cargo run`，接着在浏览器中加载 `127.0.0.1:7878`。浏览器会显示出看起来类似于“连接重置”（“Connection reset”）的错误信息，因为服务端目前并没响应任何数据。但是如果我们观察终端，会发现当浏览器连接服务端时会打印出一系列的信息！
 
 ```text
      Running `target/debug/hello`
@@ -57,7 +46,7 @@ Connection established!
 
 有时会看到对于一次浏览器请求会打印出多条信息；这可能是因为浏览器在请求页面的同时还请求了其他资源，比如出现在浏览器 tab 标签中的 *favicon.ico*。
 
-这也可能是因为浏览器尝试多次连接 server，因为 server 没有响应任何数据。当 `stream` 在循环的结尾离开作用域并被丢弃，其连接将被关闭，作为 `drop` 实现的一部分。浏览器有时通过重连来处理关闭的连接，因为这些问题可能是暂时的。现在重要的是我们成功的处理了 TCP 连接！
+这也可能是因为浏览器尝试多次连接服务器，因为服务器没有响应任何数据。当 `stream` 在循环的结尾离开作用域并被丢弃，其连接将被关闭，作为 `drop` 实现的一部分。浏览器有时通过重连来处理关闭的连接，因为这些问题可能是暂时的。现在重要的是我们成功的处理了 TCP 连接！
 
 记得当运行完特定版本的代码后使用 <span class="keystroke">ctrl-C</span> 来停止程序。并在做出最新的代码修改之后执行 `cargo run` 重启服务。
 
@@ -68,27 +57,7 @@ Connection established!
 <span class="filename">文件名: src/main.rs</span>
 
 ```rust,no_run
-use std::io::prelude::*;
-use std::net::TcpStream;
-use std::net::TcpListener;
-
-fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
-
-    for stream in listener.incoming() {
-        let stream = stream.unwrap();
-
-        handle_connection(stream);
-    }
-}
-
-fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-
-    stream.read(&mut buffer).unwrap();
-
-    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
-}
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-02/src/main.rs}}
 ```
 
 <span class="caption">示例 20-2: 读取 `TcpStream` 并打印数据</span>
@@ -170,19 +139,8 @@ HTTP/1.1 200 OK\r\n\r\n
 
 <span class="filename">文件名: src/main.rs</span>
 
-```rust
-# use std::io::prelude::*;
-# use std::net::TcpStream;
-fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-
-    stream.read(&mut buffer).unwrap();
-
-    let response = "HTTP/1.1 200 OK\r\n\r\n";
-
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
-}
+```rust,no_run
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-03/src/main.rs:here}}
 ```
 
 <span class="caption">示例 20-3: 将一个微型成功 HTTP 响应写入流</span>
@@ -200,46 +158,17 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="filename">文件名: hello.html</span>
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Hello!</title>
-  </head>
-  <body>
-    <h1>Hello!</h1>
-    <p>Hi from Rust</p>
-  </body>
-</html>
+{{#include ../listings/ch20-web-server/listing-20-04/hello.html}}
 ```
 
 <span class="caption">示例 20-4: 一个简单的 HTML 文件用来作为响应</span>
 
-这是一个极小化的 HTML5 文档，它有一个标题和一小段文本。为了在 server 接受请求时返回它，需要如示例 20-5 所示修改 `handle_connection` 来读取 HTML 文件，将其加入到响应的 body 中，并发送：
+这是一个极小化的 HTML5 文档，它有一个标题和一小段文本。为了在服务端接受请求时返回它，需要如示例 20-5 所示修改 `handle_connection` 来读取 HTML 文件，将其加入到响应的 body 中，并发送：
 
 <span class="filename">文件名: src/main.rs</span>
 
-```rust
-# use std::io::prelude::*;
-# use std::net::TcpStream;
-use std::fs;
-// --snip--
-
-fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-    stream.read(&mut buffer).unwrap();
-
-    let contents = fs::read_to_string("hello.html").unwrap();
-
-    let response = format!(
-        "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
-        contents.len(),
-        contents
-    );
-
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
-}
+```rust,no_run
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-05/src/main.rs:here}}
 ```
 
 <span class="caption">示例 20-5: 将 *hello.html* 的内容作为响应 body 发送</span>
@@ -250,41 +179,16 @@ fn handle_connection(mut stream: TcpStream) {
 
 使用 `cargo run` 运行程序，在浏览器加载 *127.0.0.1:7878*，你应该会看到渲染出来的 HTML 文件！
 
-目前忽略了 `buffer` 中的请求数据并无条件的发送了 HTML 文件的内容。这意味着如果尝试在浏览器中请求 *127.0.0.1:7878/something-else* 也会得到同样的 HTML 响应。如此其作用是非常有限的，也不是大部分 server 所做的；让我们检查请求并只对格式良好（well-formed）的请求 `/` 发送 HTML 文件。
+目前忽略了 `buffer` 中的请求数据并无条件的发送了 HTML 文件的内容。这意味着如果尝试在浏览器中请求 *127.0.0.1:7878/something-else* 也会得到同样的 HTML 响应。如此其作用是非常有限的，也不是大部分服务端所做的；让我们检查请求并只对格式良好（well-formed）的请求 `/` 发送 HTML 文件。
 
 ### 验证请求并有选择的进行响应
 
-目前我们的 web server 不管客户端请求什么都会返回相同的 HTML 文件。让我们增加在返回 HTML 文件前检查浏览器是否请求 */*，并在其请求任何其他内容时返回错误的功能。为此需要如示例 20-6 那样修改 `handle_connection`。新代码接收到的请求的内容与已知的 */* 请求的一部分做比较，并增加了 `if` 和 `else` 块来区别处理请求：
+目前我们的 Web 服务器不管客户端请求什么都会返回相同的 HTML 文件。让我们增加在返回 HTML 文件前检查浏览器是否请求 */*，并在其请求任何其他内容时返回错误的功能。为此需要如示例 20-6 那样修改 `handle_connection`。新代码接收到的请求的内容与已知的 */* 请求的一部分做比较，并增加了 `if` 和 `else` 块来区别处理请求：
 
 <span class="filename">文件名: src/main.rs</span>
 
-```rust
-# use std::io::prelude::*;
-# use std::net::TcpStream;
-# use std::fs;
-// --snip--
-
-fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-    stream.read(&mut buffer).unwrap();
-
-    let get = b"GET / HTTP/1.1\r\n";
-
-    if buffer.starts_with(get) {
-        let contents = fs::read_to_string("hello.html").unwrap();
-
-        let response = format!(
-            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
-            contents.len(),
-            contents
-        );
-
-        stream.write(response.as_bytes()).unwrap();
-        stream.flush().unwrap();
-    } else {
-        // 其他请求
-    }
-}
+```rust,no_run
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-06/src/main.rs:here}}
 ```
 
 <span class="caption">示例 20-6: 匹配请求并区别处理 */* 请求与其他请求</span>
@@ -299,24 +203,8 @@ fn handle_connection(mut stream: TcpStream) {
 
 <span class="filename">文件名: src/main.rs</span>
 
-```rust
-# use std::io::prelude::*;
-# use std::net::TcpStream;
-# use std::fs;
-# fn handle_connection(mut stream: TcpStream) {
-# if true {
-// --snip--
-
-} else {
-    let status_line = "HTTP/1.1 404 NOT FOUND\r\n\r\n";
-    let contents = fs::read_to_string("404.html").unwrap();
-
-    let response = format!("{}{}", status_line, contents);
-
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
-}
-# }
+```rust,no_run
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-07/src/main.rs:here}}
 ```
 
 <span class="caption">示例 20-7: 对于任何不是 */* 的请求返回 `404` 状态码的响应和错误页面</span>
@@ -326,22 +214,12 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="filename">文件名: 404.html</span>
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Hello!</title>
-  </head>
-  <body>
-    <h1>Oops!</h1>
-    <p>Sorry, I don't know what you're asking for.</p>
-  </body>
-</html>
+{{#include ../listings/ch20-web-server/listing-20-08/404.html}}
 ```
 
 <span class="caption">示例 20-8: 任何 404 响应所返回错误页面内容样例</span>
 
-有了这些修改，再次运行 server。请求 *127.0.0.1:7878* 应该会返回 *hello.html* 的内容，而对于任何其他请求，比如 *127.0.0.1:7878/foo*，应该会返回 *404.html* 中的错误 HTML！
+有了这些修改，再次运行服务器。请求 *127.0.0.1:7878* 应该会返回 *hello.html* 的内容，而对于任何其他请求，比如 *127.0.0.1:7878/foo*，应该会返回 *404.html* 中的错误 HTML！
 
 ### 少量代码重构
 
@@ -349,32 +227,8 @@ fn handle_connection(mut stream: TcpStream) {
 
 <span class="filename">文件名: src/main.rs</span>
 
-```rust
-# use std::io::prelude::*;
-# use std::net::TcpStream;
-# use std::fs;
-// --snip--
-
-fn handle_connection(mut stream: TcpStream) {
-#     let mut buffer = [0; 1024];
-#     stream.read(&mut buffer).unwrap();
-#
-#     let get = b"GET / HTTP/1.1\r\n";
-    // --snip--
-
-    let (status_line, filename) = if buffer.starts_with(get) {
-        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
-    } else {
-        ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
-    };
-
-    let contents = fs::read_to_string(filename).unwrap();
-
-    let response = format!("{}{}", status_line, contents);
-
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
-}
+```rust,no_run
+{{#rustdoc_include ../listings/ch20-web-server/listing-20-09/src/main.rs:here}}
 ```
 
 <span class="caption">示例 20-9: 重构使得 `if` 和 `else` 块中只包含两个情况所不同的代码</span>
@@ -383,6 +237,6 @@ fn handle_connection(mut stream: TcpStream) {
 
 之前读取文件和写入响应的冗余代码现在位于 `if` 和 `else` 块之外，并会使用变量 `status_line` 和 `filename`。这样更易于观察这两种情况真正有何不同，还意味着如果需要改变如何读取文件或写入响应时只需要更新一处的代码。示例 20-9 中代码的行为与示例 20-8 完全一样。
 
-好极了！我们有了一个 40 行左右 Rust 代码的小而简单的 server，它对一个请求返回页面内容而对所有其他请求返回 404 响应。
+好极了！我们有了一个 40 行左右 Rust 代码的小而简单的服务器，它对一个请求返回页面内容而对所有其他请求返回 404 响应。
 
-目前 server 运行于单线程中，它一次只能处理一个请求。让我们模拟一些慢请求来看看这如何会成为一个问题，并进行修复以便 server 可以一次处理多个请求。
+目前服务器运行于单线程中，它一次只能处理一个请求。让我们模拟一些慢请求来看看这如何会成为一个问题，并进行修复以便服务器可以一次处理多个请求。

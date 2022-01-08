@@ -22,9 +22,9 @@ Rust 的并发模型中一个有趣的方面是：语言本身对并发知之 **
 
 通常并不需要手动实现 `Send` 和 `Sync` trait，因为由 `Send` 和 `Sync` 的类型组成的类型，自动就是 `Send` 和 `Sync` 的。因为他们是标记 trait，甚至都不需要实现任何方法。他们只是用来加强并发相关的不可变性的。
 
-手动实现这些标记 trait 涉及到编写不安全的 Rust 代码，第十九章将会讲述具体的方法；当前重要的是，在创建新的由不是 `Send` 和 `Sync` 的部分构成的并发类型时需要多加小心，以确保维持其安全保证。[The Rustonomicon] 中有更多关于这些保证以及如何维持他们的信息。
+手动实现这些标记 trait 涉及到编写不安全的 Rust 代码，第十九章将会讲述具体的方法；当前重要的是，在创建新的由不是 `Send` 和 `Sync` 的部分构成的并发类型时需要多加小心，以确保维持其安全保证。[《Rust 秘典》][nomicon] 中有更多关于这些保证以及如何维持他们的信息。
 
-[the rustonomicon]: https://doc.rust-lang.org/stable/nomicon/
+[nomicon]: https://doc.rust-lang.org/stable/nomicon/
 
 ## 总结
 
