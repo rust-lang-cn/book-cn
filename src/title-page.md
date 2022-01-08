@@ -9,7 +9,7 @@
 > 3. 《Rust 程序设计语言》中文出版书名为《Rust 权威指南》，参见[“为什么 The Rust Programming Language 在线版书名翻译成《Rust 程序设计语言》”][trpl-translation]。
 > 4. 本书已有由 [KaiserY 翻译完的版本](https://github.com/KaiserY/trpl-zh-cn)，Rust 中文翻译项目组将把之前未翻译完的内容直接采用 KaiserY 版内容，后续 Rust 中文翻译项目组将跟随 Rust 官方的英文版本更新。
 > 5. 许可协议：跟随英文原书使用 MIT 和 Apache 2.0 双许可授权。
-> 6. <a href="https://rustwiki.org/zh-CN/book" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，**英文版每天都会自动同步一次官方的最新版本**。
+> 6. <a href="https://rustwiki.org/en/book" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，**英文版每天都会自动同步一次官方的最新版本**。
 > 7. 若发现本页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开本页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！
 
 本书的版本假设你使用 Rust 1.57（2021 年 12 月 2 日发布） 或更高版本。请参阅第 1 章的[“安装”][install]<!-- ignore -->部分来安装或更新 Rust。
