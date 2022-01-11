@@ -181,7 +181,7 @@ pub fn eat_at_restaurant() {
 
 ```toml
 [dependencies]
-rand = "0.5.5"
+rand = "0.8.3"
 ```
 
 在 *Cargo.toml* 中加入 `rand` 依赖告诉了 Cargo 要从 [crates.io](https://crates.io) 下载 `rand` 和其依赖，并使其可在项目代码中使用。
@@ -192,7 +192,7 @@ rand = "0.5.5"
 use rand::Rng;
 
 fn main() {
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..101);
 }
 ```
 
