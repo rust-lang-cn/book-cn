@@ -4,7 +4,7 @@
 
 回忆一下第二章 [“使用 `Result` 类型来处理潜在的错误”][handle_failure] 部分中的那个 `Result` 枚举，它定义有如下两个成员，`Ok` 和 `Err`：
 
-[handle_failure]: ch02-00-guessing-game-tutorial.html#handling-potential-failure-with-the-result-type
+[handle_failure]: ch02-00-guessing-game-tutorial.html#使用-result-类型来处理潜在的错误
 
 ```rust
 enum Result<T, E> {
@@ -55,7 +55,7 @@ error[E0308]: mismatched types
 
 当 `File::open` 成功的情况下，变量 `f` 的值将会是一个包含文件句柄的 `Ok` 实例。在失败的情况下，`f` 的值会是一个包含更多关于出现了何种错误信息的 `Err` 实例。
 
-我们需要在示例 9-3 的代码中增加根据 `File::open` 返回值进行不同处理的逻辑。示例 9-4 展示了一个使用基本工具处理 `Result` 的例子：第六章学习过的 `match` 表达式。
+我们需要在示例 9-3 的代码中增加根据 `File::open` 返回值进行不同处理的逻辑。示例 9-4 展示了一个使用基本工具（第六章学习过的 `match` 表达式）处理 `Result` 的例子：
 
 <span class="filename">文件名: src/main.rs</span>
 
@@ -176,7 +176,7 @@ fn main() {
 }
 ```
 
-`expect` 与 `unwrap` 的使用方式一样：返回文件句柄或调用 `panic!` 宏。`expect` 在调用 `panic!` 时使用的错误信息将是我们传递给 `expect` 的参数，而不像`unwrap` 那样使用默认的 `panic!` 信息。它看起来像这样：
+`expect` 与 `unwrap` 的使用方式一样：返回文件句柄或调用 `panic!` 宏。`expect` 在调用 `panic!` 时使用的错误信息将是我们传递给 `expect` 的参数，而不像 `unwrap` 那样使用默认的 `panic!` 信息。它看起来像这样：
 
 ```text
 thread 'main' panicked at 'Failed to open hello.txt: Error { repr: Os { code:
@@ -221,7 +221,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 函数体以 `File::open` 函数开头。接着使用 `match` 处理返回值 `Result`，类似于示例 9-4 中的 `match`，唯一的区别是当 `Err` 时不再调用 `panic!`，而是提早返回并将 `File::open` 返回的错误值作为函数的错误返回值传递给调用者。如果 `File::open` 成功了，我们将文件句柄储存在变量 `f` 中并继续。
 
-接着我们在变量 `s` 中创建了一个新 `String` 并调用文件句柄 `f` 的 `read_to_string` 方法来将文件的内容读取到 `s` 中。`read_to_string` 方法也返回一个 `Result` 因为它也可能会失败：哪怕是 `File::open` 已经成功了。所以我们需要另一个 `match` 来处理这个 `Result`：如果 `read_to_string` 成功了，那么这个函数就成功了，并返回文件中的用户名，它现在位于被封装进 `Ok` 的 `s` 中。如果`read_to_string` 失败了，则像之前处理 `File::open` 的返回值的 `match` 那样返回错误值。不过并不需要显式的调用 `return`，因为这是函数的最后一个表达式。
+接着我们在变量 `s` 中创建了一个新 `String` 并调用文件句柄 `f` 的 `read_to_string` 方法来将文件的内容读取到 `s` 中。`read_to_string` 方法也返回一个 `Result` 因为它也可能会失败：哪怕是 `File::open` 已经成功了。所以我们需要另一个 `match` 来处理这个 `Result`：如果 `read_to_string` 成功了，那么这个函数就成功了，并返回文件中的用户名，它现在位于被封装进 `Ok` 的 `s` 中。如果 `read_to_string` 失败了，则像之前处理 `File::open` 的返回值的 `match` 那样返回错误值。不过并不需要显式的调用 `return`，因为这是函数的最后一个表达式。
 
 调用这个函数的代码最终会得到一个包含用户名的 `Ok` 值，或者一个包含 `io::Error` 的 `Err` 值。我们无从得知调用者会如何处理这些值。例如，如果他们得到了一个 `Err` 值，他们可能会选择 `panic!` 并使程序崩溃、使用一个默认的用户名或者从文件之外的地方寻找用户名。我们没有足够的信息知晓调用者具体会如何尝试，所以将所有的成功或失败信息向上传播，让他们选择合适的处理方法。
 
@@ -274,7 +274,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 <span class="caption">示例 9-8：问号运算符之后的链式方法调用</span>
 
-在 `s` 中创建新的 `String` 被放到了函数开头；这一部分没有变化。我们对 `File::open("hello.txt")?` 的结果直接链式调用了 `read_to_string`，而不再创建变量 `f`。仍然需要 `read_to_string` 调用结尾的 `?`，而且当 `File::open` 和 `read_to_string` 都成功没有失败时返回包含用户名 `s` 的 `Ok` 值。其功能再一次与示例 9-6 和示例 9-7 保持一致，不过这是一个与众不同且更符合工程学(ergonomic)的写法。
+在 `s` 中创建新的 `String` 被放到了函数开头；这一部分没有变化。我们对 `File::open("hello.txt")?` 的结果直接链式调用了 `read_to_string`，而不再创建变量 `f`。仍然需要 `read_to_string` 调用结尾的 `?`，而且当 `File::open` 和 `read_to_string` 都成功没有失败时返回包含用户名 `s` 的 `Ok` 值。其功能再一次与示例 9-6 和示例 9-7 保持一致，不过这是一个与众不同且更符合工程学（ergonomic）的写法。
 
 说到编写这个函数的不同方法，甚至还有一个更短的写法：
 
@@ -297,7 +297,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 `?` 运算符可被用于返回值类型为 `Result` 的函数，因为他被定义为与示例 9-6 中的 `match` 表达式有着完全相同的工作方式。`match` 的 `return Err(e)` 部分要求返回值类型是 `Result`，所以函数的返回值必须是 `Result` 才能与这个 `return` 相兼容。
 
-让我们看看在 `main` 函数中使用 `?` 运算符会发生什么，如果你还记得的话其返回值类型是`()`：
+让我们看看在 `main` 函数中使用 `?` 运算符会发生什么，如果你还记得的话其返回值类型是 `()`：
 
 ```rust,ignore,does_not_compile
 use std::fs::File;
@@ -337,7 +337,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 ```
 
-`Box<dyn Error>` 被称为 “trait 对象”（“trait object”），第十七章 [“为使用不同类型的值而设计的 trait 对象”][trait-objects] 部分会做介绍。目前可以理解 `Box<dyn Error>` 为使用 `?` 时 `main` 允许返回的 “任何类型的错误”。
+`Box<dyn Error>` 被称为 “trait 对象”（trait object），第十七章 [“为使用不同类型的值而设计的 trait 对象”][trait-objects] 部分会做介绍。目前可以理解 `Box<dyn Error>` 为使用 `?` 时 `main` 允许返回的 “任何类型的错误”。
 
 现在我们讨论过了调用 `panic!` 或返回 `Result` 的细节，是时候回到他们各自适合哪些场景的话题了。
 
