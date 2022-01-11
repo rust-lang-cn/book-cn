@@ -45,7 +45,7 @@ pub mod hosting;
 
 <span class="filename">文件名: src/front_of_house/hosting.rs</span>
 
-```,ignore
+```rust,ignore
 pub fn add_to_waitlist() {}
 ```
 
