@@ -59,7 +59,7 @@ fn handle_connection(mut stream: TcpStream) {
 
 在开始之前，让我们讨论一下线程池应用看起来怎样。当尝试设计代码时，首先编写客户端接口确实有助于指导代码设计。以期望的调用方式来构建 API 代码的结构，接着在这个结构之内实现功能，而不是先实现功能再设计公有 API。
 
-类似于第十二章项目中使用的测试驱动开发。这里将要使用编译器驱动开发（compiler-driven development）。我们将编写调用所期望的函数的代码，接着观察编译器错误告诉我们接下来需要修改什么使得代码可以工作。
+类似于第 12 章项目中使用的测试驱动开发。这里将要使用编译器驱动开发（compiler-driven development）。我们将编写调用所期望的函数的代码，接着观察编译器错误告诉我们接下来需要修改什么使得代码可以工作。
 
 #### 为每一个请求分配线程的代码结构
 
@@ -89,7 +89,7 @@ fn main() {
 
 <span class="caption">示例 20-11: 为每一个流新建一个线程</span>
 
-正如第十六章讲到的，`thread::spawn` 会创建一个新线程并在其中运行闭包中的代码。如果运行这段代码并在在浏览器中加载 */sleep*，接着在另两个浏览器标签页中加载 */*，确实会发现 */* 请求不必等待 */sleep* 结束。不过正如之前提到的，这最终会使系统崩溃因为我们无限制的创建新线程。
+正如第 16 章讲到的，`thread::spawn` 会创建一个新线程并在其中运行闭包中的代码。如果运行这段代码并在在浏览器中加载 */sleep*，接着在另两个浏览器标签页中加载 */*，确实会发现 */* 请求不必等待 */sleep* 结束。不过正如之前提到的，这最终会使系统崩溃因为我们无限制的创建新线程。
 
 #### 为有限数量的线程创建一个类似的接口
 
@@ -191,7 +191,7 @@ impl ThreadPool {
 }
 ```
 
-这里选择 `usize` 作为 `size` 参数的类型，因为我们知道为负的线程数没有意义。我们还知道将使用 4 作为线程集合的元素数量，这也就是使用 `usize` 类型的原因，如第三章 [“整数类型”][integer-types] 部分所讲。
+这里选择 `usize` 作为 `size` 参数的类型，因为我们知道为负的线程数没有意义。我们还知道将使用 4 作为线程集合的元素数量，这也就是使用 `usize` 类型的原因，如第 3 章 [“整数类型”][integer-types] 部分所讲。
 
 再次编译检查这段代码：
 
@@ -216,7 +216,7 @@ error[E0599]: no method named `execute` found for type `hello::ThreadPool` in th
 
 现在有了一个警告和一个错误。暂时先忽略警告，发生错误是因为并没有 `ThreadPool` 上的 `execute` 方法。回忆 [“为有限数量的线程创建一个类似的接口”](#creating-a-similar-interface-for-a-finite-number-of-threads)  部分我们决定线程池应该有与 `thread::spawn` 类似的接口，同时我们将实现 `execute` 函数来获取传递的闭包并将其传递给池中的空闲线程执行。
 
-我们会在 `ThreadPool` 上定义 `execute` 函数来获取一个闭包参数。回忆第十三章的 [“使用带有泛型和 `Fn` trait 的闭包”][storing-closures-using-generic-parameters-and-the-fn-traits] 部分，闭包作为参数时可以使用三个不同的 trait：`Fn`、`FnMut` 和 `FnOnce`。我们需要决定这里应该使用哪种闭包。最终需要实现的类似于标准库的 `thread::spawn`，所以我们可以观察 `thread::spawn` 的签名在其参数中使用了何种 bound。查看文档会发现：
+我们会在 `ThreadPool` 上定义 `execute` 函数来获取一个闭包参数。回忆第 13 章的 [“使用带有泛型和 `Fn` trait 的闭包”][storing-closures-using-generic-parameters-and-the-fn-traits] 部分，闭包作为参数时可以使用三个不同的 trait：`Fn`、`FnMut` 和 `FnOnce`。我们需要决定这里应该使用哪种闭包。最终需要实现的类似于标准库的 `thread::spawn`，所以我们可以观察 `thread::spawn` 的签名在其参数中使用了何种 bound。查看文档会发现：
 
 ```rust,ignore
 pub fn spawn<F, T>(f: F) -> JoinHandle<T>
@@ -302,7 +302,7 @@ impl ThreadPool {
 
 <span class="caption">示例 20-13: 实现 `ThreadPool::new` 在 `size` 为零时 panic</span>
 
-这里用文档注释为 `ThreadPool` 增加了一些文档。注意这里遵循了良好的文档实践并增加了一个部分来提示函数会 panic 的情况，正如第十四章所讨论的。尝试运行 `cargo doc --open` 并点击 `ThreadPool` 结构体来查看生成的 `new` 的文档看起来如何！
+这里用文档注释为 `ThreadPool` 增加了一些文档。注意这里遵循了良好的文档实践并增加了一个部分来提示函数会 panic 的情况，正如第 14 章所讨论的。尝试运行 `cargo doc --open` 并点击 `ThreadPool` 结构体来查看生成的 `new` 的文档看起来如何！
 
 相比像这里使用 `assert!` 宏，也可以让 `new` 像之前 I/O 项目中示例 12-9 中 `Config::new` 那样返回一个 `Result`，不过在这里我们选择创建一个没有任何线程的线程池应该是不可恢复的错误。如果你想做的更好，尝试编写一个采用如下签名的 `new` 版本来感受一下两者的区别：
 
@@ -439,7 +439,7 @@ impl Worker {
 
 我们希望刚创建的 `Worker` 结构体能够从 `ThreadPool` 的队列中获取需要执行的代码，并发送到线程中执行他们。
 
-在第十六章，我们学习了 **通道** —— 一个沟通两个线程的简单手段 —— 对于这个例子来说则是绝佳的。这里通道将充当任务队列的作用，`execute` 将通过 `ThreadPool` 向其中线程正在寻找工作的 `Worker` 实例发送任务。如下是这个计划：
+在第 16 章，我们学习了 **通道** —— 一个沟通两个线程的简单手段 —— 对于这个例子来说则是绝佳的。这里通道将充当任务队列的作用，`execute` 将通过 `ThreadPool` 向其中线程正在寻找工作的 `Worker` 实例发送任务。如下是这个计划：
 
 1. `ThreadPool` 会创建一个通道并充当发送端。
 2. 每个 `Worker` 将会充当通道的接收端。
@@ -567,11 +567,11 @@ error[E0382]: use of moved value: `receiver`
    `std::sync::mpsc::Receiver<Job>`, which does not implement the `Copy` trait
 ```
 
-这段代码尝试将 `receiver` 传递给多个 `Worker` 实例。这是不行的，回忆第十六章：Rust 所提供的通道实现是多 **生产者**，单 **消费者** 的。这意味着不能简单的克隆通道的消费端来解决问题。即便可以，那也不是我们希望使用的技术；我们希望通过在所有的 worker 中共享单一 `receiver`，在线程间分发任务。
+这段代码尝试将 `receiver` 传递给多个 `Worker` 实例。这是不行的，回忆第 16 章：Rust 所提供的通道实现是多 **生产者**，单 **消费者** 的。这意味着不能简单的克隆通道的消费端来解决问题。即便可以，那也不是我们希望使用的技术；我们希望通过在所有的 worker 中共享单一 `receiver`，在线程间分发任务。
 
-另外，从通道队列中取出任务涉及到修改 `receiver`，所以这些线程需要一个能安全的共享和修改 `receiver` 的方式，否则可能导致竞争状态（参考第十六章）。
+另外，从通道队列中取出任务涉及到修改 `receiver`，所以这些线程需要一个能安全的共享和修改 `receiver` 的方式，否则可能导致竞争状态（参考第 16 章）。
 
-回忆一下第十六章讨论的线程安全智能指针，为了在多个线程间共享所有权并允许线程修改其值，需要使用 `Arc<Mutex<T>>`。`Arc` 使得多个 worker 拥有接收端，而 `Mutex` 则确保一次只有一个 worker 能从接收端得到任务。示例 20-18 展示了所需的修改：
+回忆一下第 16 章讨论的线程安全智能指针，为了在多个线程间共享所有权并允许线程修改其值，需要使用 `Arc<Mutex<T>>`。`Arc` 使得多个 worker 拥有接收端，而 `Mutex` 则确保一次只有一个 worker 能从接收端得到任务。示例 20-18 展示了所需的修改：
 
 <span class="filename">文件名: src/lib.rs</span>
 
@@ -640,7 +640,7 @@ impl Worker {
 
 #### 实现 `execute` 方法
 
-最后让我们实现 `ThreadPool` 上的 `execute` 方法。同时也要修改 `Job` 结构体：它将不再是结构体，`Job` 将是一个有着 `execute` 接收到的闭包类型的 trait 对象的类型别名。第十九章 [“类型别名用来创建类型同义词”][creating-type-synonyms-with-type-aliases] 部分提到过，类型别名允许将长的类型变短。观察示例 20-19：
+最后让我们实现 `ThreadPool` 上的 `execute` 方法。同时也要修改 `Job` 结构体：它将不再是结构体，`Job` 将是一个有着 `execute` 接收到的闭包类型的 trait 对象的类型别名。第 19 章 [“类型别名用来创建类型同义词”][creating-type-synonyms-with-type-aliases] 部分提到过，类型别名允许将长的类型变短。观察示例 20-19：
 
 <span class="filename">文件名: src/lib.rs</span>
 
@@ -757,7 +757,7 @@ Worker 2 got a job; executing.
 
 > 注意如果同时在多个浏览器窗口打开 */sleep*，它们可能会彼此间隔地加载 5 秒，因为一些浏览器处于缓存的原因会顺序执行相同请求的多个实例。这些限制并不是由于我们的 web server 造成的。
 
-在学习了第十八章的 `while let` 循环之后，你可能会好奇为何不能如此编写 worker 线程，如示例 20-21 所示：
+在学习了第 18 章的 `while let` 循环之后，你可能会好奇为何不能如此编写 worker 线程，如示例 20-21 所示：
 
 <span class="filename">文件名: src/lib.rs</span>
 

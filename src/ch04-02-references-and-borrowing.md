@@ -28,7 +28,7 @@ fn calculate_length(s: &String) -> usize {
 
 <span class="caption">图 4-5：`&String s` 指向 `String s1` 示意图</span>
 
-> 注意：与使用 `&` 引用相反的操作是 **解引用**（*dereferencing*），它使用解引用运算符，`*`。我们将会在第八章遇到一些解引用运算符，并在第十五章详细讨论解引用。
+> 注意：与使用 `&` 引用相反的操作是 **解引用**（*dereferencing*），它使用解引用运算符，`*`。我们将会在第 8 章遇到一些解引用运算符，并在第 15 章详细讨论解引用。
 
 仔细看看这个函数调用：
 
@@ -242,7 +242,7 @@ error[E0106]: missing lifetime specifier
   = help: consider giving it a 'static lifetime
 ```
 
-错误信息引用了一个我们还未介绍的功能：生命周期（lifetimes）。第十章会详细介绍生命周期。不过，如果你不理会生命周期部分，错误信息中确实包含了为什么这段代码有问题的关键信息：
+错误信息引用了一个我们还未介绍的功能：生命周期（lifetimes）。第 10 章会详细介绍生命周期。不过，如果你不理会生命周期部分，错误信息中确实包含了为什么这段代码有问题的关键信息：
 
 ```text
 this function's return type contains a borrowed value, but there is no value for it to be borrowed from.

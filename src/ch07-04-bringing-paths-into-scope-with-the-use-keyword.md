@@ -175,7 +175,7 @@ pub fn eat_at_restaurant() {
 
 ### 使用外部包
 
-在第二章中我们编写了一个猜猜看游戏。那个项目使用了一个外部包，`rand`，来生成随机数。为了在项目中使用 `rand`，在 *Cargo.toml* 中加入了如下行：
+在第 2 章中我们编写了一个猜猜看游戏。那个项目使用了一个外部包，`rand`，来生成随机数。为了在项目中使用 `rand`，在 *Cargo.toml* 中加入了如下行：
 
 <span class="filename">文件名: Cargo.toml</span>
 
@@ -186,7 +186,7 @@ rand = "0.8.3"
 
 在 *Cargo.toml* 中加入 `rand` 依赖告诉了 Cargo 要从 [crates.io](https://crates.io) 下载 `rand` 和其依赖，并使其可在项目代码中使用。
 
-接着，为了将 `rand` 定义引入项目包的作用域，我们加入一行 `use` 起始的包名，它以 `rand` 包名开头并列出了需要引入作用域的项。回忆一下第二章的 [“生成一个随机数”][rand]<!-- ignore --> 部分，我们曾将 `Rng` trait 引入作用域并调用了 `rand::thread_rng` 函数：
+接着，为了将 `rand` 定义引入项目包的作用域，我们加入一行 `use` 起始的包名，它以 `rand` 包名开头并列出了需要引入作用域的项。回忆一下第 2 章的 [“生成一个随机数”][rand]<!-- ignore --> 部分，我们曾将 `Rng` trait 引入作用域并调用了 `rand::thread_rng` 函数：
 
 ```rust,ignore
 use rand::Rng;
@@ -264,7 +264,7 @@ use std::collections::*;
 
 这个 `use` 语句将 `std::collections` 中定义的所有公有项引入当前作用域。使用 glob 运算符时请多加小心！Glob 会使得我们难以推导作用域中有什么名称和它们是在何处定义的。
 
-glob 运算符经常用于测试模块 `tests` 中，这时会将所有内容引入作用域；我们将在第十一章 [“如何编写测试”][writing-tests]<!-- ignore --> 部分讲解。glob 运算符有时也用于 prelude 模式；查看 [标准库中的文档](https://doc.rust-lang.org/std/prelude/index.html#other-preludes) 了解这个模式的更多细节。
+glob 运算符经常用于测试模块 `tests` 中，这时会将所有内容引入作用域；我们将在第 11 章 [“如何编写测试”][writing-tests]<!-- ignore --> 部分讲解。glob 运算符有时也用于 prelude 模式；查看 [标准库中的文档](https://doc.rust-lang.org/std/prelude/index.html#other-preludes) 了解这个模式的更多细节。
 
 [rand]: ch02-00-guessing-game-tutorial.html#生成一个随机数
 [writing-tests]: ch11-01-writing-tests.html#如何编写测试

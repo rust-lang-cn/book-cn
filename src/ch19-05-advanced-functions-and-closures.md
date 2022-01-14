@@ -108,7 +108,7 @@ fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
 }
 ```
 
-这段代码正好可以编译。关于 trait 对象的更多内容，请回顾第十七章的 [“为使用不同类型的值而设计的 trait 对象”][using-trait-objects-that-allow-for-values-of-different-types] 部分。
+这段代码正好可以编译。关于 trait 对象的更多内容，请回顾第 17 章的 [“为使用不同类型的值而设计的 trait 对象”][using-trait-objects-that-allow-for-values-of-different-types] 部分。
 
 接下来让我们学习宏！
 

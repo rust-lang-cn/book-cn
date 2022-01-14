@@ -113,7 +113,7 @@ error[E0614]: type `MyBox<{integer}>` cannot be dereferenced
 
 ### 通过实现 `Deref` trait 将某类型像引用一样处理
 
-如第十章所讨论的，为了实现 trait，需要提供 trait 所需的方法实现。`Deref` trait，由标准库提供，要求实现名为 `deref` 的方法，其借用 `self` 并返回一个内部数据的引用。示例 15-10 包含定义于 `MyBox` 之上的 `Deref` 实现：
+如第 10 章所讨论的，为了实现 trait，需要提供 trait 所需的方法实现。`Deref` trait，由标准库提供，要求实现名为 `deref` 的方法，其借用 `self` 并返回一个内部数据的引用。示例 15-10 包含定义于 `MyBox` 之上的 `Deref` 实现：
 
 <span class="filename">文件名: src/main.rs</span>
 
@@ -133,7 +133,7 @@ impl<T> Deref for MyBox<T> {
 
 <span class="caption">示例 15-10：`MyBox<T>` 上的 `Deref` 实现</span>
 
-`type Target = T;` 语法定义了用于此 trait 的关联类型。关联类型是一个稍有不同的定义泛型参数的方式，现在还无需过多的担心它；第十九章会详细介绍。
+`type Target = T;` 语法定义了用于此 trait 的关联类型。关联类型是一个稍有不同的定义泛型参数的方式，现在还无需过多的担心它；第 19 章会详细介绍。
 
 `deref` 方法体中写入了 `&self.0`，这样 `deref` 返回了我希望通过 `*` 运算符访问的值的引用。示例 15-9 中的 `main` 函数中对 `MyBox<T>` 值的 `*` 调用现在可以编译并能通过断言了！
 

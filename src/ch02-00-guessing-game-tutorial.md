@@ -6,7 +6,7 @@
 
 ## 准备一个新项目
 
-要创建一个新项目，进入第一章中创建的 *projects* 目录，使用 Cargo 新建一个项目，如下：
+要创建一个新项目，进入第 1 章中创建的 *projects* 目录，使用 Cargo 新建一个项目，如下：
 
 ```console
 $ cargo new guessing_game
@@ -25,7 +25,7 @@ $ cd guessing_game
 
 如果 Cargo 从环境中获取的开发者信息不正确，修改这个文件并再次保存。
 
-正如第一章那样，`cargo new` 生成了一个 “Hello, world!” 程序。查看 *src/main.rs* 文件：
+正如第 1 章那样，`cargo new` 生成了一个 “Hello, world!” 程序。查看 *src/main.rs* 文件：
 
 <span class="filename">文件名：src/main.rs</span>
 
@@ -65,7 +65,7 @@ $ cd guessing_game
 
 [prelude]: https://doc.rust-lang.org/std/prelude/index.html
 
-如第一章所提及，`main` 函数是程序的入口点：
+如第 1 章所提及，`main` 函数是程序的入口点：
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:main}}
@@ -73,7 +73,7 @@ $ cd guessing_game
 
 `fn` 语法声明了一个新函数，`()` 表明没有参数，`{` 作为函数体的开始。
 
-第一章也提及了 `println!` 是一个在屏幕上打印字符串的宏：
+第 1 章也提及了 `println!` 是一个在屏幕上打印字符串的宏：
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-01/src/main.rs:print}}
@@ -95,7 +95,7 @@ $ cd guessing_game
 let foo = bar;
 ```
 
-这行代码新建了一个叫做 `foo` 的变量并把它绑定到值 `bar` 上。在 Rust 中，变量默认是不可变的。我们将会在第三章的 [“变量与可变性”][variables-and-mutability]<!-- ignore --> 部分详细讨论这个概念。下面的例子展示了如何在变量名前使用 `mut` 来使一个变量可变：
+这行代码新建了一个叫做 `foo` 的变量并把它绑定到值 `bar` 上。在 Rust 中，变量默认是不可变的。我们将会在第 3 章的 [“变量与可变性”][variables-and-mutability]<!-- ignore --> 部分详细讨论这个概念。下面的例子展示了如何在变量名前使用 `mut` 来使一个变量可变：
 
 ```rust,ignore
 let foo = 5; // 不可变
@@ -171,7 +171,7 @@ io::stdin().read_line(&mut guess).expect("Failed to read line");
 
 Rust 警告我们没有使用 `read_line` 的返回值 `Result`，说明有一个可能的错误没有处理。
 
-消除警告的正确做法是实际编写错误处理代码，不过由于我们就是希望程序在出现问题时立即崩溃，所以直接使用 `expect`。第九章会学习如何从错误中恢复。
+消除警告的正确做法是实际编写错误处理代码，不过由于我们就是希望程序在出现问题时立即崩溃，所以直接使用 `expect`。第 9 章会学习如何从错误中恢复。
 
 ### 使用 `println!` 占位符打印值
 

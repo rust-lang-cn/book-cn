@@ -10,7 +10,7 @@ newtype 模式可以用于一些其他我们还未讨论的功能，包括静态
 
 另一个 newtype 模式的应用在于抽象掉一些类型的实现细节：例如，封装类型可以暴露出与直接使用其内部私有类型时所不同的公有 API，以便限制其功能。
 
-newtype 也可以隐藏其内部的泛型类型。例如，可以提供一个封装了 `HashMap<i32, String>` 的 `People` 类型，用来储存人名以及相应的 ID。使用 `People` 的代码只需与提供的公有 API 交互即可，比如向 `People` 集合增加名字字符串的方法，这样这些代码就无需知道在内部我们将一个 `i32` ID 赋予了这个名字了。newtype 模式是一种实现第十七章 [“封装隐藏了实现细节”][encapsulation-that-hides-implementation-details]  部分所讨论的隐藏实现细节的封装的轻量级方法。
+newtype 也可以隐藏其内部的泛型类型。例如，可以提供一个封装了 `HashMap<i32, String>` 的 `People` 类型，用来储存人名以及相应的 ID。使用 `People` 的代码只需与提供的公有 API 交互即可，比如向 `People` 集合增加名字字符串的方法，这样这些代码就无需知道在内部我们将一个 `i32` ID 赋予了这个名字了。newtype 模式是一种实现第 17 章 [“封装隐藏了实现细节”][encapsulation-that-hides-implementation-details]  部分所讨论的隐藏实现细节的封装的轻量级方法。
 
 ### 类型别名用来创建类型同义词
 
@@ -139,7 +139,7 @@ let guess: u32 = match guess.trim().parse() {
 
 <span class="caption">示例 19-26: `match` 语句和一个以 `continue` 结束的分支</span>
 
-当时我们忽略了代码中的一些细节。在第六章 [“`match` 控制流运算符”][the-match-control-flow-operator] 部分，我们学习了 `match` 的分支必须返回相同的类型。如下代码不能工作：
+当时我们忽略了代码中的一些细节。在第 6 章 [“`match` 控制流运算符”][the-match-control-flow-operator] 部分，我们学习了 `match` 的分支必须返回相同的类型。如下代码不能工作：
 
 ```rust,ignore,does_not_compile
 let guess = match guess.trim().parse() {
@@ -194,11 +194,11 @@ let s2: str = "How's it going?";
 
 Rust 需要知道应该为特定类型的值分配多少内存，同时所有同一类型的值必须使用相同数量的内存。如果允许编写这样的代码，也就意味着这两个 `str` 需要占用完全相同大小的空间，不过它们有着不同的长度。这也就是为什么不可能创建一个存放动态大小类型的变量的原因。
 
-那么该怎么办呢？你已经知道了这种问题的答案：`s1` 和 `s2` 的类型是 `&str` 而不是 `str`。如果你回想第四章 [“字符串 slice”][string-slices]  部分，slice 数据结储存了开始位置和 slice 的长度。
+那么该怎么办呢？你已经知道了这种问题的答案：`s1` 和 `s2` 的类型是 `&str` 而不是 `str`。如果你回想第 4 章 [“字符串 slice”][string-slices]  部分，slice 数据结储存了开始位置和 slice 的长度。
 
 所以虽然 `&T` 是一个储存了 `T` 所在的内存位置的单个值，`&str` 则是 **两个** 值：`str` 的地址和其长度。这样，`&str` 就有了一个在编译时可以知道的大小：它是 `usize` 长度的两倍。也就是说，我们总是知道 `&str` 的大小，而无论其引用的字符串是多长。这里是 Rust 中动态大小类型的常规用法：他们有一些额外的元信息来储存动态信息的大小。这引出了动态大小类型的黄金规则：必须将动态大小类型的值置于某种指针之后。
 
-可以将 `str` 与所有类型的指针结合：比如 `Box<str>` 或 `Rc<str>`。事实上，之前我们已经见过了，不过是另一个动态大小类型：trait。每一个 trait 都是一个可以通过 trait 名称来引用的动态大小类型。在第十七章 [“为使用不同类型的值而设计的 trait 对象”][using-trait-objects-that-allow-for-values-of-different-types] 部分，我们提到了为了将 trait 用于 trait 对象，必须将他们放入指针之后，比如 `&dyn Trait` 或 `Box<dyn Trait>`（`Rc<dyn Trait>` 也可以）。
+可以将 `str` 与所有类型的指针结合：比如 `Box<str>` 或 `Rc<str>`。事实上，之前我们已经见过了，不过是另一个动态大小类型：trait。每一个 trait 都是一个可以通过 trait 名称来引用的动态大小类型。在第 17 章 [“为使用不同类型的值而设计的 trait 对象”][using-trait-objects-that-allow-for-values-of-different-types] 部分，我们提到了为了将 trait 用于 trait 对象，必须将他们放入指针之后，比如 `&dyn Trait` 或 `Box<dyn Trait>`（`Rc<dyn Trait>` 也可以）。
 
 为了处理 DST，Rust 有一个特定的 trait 来确定一个类型的大小是否在编译时可知：这就是 `Sized` trait。这个 trait 自动为编译器在编译时就知道其大小的类型实现。另外，Rust 隐式的为每一个泛型函数增加了 `Sized` bound。也就是说，对于如下泛型函数定义：
 

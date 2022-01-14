@@ -24,7 +24,7 @@ fn main() {
 
 <!-- NEXT PARAGRAPH WRAPPED WEIRD INTENTIONALLY SEE #199 -->
 
-所有的 `if` 表达式都以 `if` 关键字开头，其后跟一个条件。在这个例子中，条件检查变量 `number` 的值是否小于 5。在条件为真时希望执行的代码块位于紧跟条件之后的大括号中。`if` 表达式中与条件关联的代码块有时被叫做 *arms*，就像第二章 [“比较猜测的数字和秘密数字”][comparing-the-guess-to-the-secret-number] 部分中讨论到的 `match` 表达式中的分支一样。
+所有的 `if` 表达式都以 `if` 关键字开头，其后跟一个条件。在这个例子中，条件检查变量 `number` 的值是否小于 5。在条件为真时希望执行的代码块位于紧跟条件之后的大括号中。`if` 表达式中与条件关联的代码块有时被叫做 *arms*，就像第 2 章 [“比较猜测的数字和秘密数字”][comparing-the-guess-to-the-secret-number] 部分中讨论到的 `match` 表达式中的分支一样。
 
 也可以包含一个可选的 `else` 表达式来提供一个在条件为假时应当执行的代码块，这里我们就这么做了。如果不提供 `else` 表达式并且条件为假时，程序会直接忽略 `if` 代码块并继续执行下面的代码。
 
@@ -131,7 +131,7 @@ number is divisible by 3
 
 当执行这个程序时，它按顺序检查每个 `if` 表达式并执行第一个条件为真的代码块。注意即使 6 可以被 2 整除，也不会输出 `number is divisible by 2`，更不会输出 `else` 块中的 `number is not divisible by 4, 3, or 2`。原因是 Rust 只会执行第一个条件为真的代码块，并且一旦它找到一个以后，甚至都不会检查剩下的条件了。
 
-使用过多的 `else if` 表达式会使代码显得杂乱无章，所以如果有多于一个 `else if` 表达式，最好重构代码。为此，第六章会介绍一个强大的 Rust 分支结构（branching construct），叫做 `match`。
+使用过多的 `else if` 表达式会使代码显得杂乱无章，所以如果有多于一个 `else if` 表达式，最好重构代码。为此，第 6 章会介绍一个强大的 Rust 分支结构（branching construct），叫做 `match`。
 
 #### 在 `let` 语句中使用 `if`
 
@@ -240,7 +240,7 @@ again!
 
 符号 `^C` 代表你在这按下了<span class="keystroke">ctrl-c</span>。在 `^C` 之后你可能看到也可能看不到 `again!` ，这取决于在接收到终止信号时代码执行到了循环的何处。
 
-幸运的是，Rust 提供了另一种更可靠的退出循环的方式。可以使用 `break` 关键字来告诉程序何时停止循环。回忆一下在第二章猜数字游戏的 [“猜测正确后退出”][quitting-after-a-correct-guess] 部分使用过它来在用户猜对数字赢得游戏后退出程序。
+幸运的是，Rust 提供了另一种更可靠的退出循环的方式。可以使用 `break` 关键字来告诉程序何时停止循环。回忆一下在第 2 章猜数字游戏的 [“猜测正确后退出”][quitting-after-a-correct-guess] 部分使用过它来在用户猜对数字赢得游戏后退出程序。
 
 #### 从循环返回
 

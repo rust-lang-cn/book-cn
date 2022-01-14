@@ -60,7 +60,7 @@ map.insert(field_name, field_value);
 
 当 `insert` 调用将 `field_name` 和 `field_value` 移动到哈希 map 中后，将不能使用这两个绑定。
 
-如果将值的引用插入哈希 map，这些值本身将不会被移动进哈希 map。但是这些引用指向的值必须至少在哈希 map 有效时也是有效的。第十章 [“生命周期与引用有效性”][validating-references-with-lifetimes] 部分将会更多的讨论这个问题。
+如果将值的引用插入哈希 map，这些值本身将不会被移动进哈希 map。但是这些引用指向的值必须至少在哈希 map 有效时也是有效的。第 10 章 [“生命周期与引用有效性”][validating-references-with-lifetimes] 部分将会更多的讨论这个问题。
 
 ### 访问哈希 map 中的值
 
@@ -80,7 +80,7 @@ let score = scores.get(&team_name);
 
 <span class="caption">示例 8-23：访问哈希 map 中储存的蓝队分数</span>
 
-这里，`score` 是与蓝队分数相关的值，应为 `Some(10)`。因为 `get` 返回 `Option<V>`，所以结果被装进 `Some`；如果某个键在哈希 map 中没有对应的值，`get` 会返回 `None`。这时就要用某种第六章提到的方法之一来处理 `Option`。
+这里，`score` 是与蓝队分数相关的值，应为 `Some(10)`。因为 `get` 返回 `Option<V>`，所以结果被装进 `Some`；如果某个键在哈希 map 中没有对应的值，`get` 会返回 `None`。这时就要用某种第 6 章提到的方法之一来处理 `Option`。
 
 可以使用与 vector 类似的方式来遍历哈希 map 中的每一个键值对，也就是 `for` 循环：
 
@@ -174,7 +174,7 @@ println!("{:?}", map);
 
 ### 哈希函数
 
-`HashMap` 默认使用一种 “密码学安全的”（“cryptographically strong” ）[^siphash] 哈希函数，它可以抵抗拒绝服务（Denial of Service, DoS）攻击。然而这并不是可用的最快的算法，不过为了更高的安全性值得付出一些性能的代价。如果性能监测显示此哈希函数非常慢，以致于你无法接受，你可以指定一个不同的 *hasher* 来切换为其它函数。hasher 是一个实现了 `BuildHasher` trait 的类型。第十章会讨论 trait 和如何实现它们。你并不需要从头开始实现你自己的 hasher；[crates.io](https://crates.io) 有其他人分享的实现了许多常用哈希算法的 hasher 的库。
+`HashMap` 默认使用一种 “密码学安全的”（“cryptographically strong” ）[^siphash] 哈希函数，它可以抵抗拒绝服务（Denial of Service, DoS）攻击。然而这并不是可用的最快的算法，不过为了更高的安全性值得付出一些性能的代价。如果性能监测显示此哈希函数非常慢，以致于你无法接受，你可以指定一个不同的 *hasher* 来切换为其它函数。hasher 是一个实现了 `BuildHasher` trait 的类型。第 10 章会讨论 trait 和如何实现它们。你并不需要从头开始实现你自己的 hasher；[crates.io](https://crates.io) 有其他人分享的实现了许多常用哈希算法的 hasher 的库。
 
 [^siphash]: [https://www.131002.net/siphash/siphash.pdf](https://www.131002.net/siphash/siphash.pdf)
 
