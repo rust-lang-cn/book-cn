@@ -2,7 +2,7 @@
 
 *trait* 告诉 Rust 编译器某个特定类型拥有可能与其他类型共享的功能。可以通过 trait 以一种抽象的方式定义共享的行为。可以使用 *trait bounds* 指定泛型是任何拥有特定行为的类型。
 
-> 注意：*trait* 类似于其他语言中的常被称为 **接口**（*interfaces*）的功能，虽然有一些不同。
+> 注意：*trait* 类似于其他语言中常被称为 **接口**（*interfaces*）的功能，虽然有一些不同。
 
 ### 定义 trait
 
@@ -166,7 +166,7 @@ println!("1 new tweet: {}", tweet.summarize());
 
 这会打印出 `1 new tweet: (Read more from @horse_ebooks...)`。
 
-注意无法从相同方法的重载实现中调用默认方法。
+请注意，无法从相同方法的重载实现中调用默认方法。
 
 ### trait 作为参数
 
