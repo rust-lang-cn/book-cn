@@ -188,7 +188,7 @@
 | 符号 | 解释 |
 |---------|-------------|
 | `[...]` | 数组 |
-| `[expr; len]` | 复制了 `len`个 `expr`的数组 |
-| `[type; len]` | 包含 `len`个 `type` 类型的数组|
+| `[expr; len]` | 复制了 `len` 个 `expr` 的数组 |
+| `[type; len]` | 包含 `len` 个 `type` 类型的数组|
 | `expr[expr]` | 集合索引。 重载（`Index`, `IndexMut`） |
 | `expr[..]`, `expr[a..]`, `expr[..b]`, `expr[a..b]` | 集合索引，使用 `Range`，`RangeFrom`，`RangeTo` 或 `RangeFull` 作为索引来代替集合 slice |

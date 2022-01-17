@@ -4,11 +4,11 @@
 
 在本附录中提供了标准库中所有可以使用 `derive` 的 trait 的参考。这些部分涉及到：
 
-* 该 trait 将会派生什么样的操作符和方法
-* 由 `derive` 提供什么样的 trait 实现
-* 由什么来实现类型的 trait
-* 是否允许实现该 trait 的条件
-* 需要 trait 操作的例子
+- 该 trait 将会派生什么样的操作符和方法
+- 由 `derive` 提供什么样的 trait 实现
+- 由什么来实现类型的 trait
+- 是否允许实现该 trait 的条件
+- 需要 trait 操作的例子
 
 如果你希望不同于 `derive` 属性所提供的行为，请查阅 [标准库文档](https://doc.rust-lang.org/std/index.html) 中每个 trait 的细节以了解如何手动实现它们。
 
@@ -82,7 +82,7 @@
 
 `Default::default` 函数通常结合结构体更新语法一起使用，这在第 5 章的 [“使用结构体更新语法从其他实例中创建实例”][creating-instances-from-other-instances-with-struct-update-syntax] 部分有讨论。可以自定义一个结构体的一小部分字段而剩余字段则使用 `..Default::default()` 设置为默认值。
 
-例如，当你在 `Option<T>` 实例上使用 `unwrap_or_default` 方法时，`Default` trait是必须的。如果 `Option<T>` 是 `None`的话, `unwrap_or_default` 方法将返回存储在 `Option<T>` 中 `T` 类型的 `Default::default` 的结果。
+例如，当你在 `Option<T>` 实例上使用 `unwrap_or_default` 方法时，`Default` trait 是必须的。如果 `Option<T>` 是 `None` 的话, `unwrap_or_default` 方法将返回存储在 `Option<T>` 中 `T` 类型的 `Default::default` 的结果。
 
 [creating-instances-from-other-instances-with-struct-update-syntax]:
 ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax

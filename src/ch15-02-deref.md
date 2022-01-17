@@ -8,7 +8,7 @@
 
 ### 通过解引用运算符追踪指针的值
 
-常规引用是一个指针类型，一种理解指针的方式是将其看成指向储存在其他某处值的箭头。在示例 15-6 中，创建了一个 `i32` 值的引用y，接着使用解引用运算符来解出y所引用的值：
+常规引用是一种指针类型，一种理解指针的方式是将其看成指向储存在其他某处值的箭头。在示例 15-6 中，创建了一个 `i32` 值的引用，接着使用解引用运算符解出所引用的值：
 
 <span class="filename">文件名: src/main.rs</span>
 
@@ -153,8 +153,8 @@ Rust 将 `*` 运算符替换为先调用 `deref` 方法再进行普通解引用�
 
 ### 函数和方法的隐式解引用强制转换
 
-**解引用强制转换**（_deref coercions_）是 Rust 在函数或方法传参上的一种便利。解引用强制转换只能工作在实现了Deref trait的类型上。解引用强制转换将一种类型（A）隐式转换为另外一种类型（B）的引用，因为A类型实现了Deref trait，并且其关联类型是B类型。比如，解引用强制转换可以将&String转换为&str，因为类型String实现了Deref trait并且其关联类型是str。代码如下：
-    
+**解引用强制转换**（_deref coercions_）是 Rust 在函数或方法传参上的一种便利。解引用强制转换只能工作在实现了 Deref trait 的类型上。解引用强制转换将一种类型（A）隐式转换为另外一种类型（B）的引用，因为 A 类型实现了 Deref trait，并且其关联类型是 B 类型。比如，解引用强制转换可以将 &String 转换为 &str，因为类型 String 实现了 Deref trait 并且其关联类型是 str。代码如下：
+
 ```rust,ignore,does_not_compile
 #[stable(feature = "rust1", since = "1.0.0")]
 impl ops::Deref for String {
