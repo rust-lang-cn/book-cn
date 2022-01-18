@@ -9,19 +9,21 @@
 
 > Chinese translation of [The Rust Programming Language][github-en]
 >
-> 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书。
+> 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书，本书是 Rust 中文翻译项目组的重点翻译项目。
 >
 > 本仓库翻译内容包括 Rust 中文翻译项目组本身原有的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn][KaiserY] 译本），我们尽可能避免不必要的重复劳动，我们对原译者感激不尽！
 
 [github-en]: https://github.com/rust-lang/book
 [KaiserY]: https://github.com/KaiserY/trpl-zh-cn
 
-可以从 [No Starch 出版社购买本书英文纸质版][nostarch]。
+本仓库包含《Rust 程序设计语言》图书的源码。
 
-中文译版注：
+可以从 [No Starch 出版社购买本书英文纸质图书][nostarch]。
 
-1. 中文出版书名为《Rust 权威指南》，可以在线上或线下购书平台购买。
-2. 出版的版本翻译独立于本仓库翻译。
+> 中文译版注：
+>
+> 1. 中文出版书名为《Rust 权威指南》，可以在线上或线下购书平台购买。
+> 2. 出版的版本翻译独立于本仓库翻译。
 
 [nostarch]: https://nostarch.com/rust
 
@@ -36,15 +38,10 @@
 
 ## 依赖
 
-构建这本书需要 [mdBook] 。执行以下命令安装：
+构建本书需要 [mdBook]，最好使用的版本和 `rust-lang/rust` 在[这个文件][rust-mdbook]中指定的版本一致。执行以下命令安装：
 
-[mdBook]: https://github.com/azerupi/mdBook
-
-```bash
-$ cargo install mdbook
-```
-
-或指定安装版本：
+[mdBook]: https://github.com/rust-lang-nursery/mdBook
+[rust-mdbook]: https://github.com/rust-lang/rust/blob/master/src/tools/rustbook/Cargo.toml
 
 ```bash
 $ cargo install mdbook --vers [version-num]
