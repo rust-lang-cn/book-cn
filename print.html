@@ -2005,7 +2005,7 @@ again!
     println!(&quot;End count = {}&quot;, count);
 }
 </code></pre></pre>
-<p>外层循环有一个标签 <code>counting_ up</code>，它将从 0 数到 2。没有标签的内部循环从 10 向下数到 9。第一个没有指定标签的 <code>break</code> 将只退出内层循环。<code>break'counting_up;</code> 语句将退出外层循环。这个代码打印:</p>
+<p>外层循环有一个标签 <code>counting_ up</code>，它将从 0 数到 2。没有标签的内部循环从 10 向下数到 9。第一个没有指定标签的 <code>break</code> 将只退出内层循环。<code>break 'counting_up;</code> 语句将退出外层循环。这个代码打印:</p>
 <pre><code class="language-console">$ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.58s
