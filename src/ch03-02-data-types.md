@@ -35,14 +35,14 @@ let guess: u32 = "42".parse().expect("Not a number!");
 | 128-位     | `i128`  | `u128`  |
 | 视架构而定   | `isize` | `usize` |
 
-每个定义形式都可以是有符号类型或无符号类型，且带有一个显式的大小。**有符号**和**无符号**表示数字能否取负数或是只能取正数；也就是说，数字是否需要带一个符号（有符号类型），或数字只能表示正数故不需要包括符号（无符号类型）。就像在纸上写数字一样：当要强调符号时，数字前面可以带上正号或负号；然而，当很明显确定数字为正数时，就不需要加上正号了。有符号数字以[二进制补码](https://en.wikipedia.org/wiki/Two%27s_complement)（译者补充：[“补码”百度百科](https://baike.baidu.com/item/%E8%A1%A5%E7%A0%81/6854613)）形式存储。
+每个定义形式都可以是有符号类型或无符号类型，且带有一个显式的大小。**有符号**和**无符号**表示数字能否取负数或是只能取正数；也就是说，这个数是否可能是负数（有符号类型），或一直为正而不需要带上符号（无符号类型）。就像在纸上写数字一样：当要强调符号时，数字前面可以带上正号或负号；然而，当很明显确定数字为正数时，就不需要加上正号了。有符号数字以[二进制补码](https://en.wikipedia.org/wiki/Two%27s_complement)（译者补充：[“补码”百度百科](https://baike.baidu.com/item/%E8%A1%A5%E7%A0%81/6854613)）形式存储。
 
 每个有符号类型规定的数字范围是  -(2<sup>n - 1</sup>) ~ 2<sup>n -
 1</sup> - 1，其中 `n` 是该定义形式的位长度。所以 `i8` 可存储数字范围是 -(2<sup>7</sup>) ~ 2<sup>7</sup> - 1，即 -128 ~ 127。无符号类型可以存储的数字范围是 0 ~ 2<sup>n</sup> - 1，所以 `u8` 能够存储的数字为 0 ~ 2<sup>8</sup> - 1，即 0 ~ 255。
 
 此外，`isize` 和 `usize` 类型取决于程序运行的计算机类型：64 位（如果使用 64 位架构系统）和 32 位（如果使用 32 位架构系统）。
 
-整型的字面量可以写成下表 3-2 中任意一种。注意，除了字节字面量之外的所有的数字字面量都允许使用类型后缀，例如 `57u8`，还有可以使用 `_` 作为可视分隔符，如 `1_000`。
+整型的字面量可以写成下表 3-2 中任意一种。注意，除了字节字面量之外的所有的数字字面量都允许使用类型后缀，例如 `57u8`，还有可以使用 `_` 作为可视分隔符以方便读数，如 `1_000`，此值和 `1000` 相同。
 
 <span class="caption">表 3-2: Rust 的整型字面量</span>
 
@@ -85,7 +85,7 @@ let guess: u32 = "42".parse().expect("Not a number!");
 
 #### 数字运算
 
-Rust 支持所有数字类型的基本数学运算：加法、减法、乘法、除法和取模运算。下面代码演示了各使用一条 `let` 语句来说明相应运算的用法：
+Rust 支持所有数字类型的基本数学运算：加法、减法、乘法、除法和取模运算。整数除法会向下取整。下面代码演示了各使用一条 `let` 语句来说明相应运算的用法：
 
 <span class="filename">文件名：src/main.rs</span>
 
@@ -93,7 +93,7 @@ Rust 支持所有数字类型的基本数学运算：加法、减法、乘法、
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-07-numeric-operations/src/main.rs}}
 ```
 
-这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。[附录 B][appendix_b]<!-- ignore -->  给出了 Rust 提供的所有运算符的列表。
+这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。[附录 B][appendix_b]<!-- ignore -->  罗列了 Rust 提供的所有运算符的列表。
 
 #### 布尔类型
 
@@ -155,9 +155,11 @@ Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示
 
 该程序创建一个元组 `x`，然后通过使用它们的索引为每个元素创建新的变量。和大多数编程语言一样，元组中的第一个索引为 0。
 
-#### 数组
+没有任何值的元组 `()` 是一种特殊的类型，只有一个值，也写成 `()`。该类型被称为**单元类型**（*unit type*），该值被称为**单元值**（*unit value*）。如果表达式不返回任何其他值，就隐式地返回单位值。
 
-将多个值的组合在一起另一种方式就是使用**数组**（*array*）。与元组不同，数组的每个元素必须具有相同的类型。Rust 中的数组与某些其他语言中的数组不同，因为 Rust 中的数组具有固定长度，跟元组一样。
+#### 数组类型
+
+将多个值的组合在一起另一种方式就是使用**数组**（*array*）。与元组不同，数组的每个元素必须具有相同的类型。与一些其他语言中的数组不同，Rust 中的数组具有固定长度。
 
 在 Rust 中，数组内的值将以逗号分隔的列表形式写入方括号内的：
 
@@ -167,7 +169,7 @@ Rust 的字符类型表示的是一个 Unicode 值，这意味着它可以表示
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-13-arrays/src/main.rs}}
 ```
 
-当你希望将数据分配到栈（stack）而不是堆（heap）时（我们将在第 4 章中进一步讨论栈和堆），或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其的大小允许增长或缩小。如果您不确定是使用数组还是 vector，那就应该使用一个 vector：第 8 章更详细地讨论 vector。
+当你希望将数据分配到栈（stack）而不是堆（heap）时（我们将在[第 4 章][stack-and-heap]<!-- ignore -->)中进一步讨论栈和堆），或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其的大小允许增长或缩小。如果不确定是使用数组还是 vector，那就应该使用一个 vector。[第 8 章][vectors]<!-- ignore -->将详细地讨论 vector。
 
 举个例子，在需要知道一年中各个月份名称的程序中，你很可能希望使用的是数组而不是 vector。这样的程序不太可能需要添加或删除月份，所以可以使用数组，因为你知道它总是包含 12 个元素：
 
@@ -194,7 +196,7 @@ let a = [3; 5];
 
 ##### 访问数组元素
 
-数组是在栈上分配的单个内存块。可以使用索引访问数组的元素，如下所示：
+数组是可以在栈上分配的已知固定大小的单个内存块。可以使用索引访问数组的元素，如下所示：
 
 <span class="filename">文件名：src/main.rs</span>
 
@@ -214,7 +216,7 @@ let a = [3; 5];
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
 ```
 
-此代码编译成功。如果使用 `cargo run` 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果输入的是超出数组末尾的数字，例如10，则会看到类似以下的输出：
+此代码编译成功。如果使用 `cargo run` 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果输入的是超出数组末尾的数字，例如 10，则会看到类似以下的输出：
 
 <!-- manual-regeneration
 cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
@@ -232,9 +234,11 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。 第 9 章将进一步讨论 Rust 的错误处理。
 
 [comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[control-flow]: ch03-05-control-flow.html#control-flow
-[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
+[control-flow]: ch03-05-control-flow.html#控制流
+[strings]: ch08-02-strings.html#使用字符串存储-utf-8-编码的文本
+[stack-and-heap]: ch04-01-what-is-ownership.html#栈stack与堆heap
+[vectors]: ch08-01-vectors.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
 [wrapping]: ../std/num/struct.Wrapping.html
 [appendix_b]: appendix-02-operators.md
