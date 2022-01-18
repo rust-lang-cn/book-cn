@@ -29,8 +29,8 @@ fn simulated_expensive_calculation(intensity: u32) -> u32 {
 
 所需的输入有这些：
 
-* 一个来自用户的 intensity 数字，请求健身计划时指定，它代表用户喜好低强度还是高强度健身。
-* 一个随机数，其会在健身计划中生成变化。
+- 一个来自用户的 intensity 数字，请求健身计划时指定，它代表用户喜好低强度还是高强度健身。
+- 一个随机数，其会在健身计划中生成变化。
 
 程序的输出将会是建议的锻炼计划。示例 13-2 展示了我们将要使用的 `main` 函数：
 
@@ -92,7 +92,7 @@ fn generate_workout(intensity: u32, random_number: u32) {
 
 <span class="caption">示例 13-3：程序的业务逻辑，它根据输入并调用 `simulated_expensive_calculation` 函数来打印出健身计划</span>
 
-示例 13-3 中的代码有多处调用了慢计算函数 `simulated_expensive_calculation` 。第一个 `if` 块调用了 `simulated_expensive_calculation` 两次， `else` 中的 `if` 没有调用它，而第二个 `else` 中的代码调用了它一次。
+示例 13-3 中的代码有多处调用了慢计算函数 `simulated_expensive_calculation`。第一个 `if` 块调用了 `simulated_expensive_calculation` 两次， `else` 中的 `if` 没有调用它，而第二个 `else` 中的代码调用了它一次。
 
 `generate_workout` 函数的期望行为是首先检查用户需要低强度（由小于 25 的系数表示）锻炼还是高强度（25 或以上）锻炼。
 
@@ -525,9 +525,9 @@ error[E0434]: can't capture dynamic environment in a fn item; use the || { ...
 
 闭包可以通过三种方式捕获其环境，他们直接对应函数的三种获取参数的方式：获取所有权，可变借用和不可变借用。这三种捕获值的方式被编码为如下三个 `Fn` trait：
 
-* `FnOnce` 消费从周围作用域捕获的变量，闭包周围的作用域被称为其 **环境**，*environment*。为了消费捕获到的变量，闭包必须获取其所有权并在定义闭包时将其移动进闭包。其名称的 `Once` 部分代表了闭包不能多次获取相同变量的所有权的事实，所以它只能被调用一次。
-* `FnMut` 获取可变的借用值所以可以改变其环境
-* `Fn` 从其环境获取不可变的借用值
+- `FnOnce` 消费从周围作用域捕获的变量，闭包周围的作用域被称为其 **环境**，*environment*。为了消费捕获到的变量，闭包必须获取其所有权并在定义闭包时将其移动进闭包。其名称的 `Once` 部分代表了闭包不能多次获取相同变量的所有权的事实，所以它只能被调用一次。
+- `FnMut` 获取可变的借用值所以可以改变其环境
+- `Fn` 从其环境获取不可变的借用值
 
 当创建一个闭包时，Rust 根据其如何使用环境中变量来推断我们希望如何引用环境。由于所有闭包都可以被调用至少一次，所以所有闭包都实现了 `FnOnce` 。那些并没有移动被捕获变量的所有权到闭包内的闭包也实现了 `FnMut` ，而不需要对被捕获的变量进行可变访问的闭包则也实现了 `Fn` 。 在示例 13-12 中，`equal_to_x` 闭包不可变的借用了 `x`（所以 `equal_to_x` 具有 `Fn` trait），因为闭包体只需要读取 `x` 的值。
 
