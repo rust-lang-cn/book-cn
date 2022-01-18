@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -154,11 +154,11 @@
 <p>来看一下 Rust 如何在模块树中找到一个项的位置，我们使用路径的方式，就像在文件系统使用路径一样。如果我们想要调用一个函数，我们需要知道它的路径。</p>
 <p>路径有两种形式：</p>
 <ul>
-<li><strong>绝对路径</strong>（<em>absolute path</em>）从 crate 根开始，以 crate 名或者字面值 <code>crate</code> 开头。</li>
+<li><strong>绝对路径</strong>（<em>absolute path</em>）从 crate 根部开始，以 crate 名或者字面值 <code>crate</code> 开头。</li>
 <li><strong>相对路径</strong>（<em>relative path</em>）从当前模块开始，以 <code>self</code>、<code>super</code> 或当前模块的标识符开头。</li>
 </ul>
 <p>绝对路径和相对路径都后跟一个或多个由双冒号（<code>::</code>）分割的标识符。</p>
-<p>让我们回到示例 7-1。我们如何调用 <code>add_to_waitlist</code> 函数？还是同样的问题，<code>add_to_waitlist</code> 函数的路径是什么？在示例 7-3 中，我们通过删除一些模块和函数，稍微简化了一下我们的代码。我们在 crate 根定义了一个新函数 <code>eat_at_restaurant</code>，并在其中展示调用 <code>add_to_waitlist</code> 函数的两种方法。<code>eat_at_restaurant</code> 函数是我们 crate 库的一个公共API，所以我们使用 <code>pub</code> 关键字来标记它。在 “<a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword">使用<code>pub</code>关键字暴露路径</a>” 一节，我们将详细介绍 <code>pub</code>。注意，这个例子无法编译通过，我们稍后会解释原因。</p>
+<p>让我们回到示例 7-1。我们如何调用 <code>add_to_waitlist</code> 函数？还是同样的问题，<code>add_to_waitlist</code> 函数的路径是什么？在示例 7-3 中，我们通过删除一些模块和函数，稍微简化了一下我们的代码。我们在 crate 根部定义了一个新函数 <code>eat_at_restaurant</code>，并在其中展示调用 <code>add_to_waitlist</code> 函数的两种方法。<code>eat_at_restaurant</code> 函数是我们 crate 库的一个公共 API，所以我们使用 <code>pub</code> 关键字来标记它。在<a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#%E4%BD%BF%E7%94%A8-pub-%E5%85%B3%E9%94%AE%E5%AD%97%E6%9A%B4%E9%9C%B2%E8%B7%AF%E5%BE%84">“使用 <code>pub</code> 关键字暴露路径”</a><!-- ignore -->一节，我们将详细介绍 <code>pub</code>。注意，这个例子无法编译通过，我们稍后会解释原因。</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">mod front_of_house {
     mod hosting {
@@ -176,23 +176,38 @@ pub fn eat_at_restaurant() {
 </code></pre>
 <p><span class="caption">示例 7-3: 使用绝对路径和相对路径来调用 <code>add_to_waitlist</code> 函数</span></p>
 <p>第一种方式，我们在 <code>eat_at_restaurant</code> 中调用 <code>add_to_waitlist</code> 函数，使用的是绝对路径。<code>add_to_waitlist</code> 函数与 <code>eat_at_restaurant</code> 被定义在同一 crate 中，这意味着我们可以使用 <code>crate</code> 关键字为起始的绝对路径。</p>
-<p>在 <code>crate</code> 后面，我们持续地嵌入模块，直到我们找到 <code>add_to_waitlist</code>。你可以想象出一个相同结构的文件系统，我们通过指定路径 <code>/front_of_house/hosting/add_to_waitlist</code> 来执行 <code>add_to_waitlist</code> 程序。我们使用 <code>crate</code> 从 crate 根开始就类似于在 shell 中使用 <code>/</code> 从文件系统根开始。</p>
+<p>在 <code>crate</code> 后面，我们持续地嵌入模块，直到我们找到 <code>add_to_waitlist</code>。你可以想象出一个相同结构的文件系统，我们通过指定路径 <code>/front_of_house/hosting/add_to_waitlist</code> 来执行 <code>add_to_waitlist</code> 程序。我们使用 <code>crate</code> 从 crate 根部开始就类似于在 shell 中使用 <code>/</code> 从文件系统根开始。</p>
 <p>第二种方式，我们在 <code>eat_at_restaurant</code> 中调用 <code>add_to_waitlist</code>，使用的是相对路径。这个路径以 <code>front_of_house</code> 为起始，这个模块在模块树中，与 <code>eat_at_restaurant</code> 定义在同一层级。与之等价的文件系统路径就是 <code>front_of_house/hosting/add_to_waitlist</code>。以名称为起始，意味着该路径是相对路径。</p>
 <p>选择使用相对路径还是绝对路径，还是要取决于你的项目。取决于你是更倾向于将项的定义代码与使用该项的代码分开来移动，还是一起移动。举一个例子，如果我们要将 <code>front_of_house</code> 模块和 <code>eat_at_restaurant</code> 函数一起移动到一个名为 <code>customer_experience</code> 的模块中，我们需要更新 <code>add_to_waitlist</code> 的绝对路径，但是相对路径还是可用的。然而，如果我们要将 <code>eat_at_restaurant</code> 函数单独移到一个名为 <code>dining</code> 的模块中，还是可以使用原本的绝对路径来调用 <code>add_to_waitlist</code>，但是相对路径必须要更新。我们更倾向于使用绝对路径，因为把代码定义和项调用各自独立地移动是更常见的。</p>
 <p>让我们试着编译一下示例 7-3，并查明为何不能编译！示例 7-4 展示了这个错误。</p>
-<pre><code class="language-text">$ cargo build
+<pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
 error[E0603]: module `hosting` is private
  --&gt; src/lib.rs:9:28
   |
 9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                            ^^^^^^^
+  |                            ^^^^^^^ private module
+  |
+note: the module `hosting` is defined here
+ --&gt; src/lib.rs:2:5
+  |
+2 |     mod hosting {
+  |     ^^^^^^^^^^^
 
 error[E0603]: module `hosting` is private
   --&gt; src/lib.rs:12:21
    |
 12 |     front_of_house::hosting::add_to_waitlist();
-   |                     ^^^^^^^
+   |                     ^^^^^^^ private module
+   |
+note: the module `hosting` is defined here
+  --&gt; src/lib.rs:2:5
+   |
+2  |     mod hosting {
+   |     ^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0603`.
+error: could not compile `restaurant` due to 2 previous errors
 </code></pre>
 <p><span class="caption">示例 7-4: 构建示例 7-3 出现的编译器错误</span></p>
 <p>错误信息说 <code>hosting</code> 模块是私有的。换句话说，我们拥有 <code>hosting</code> 模块和 <code>add_to_waitlist</code> 函数的的正确路径，但是 Rust 不让我们使用，因为它不能访问私有片段。</p>
@@ -218,26 +233,41 @@ pub fn eat_at_restaurant() {
 </code></pre>
 <p><span class="caption">示例 7-5: 使用 <code>pub</code> 关键字声明 <code>hosting</code> 模块使其可在 <code>eat_at_restaurant</code> 使用</span></p>
 <p>不幸的是，示例 7-5 的代码编译仍然有错误，如示例 7-6 所示。</p>
-<pre><code class="language-text">$ cargo build
+<pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
 error[E0603]: function `add_to_waitlist` is private
  --&gt; src/lib.rs:9:37
   |
 9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                                     ^^^^^^^^^^^^^^^
+  |                                     ^^^^^^^^^^^^^^^ private function
+  |
+note: the function `add_to_waitlist` is defined here
+ --&gt; src/lib.rs:3:9
+  |
+3 |         fn add_to_waitlist() {}
+  |         ^^^^^^^^^^^^^^^^^^^^
 
 error[E0603]: function `add_to_waitlist` is private
   --&gt; src/lib.rs:12:30
    |
 12 |     front_of_house::hosting::add_to_waitlist();
-   |                              ^^^^^^^^^^^^^^^
+   |                              ^^^^^^^^^^^^^^^ private function
+   |
+note: the function `add_to_waitlist` is defined here
+  --&gt; src/lib.rs:3:9
+   |
+3  |         fn add_to_waitlist() {}
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0603`.
+error: could not compile `restaurant` due to 2 previous errors
 </code></pre>
 <p><span class="caption">示例 7-6: 构建示例 7-5 出现的编译器错误</span></p>
-<p>发生了什么？在 <code>mod hosting</code> 前添加了 <code>pub</code> 关键字，使其变成公有的。伴随着这种变化，如果我们可以访问 <code>front_of_house</code>，那我们也可以访问 <code>hosting</code>。但是 <code>hosting</code> 的 <em>内容</em>（<em>contents</em>） 仍然是私有的；这表明使模块公有并不使其内容也是公有的。模块上的 <code>pub</code> 关键字只允许其父模块引用它。</p>
+<p>发生了什么？在 <code>mod hosting</code> 前添加了 <code>pub</code> 关键字，使其变成公有的。伴随着这种变化，如果我们可以访问 <code>front_of_house</code>，那我们也可以访问 <code>hosting</code>。但是 <code>hosting</code> 的 <strong>内容</strong>（<em>contents</em>） 仍然是私有的；这表明使模块公有并不使其内容也是公有的。模块上的 <code>pub</code> 关键字只允许其父模块引用它。</p>
 <p>示例 7-6 中的错误说，<code>add_to_waitlist</code> 函数是私有的。私有性规则不但应用于模块，还应用于结构体、枚举、函数和方法。</p>
 <p>让我们继续将 <code>pub</code> 关键字放置在 <code>add_to_waitlist</code> 函数的定义之前，使其变成公有。如示例 7-7 所示。</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">mod front_of_house {
+<pre><code class="language-rust noplayground test_harness">mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
     }
@@ -250,19 +280,18 @@ pub fn eat_at_restaurant() {
     // Relative path
     front_of_house::hosting::add_to_waitlist();
 }
-<span class="boring">fn main() {}
-</span></code></pre></pre>
+</code></pre>
 <p><span class="caption">示例 7-7: 为 <code>mod hosting</code>
 和 <code>fn add_to_waitlist</code> 添加 <code>pub</code> 关键字使他们可以在
 <code>eat_at_restaurant</code> 函数中被调用</span></p>
 <p>现在代码可以编译通过了！让我们看看绝对路径和相对路径，并根据私有性规则，再检查一下为什么增加 <code>pub</code> 关键字使得我们可以在 <code>add_to_waitlist</code> 中调用这些路径。</p>
-<p>在绝对路径，我们从 <code>crate</code>，也就是 crate 根开始。然后 crate 根中定义了 <code>front_of_house</code> 模块。<code>front_of_house</code> 模块不是公有的，不过因为 <code>eat_at_restaurant</code> 函数与 <code>front_of_house</code> 定义于同一模块中（即，<code>eat_at_restaurant</code> 和 <code>front_of_house</code> 是兄弟），我们可以从 <code>eat_at_restaurant</code> 中引用 <code>front_of_house</code>。接下来是使用 <code>pub</code> 标记的 <code>hosting</code> 模块。我们可以访问 <code>hosting</code> 的父模块，所以可以访问 <code>hosting</code>。最后，<code>add_to_waitlist</code> 函数被标记为 <code>pub</code> ，我们可以访问其父模块，所以这个函数调用是有效的！</p>
-<p>在相对路径，其逻辑与绝对路径相同，除了第一步：不同于从 crate 根开始，路径从 <code>front_of_house</code> 开始。<code>front_of_house</code> 模块与 <code>eat_at_restaurant</code> 定义于同一模块，所以从 <code>eat_at_restaurant</code> 中开始定义的该模块相对路径是有效的。接下来因为 <code>hosting</code> 和 <code>add_to_waitlist</code> 被标记为 <code>pub</code>，路径其余的部分也是有效的，因此函数调用也是有效的！</p>
+<p>在绝对路径，我们从 <code>crate</code>，也就是 crate 根部开始。然后 crate 根部中定义了 <code>front_of_house</code> 模块。<code>front_of_house</code> 模块不是公有的，不过因为 <code>eat_at_restaurant</code> 函数与 <code>front_of_house</code> 定义于同一模块中（即，<code>eat_at_restaurant</code> 和 <code>front_of_house</code> 是兄弟），我们可以从 <code>eat_at_restaurant</code> 中引用 <code>front_of_house</code>。接下来是使用 <code>pub</code> 标记的 <code>hosting</code> 模块。我们可以访问 <code>hosting</code> 的父模块，所以可以访问 <code>hosting</code>。最后，<code>add_to_waitlist</code> 函数被标记为 <code>pub</code> ，我们可以访问其父模块，所以这个函数调用是有效的！</p>
+<p>在相对路径，其逻辑与绝对路径相同，除了第一步：不同于从 crate 根部开始，路径从 <code>front_of_house</code> 开始。<code>front_of_house</code> 模块与 <code>eat_at_restaurant</code> 定义于同一模块，所以从 <code>eat_at_restaurant</code> 中开始定义的该模块相对路径是有效的。接下来因为 <code>hosting</code> 和 <code>add_to_waitlist</code> 被标记为 <code>pub</code>，路径其余的部分也是有效的，因此函数调用也是有效的！</p>
 <h3 id="使用-super-起始的相对路径"><a class="header" href="#使用-super-起始的相对路径">使用 <code>super</code> 起始的相对路径</a></h3>
 <p>我们还可以使用 <code>super</code> 开头来构建从父模块开始的相对路径。这么做类似于文件系统中以 <code>..</code> 开头的语法。我们为什么要这样做呢？</p>
 <p>考虑一下示例 7-8 中的代码，它模拟了厨师更正了一个错误订单，并亲自将其提供给客户的情况。<code>fix_incorrect_order</code> 函数通过指定的 <code>super</code> 起始的 <code>serve_order</code> 路径，来调用 <code>serve_order</code> 函数：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn serve_order() {}
+<pre><code class="language-rust noplayground test_harness">fn serve_order() {}
 
 mod back_of_house {
     fn fix_incorrect_order() {
@@ -272,17 +301,13 @@ mod back_of_house {
 
     fn cook_order() {}
 }
-<span class="boring">fn main() {}
-</span></code></pre></pre>
+</code></pre>
 <p><span class="caption">示例 7-8: 使用以 <code>super</code> 开头的相对路径从父目录开始调用函数</span></p>
 <p><code>fix_incorrect_order</code> 函数在 <code>back_of_house</code> 模块中，所以我们可以使用 <code>super</code> 进入 <code>back_of_house</code> 父模块，也就是本例中的 <code>crate</code> 根。在这里，我们可以找到 <code>serve_order</code>。成功！我们认为 <code>back_of_house</code> 模块和 <code>serve_order</code> 函数之间可能具有某种关联关系，并且，如果我们要重新组织这个 crate 的模块树，需要一起移动它们。因此，我们使用 <code>super</code>，这样一来，如果这些代码被移动到了其他模块，我们只需要更新很少的代码。</p>
 <h3 id="创建公有的结构体和枚举"><a class="header" href="#创建公有的结构体和枚举">创建公有的结构体和枚举</a></h3>
 <p>我们还可以使用 <code>pub</code> 来设计公有的结构体和枚举，不过有一些额外的细节需要注意。如果我们在一个结构体定义的前面使用了 <code>pub</code> ，这个结构体会变成公有的，但是这个结构体的字段仍然是私有的。我们可以根据情况决定每个字段是否公有。在示例 7-9 中，我们定义了一个公有结构体 <code>back_of_house:Breakfast</code>，其中有一个公有字段 <code>toast</code> 和私有字段 <code>seasonal_fruit</code>。这个例子模拟的情况是，在一家餐馆中，顾客可以选择随餐附赠的面包类型，但是厨师会根据季节和库存情况来决定随餐搭配的水果。餐馆可用的水果变化是很快的，所以顾客不能选择水果，甚至无法看到他们将会得到什么水果。</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod back_of_house {
+<pre><code class="language-rust noplayground">mod back_of_house {
     pub struct Breakfast {
         pub toast: String,
         seasonal_fruit: String,
@@ -309,17 +334,13 @@ pub fn eat_at_restaurant() {
     // to see or modify the seasonal fruit that comes with the meal
     // meal.seasonal_fruit = String::from(&quot;blueberries&quot;);
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p><span class="caption">示例 7-9: 带有公有和私有字段的结构体</span></p>
 <p>因为 <code>back_of_house::Breakfast</code> 结构体的 <code>toast</code> 字段是公有的，所以我们可以在 <code>eat_at_restaurant</code> 中使用点号来随意的读写 <code>toast</code> 字段。注意，我们不能在 <code>eat_at_restaurant</code> 中使用 <code>seasonal_fruit</code> 字段，因为 <code>seasonal_fruit</code> 是私有的。尝试去除那一行修改 <code>seasonal_fruit</code> 字段值的代码的注释，看看你会得到什么错误！</p>
-<p>还请注意一点，因为 <code>back_of_house::Breakfast</code> 具有私有字段，所以这个结构体需要提供一个公共的关联函数来构造 <code>Breakfast</code> 的实例(这里我们命名为 <code>summer</code>)。如果 <code>Breakfast</code> 没有这样的函数，我们将无法在 <code>eat_at_restaurant</code> 中创建 <code>Breakfast</code> 实例，因为我们不能在 <code>eat_at_restaurant</code> 中设置私有字段 <code>seasonal_fruit</code> 的值。</p>
+<p>还请注意一点，因为 <code>back_of_house::Breakfast</code> 具有私有字段，所以这个结构体需要提供一个公共的关联函数来构造 <code>Breakfast</code> 的实例（这里我们命名为 <code>summer</code>）。如果 <code>Breakfast</code> 没有这样的函数，我们将无法在 <code>eat_at_restaurant</code> 中创建 <code>Breakfast</code> 实例，因为我们不能在 <code>eat_at_restaurant</code> 中设置私有字段 <code>seasonal_fruit</code> 的值。</p>
 <p>与之相反，如果我们将枚举设为公有，则它的所有成员都将变为公有。我们只需要在 <code>enum</code> 关键字前面加上 <code>pub</code>，就像示例 7-10 展示的那样。</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod back_of_house {
+<pre><code class="language-rust noplayground">mod back_of_house {
     pub enum Appetizer {
         Soup,
         Salad,
@@ -330,8 +351,7 @@ pub fn eat_at_restaurant() {
     let order1 = back_of_house::Appetizer::Soup;
     let order2 = back_of_house::Appetizer::Salad;
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p><span class="caption">示例 7-10: 设计公有枚举，使其所有成员公有</span></p>
 <p>因为我们创建了名为 <code>Appetizer</code> 的公有枚举，所以我们可以在 <code>eat_at_restaurant</code> 中使用 <code>Soup</code> 和 <code>Salad</code> 成员。如果枚举成员不是公有的，那么枚举会显得用处不大；给枚举的所有成员挨个添加 <code>pub</code> 是很令人恼火的，因此枚举成员默认就是公有的。结构体通常使用时，不必将它们的字段公有化，因此结构体遵循常规，内容全部是私有的，除非使用 <code>pub</code> 关键字。</p>
 <p>还有一种使用 <code>pub</code> 的场景我们还没有涉及到，那就是我们最后要讲的模块功能：<code>use</code> 关键字。我们将先单独介绍 <code>use</code>，然后展示如何结合使用 <code>pub</code> 和 <code>use</code>。</p>

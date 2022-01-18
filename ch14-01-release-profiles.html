@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="采用发布配置自定义构建"><a class="header" href="#采用发布配置自定义构建">采用发布配置自定义构建</a></h2>
-<p>在 Rust 中 <strong>发布配置</strong>（<em>release profiles</em>）是预定义的、可定制的带有不同选项的配置，他们允许程序员更灵活地控制代码编译的多种选项。每一个配置都彼此相互独立。</p>
+<p>在 Rust 中 <strong>发布配置</strong>（<em>release profiles</em>）是预定义的、可定制的带有不同选项的配置，他们允许开发者更灵活地控制代码编译的多种选项。每一个配置都彼此相互独立。</p>
 <p>Cargo 有两个主要的配置：运行 <code>cargo build</code> 时采用的 <code>dev</code> 配置和运行 <code>cargo build --release</code> 的 <code>release</code> 配置。<code>dev</code> 配置被定义为开发时的好的默认配置，<code>release</code> 配置则有着良好的发布构建的默认配置。</p>
 <p>这些配置名称可能很眼熟，因为它们出现在构建的输出中：</p>
 <pre><code class="language-text">$ cargo build

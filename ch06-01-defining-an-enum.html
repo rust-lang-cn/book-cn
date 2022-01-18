@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -205,7 +205,7 @@ let six = IpAddrKind::V6;
 route(IpAddrKind::V6);
 <span class="boring">}
 </span></code></pre></pre>
-<p>使用枚举甚至还有更多优势。进一步考虑一下我们的 IP 地址类型，目前没有一个存储实际 IP 地址 <strong>数据</strong> 的方法；只知道它是什么 <strong>类型</strong> 的。考虑到已经在第五章学习过结构体了，你可能会像示例 6-1 那样处理这个问题：</p>
+<p>使用枚举甚至还有更多优势。进一步考虑一下我们的 IP 地址类型，目前没有一个存储实际 IP 地址 <strong>数据</strong> 的方法；只知道它是什么 <strong>类型</strong> 的。考虑到已经在第 5 章学习过结构体了，你可能会像示例 6-1 那样处理这个问题：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -280,7 +280,7 @@ enum IpAddr {
 <span class="boring">}
 </span></code></pre></pre>
 <p>这些代码展示了可以将任意类型的数据放入枚举成员中：例如字符串、数字类型或者结构体。甚至可以包含另一个枚举！另外，标准库中的类型通常并不比你设想出来的要复杂多少。</p>
-<p>注意虽然标准库中包含一个 <code>IpAddr</code> 的定义，仍然可以创建和使用我们自己的定义而不会有冲突，因为我们并没有将标准库中的定义引入作用域。第七章会讲到如何导入类型。</p>
+<p>注意虽然标准库中包含一个 <code>IpAddr</code> 的定义，仍然可以创建和使用我们自己的定义而不会有冲突，因为我们并没有将标准库中的定义引入作用域。第 7 章会讲到如何导入类型。</p>
 <p>来看看示例 6-2 中的另一个枚举的例子：它的成员中内嵌了多种多样的类型：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -315,7 +315,7 @@ struct ChangeColorMessage(i32, i32, i32); // 元组结构体
 <span class="boring">}
 </span></code></pre></pre>
 <p>不过，如果我们使用不同的结构体，由于它们都有不同的类型，我们将不能像使用示例 6-2 中定义的 <code>Message</code> 枚举那样，轻易的定义一个能够处理这些不同类型的结构体的函数，因为枚举是单独一个类型。</p>
-<p>结构体和枚举还有另一个相似点：就像可以使用 <code>impl</code> 来为结构体定义方法那样，也可以在枚举上定义方法。这是一个定义于我们 <code>Message</code> 枚举上的叫做 <code>call</code> 的方法：</p>
+<p>枚举和结构体还有另一个相似点：就像可以使用 <code>impl</code> 来为结构体定义方法那样，也可以在枚举上定义方法。这是我们在 <code>Message</code> 枚举上定义了一个叫做 <code>call</code> 的方法：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -343,14 +343,6 @@ m.call();
 <p>编程语言的设计经常要考虑包含哪些功能，但考虑排除哪些功能也很重要。Rust 并没有很多其他语言中有的空值功能。<strong>空值</strong>（<em>Null</em> ）是一个值，它代表没有值。在有空值的语言中，变量总是这两种状态之一：空值和非空值。</p>
 <p>Tony Hoare，null 的发明者，在他 2009 年的演讲 “Null References: The Billion Dollar Mistake” 中曾经说到：</p>
 <blockquote>
-<p>I call it my billion-dollar mistake. At that time, I was designing the first
-comprehensive type system for references in an object-oriented language. My
-goal was to ensure that all use of references should be absolutely safe, with
-checking performed automatically by the compiler. But I couldn't resist the
-temptation to put in a null reference, simply because it was so easy to
-implement. This has led to innumerable errors, vulnerabilities, and system
-crashes, which have probably caused a billion dollars of pain and damage in
-the last forty years.</p>
 <p>我称之为我十亿美元的错误。当时，我在为一个面向对象语言设计第一个综合性的面向引用的类型系统。我的目标是通过编译器的自动检查来保证所有引用的使用都应该是绝对安全的。不过我未能抵抗住引入一个空引用的诱惑，仅仅是因为它是这么的容易实现。这引发了无数错误、漏洞和系统崩溃，在之后的四十多年中造成了数十亿美元的苦痛和伤害。</p>
 </blockquote>
 <p>空值的问题在于当你尝试像一个非空值那样使用一个空值，会出现某种形式的错误。因为空和非空的属性无处不在，非常容易出现这类错误。</p>
@@ -366,7 +358,7 @@ the last forty years.</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>Option&lt;T&gt;</code> 枚举是如此有用以至于它甚至被包含在了 prelude 之中，你不需要将其显式引入作用域。另外，它的成员也是如此，可以不需要 <code>Option::</code> 前缀来直接使用 <code>Some</code> 和 <code>None</code>。即便如此 <code>Option&lt;T&gt;</code> 也仍是常规的枚举，<code>Some(T)</code> 和 <code>None</code> 仍是 <code>Option&lt;T&gt;</code> 的成员。</p>
-<p><code>&lt;T&gt;</code> 语法是一个我们还未讲到的 Rust 功能。它是一个泛型类型参数，第十章会更详细的讲解泛型。目前，所有你需要知道的就是 <code>&lt;T&gt;</code> 意味着 <code>Option</code> 枚举的 <code>Some</code> 成员可以包含任意类型的数据。这里是一些包含数字类型和字符串类型 <code>Option</code> 值的例子：</p>
+<p><code>&lt;T&gt;</code> 语法是一个我们还未讲到的 Rust 功能。它是一个泛型类型参数，第 10 章会更详细的讲解泛型。目前，所有你需要知道的就是 <code>&lt;T&gt;</code> 意味着 <code>Option</code> 枚举的 <code>Some</code> 成员可以包含任意类型的数据。这里是一些包含数字类型和字符串类型 <code>Option</code> 值的例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

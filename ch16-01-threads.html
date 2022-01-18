@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -166,7 +166,7 @@
 <p>绿色线程的 M:N 模型需要更大的语言运行时来管理这些线程。因此，Rust 标准库只提供了 1:1 线程模型实现。由于 Rust 是较为底层的语言，如果你愿意牺牲性能来换取抽象，以获得对线程运行更精细的控制及更低的上下文切换成本，你可以使用实现了 M:N 线程模型的 crate。</p>
 <p>现在我们明白了 Rust 中的线程是如何定义的，让我们开始探索如何使用标准库提供的线程相关的 API 吧。</p>
 <h3 id="使用-spawn-创建新线程"><a class="header" href="#使用-spawn-创建新线程">使用 <code>spawn</code> 创建新线程</a></h3>
-<p>为了创建一个新线程，需要调用 <code>thread::spawn</code> 函数并传递一个闭包（第十三章学习了闭包），并在其中包含希望在新线程运行的代码。示例 16-1 中的例子在主线程打印了一些文本而另一些文本则由新线程打印：</p>
+<p>为了创建一个新线程，需要调用 <code>thread::spawn</code> 函数并传递一个闭包（第 13 章学习了闭包），并在其中包含希望在新线程运行的代码。示例 16-1 中的例子在主线程打印了一些文本而另一些文本则由新线程打印：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::thread;
 use std::time::Duration;
@@ -277,8 +277,8 @@ hi number 4 from the main thread!
 </code></pre>
 <p>诸如将 <code>join</code> 放置于何处这样的小细节，会影响线程是否同时运行。</p>
 <h3 id="线程与-move-闭包"><a class="header" href="#线程与-move-闭包">线程与 <code>move</code> 闭包</a></h3>
-<p><code>move</code> 闭包，我们曾在第十三章简要的提到过，其经常与 <code>thread::spawn</code> 一起使用，因为它允许我们在一个线程中使用另一个线程的数据。</p>
-<p>在第十三章中，我们讲到可以在参数列表前使用 <code>move</code> 关键字强制闭包获取其使用的环境值的所有权。这个技巧在创建新线程将值的所有权从一个线程移动到另一个线程时最为实用。</p>
+<p><code>move</code> 闭包，我们曾在第 13 章简要的提到过，其经常与 <code>thread::spawn</code> 一起使用，因为它允许我们在一个线程中使用另一个线程的数据。</p>
+<p>在第 13 章中，我们讲到可以在参数列表前使用 <code>move</code> 关键字强制闭包获取其使用的环境值的所有权。这个技巧在创建新线程将值的所有权从一个线程移动到另一个线程时最为实用。</p>
 <p>注意示例 16-1 中传递给 <code>thread::spawn</code> 的闭包并没有任何参数：并没有在新建线程代码中使用任何主线程的数据。为了在新建线程中使用来自于主线程的数据，需要新建线程的闭包获取它需要的值。示例 16-3 展示了一个尝试在主线程中创建一个 vector 并用于新建线程的例子，不过这么写还不能工作，如下所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">use std::thread;
@@ -328,7 +328,7 @@ fn main() {
 }
 </code></pre>
 <p><span class="caption">示例 16-4: 一个具有闭包的线程，尝试使用一个在主线程中被回收的引用 <code>v</code></span></p>
-<p>假如这段代码能正常运行的话，则新建线程则可能会立刻被转移到后台并完全没有机会运行。新建线程内部有一个 <code>v</code> 的引用，不过主线程立刻就使用第十五章讨论的 <code>drop</code> 丢弃了 <code>v</code>。接着当新建线程开始执行，<code>v</code> 已不再有效，所以其引用也是无效的。噢，这太糟了！</p>
+<p>假如这段代码能正常运行的话，则新建线程则可能会立刻被转移到后台并完全没有机会运行。新建线程内部有一个 <code>v</code> 的引用，不过主线程立刻就使用第 15 章讨论的 <code>drop</code> 丢弃了 <code>v</code>。接着当新建线程开始执行，<code>v</code> 已不再有效，所以其引用也是无效的。噢，这太糟了！</p>
 <p>为了修复示例 16-3 的编译错误，我们可以听取错误信息的建议：</p>
 <pre><code class="language-text">help: to force the closure to take ownership of `v` (and any other referenced
 variables), use the `move` keyword

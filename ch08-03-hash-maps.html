@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -183,7 +183,7 @@ let scores: HashMap&lt;_, _&gt; = teams.iter().zip(initial_scores.iter()).collec
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 8-21：用队伍列表和分数列表创建哈希 map</span></p>
-<p>这里 <code>HashMap&lt;_, _&gt;</code> 类型注解是必要的，因为可能 <code>collect</code> 很多不同的数据结构，而除非显式指定否则 Rust 无从得知你需要的类型。但是对于键和值的类型参数来说，可以使用下划线占位，而 Rust 能够根据 vector 中数据的类型推断出 <code>HashMap</code> 所包含的类型。</p>
+<p>这里 <code>HashMap&lt;_, _&gt;</code> 类型注解是必要的，因为 <code>collect</code> 有可能当成多种不同的数据结构，而除非显式指定否则 Rust 无从得知你需要的类型。但是对于键和值的类型参数来说，可以使用下划线占位，而 Rust 能够根据 vector 中数据的类型推断出 <code>HashMap</code> 所包含的类型。</p>
 <h3 id="哈希-map-和所有权"><a class="header" href="#哈希-map-和所有权">哈希 map 和所有权</a></h3>
 <p>对于像 <code>i32</code> 这样的实现了 <code>Copy</code> trait 的类型，其值可以拷贝进哈希 map。对于像 <code>String</code> 这样拥有所有权的值，其值将被移动而哈希 map 会成为这些值的所有者，如示例 8-22 所示：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -202,7 +202,7 @@ map.insert(field_name, field_value);
 </span></code></pre></pre>
 <p><span class="caption">示例 8-22：展示一旦键值对被插入后就为哈希 map 所拥有</span></p>
 <p>当 <code>insert</code> 调用将 <code>field_name</code> 和 <code>field_value</code> 移动到哈希 map 中后，将不能使用这两个绑定。</p>
-<p>如果将值的引用插入哈希 map，这些值本身将不会被移动进哈希 map。但是这些引用指向的值必须至少在哈希 map 有效时也是有效的。第十章 <a href="ch10-03-lifetime-syntax.html#validating-references-with-lifetimes">“生命周期与引用有效性”</a> 部分将会更多的讨论这个问题。</p>
+<p>如果将值的引用插入哈希 map，这些值本身将不会被移动进哈希 map。但是这些引用指向的值必须至少在哈希 map 有效时也是有效的。第 10 章 <a href="ch10-03-lifetime-syntax.html#validating-references-with-lifetimes">“生命周期与引用有效性”</a> 部分将会更多的讨论这个问题。</p>
 <h3 id="访问哈希-map-中的值"><a class="header" href="#访问哈希-map-中的值">访问哈希 map 中的值</a></h3>
 <p>可以通过 <code>get</code> 方法并提供对应的键来从哈希 map 中获取值，如示例 8-23 所示：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -220,7 +220,7 @@ let score = scores.get(&amp;team_name);
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 8-23：访问哈希 map 中储存的蓝队分数</span></p>
-<p>这里，<code>score</code> 是与蓝队分数相关的值，应为 <code>Some(10)</code>。因为 <code>get</code> 返回 <code>Option&lt;V&gt;</code>，所以结果被装进 <code>Some</code>；如果某个键在哈希 map 中没有对应的值，<code>get</code> 会返回 <code>None</code>。这时就要用某种第六章提到的方法之一来处理 <code>Option</code>。</p>
+<p>这里，<code>score</code> 是与蓝队分数相关的值，应为 <code>Some(10)</code>。因为 <code>get</code> 返回 <code>Option&lt;V&gt;</code>，所以结果被装进 <code>Some</code>；如果某个键在哈希 map 中没有对应的值，<code>get</code> 会返回 <code>None</code>。这时就要用某种第 6 章提到的方法之一来处理 <code>Option</code>。</p>
 <p>可以使用与 vector 类似的方式来遍历哈希 map 中的每一个键值对，也就是 <code>for</code> 循环：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -301,14 +301,14 @@ println!(&quot;{:?}&quot;, map);
 <p><span class="caption">示例 8-26：通过哈希 map 储存单词和计数来统计出现次数</span></p>
 <p>这会打印出 <code>{&quot;world&quot;: 2, &quot;hello&quot;: 1, &quot;wonderful&quot;: 1}</code>，<code>or_insert</code> 方法事实上会返回这个键的值的一个可变引用（<code>&amp;mut V</code>）。这里我们将这个可变引用储存在 <code>count</code> 变量中，所以为了赋值必须首先使用星号（<code>*</code>）解引用 <code>count</code>。这个可变引用在 <code>for</code> 循环的结尾离开作用域，这样所有这些改变都是安全的并符合借用规则。</p>
 <h3 id="哈希函数"><a class="header" href="#哈希函数">哈希函数</a></h3>
-<p><code>HashMap</code> 默认使用一种 “密码学安全的”（“cryptographically strong” ）<sup class="footnote-reference"><a href="#siphash">1</a></sup> 哈希函数，它可以抵抗拒绝服务（Denial of Service, DoS）攻击。然而这并不是可用的最快的算法，不过为了更高的安全性值得付出一些性能的代价。如果性能监测显示此哈希函数非常慢，以致于你无法接受，你可以指定一个不同的 <em>hasher</em> 来切换为其它函数。hasher 是一个实现了 <code>BuildHasher</code> trait 的类型。第十章会讨论 trait 和如何实现它们。你并不需要从头开始实现你自己的 hasher；<a href="https://crates.io">crates.io</a> 有其他人分享的实现了许多常用哈希算法的 hasher 的库。</p>
+<p><code>HashMap</code> 默认使用一种 “密码学安全的”（“cryptographically strong” ）<sup class="footnote-reference"><a href="#siphash">1</a></sup> 哈希函数，它可以抵抗拒绝服务（Denial of Service, DoS）攻击。然而这并不是可用的最快的算法，不过为了更高的安全性值得付出一些性能的代价。如果性能监测显示此哈希函数非常慢，以致于你无法接受，你可以指定一个不同的 <em>hasher</em> 来切换为其它函数。hasher 是一个实现了 <code>BuildHasher</code> trait 的类型。第 10 章会讨论 trait 和如何实现它们。你并不需要从头开始实现你自己的 hasher；<a href="https://crates.io">crates.io</a> 有其他人分享的实现了许多常用哈希算法的 hasher 的库。</p>
 <div class="footnote-definition" id="siphash"><sup class="footnote-definition-label">1</sup>
 <p><a href="https://www.131002.net/siphash/siphash.pdf">https://www.131002.net/siphash/siphash.pdf</a></p>
 </div>
 <h2 id="总结"><a class="header" href="#总结">总结</a></h2>
 <p>vector、字符串和哈希 map 会在你的程序需要储存、访问和修改数据时帮助你。这里有一些你应该能够解决的练习问题：</p>
 <ul>
-<li>给定一系列数字，使用 vector 并返回这个列表的平均数（mean, average）、中位数（排列数组后位于中间的值）和众数（mode，出现次数最多的值；这里哈希函数会很有帮助）。</li>
+<li>给定一系列数字，使用 vector 并返回这个列表的平均数（mean, average）、中位数（排列数组后位于中间的值）和众数（mode，出现次数最多的值；这里哈希 map 会很有帮助）。</li>
 <li>将字符串转换为 Pig Latin，也就是每一个单词的第一个辅音字母被移动到单词的结尾并增加 “ay”，所以 “first” 会变成 “irst-fay”。元音字母开头的单词则在结尾增加  “hay”（“apple” 会变成 “apple-hay”）。牢记 UTF-8 编码！</li>
 <li>使用哈希 map 和 vector，创建一个文本接口来允许用户向公司的部门中增加员工的名字。例如，“Add Sally to Engineering” 或 “Add Amir to Sales”。接着让用户获取一个部门的所有员工的列表，或者公司每个部门的所有员工按照字典序排列的列表。</li>
 </ul>

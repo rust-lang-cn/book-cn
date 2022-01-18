@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -179,7 +179,7 @@ pub fn eat_at_restaurant() {
 </code></pre>
 <p>接着我们创建一个 <em>src/front_of_house</em> 目录和一个包含 <code>hosting</code> 模块定义的 <em>src/front_of_house/hosting.rs</em> 文件：</p>
 <p><span class="filename">文件名: src/front_of_house/hosting.rs</span></p>
-<pre><code class="language- ignore">pub fn add_to_waitlist() {}
+<pre><code class="language-rust ignore">pub fn add_to_waitlist() {}
 </code></pre>
 <p>模块树依然保持相同，<code>eat_at_restaurant</code> 中的函数调用也无需修改继续保持有效，即便其定义存在于不同的文件中。这个技巧让你可以在模块代码增长时，将它们移动到新文件中。</p>
 <p>注意，<em>src/lib.rs</em> 中的 <code>pub use crate::front_of_house::hosting</code> 语句是没有改变的，在文件作为 crate 的一部分而编译时，<code>use</code> 不会有任何影响。<code>mod</code> 关键字声明了模块，Rust 会在与模块同名的文件中查找模块的代码。</p>

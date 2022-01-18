@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="方法语法"><a class="header" href="#方法语法">方法语法</a></h2>
-<p><strong>方法</strong> 与函数类似：它们使用 <code>fn</code> 关键字和名称声明，可以拥有参数和返回值，同时包含在某处调用该方法时会执行的代码。不过方法与函数是不同的，因为它们在结构体的上下文中被定义（或者是枚举或 trait 对象的上下文，将分别在第六章和第十七章讲解），并且它们第一个参数总是 <code>self</code>，它代表调用该方法的结构体实例。</p>
+<p><strong>方法</strong> 与函数类似：它们使用 <code>fn</code> 关键字和名称声明，可以拥有参数和返回值，同时包含在某处调用该方法时会执行的代码。不过方法与函数是不同的，因为它们在结构体的上下文中被定义（或者是枚举或 trait 对象的上下文，将分别在第 6 章和第 17 章讲解），并且它们第一个参数总是 <code>self</code>，它代表调用该方法的结构体实例。</p>
 <h3 id="定义方法"><a class="header" href="#定义方法">定义方法</a></h3>
 <p>让我们把前面实现的获取一个 <code>Rectangle</code> 实例作为参数的 <code>area</code> 函数，改写成一个定义于 <code>Rectangle</code> 结构体上的 <code>area</code> 方法，如示例 5-13 所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -272,7 +272,7 @@ Can rect1 hold rect3? false
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>使用结构体名和 <code>::</code> 语法来调用这个关联函数：比如 <code>let sq = Rectangle::square(3);</code>。这个方法位于结构体的命名空间中：<code>::</code> 语法用于关联函数和模块创建的命名空间。第七章会讲到模块。</p>
+<p>使用结构体名和 <code>::</code> 语法来调用这个关联函数：比如 <code>let sq = Rectangle::square(3);</code>。这个方法位于结构体的命名空间中：<code>::</code> 语法用于关联函数和模块创建的命名空间。第 7 章会讲到模块。</p>
 <h3 id="多个-impl-块"><a class="header" href="#多个-impl-块">多个 <code>impl</code> 块</a></h3>
 <p>每个结构体都允许拥有多个 <code>impl</code> 块。例如，示例 5-16 中的代码等同于示例 5-15，但每个方法有其自己的 <code>impl</code> 块。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -298,7 +298,7 @@ impl Rectangle {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 5-16：使用多个 <code>impl</code> 块重写示例 5-15</span></p>
-<p>这里没有理由将这些方法分散在多个 <code>impl</code> 块中，不过这是有效的语法。第十章讨论泛型和 trait 时会看到实用的多 <code>impl</code> 块的用例。</p>
+<p>这里没有理由将这些方法分散在多个 <code>impl</code> 块中，不过这是有效的语法。第 10 章讨论泛型和 trait 时会看到实用的多 <code>impl</code> 块用例。</p>
 <h2 id="总结"><a class="header" href="#总结">总结</a></h2>
 <p>结构体让你可以创建出在你的领域中有意义的自定义类型。通过结构体，我们可以将相关联的数据片段联系起来并命名它们，这样可以使得代码更加清晰。方法允许为结构体实例指定行为，而关联函数将特定功能置于结构体的命名空间中并且无需一个实例。</p>
 <p>但结构体并不是创建自定义类型的唯一方法：让我们转向 Rust 的枚举功能，为你的工具箱再添一个工具。</p>

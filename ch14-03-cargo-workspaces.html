@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="cargo-工作空间"><a class="header" href="#cargo-工作空间">Cargo 工作空间</a></h2>
-<p>第十二章中，我们构建一个包含二进制 crate 和库 crate 的包。你可能会发现，随着项目开发的深入，库 crate 持续增大，而你希望将其进一步拆分成多个库 crate。对于这种情况，Cargo 提供了一个叫 <strong>工作空间</strong>（<em>workspaces</em>）的功能，它可以帮助我们管理多个相关的协同开发的包。</p>
+<p>第 12 章中，我们构建一个包含二进制 crate 和库 crate 的包。你可能会发现，随着项目开发的深入，库 crate 持续增大，而你希望将其进一步拆分成多个库 crate。对于这种情况，Cargo 提供了一个叫 <strong>工作空间</strong>（<em>workspaces</em>）的功能，它可以帮助我们管理多个相关的协同开发的包。</p>
 <h3 id="创建工作空间"><a class="header" href="#创建工作空间">创建工作空间</a></h3>
 <p><strong>工作空间</strong> 是一系列共享同样的 <em>Cargo.lock</em> 和输出目录的包。让我们使用工作空间创建一个项目 —— 这里采用常见的代码以便可以关注工作空间的结构。有多种组织工作空间的方式；我们将展示一个常用方法。我们的工作空间有一个二进制项目和两个库。二进制项目会提供主要功能，并会依赖另两个库。一个库会提供 <code>add_one</code> 方法而第二个会提供 <code>add_two</code> 方法。这三个 crate 将会是相同工作空间的一部分。让我们以新建工作空间目录开始：</p>
 <pre><code class="language-text">$ mkdir add

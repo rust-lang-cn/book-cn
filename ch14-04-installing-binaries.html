@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -153,7 +153,7 @@
                         <h2 id="使用-cargo-install-从-cratesio-安装二进制文件"><a class="header" href="#使用-cargo-install-从-cratesio-安装二进制文件">使用 <code>cargo install</code> 从 Crates.io 安装二进制文件</a></h2>
 <p><code>cargo install</code> 命令用于在本地安装和使用二进制 crate。它并不打算替换系统中的包；它意在作为一个方便 Rust 开发者们安装其他人已经在 <a href="https://crates.io/">crates.io</a><!-- ignore --> 上共享的工具的手段。只有拥有二进制目标文件的包能够被安装。<strong>二进制目标</strong> 文件是在 crate 有 <em>src/main.rs</em> 或者其他指定为二进制文件时所创建的可执行程序，这不同于自身不能执行但适合包含在其他程序中的库目标文件。通常 crate 的 <em>README</em> 文件中有该 crate 是库、二进制目标还是两者都是的信息。</p>
 <p>所有来自 <code>cargo install</code> 的二进制文件都安装到 Rust 安装根目录的 <em>bin</em> 文件夹中。如果你使用 <em>rustup.rs</em> 安装的 Rust 且没有自定义任何配置，这将是 <code>$HOME/.cargo/bin</code>。确保将这个目录添加到 <code>$PATH</code> 环境变量中就能够运行通过 <code>cargo install</code> 安装的程序了。</p>
-<p>例如，第十二章提到的叫做 <code>ripgrep</code> 的用于搜索文件的 <code>grep</code> 的 Rust 实现。如果想要安装 <code>ripgrep</code>，可以运行如下：</p>
+<p>例如，第 12 章提到的叫做 <code>ripgrep</code> 的用于搜索文件的 <code>grep</code> 的 Rust 实现。如果想要安装 <code>ripgrep</code>，可以运行如下：</p>
 <pre><code class="language-text">$ cargo install ripgrep
 Updating registry `https://github.com/rust-lang/crates.io-index`
  Downloading ripgrep v0.3.2

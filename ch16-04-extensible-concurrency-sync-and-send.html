@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -156,15 +156,15 @@
 <h3 id="通过-send-允许在线程间转移所有权"><a class="header" href="#通过-send-允许在线程间转移所有权">通过 <code>Send</code> 允许在线程间转移所有权</a></h3>
 <p><code>Send</code> 标记 trait 表明类型的所有权可以在线程间传递。几乎所有的 Rust 类型都是<code>Send</code> 的，不过有一些例外，包括 <code>Rc&lt;T&gt;</code>：这是不能 <code>Send</code> 的，因为如果克隆了 <code>Rc&lt;T&gt;</code> 的值并尝试将克隆的所有权转移到另一个线程，这两个线程都可能同时更新引用计数。为此，<code>Rc&lt;T&gt;</code> 被实现为用于单线程场景，这时不需要为拥有线程安全的引用计数而付出性能代价。</p>
 <p>因此，Rust 类型系统和 trait bound 确保永远也不会意外的将不安全的 <code>Rc&lt;T&gt;</code> 在线程间发送。当尝试在示例 16-14 中这么做的时候，会得到错误 <code>the trait Send is not implemented for Rc&lt;Mutex&lt;i32&gt;&gt;</code>。而使用标记为 <code>Send</code> 的 <code>Arc&lt;T&gt;</code> 时，就没有问题了。</p>
-<p>任何完全由 <code>Send</code> 的类型组成的类型也会自动被标记为 <code>Send</code>。几乎所有基本类型都是 <code>Send</code> 的，除了第十九章将会讨论的裸指针（raw pointer）。</p>
+<p>任何完全由 <code>Send</code> 的类型组成的类型也会自动被标记为 <code>Send</code>。几乎所有基本类型都是 <code>Send</code> 的，除了第 19 章将会讨论的裸指针（raw pointer）。</p>
 <h3 id="sync-允许多线程访问"><a class="header" href="#sync-允许多线程访问"><code>Sync</code> 允许多线程访问</a></h3>
 <p><code>Sync</code> 标记 trait 表明一个实现了 <code>Sync</code> 的类型可以安全的在多个线程中拥有其值的引用。换一种方式来说，对于任意类型 <code>T</code>，如果 <code>&amp;T</code>（<code>T</code> 的引用）是 <code>Send</code> 的话 <code>T</code> 就是 <code>Sync</code> 的，这意味着其引用就可以安全的发送到另一个线程。类似于 <code>Send</code> 的情况，基本类型是 <code>Sync</code> 的，完全由 <code>Sync</code> 的类型组成的类型也是 <code>Sync</code> 的。</p>
-<p>智能指针 <code>Rc&lt;T&gt;</code> 也不是 <code>Sync</code> 的，出于其不是 <code>Send</code> 相同的原因。<code>RefCell&lt;T&gt;</code>（第十五章讨论过）和 <code>Cell&lt;T&gt;</code> 系列类型不是 <code>Sync</code> 的。<code>RefCell&lt;T&gt;</code> 在运行时所进行的借用检查也不是线程安全的。<code>Mutex&lt;T&gt;</code> 是 <code>Sync</code> 的，正如 <a href="ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads">“在线程间共享 <code>Mutex&lt;T&gt;</code>”</a> 部分所讲的它可以被用来在多线程中共享访问。</p>
+<p>智能指针 <code>Rc&lt;T&gt;</code> 也不是 <code>Sync</code> 的，出于其不是 <code>Send</code> 相同的原因。<code>RefCell&lt;T&gt;</code>（第 15 章讨论过）和 <code>Cell&lt;T&gt;</code> 系列类型不是 <code>Sync</code> 的。<code>RefCell&lt;T&gt;</code> 在运行时所进行的借用检查也不是线程安全的。<code>Mutex&lt;T&gt;</code> 是 <code>Sync</code> 的，正如 <a href="ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads">“在线程间共享 <code>Mutex&lt;T&gt;</code>”</a> 部分所讲的它可以被用来在多线程中共享访问。</p>
 <h3 id="手动实现-send-和-sync-是不安全的"><a class="header" href="#手动实现-send-和-sync-是不安全的">手动实现 <code>Send</code> 和 <code>Sync</code> 是不安全的</a></h3>
 <p>通常并不需要手动实现 <code>Send</code> 和 <code>Sync</code> trait，因为由 <code>Send</code> 和 <code>Sync</code> 的类型组成的类型，自动就是 <code>Send</code> 和 <code>Sync</code> 的。因为他们是标记 trait，甚至都不需要实现任何方法。他们只是用来加强并发相关的不可变性的。</p>
-<p>手动实现这些标记 trait 涉及到编写不安全的 Rust 代码，第十九章将会讲述具体的方法；当前重要的是，在创建新的由不是 <code>Send</code> 和 <code>Sync</code> 的部分构成的并发类型时需要多加小心，以确保维持其安全保证。<a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon</a> 中有更多关于这些保证以及如何维持他们的信息。</p>
+<p>手动实现这些标记 trait 涉及到编写不安全的 Rust 代码，第 19 章将会讲述具体的方法；当前重要的是，在创建新的由不是 <code>Send</code> 和 <code>Sync</code> 的部分构成的并发类型时需要多加小心，以确保维持其安全保证。<a href="https://doc.rust-lang.org/stable/nomicon/">《Rust 秘典》</a> 中有更多关于这些保证以及如何维持他们的信息。</p>
 <h2 id="总结"><a class="header" href="#总结">总结</a></h2>
-<p>这不会是本书最后一个出现并发的章节：第二十章的项目会在更现实的场景中使用这些概念，而不像本章中讨论的这些小例子。</p>
+<p>这不会是本书最后一个出现并发的章节：第 20 章的项目会在更现实的场景中使用这些概念，而不像本章中讨论的这些小例子。</p>
 <p>正如之前提到的，因为 Rust 本身很少有处理并发的部分内容，有很多的并发方案都由 crate 实现。他们比标准库要发展的更快；请在网上搜索当前最新的用于多线程场景的 crate。</p>
 <p>Rust 提供了用于消息传递的通道，和像 <code>Mutex&lt;T&gt;</code> 和 <code>Arc&lt;T&gt;</code> 这样可以安全的用于并发上下文的智能指针。类型系统和借用检查器会确保这些场景中的代码，不会出现数据竞争和无效的引用。一旦代码可以编译了，我们就可以坚信这些代码可以正确的运行于多线程环境，而不会出现其他语言中经常出现的那些难以追踪的 bug。并发编程不再是什么可怕的概念：无所畏惧地并发吧！</p>
 <p>接下来，让我们讨论一下当 Rust 程序变得更大时，有哪些符合语言习惯的问题建模方法和结构化解决方案，以及 Rust 的风格是如何与面向对象编程（Object Oriented Programming）中那些你所熟悉的概念相联系的。</p>

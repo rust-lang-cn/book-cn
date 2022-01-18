@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -150,15 +150,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="使用box-t指向堆上的数据"><a class="header" href="#使用box-t指向堆上的数据">使用<code>Box &lt;T&gt;</code>指向堆上的数据</a></h2>
-<p>最简单直接的智能指针是 <em>box</em>，其类型是 <code>Box&lt;T&gt;</code>。 box 允许你将一个值放在堆上而不是栈上。留在栈上的则是指向堆数据的指针。如果你想回顾一下栈与堆的区别请参考第四章。</p>
+                        <h2 id="使用-boxt-指向堆上的数据"><a class="header" href="#使用-boxt-指向堆上的数据">使用 <code>Box&lt;T&gt;</code> 指向堆上的数据</a></h2>
+<p>最简单直接的智能指针是 <em>box</em>，其类型是 <code>Box&lt;T&gt;</code>。 box 允许你将一个值放在堆上而不是栈上。留在栈上的则是指向堆数据的指针。如果你想回顾一下栈与堆的区别请参考第 4 章。</p>
 <p>除了数据被储存在堆上而不是栈上之外，box 没有性能损失。不过也没有很多额外的功能。它们多用于如下场景：</p>
 <ul>
 <li>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候</li>
 <li>当有大量数据并希望在确保数据不被拷贝的情况下转移所有权的时候</li>
 <li>当希望拥有一个值并只关心它的类型是否实现了特定 trait 而不是其具体类型的时候</li>
 </ul>
-<p>我们会在 “box 允许创建递归类型” 部分展示第一种场景。在第二种情况中，转移大量数据的所有权可能会花费很长的时间，因为数据在栈上进行了拷贝。为了改善这种情况下的性能，可以通过 box 将这些数据储存在堆上。接着，只有少量的指针数据在栈上被拷贝。第三种情况被称为 <strong>trait 对象</strong>（<em>trait object</em>），第十七章刚好有一整个部分 “为使用不同类型的值而设计的 trait 对象” 专门讲解这个主题。所以这里所学的内容会在第十七章再次用上！</p>
+<p>我们会在 “box 允许创建递归类型” 部分展示第一种场景。在第二种情况中，转移大量数据的所有权可能会花费很长的时间，因为数据在栈上进行了拷贝。为了改善这种情况下的性能，可以通过 box 将这些数据储存在堆上。接着，只有少量的指针数据在栈上被拷贝。第三种情况被称为 <strong>trait 对象</strong>（<em>trait object</em>），第 17 章刚好有一整个部分 “为使用不同类型的值而设计的 trait 对象” 专门讲解这个主题。所以这里所学的内容会在第 17 章再次用上！</p>
 <h3 id="使用-boxt-在堆上储存数据"><a class="header" href="#使用-boxt-在堆上储存数据">使用 <code>Box&lt;T&gt;</code> 在堆上储存数据</a></h3>
 <p>在讨论 <code>Box&lt;T&gt;</code> 的用例之前，让我们熟悉一下语法以及如何与储存在 <code>Box&lt;T&gt;</code> 中的值进行交互。</p>
 <p>示例 15-1 展示了如何使用 box 在堆上储存一个 <code>i32</code>：</p>
@@ -177,7 +177,7 @@
 <h4 id="cons-list-的更多内容"><a class="header" href="#cons-list-的更多内容">cons list 的更多内容</a></h4>
 <p><em>cons list</em> 是一个来源于 Lisp 编程语言及其方言的数据结构。在 Lisp 中，<code>cons</code> 函数（“construct function&quot; 的缩写）利用两个参数来构造一个新的列表，他们通常是一个单独的值和另一个列表。</p>
 <p>cons 函数的概念涉及到更常见的函数式编程术语；“将 <em>x</em> 与 <em>y</em> 连接” 通常意味着构建一个新的容器而将 <em>x</em> 的元素放在新容器的开头，其后则是容器 <em>y</em> 的元素。</p>
-<p>cons list 的每一项都包含两个元素：当前项的值和下一项。其最后一项值包含一个叫做 <code>Nil</code> 的值且没有下一项。cons list 通过递归调用 <code>cons</code> 函数产生。代表递归的终止条件（base case）的规范名称是 <code>Nil</code>，它宣布列表的终止。注意这不同于第六章中的 “null” 或 “nil” 的概念，他们代表无效或缺失的值。</p>
+<p>cons list 的每一项都包含两个元素：当前项的值和下一项。其最后一项值包含一个叫做 <code>Nil</code> 的值且没有下一项。cons list 通过递归调用 <code>cons</code> 函数产生。代表递归的终止条件（base case）的规范名称是 <code>Nil</code>，它宣布列表的终止。注意这不同于第 6 章中的 “null” 或 “nil” 的概念，他们代表无效或缺失的值。</p>
 <p>注意虽然函数式编程语言经常使用 cons list，但是它并不是一个 Rust 中常见的类型。大部分在 Rust 中需要列表的时候，<code>Vec&lt;T&gt;</code> 是一个更好的选择。其他更为复杂的递归数据类型 <strong>确实</strong> 在 Rust 的很多场景中很有用，不过通过以 cons list 作为开始，我们可以探索如何使用 box 毫不费力的定义一个递归数据类型。</p>
 <p>示例 15-2 包含一个 cons list 的枚举定义。注意这还不能编译因为这个类型没有已知的大小，之后我们会展示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -188,7 +188,7 @@
 </code></pre>
 <p><span class="caption">示例 15-2：第一次尝试定义一个代表 <code>i32</code> 值的 cons list 数据结构的枚举</span></p>
 <blockquote>
-<p>注意：出于示例的需要我们选择实现一个只存放 <code>i32</code> 值的 cons list。也可以用泛型，正如第十章讲到的，来定义一个可以存放任何类型值的 cons list 类型。</p>
+<p>注意：出于示例的需要我们选择实现一个只存放 <code>i32</code> 值的 cons list。也可以用泛型，正如第 10 章讲到的，来定义一个可以存放任何类型值的 cons list 类型。</p>
 </blockquote>
 <p>使用这个 cons list 来储存列表 <code>1, 2, 3</code> 将看起来如示例 15-3 所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -215,7 +215,7 @@ fn main() {
 <p><span class="caption">示例 15-4：尝试定义一个递归枚举时得到的错误</span></p>
 <p>这个错误表明这个类型 “有无限的大小”。其原因是 <code>List</code> 的一个成员被定义为是递归的：它直接存放了另一个相同类型的值。这意味着 Rust 无法计算为了存放 <code>List</code> 值到底需要多少空间。让我们一点一点来看：首先了解一下 Rust 如何决定需要多少空间来存放一个非递归类型。</p>
 <h3 id="计算非递归类型的大小"><a class="header" href="#计算非递归类型的大小">计算非递归类型的大小</a></h3>
-<p>回忆一下第六章讨论枚举定义时示例 6-2 中定义的 <code>Message</code> 枚举：</p>
+<p>回忆一下第 6 章讨论枚举定义时示例 6-2 中定义的 <code>Message</code> 枚举：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -228,7 +228,7 @@ fn main() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当 Rust 需要知道要为 <code>Message</code> 值分配多少空间时，它可以检查每一个成员并发现 <code>Message::Quit</code> 并不需要任何空间，<code>Message::Move</code> 需要足够储存两个 <code>i32</code> 值的空间，依此类推。因此，<code>Message</code> 值所需的空间等于储存其最大成员的空间大小。</p>
-<p>与此相对当 Rust 编译器检查像示例 15-2 中的 <code>List</code> 这样的递归类型时会发生什么呢。编译器尝试计算出储存一个 <code>List</code> 枚举需要多少内存，并开始检查 <code>Cons</code> 成员，那么 <code>Cons</code> 需要的空间等于 <code>i32</code> 的大小加上 <code>List</code> 的大小。为了计算 <code>List</code> 需要多少内存，它检查其成员，从 <code>Cons</code> 成员开始。<code>Cons</code>成员储存了一个 <code>i32</code> 值和一个<code>List</code>值，这样的计算将无限进行下去，如图 15-1 所示：</p>
+<p>与此相对当 Rust 编译器检查像示例 15-2 中的 <code>List</code> 这样的递归类型时会发生什么呢。编译器尝试计算出储存一个 <code>List</code> 枚举需要多少内存，并开始检查 <code>Cons</code> 成员，那么 <code>Cons</code> 需要的空间等于 <code>i32</code> 的大小加上 <code>List</code> 的大小。为了计算 <code>List</code> 需要多少内存，它检查其成员，从 <code>Cons</code> 成员开始。<code>Cons</code> 成员储存了一个 <code>i32</code> 值和一个 <code>List</code> 值，这样的计算将无限进行下去，如图 15-1 所示：</p>
 <img alt="An infinite Cons list" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
 <p><span class="caption">图 15-1：一个包含无限个 <code>Cons</code> 成员的无限 <code>List</code></span></p>
 <h3 id="使用-boxt-给递归类型一个已知的大小"><a class="header" href="#使用-boxt-给递归类型一个已知的大小">使用 <code>Box&lt;T&gt;</code> 给递归类型一个已知的大小</a></h3>
@@ -258,7 +258,7 @@ fn main() {
 <p><code>Cons</code> 成员将会需要一个 <code>i32</code> 的大小加上储存 box 指针数据的空间。<code>Nil</code> 成员不储存值，所以它比 <code>Cons</code> 成员需要更少的空间。现在我们知道了任何 <code>List</code> 值最多需要一个 <code>i32</code> 加上 box 指针数据的大小。通过使用 box ，打破了这无限递归的连锁，这样编译器就能够计算出储存 <code>List</code> 值需要的大小了。图 15-2 展示了现在 <code>Cons</code> 成员看起来像什么：</p>
 <img alt="A finite Cons list" src="img/trpl15-02.svg" class="center" />
 <p><span class="caption">图 15-2：因为 <code>Cons</code> 存放一个 <code>Box</code> 所以 <code>List</code> 不是无限大小的了</span></p>
-<p>box 只提供了间接存储和堆分配；他们并没有任何其他特殊的功能，比如我们将会见到的其他智能指针。它们也没有这些特殊功能带来的性能损失，所以他们可以用于像 cons list 这样间接存储是唯一所需功能的场景。我们还将在第十七章看到 box 的更多应用场景。</p>
+<p>box 只提供了间接存储和堆分配；他们并没有任何其他特殊的功能，比如我们将会见到的其他智能指针。它们也没有这些特殊功能带来的性能损失，所以他们可以用于像 cons list 这样间接存储是唯一所需功能的场景。我们还将在第 17 章看到 box 的更多应用场景。</p>
 <p><code>Box&lt;T&gt;</code> 类型是一个智能指针，因为它实现了 <code>Deref</code> trait，它允许 <code>Box&lt;T&gt;</code> 值被当作引用对待。当 <code>Box&lt;T&gt;</code> 值离开作用域时，由于 <code>Box&lt;T&gt;</code> 类型 <code>Drop</code> trait 的实现，box 所指向的堆数据也会被清除。让我们更详细的探索一下这两个 trait。这两个 trait 对于在本章余下讨论的其他智能指针所提供的功能中，将会更为重要。</p>
 
                     </main>

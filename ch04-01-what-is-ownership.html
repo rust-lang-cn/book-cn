@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -152,8 +152,8 @@
                     <main>
                         <h2 id="什么是所有权"><a class="header" href="#什么是所有权">什么是所有权？</a></h2>
 <p>Rust 的核心功能（之一）是 <strong>所有权</strong>（<em>ownership</em>）。虽然该功能很容易解释，但它对语言的其他部分有着深刻的影响。</p>
-<p>所有运行的程序都必须管理其使用计算机内存的方式。一些语言中具有垃圾回收机制，在程序运行时不断地寻找不再使用的内存；在另一些语言中，程序员必须亲自分配和释放内存。Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。在运行时，所有权系统的任何功能都不会减慢程序。</p>
-<p>因为所有权对很多程序员来说都是一个新概念，需要一些时间来适应。好消息是随着你对 Rust 和所有权系统的规则越来越有经验，你就越能自然地编写出安全和高效的代码。持之以恒！</p>
+<p>所有运行的程序都必须管理其使用计算机内存的方式。一些语言中具有垃圾回收机制，在程序运行时不断地寻找不再使用的内存；在另一些语言中，开发者必须亲自分配和释放内存。Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。在运行时，所有权系统的任何功能都不会减慢程序。</p>
+<p>因为所有权对很多开发者来说都是一个新概念，需要一些时间来适应。好消息是随着你对 Rust 和所有权系统的规则越来越有经验，你就越能自然地编写出安全和高效的代码。持之以恒！</p>
 <p>当你理解了所有权，你将有一个坚实的基础来理解那些使 Rust 独特的功能。在本章中，你将通过完成一些示例来学习所有权，这些示例基于一个常用的数据结构：字符串。</p>
 <blockquote>
 <h3 id="栈stack与堆heap"><a class="header" href="#栈stack与堆heap">栈（Stack）与堆（Heap）</a></h3>
@@ -176,7 +176,7 @@
 </ol>
 </blockquote>
 <h3 id="变量作用域"><a class="header" href="#变量作用域">变量作用域</a></h3>
-<p>我们已经在第二章完成一个 Rust 程序示例。既然我们已经掌握了基本语法，将不会在之后的例子中包含 <code>fn main() {</code> 代码，所以如果你是一路跟过来的，必须手动将之后例子的代码放入一个 <code>main</code> 函数中。这样，例子将显得更加简明，使我们可以关注实际细节而不是样板代码。</p>
+<p>我们已经在第 2 章完成一个 Rust 程序示例。既然我们已经掌握了基本语法，将不会在之后的例子中包含 <code>fn main() {</code> 代码，所以如果你是一路跟过来的，必须手动将之后例子的代码放入一个 <code>main</code> 函数中。这样，例子将显得更加简明，使我们可以关注实际细节而不是样板代码。</p>
 <p>在所有权的第一个例子中，我们看看一些变量的 <strong>作用域</strong>（<em>scope</em>）。作用域是一个项（item）在程序中有效的范围。假设有这样一个变量：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -203,8 +203,8 @@
 </ul>
 <p>目前为止，变量是否有效与作用域的关系跟其他编程语言是类似的。现在我们在此基础上介绍 <code>String</code> 类型。</p>
 <h3 id="string-类型"><a class="header" href="#string-类型"><code>String</code> 类型</a></h3>
-<p>为了演示所有权的规则，我们需要一个比第三章 <a href="ch03-02-data-types.html#data-types">“数据类型”</a> 中讲到的都要复杂的数据类型。前面介绍的类型都是存储在栈上的并且当离开作用域时被移出栈，不过我们需要寻找一个存储在堆上的数据来探索 Rust 是如何知道该在何时清理数据的。</p>
-<p>这里使用 <code>String</code> 作为例子，并专注于 <code>String</code> 与所有权相关的部分。这些方面也同样适用于标准库提供的或你自己创建的其他复杂数据类型。在第八章会更深入地讲解 <code>String</code>。</p>
+<p>为了演示所有权的规则，我们需要一个比第 3 章 <a href="ch03-02-data-types.html#data-types">“数据类型”</a> 中讲到的都要复杂的数据类型。前面介绍的类型都是存储在栈上的并且当离开作用域时被移出栈，不过我们需要寻找一个存储在堆上的数据来探索 Rust 是如何知道该在何时清理数据的。</p>
+<p>这里使用 <code>String</code> 作为例子，并专注于 <code>String</code> 与所有权相关的部分。这些方面也同样适用于标准库提供的或你自己创建的其他复杂数据类型。在第 8 章会更深入地讲解 <code>String</code>。</p>
 <p>我们已经见过字符串字面值，即被硬编码进程序里的字符串值。字符串字面值是很方便的，不过它们并不适合使用文本的每一种场景。原因之一就是它们是不可变的。另一个原因是并非所有字符串的值都能在编写代码时就知道：例如，要是想获取用户输入并存储该怎么办呢？为此，Rust 有第二个字符串类型，<code>String</code>。这个类型被分配到堆上，所以能够存储在编译时未知大小的文本。可以使用 <code>from</code> 函数基于字符串字面值来创建 <code>String</code>，如下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -212,7 +212,7 @@
 </span>let s = String::from(&quot;hello&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<p>这两个冒号（<code>::</code>）是运算符，允许将特定的 <code>from</code> 函数置于 <code>String</code> 类型的命名空间（namespace）下，而不需要使用类似 <code>string_from</code> 这样的名字。在第五章的 <a href="ch05-03-method-syntax.html#method-syntax">“方法语法”（“Method Syntax”）</a> 部分会着重讲解这个语法而且在第七章的 <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">“路径用于引用模块树中的项”</a>  中会讲到模块的命名空间。</p>
+<p>这两个冒号（<code>::</code>）是运算符，允许将特定的 <code>from</code> 函数置于 <code>String</code> 类型的命名空间（namespace）下，而不需要使用类似 <code>string_from</code> 这样的名字。在第 5 章的 <a href="ch05-03-method-syntax.html#method-syntax">“方法语法”（“Method Syntax”）</a> 部分会着重讲解这个语法而且在第 7 章的 <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">“路径用于引用模块树中的项”</a>  中会讲到模块的命名空间。</p>
 <p><strong>可以</strong> 修改此类字符串 ：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -307,7 +307,7 @@ println!(&quot;{}, world!&quot;, s1);
 <p>这样就解决了我们的问题！因为只有 <code>s2</code> 是有效的，当其离开作用域，它就释放自己的内存，完毕。</p>
 <p>另外，这里还隐含了一个设计选择：Rust 永远也不会自动创建数据的 “深拷贝”。因此，任何 <strong>自动</strong> 的复制可以被认为对运行时性能影响较小。</p>
 <h4 id="变量与数据交互的方式二克隆"><a class="header" href="#变量与数据交互的方式二克隆">变量与数据交互的方式（二）：克隆</a></h4>
-<p>如果我们 <strong>确实</strong> 需要深度复制 <code>String</code> 中堆上的数据，而不仅仅是栈上的数据，可以使用一个叫做 <code>clone</code> 的通用函数。第五章会讨论方法语法，不过因为方法在很多语言中是一个常见功能，所以之前你可能已经见过了。</p>
+<p>如果我们 <strong>确实</strong> 需要深度复制 <code>String</code> 中堆上的数据，而不仅仅是栈上的数据，可以使用一个叫做 <code>clone</code> 的通用函数。第 5 章会讨论方法语法，不过因为方法在很多语言中是一个常见功能，所以之前你可能已经见过了。</p>
 <p>这是一个实际使用 <code>clone</code> 方法的例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -333,7 +333,7 @@ println!(&quot;x = {}, y = {}&quot;, x, y);
 </span></code></pre></pre>
 <p>但这段代码似乎与我们刚刚学到的内容相矛盾：没有调用 <code>clone</code>，不过 <code>x</code> 依然有效且没有被移动到 <code>y</code> 中。</p>
 <p>原因是像整型这样的在编译时已知大小的类型被整个存储在栈上，所以拷贝其实际的值是快速的。这意味着没有理由在创建变量 <code>y</code> 后使 <code>x</code> 无效。换句话说，这里没有深浅拷贝的区别，所以这里调用 <code>clone</code> 并不会与通常的浅拷贝有什么不同，我们可以不用管它。</p>
-<p>Rust 有一个叫做 <code>Copy</code> trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上（第十章详细讲解 trait）。如果一个类型拥有 <code>Copy</code> trait，一个旧的变量在将其赋值给其他变量后仍然可用。Rust 不允许自身或其任何部分实现了 <code>Drop</code> trait 的类型使用 <code>Copy</code> trait。如果我们对其值离开作用域时需要特殊处理的类型使用 <code>Copy</code> 注解，将会出现一个编译时错误。要学习如何为你的类型增加 <code>Copy</code> 注解，请阅读附录 C 中的 <a href="appendix-03-derivable-traits.html">“可派生的 trait”</a>。</p>
+<p>Rust 有一个叫做 <code>Copy</code> trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上（第 10 章详细讲解 trait）。如果一个类型拥有 <code>Copy</code> trait，一个旧的变量在将其赋值给其他变量后仍然可用。Rust 不允许自身或其任何部分实现了 <code>Drop</code> trait 的类型使用 <code>Copy</code> trait。如果我们对其值离开作用域时需要特殊处理的类型使用 <code>Copy</code> 注解，将会出现一个编译时错误。要学习如何为你的类型增加 <code>Copy</code> 注解，请阅读附录 C 中的 <a href="appendix-03-derivable-traits.html">“可派生的 trait”</a>。</p>
 <p>那么什么类型是 <code>Copy</code> 的呢？可以查看给定类型的文档来确认，不过作为一个通用的规则，任何简单标量值的组合可以是 <code>Copy</code> 的，不需要分配内存或某种形式资源的类型是 <code>Copy</code> 的。如下是一些 <code>Copy</code> 的类型：</p>
 <ul>
 <li>所有整数类型，比如 <code>u32</code>。</li>

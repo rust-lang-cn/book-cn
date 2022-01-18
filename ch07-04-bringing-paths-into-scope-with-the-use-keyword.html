@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="使用-use-关键字将名称引入作用域"><a class="header" href="#使用-use-关键字将名称引入作用域">使用 <code>use</code> 关键字将名称引入作用域</a></h2>
-<p>到目前为止，似乎我们编写的用于调用函数的路径都很冗长且重复，并不方便。例如，示例 7-7 中，无论我们选择 <code>add_to_waitlist</code> 函数的绝对路径还是相对路径，每次我们想要调用 <code>add_to_waitlist</code> 时，都必须指定<code>front_of_house</code> 和 <code>hosting</code>。幸运的是，有一种方法可以简化这个过程。我们可以使用 <code>use</code> 关键字将路径一次性引入作用域，然后调用该路径中的项，就如同它们是本地项一样。</p>
+<p>到目前为止，似乎我们编写的用于调用函数的路径都很冗长且重复，并不方便。例如，示例 7-7 中，无论我们选择 <code>add_to_waitlist</code> 函数的绝对路径还是相对路径，每次我们想要调用 <code>add_to_waitlist</code> 时，都必须指定 <code>front_of_house</code> 和 <code>hosting</code>。幸运的是，有一种方法可以简化这个过程。我们可以使用 <code>use</code> 关键字将路径一次性引入作用域，然后调用该路径中的项，就如同它们是本地项一样。</p>
 <p>在示例 7-11 中，我们将 <code>crate::front_of_house::hosting</code> 模块引入了 <code>eat_at_restaurant</code> 函数的作用域，而我们只需要指定 <code>hosting::add_to_waitlist</code> 即可在 <code>eat_at_restaurant</code> 中调用 <code>add_to_waitlist</code> 函数。</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">mod front_of_house {
@@ -190,7 +190,7 @@ pub fn eat_at_restaurant() {
 </span></code></pre></pre>
 <p><span class="caption">示例 7-12: 使用 <code>use</code> 和相对路径将模块引入作用域</span></p>
 <h3 id="创建惯用的-use-路径"><a class="header" href="#创建惯用的-use-路径">创建惯用的 <code>use</code> 路径</a></h3>
-<p>在示例 7-11 中，你可能会比较疑惑，为什么我们是指定 <code>use crate::front_of_house::hosting</code> ，然后在 <code>eat_at_restaurant</code> 中调用 <code>hosting::add_to_waitlist</code> ，而不是通过指定一直到 <code>add_to_waitlist</code> 函数的 <code>use</code> 路径来得到相同的结果，如示例 7-13 所示。</p>
+<p>在示例 7-11 中，你可能会比较疑惑，为什么我们是指定 <code>use crate::front_of_house::hosting</code>，然后在 <code>eat_at_restaurant</code> 中调用 <code>hosting::add_to_waitlist</code>，而不是通过指定一直到 <code>add_to_waitlist</code> 函数的 <code>use</code> 路径来得到相同的结果，如示例 7-13 所示。</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">mod front_of_house {
     pub mod hosting {
@@ -262,7 +262,7 @@ fn function2() -&gt; IoResult&lt;()&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 7-16: 使用 <code>as</code> 关键字重命名引入作用域的类型</span></p>
-<p>在第二个 <code>use</code> 语句中，我们选择 <code>IoResult</code> 作为 <code>std::io::Result</code> 的新名称，它与从 <code>std::fmt</code> 引入作用域的 <code>Result</code> 并不冲突。示例 7-15 和示例 7-16 都是惯用的，如何选择都取决于你!</p>
+<p>在第二个 <code>use</code> 语句中，我们选择 <code>IoResult</code> 作为 <code>std::io::Result</code> 的新名称，它与从 <code>std::fmt</code> 引入作用域的 <code>Result</code> 并不冲突。示例 7-15 和示例 7-16 都是惯用的，如何选择都取决于你！</p>
 <h3 id="使用-pub-use-重导出名称"><a class="header" href="#使用-pub-use-重导出名称">使用 <code>pub use</code> 重导出名称</a></h3>
 <p>当使用 <code>use</code> 关键字将名称导入作用域时，在新作用域中可用的名称是私有的。如果为了让调用你编写的代码的代码能够像在自己的作用域内引用这些类型，可以结合 <code>pub</code> 和 <code>use</code>。这个技术被称为 “<em>重导出</em>（<em>re-exporting</em>）”，因为这样做将项引入作用域并同时使其可供其他代码引入自己的作用域。</p>
 <p>示例 7-17 展示了将示例 7-11 中使用 <code>use</code> 的根模块变为 <code>pub use</code> 的版本的代码。</p>
@@ -284,19 +284,19 @@ pub fn eat_at_restaurant() {
 </span></code></pre></pre>
 <p><span class="caption">示例 7-17: 通过 <code>pub use</code> 使名称可引入任何代码的作用域中</span></p>
 <p>通过 <code>pub use</code>，现在可以通过新路径 <code>hosting::add_to_waitlist</code> 来调用 <code>add_to_waitlist</code> 函数。如果没有指定 <code>pub use</code>，<code>eat_at_restaurant</code> 函数可以在其作用域中调用 <code>hosting::add_to_waitlist</code>，但外部代码则不允许使用这个新路径。</p>
-<p>当你的代码的内部结构与调用你的代码的程序员的思考领域不同时，重导出会很有用。例如，在这个餐馆的比喻中，经营餐馆的人会想到“前台”和“后台”。但顾客在光顾一家餐馆时，可能不会以这些术语来考虑餐馆的各个部分。使用 <code>pub use</code>，我们可以使用一种结构编写代码，却将不同的结构形式暴露出来。这样做使我们的库井井有条，方便开发这个库的程序员和调用这个库的程序员之间组织起来。</p>
+<p>当你的代码的内部结构与调用你的代码的开发者的思考领域不同时，重导出会很有用。例如，在这个餐馆的比喻中，经营餐馆的人会想到“前台”和“后台”。但顾客在光顾一家餐馆时，可能不会以这些术语来考虑餐馆的各个部分。使用 <code>pub use</code>，我们可以使用一种结构编写代码，却将不同的结构形式暴露出来。这样做使我们的库井井有条，方便开发这个库的开发者和调用这个库的开发者之间组织起来。</p>
 <h3 id="使用外部包"><a class="header" href="#使用外部包">使用外部包</a></h3>
-<p>在第二章中我们编写了一个猜猜看游戏。那个项目使用了一个外部包，<code>rand</code>，来生成随机数。为了在项目中使用 <code>rand</code>，在 <em>Cargo.toml</em> 中加入了如下行：</p>
+<p>在第 2 章中我们编写了一个猜猜看游戏。那个项目使用了一个外部包，<code>rand</code>，来生成随机数。为了在项目中使用 <code>rand</code>，在 <em>Cargo.toml</em> 中加入了如下行：</p>
 <p><span class="filename">文件名: Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.5.5&quot;
+rand = &quot;0.8.3&quot;
 </code></pre>
 <p>在 <em>Cargo.toml</em> 中加入 <code>rand</code> 依赖告诉了 Cargo 要从 <a href="https://crates.io">crates.io</a> 下载 <code>rand</code> 和其依赖，并使其可在项目代码中使用。</p>
-<p>接着，为了将 <code>rand</code> 定义引入项目包的作用域，我们加入一行 <code>use</code> 起始的包名，它以 <code>rand</code> 包名开头并列出了需要引入作用域的项。回忆一下第二章的 “生成一个随机数” 部分，我们曾将 <code>Rng</code> trait 引入作用域并调用了 <code>rand::thread_rng</code> 函数：</p>
+<p>接着，为了将 <code>rand</code> 定义引入项目包的作用域，我们加入一行 <code>use</code> 起始的包名，它以 <code>rand</code> 包名开头并列出了需要引入作用域的项。回忆一下第 2 章的 <a href="ch02-00-guessing-game-tutorial.html#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E9%9A%8F%E6%9C%BA%E6%95%B0">“生成一个随机数”</a><!-- ignore --> 部分，我们曾将 <code>Rng</code> trait 引入作用域并调用了 <code>rand::thread_rng</code> 函数：</p>
 <pre><code class="language-rust ignore">use rand::Rng;
 
 fn main() {
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..101);
 }
 </code></pre>
 <p><a href="https://crates.io">crates.io</a> 上有很多 Rust 社区成员发布的包，将其引入你自己的项目都需要一道相同的步骤：在 <em>Cargo.toml</em> 列出它们并通过 <code>use</code> 将其中定义的项引入项目包的作用域中。</p>
@@ -359,7 +359,7 @@ use std::io::Write;
 <span class="boring">}
 </span></code></pre></pre>
 <p>这个 <code>use</code> 语句将 <code>std::collections</code> 中定义的所有公有项引入当前作用域。使用 glob 运算符时请多加小心！Glob 会使得我们难以推导作用域中有什么名称和它们是在何处定义的。</p>
-<p>glob 运算符经常用于测试模块 <code>tests</code> 中，这时会将所有内容引入作用域；我们将在第十一章 “如何编写测试” 部分讲解。glob 运算符有时也用于 prelude 模式；查看 <a href="https://doc.rust-lang.org/std/prelude/index.html#other-preludes">标准库中的文档</a> 了解这个模式的更多细节。</p>
+<p>glob 运算符经常用于测试模块 <code>tests</code> 中，这时会将所有内容引入作用域；我们将在第 11 章 <a href="ch11-01-writing-tests.html#%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95">“如何编写测试”</a><!-- ignore --> 部分讲解。glob 运算符有时也用于 prelude 模式；查看 <a href="https://doc.rust-lang.org/std/prelude/index.html#other-preludes">标准库中的文档</a> 了解这个模式的更多细节。</p>
 
                     </main>
 

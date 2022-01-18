@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -191,7 +191,7 @@ fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
 <span class="boring">fn generate_workout(intensity: u32, random_number: u32) {}
 </span></code></pre></pre>
 <p><span class="caption">示例 13-2：<code>main</code> 函数包含了用于 <code>generate_workout</code> 函数的模拟用户输入和模拟随机数输入</span></p>
-<p>出于简单考虑这里硬编码了 <code>simulated_user_specified_value</code> 变量的值为 10 和 <code>simulated_random_number</code> 变量的值为 7；一个实际的程序会从 app 前端获取强度系数并使用 <code>rand</code> crate 来生成随机数，正如第二章的猜猜看游戏所做的那样。<code>main</code> 函数使用模拟的输入值调用 <code>generate_workout</code> 函数：</p>
+<p>出于简单考虑这里硬编码了 <code>simulated_user_specified_value</code> 变量的值为 10 和 <code>simulated_random_number</code> 变量的值为 7；一个实际的程序会从 app 前端获取强度系数并使用 <code>rand</code> crate 来生成随机数，正如第 2 章的猜猜看游戏所做的那样。<code>main</code> 函数使用模拟的输入值调用 <code>generate_workout</code> 函数：</p>
 <p>现在有了执行上下文，让我们编写算法。示例 13-3 中的 <code>generate_workout</code> 函数包含本例中我们最关心的 app 业务逻辑。本例中余下的代码修改都将在这个函数中进行：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -230,7 +230,7 @@ fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 13-3：程序的业务逻辑，它根据输入并调用 <code>simulated_expensive_calculation</code> 函数来打印出健身计划</span></p>
-<p>示例 13-3 中的代码有多处调用了慢计算函数 <code>simulated_expensive_calculation</code> 。第一个 <code>if</code> 块调用了 <code>simulated_expensive_calculation</code> 两次， <code>else</code> 中的 <code>if</code> 没有调用它，而第二个 <code>else</code> 中的代码调用了它一次。</p>
+<p>示例 13-3 中的代码有多处调用了慢计算函数 <code>simulated_expensive_calculation</code>。第一个 <code>if</code> 块调用了 <code>simulated_expensive_calculation</code> 两次， <code>else</code> 中的 <code>if</code> 没有调用它，而第二个 <code>else</code> 中的代码调用了它一次。</p>
 <p><code>generate_workout</code> 函数的期望行为是首先检查用户需要低强度（由小于 25 的系数表示）锻炼还是高强度（25 或以上）锻炼。</p>
 <p>低强度锻炼计划会根据由 <code>simulated_expensive_calculation</code> 函数所模拟的复杂算法建议一定数量的俯卧撑和仰卧起坐。</p>
 <p>如果用户需要高强度锻炼，这里有一些额外的逻辑：如果 app 生成的随机数刚好是 3，app 相反会建议用户稍做休息并补充水分。如果不是，则用户会从复杂算法中得到数分钟跑步的高强度锻炼计划。</p>
@@ -390,7 +390,7 @@ let n = example_closure(5);
 <h3 id="使用带有泛型和-fn-trait-的闭包"><a class="header" href="#使用带有泛型和-fn-trait-的闭包">使用带有泛型和 <code>Fn</code> trait 的闭包</a></h3>
 <p>回到我们的健身计划生成 app ，在示例 13-6 中的代码仍然把慢计算闭包调用了比所需更多的次数。解决这个问题的一个方法是在全部代码中的每一个需要多个慢计算闭包结果的地方，可以将结果保存进变量以供复用，这样就可以使用变量而不是再次调用闭包。但是这样就会有很多重复的保存结果变量的地方。</p>
 <p>幸运的是，还有另一个可用的方案。可以创建一个存放闭包和调用闭包结果的结构体。该结构体只会在需要结果时执行闭包，并会缓存结果值，这样余下的代码就不必再负责保存结果并可以复用该值。你可能见过这种模式被称 <em>memoization</em> 或 <em>lazy evaluation</em> <em>（惰性求值）</em>。</p>
-<p>为了让结构体存放闭包，我们需要指定闭包的类型，因为结构体定义需要知道其每一个字段的类型。每一个闭包实例有其自己独有的匿名类型：也就是说，即便两个闭包有着相同的签名，他们的类型仍然可以被认为是不同。为了定义使用闭包的结构体、枚举或函数参数，需要像第十章讨论的那样使用泛型和 trait bound。</p>
+<p>为了让结构体存放闭包，我们需要指定闭包的类型，因为结构体定义需要知道其每一个字段的类型。每一个闭包实例有其自己独有的匿名类型：也就是说，即便两个闭包有着相同的签名，他们的类型仍然可以被认为是不同。为了定义使用闭包的结构体、枚举或函数参数，需要像第 10 章讨论的那样使用泛型和 trait bound。</p>
 <p><code>Fn</code> 系列 trait 由标准库提供。所有的闭包都实现了 trait <code>Fn</code>、<code>FnMut</code> 或 <code>FnOnce</code> 中的一个。在 <a href="#%E9%97%AD%E5%8C%85%E4%BC%9A%E6%8D%95%E8%8E%B7%E5%85%B6%E7%8E%AF%E5%A2%83">“闭包会捕获其环境”</a> 部分我们会讨论这些 trait 的区别；在这个例子中可以使用 <code>Fn</code> trait。</p>
 <p>为了满足 <code>Fn</code> trait bound 我们增加了代表闭包所必须的参数和返回值类型的类型。在这个例子中，闭包有一个 <code>u32</code> 的参数并返回一个 <code>u32</code>，这样所指定的 trait bound 就是 <code>Fn(u32) -&gt; u32</code>。</p>
 <p>示例 13-9 展示了存放了闭包和一个 Option 结果值的 <code>Cacher</code> 结构体的定义：</p>
@@ -589,7 +589,7 @@ fn call_with_different_values() {
 </ul>
 <p>当创建一个闭包时，Rust 根据其如何使用环境中变量来推断我们希望如何引用环境。由于所有闭包都可以被调用至少一次，所以所有闭包都实现了 <code>FnOnce</code> 。那些并没有移动被捕获变量的所有权到闭包内的闭包也实现了 <code>FnMut</code> ，而不需要对被捕获的变量进行可变访问的闭包则也实现了 <code>Fn</code> 。 在示例 13-12 中，<code>equal_to_x</code> 闭包不可变的借用了 <code>x</code>（所以 <code>equal_to_x</code> 具有 <code>Fn</code> trait），因为闭包体只需要读取 <code>x</code> 的值。</p>
 <p>如果你希望强制闭包获取其使用的环境值的所有权，可以在参数列表前使用 <code>move</code> 关键字。这个技巧在将闭包传递给新线程以便将数据移动到新线程中时最为实用。</p>
-<p>第十六章讨论并发时会展示更多 <code>move</code> 闭包的例子，不过现在这里修改了示例 13-12 中的代码（作为演示），在闭包定义中增加 <code>move</code> 关键字并使用 vector 代替整型，因为整型可以被拷贝而不是移动；注意这些代码还不能编译：</p>
+<p>第 16 章讨论并发时会展示更多 <code>move</code> 闭包的例子，不过现在这里修改了示例 13-12 中的代码（作为演示），在闭包定义中增加 <code>move</code> 关键字并使用 vector 代替整型，因为整型可以被拷贝而不是移动；注意这些代码还不能编译：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">fn main() {
     let x = vec![1, 2, 3];

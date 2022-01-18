@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -197,7 +197,7 @@ fn handle_connection(mut stream: TcpStream) {
 <p>不同于分配无限的线程，线程池中将有固定数量的等待线程。当新进请求时，将请求发送到线程池中做处理。线程池会维护一个接收请求的队列。每一个线程会从队列中取出一个请求，处理请求，接着向对队列索取另一个请求。通过这种设计，则可以并发处理 <code>N</code> 个请求，其中 <code>N</code> 为线程数。如果每一个线程都在响应慢请求，之后的请求仍然会阻塞队列，不过相比之前增加了能处理的慢请求的数量。</p>
 <p>这个设计仅仅是多种改善 web server 吞吐量的方法之一。其他可供探索的方法有 fork/join 模型和单线程异步 I/O 模型。如果你对这个主题感兴趣，则可以阅读更多关于其他解决方案的内容并尝试用 Rust 实现他们；对于一个像 Rust 这样的底层语言，所有这些方法都是可能的。</p>
 <p>在开始之前，让我们讨论一下线程池应用看起来怎样。当尝试设计代码时，首先编写客户端接口确实有助于指导代码设计。以期望的调用方式来构建 API 代码的结构，接着在这个结构之内实现功能，而不是先实现功能再设计公有 API。</p>
-<p>类似于第十二章项目中使用的测试驱动开发。这里将要使用编译器驱动开发（compiler-driven development）。我们将编写调用所期望的函数的代码，接着观察编译器错误告诉我们接下来需要修改什么使得代码可以工作。</p>
+<p>类似于第 12 章项目中使用的测试驱动开发。这里将要使用编译器驱动开发（compiler-driven development）。我们将编写调用所期望的函数的代码，接着观察编译器错误告诉我们接下来需要修改什么使得代码可以工作。</p>
 <h4 id="为每一个请求分配线程的代码结构"><a class="header" href="#为每一个请求分配线程的代码结构">为每一个请求分配线程的代码结构</a></h4>
 <p>首先，让我们探索一下为每一个连接都创建一个线程的代码看起来如何。这并不是最终方案，因为正如之前讲到的它会潜在的分配无限的线程，不过这是一个开始。示例 20-11 展示了 <code>main</code> 的改变，它在 <code>for</code> 循环中为每一个流分配了一个新线程进行处理：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -220,7 +220,7 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="boring">fn handle_connection(mut stream: TcpStream) {}
 </span></code></pre></pre>
 <p><span class="caption">示例 20-11: 为每一个流新建一个线程</span></p>
-<p>正如第十六章讲到的，<code>thread::spawn</code> 会创建一个新线程并在其中运行闭包中的代码。如果运行这段代码并在在浏览器中加载 <em>/sleep</em>，接着在另两个浏览器标签页中加载 <em>/</em>，确实会发现 <em>/</em> 请求不必等待 <em>/sleep</em> 结束。不过正如之前提到的，这最终会使系统崩溃因为我们无限制的创建新线程。</p>
+<p>正如第 16 章讲到的，<code>thread::spawn</code> 会创建一个新线程并在其中运行闭包中的代码。如果运行这段代码并在在浏览器中加载 <em>/sleep</em>，接着在另两个浏览器标签页中加载 <em>/</em>，确实会发现 <em>/</em> 请求不必等待 <em>/sleep</em> 结束。不过正如之前提到的，这最终会使系统崩溃因为我们无限制的创建新线程。</p>
 <h4 id="为有限数量的线程创建一个类似的接口"><a class="header" href="#为有限数量的线程创建一个类似的接口">为有限数量的线程创建一个类似的接口</a></h4>
 <p>我们期望线程池以类似且熟悉的方式工作，以便从线程切换到线程池并不会对使用该 API 的代码做出较大的修改。示例 20-12 展示我们希望用来替换 <code>thread::spawn</code> 的 <code>ThreadPool</code> 结构体的假想接口：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -302,7 +302,7 @@ impl ThreadPool {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这里选择 <code>usize</code> 作为 <code>size</code> 参数的类型，因为我们知道为负的线程数没有意义。我们还知道将使用 4 作为线程集合的元素数量，这也就是使用 <code>usize</code> 类型的原因，如第三章 <a href="ch03-02-data-types.html#integer-types">“整数类型”</a> 部分所讲。</p>
+<p>这里选择 <code>usize</code> 作为 <code>size</code> 参数的类型，因为我们知道为负的线程数没有意义。我们还知道将使用 4 作为线程集合的元素数量，这也就是使用 <code>usize</code> 类型的原因，如第 3 章 <a href="ch03-02-data-types.html#integer-types">“整数类型”</a> 部分所讲。</p>
 <p>再次编译检查这段代码：</p>
 <pre><code class="language-text">$ cargo check
    Compiling hello v0.1.0 (file:///projects/hello)
@@ -322,7 +322,7 @@ error[E0599]: no method named `execute` found for type `hello::ThreadPool` in th
    |              ^^^^^^^
 </code></pre>
 <p>现在有了一个警告和一个错误。暂时先忽略警告，发生错误是因为并没有 <code>ThreadPool</code> 上的 <code>execute</code> 方法。回忆 <a href="#creating-a-similar-interface-for-a-finite-number-of-threads">“为有限数量的线程创建一个类似的接口”</a>  部分我们决定线程池应该有与 <code>thread::spawn</code> 类似的接口，同时我们将实现 <code>execute</code> 函数来获取传递的闭包并将其传递给池中的空闲线程执行。</p>
-<p>我们会在 <code>ThreadPool</code> 上定义 <code>execute</code> 函数来获取一个闭包参数。回忆第十三章的 <a href="ch13-01-closures.html#storing-closures-using-generic-parameters-and-the-fn-traits">“使用带有泛型和 <code>Fn</code> trait 的闭包”</a> 部分，闭包作为参数时可以使用三个不同的 trait：<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>。我们需要决定这里应该使用哪种闭包。最终需要实现的类似于标准库的 <code>thread::spawn</code>，所以我们可以观察 <code>thread::spawn</code> 的签名在其参数中使用了何种 bound。查看文档会发现：</p>
+<p>我们会在 <code>ThreadPool</code> 上定义 <code>execute</code> 函数来获取一个闭包参数。回忆第 13 章的 <a href="ch13-01-closures.html#storing-closures-using-generic-parameters-and-the-fn-traits">“使用带有泛型和 <code>Fn</code> trait 的闭包”</a> 部分，闭包作为参数时可以使用三个不同的 trait：<code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code>。我们需要决定这里应该使用哪种闭包。最终需要实现的类似于标准库的 <code>thread::spawn</code>，所以我们可以观察 <code>thread::spawn</code> 的签名在其参数中使用了何种 bound。查看文档会发现：</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
         F: FnOnce() -&gt; T + Send + 'static,
@@ -398,7 +398,7 @@ warning: unused variable: `f`
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 20-13: 实现 <code>ThreadPool::new</code> 在 <code>size</code> 为零时 panic</span></p>
-<p>这里用文档注释为 <code>ThreadPool</code> 增加了一些文档。注意这里遵循了良好的文档实践并增加了一个部分来提示函数会 panic 的情况，正如第十四章所讨论的。尝试运行 <code>cargo doc --open</code> 并点击 <code>ThreadPool</code> 结构体来查看生成的 <code>new</code> 的文档看起来如何！</p>
+<p>这里用文档注释为 <code>ThreadPool</code> 增加了一些文档。注意这里遵循了良好的文档实践并增加了一个部分来提示函数会 panic 的情况，正如第 14 章所讨论的。尝试运行 <code>cargo doc --open</code> 并点击 <code>ThreadPool</code> 结构体来查看生成的 <code>new</code> 的文档看起来如何！</p>
 <p>相比像这里使用 <code>assert!</code> 宏，也可以让 <code>new</code> 像之前 I/O 项目中示例 12-9 中 <code>Config::new</code> 那样返回一个 <code>Result</code>，不过在这里我们选择创建一个没有任何线程的线程池应该是不可恢复的错误。如果你想做的更好，尝试编写一个采用如下签名的 <code>new</code> 版本来感受一下两者的区别：</p>
 <pre><code class="language-rust ignore">pub fn new(size: usize) -&gt; Result&lt;ThreadPool, PoolCreationError&gt; {
 </code></pre>
@@ -506,7 +506,7 @@ impl Worker {
 <h4 id="使用通道向线程发送请求"><a class="header" href="#使用通道向线程发送请求">使用通道向线程发送请求</a></h4>
 <p>下一个需要解决的问题是传递给 <code>thread::spawn</code> 的闭包完全没有做任何工作。目前，我们在 <code>execute</code> 方法中获得期望执行的闭包，不过在创建 <code>ThreadPool</code> 的过程中创建每一个 <code>Worker</code> 时需要向 <code>thread::spawn</code> 传递一个闭包。</p>
 <p>我们希望刚创建的 <code>Worker</code> 结构体能够从 <code>ThreadPool</code> 的队列中获取需要执行的代码，并发送到线程中执行他们。</p>
-<p>在第十六章，我们学习了 <strong>通道</strong> —— 一个沟通两个线程的简单手段 —— 对于这个例子来说则是绝佳的。这里通道将充当任务队列的作用，<code>execute</code> 将通过 <code>ThreadPool</code> 向其中线程正在寻找工作的 <code>Worker</code> 实例发送任务。如下是这个计划：</p>
+<p>在第 16 章，我们学习了 <strong>通道</strong> —— 一个沟通两个线程的简单手段 —— 对于这个例子来说则是绝佳的。这里通道将充当任务队列的作用，<code>execute</code> 将通过 <code>ThreadPool</code> 向其中线程正在寻找工作的 <code>Worker</code> 实例发送任务。如下是这个计划：</p>
 <ol>
 <li><code>ThreadPool</code> 会创建一个通道并充当发送端。</li>
 <li>每个 <code>Worker</code> 将会充当通道的接收端。</li>
@@ -623,9 +623,9 @@ error[E0382]: use of moved value: `receiver`
    = note: move occurs because `receiver` has type
    `std::sync::mpsc::Receiver&lt;Job&gt;`, which does not implement the `Copy` trait
 </code></pre>
-<p>这段代码尝试将 <code>receiver</code> 传递给多个 <code>Worker</code> 实例。这是不行的，回忆第十六章：Rust 所提供的通道实现是多 <strong>生产者</strong>，单 <strong>消费者</strong> 的。这意味着不能简单的克隆通道的消费端来解决问题。即便可以，那也不是我们希望使用的技术；我们希望通过在所有的 worker 中共享单一 <code>receiver</code>，在线程间分发任务。</p>
-<p>另外，从通道队列中取出任务涉及到修改 <code>receiver</code>，所以这些线程需要一个能安全的共享和修改 <code>receiver</code> 的方式，否则可能导致竞争状态（参考第十六章）。</p>
-<p>回忆一下第十六章讨论的线程安全智能指针，为了在多个线程间共享所有权并允许线程修改其值，需要使用 <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>。<code>Arc</code> 使得多个 worker 拥有接收端，而 <code>Mutex</code> 则确保一次只有一个 worker 能从接收端得到任务。示例 20-18 展示了所需的修改：</p>
+<p>这段代码尝试将 <code>receiver</code> 传递给多个 <code>Worker</code> 实例。这是不行的，回忆第 16 章：Rust 所提供的通道实现是多 <strong>生产者</strong>，单 <strong>消费者</strong> 的。这意味着不能简单的克隆通道的消费端来解决问题。即便可以，那也不是我们希望使用的技术；我们希望通过在所有的 worker 中共享单一 <code>receiver</code>，在线程间分发任务。</p>
+<p>另外，从通道队列中取出任务涉及到修改 <code>receiver</code>，所以这些线程需要一个能安全的共享和修改 <code>receiver</code> 的方式，否则可能导致竞争状态（参考第 16 章）。</p>
+<p>回忆一下第 16 章讨论的线程安全智能指针，为了在多个线程间共享所有权并允许线程修改其值，需要使用 <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>。<code>Arc</code> 使得多个 worker 拥有接收端，而 <code>Mutex</code> 则确保一次只有一个 worker 能从接收端得到任务。示例 20-18 展示了所需的修改：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -690,7 +690,7 @@ use std::sync::Mutex;
 <p>在 <code>ThreadPool::new</code> 中，将通道的接收端放入一个 <code>Arc</code> 和一个 <code>Mutex</code> 中。对于每一个新 worker，克隆 <code>Arc</code> 来增加引用计数，如此这些 worker 就可以共享接收端的所有权了。</p>
 <p>通过这些修改，代码可以编译了！我们做到了！</p>
 <h4 id="实现-execute-方法"><a class="header" href="#实现-execute-方法">实现 <code>execute</code> 方法</a></h4>
-<p>最后让我们实现 <code>ThreadPool</code> 上的 <code>execute</code> 方法。同时也要修改 <code>Job</code> 结构体：它将不再是结构体，<code>Job</code> 将是一个有着 <code>execute</code> 接收到的闭包类型的 trait 对象的类型别名。第十九章 <a href="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases">“类型别名用来创建类型同义词”</a> 部分提到过，类型别名允许将长的类型变短。观察示例 20-19：</p>
+<p>最后让我们实现 <code>ThreadPool</code> 上的 <code>execute</code> 方法。同时也要修改 <code>Job</code> 结构体：它将不再是结构体，<code>Job</code> 将是一个有着 <code>execute</code> 接收到的闭包类型的 trait 对象的类型别名。第 19 章 <a href="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases">“类型别名用来创建类型同义词”</a> 部分提到过，类型别名允许将长的类型变短。观察示例 20-19：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -794,7 +794,7 @@ Worker 2 got a job; executing.
 <blockquote>
 <p>注意如果同时在多个浏览器窗口打开 <em>/sleep</em>，它们可能会彼此间隔地加载 5 秒，因为一些浏览器处于缓存的原因会顺序执行相同请求的多个实例。这些限制并不是由于我们的 web server 造成的。</p>
 </blockquote>
-<p>在学习了第十八章的 <code>while let</code> 循环之后，你可能会好奇为何不能如此编写 worker 线程，如示例 20-21 所示：</p>
+<p>在学习了第 18 章的 <code>while let</code> 循环之后，你可能会好奇为何不能如此编写 worker 线程，如示例 20-21 所示：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><code class="language-rust ignore not_desired_behavior">// --snip--
 

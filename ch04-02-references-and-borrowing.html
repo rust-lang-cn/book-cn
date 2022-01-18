@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -171,7 +171,7 @@ fn calculate_length(s: &amp;String) -&gt; usize {
 <img alt="&String s pointing at String s1" src="img/trpl04-05.svg" class="center" />
 <p><span class="caption">图 4-5：<code>&amp;String s</code> 指向 <code>String s1</code> 示意图</span></p>
 <blockquote>
-<p>注意：与使用 <code>&amp;</code> 引用相反的操作是 <strong>解引用</strong>（<em>dereferencing</em>），它使用解引用运算符，<code>*</code>。我们将会在第八章遇到一些解引用运算符，并在第十五章详细讨论解引用。</p>
+<p>注意：与使用 <code>&amp;</code> 引用相反的操作是 <strong>解引用</strong>（<em>dereferencing</em>），它使用解引用运算符，<code>*</code>。我们将会在第 8 章遇到一些解引用运算符，并在第 15 章详细讨论解引用。</p>
 </blockquote>
 <p>仔细看看这个函数调用：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -339,7 +339,7 @@ fn dangle() -&gt; &amp;String {
   no value for it to be borrowed from
   = help: consider giving it a 'static lifetime
 </code></pre>
-<p>错误信息引用了一个我们还未介绍的功能：生命周期（lifetimes）。第十章会详细介绍生命周期。不过，如果你不理会生命周期部分，错误信息中确实包含了为什么这段代码有问题的关键信息：</p>
+<p>错误信息引用了一个我们还未介绍的功能：生命周期（lifetimes）。第 10 章会详细介绍生命周期。不过，如果你不理会生命周期部分，错误信息中确实包含了为什么这段代码有问题的关键信息：</p>
 <pre><code class="language-text">this function's return type contains a borrowed value, but there is no value for it to be borrowed from.
 </code></pre>
 <p>让我们仔细看看我们的 <code>dangle</code> 代码的每一步到底发生了什么：</p>

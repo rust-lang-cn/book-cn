@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -153,7 +153,7 @@
                         <h2 id="所有可能会用到模式的位置"><a class="header" href="#所有可能会用到模式的位置">所有可能会用到模式的位置</a></h2>
 <p>模式出现在 Rust 的很多地方。你已经在不经意间使用了很多模式！本部分是一个所有有效模式位置的参考。</p>
 <h3 id="match-分支"><a class="header" href="#match-分支"><code>match</code> 分支</a></h3>
-<p>如第六章所讨论的，一个模式常用的位置是 <code>match</code> 表达式的分支。在形式上 <code>match</code> 表达式由 <code>match</code> 关键字、用于匹配的值和一个或多个分支构成，这些分支包含一个模式和在值匹配分支的模式时运行的表达式：</p>
+<p>如第 6 章所讨论的，一个模式常用的位置是 <code>match</code> 表达式的分支。在形式上 <code>match</code> 表达式由 <code>match</code> 关键字、用于匹配的值和一个或多个分支构成，这些分支包含一个模式和在值匹配分支的模式时运行的表达式：</p>
 <pre><code class="language-text">match VALUE {
     PATTERN =&gt; EXPRESSION,
     PATTERN =&gt; EXPRESSION,
@@ -163,7 +163,7 @@
 <p><code>match</code> 表达式必须是 <strong>穷尽</strong>（<em>exhaustive</em>）的，意为 <code>match</code> 表达式所有可能的值都必须被考虑到。一个确保覆盖每个可能值的方法是在最后一个分支使用捕获所有的模式：比如，一个匹配任何值的名称永远也不会失败，因此可以覆盖所有匹配剩下的情况。</p>
 <p>有一个特定的模式 <code>_</code> 可以匹配所有情况，不过它从不绑定任何变量。这在例如希望忽略任何未指定值的情况很有用。本章之后的 <a href="ch18-03-pattern-syntax.html#ignoring-values-in-a-pattern">“忽略模式中的值”</a>  部分会详细介绍 <code>_</code> 模式的更多细节。</p>
 <h3 id="if-let-条件表达式"><a class="header" href="#if-let-条件表达式"><code>if let</code> 条件表达式</a></h3>
-<p>第六章讨论过了 <code>if let</code> 表达式，以及它是如何主要用于编写等同于只关心一个情况的 <code>match</code> 语句简写的。<code>if let</code> 可以对应一个可选的带有代码的 <code>else</code> 在 <code>if let</code> 中的模式不匹配时运行。</p>
+<p>第 6 章讨论过了 <code>if let</code> 表达式，以及它是如何主要用于编写等同于只关心一个情况的 <code>match</code> 语句简写的。<code>if let</code> 可以对应一个可选的带有代码的 <code>else</code> 在 <code>if let</code> 中的模式不匹配时运行。</p>
 <p>示例 18-1 展示了也可以组合并匹配 <code>if let</code>、<code>else if</code> 和 <code>else if let</code> 表达式。这相比 <code>match</code> 表达式一次只能将一个值与模式比较提供了更多灵活性；一系列 <code>if let</code>、<code>else if</code>、<code>else if let</code> 分支并不要求其条件相互关联。</p>
 <p>示例 18-1 中的代码展示了一系列针对不同条件的检查来决定背景颜色应该是什么。为了达到这个例子的目的，我们创建了硬编码值的变量，在真实程序中则可能由询问用户获得。</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -211,7 +211,7 @@ while let Some(top) = stack.pop() {
 <p><span class="caption">列表 18-2: 使用 <code>while let</code> 循环只要 <code>stack.pop()</code> 返回 <code>Some</code> 就打印出其值</span></p>
 <p>这个例子会打印出 3、2 接着是 1。<code>pop</code> 方法取出 vector 的最后一个元素并返回 <code>Some(value)</code>。如果 vector 是空的，它返回 <code>None</code>。<code>while</code> 循环只要 <code>pop</code> 返回 <code>Some</code> 就会一直运行其块中的代码。一旦其返回 <code>None</code>，<code>while</code> 循环停止。我们可以使用 <code>while let</code> 来弹出栈中的每一个元素。</p>
 <h3 id="for-循环"><a class="header" href="#for-循环"><code>for</code> 循环</a></h3>
-<p>如同第三章所讲的，<code>for</code> 循环是 Rust 中最常见的循环结构，不过还没有讲到的是 <code>for</code> 可以获取一个模式。在 <code>for</code> 循环中，模式是 <code>for</code> 关键字直接跟随的值，正如 <code>for x in y</code> 中的 <code>x</code>。</p>
+<p>如同第 3 章所讲的，<code>for</code> 循环是 Rust 中最常见的循环结构，不过还没有讲到的是 <code>for</code> 可以获取一个模式。在 <code>for</code> 循环中，模式是 <code>for</code> 关键字直接跟随的值，正如 <code>for x in y</code> 中的 <code>x</code>。</p>
 <p>示例 18-3 中展示了如何使用 <code>for</code> 循环来解构，或拆开一个元组作为 <code>for</code> 循环的一部分：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -290,7 +290,7 @@ fn main() {
 </code></pre></pre>
 <p><span class="caption">列表 18-7: 一个在参数中解构元组的函数</span></p>
 <p>这会打印出 <code>Current location: (3, 5)</code>。值 <code>&amp;(3, 5)</code> 会匹配模式 <code>&amp;(x, y)</code>，如此 <code>x</code> 得到了值 <code>3</code>，而 <code>y</code>得到了值 <code>5</code>。</p>
-<p>因为如第十三章所讲闭包类似于函数，也可以在闭包参数列表中使用模式。</p>
+<p>因为如第 13 章所讲闭包类似于函数，也可以在闭包参数列表中使用模式。</p>
 <p>现在我们见过了很多使用模式的方式了，不过模式在每个使用它的地方并不以相同的方式工作；在一些地方，模式必须是 <em>irrefutable</em> 的，意味着他们必须匹配所提供的任何值。在另一些情况，他们则可以是 refutable 的。接下来让我们讨论这两个概念。</p>
 
                     </main>

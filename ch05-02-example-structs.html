@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -176,7 +176,7 @@ fn area(width: u32, height: u32) -&gt; u32 {
 <p>这些代码的问题突显在 <code>area</code> 的签名上：</p>
 <pre><code class="language-rust ignore">fn area(width: u32, height: u32) -&gt; u32 {
 </code></pre>
-<p>函数 <code>area</code> 本应该计算一个长方形的面积，不过函数却有两个参数。这两个参数是相关联的，不过程序本身却没有表现出这一点。将长度和宽度组合在一起将更易懂也更易处理。第三章的 <a href="ch03-02-data-types.html#the-tuple-type">“元组类型”</a> 部分已经讨论过了一种可行的方法：元组。</p>
+<p>函数 <code>area</code> 本应该计算一个长方形的面积，不过函数却有两个参数。这两个参数是相关联的，不过程序本身却没有表现出这一点。将长度和宽度组合在一起将更易懂也更易处理。第 3 章的 <a href="ch03-02-data-types.html#the-tuple-type">“元组类型”</a> 部分已经讨论过了一种可行的方法：元组。</p>
 <h3 id="使用元组重构"><a class="header" href="#使用元组重构">使用元组重构</a></h3>
 <p>示例 5-9 展示了使用元组的另一个程序版本。</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -219,7 +219,7 @@ fn area(rectangle: &amp;Rectangle) -&gt; u32 {
 </code></pre></pre>
 <p><span class="caption">示例 5-10：定义 <code>Rectangle</code> 结构体</span></p>
 <p>这里我们定义了一个结构体并称其为 <code>Rectangle</code>。在大括号中定义了字段 <code>width</code> 和 <code>height</code>，类型都是 <code>u32</code>。接着在 <code>main</code> 中，我们创建了一个具体的 <code>Rectangle</code> 实例，它的宽是 30，高是 50。</p>
-<p>函数 <code>area</code> 现在被定义为接收一个名叫 <code>rectangle</code> 的参数，其类型是一个结构体 <code>Rectangle</code> 实例的不可变借用。第四章讲到过，我们希望借用结构体而不是获取它的所有权，这样 <code>main</code> 函数就可以保持 <code>rect1</code> 的所有权并继续使用它，所以这就是为什么在函数签名和调用的地方会有 <code>&amp;</code>。</p>
+<p>函数 <code>area</code> 现在被定义为接收一个名叫 <code>rectangle</code> 的参数，其类型是一个结构体 <code>Rectangle</code> 实例的不可变借用。第 4 章讲到过，我们希望借用结构体而不是获取它的所有权，这样 <code>main</code> 函数就可以保持 <code>rect1</code> 的所有权并继续使用它，所以这就是为什么在函数签名和调用的地方会有 <code>&amp;</code>。</p>
 <p><code>area</code> 函数访问 <code>Rectangle</code> 实例的 <code>width</code> 和 <code>height</code> 字段。<code>area</code> 的函数签名现在明确的阐述了我们的意图：使用 <code>Rectangle</code> 的 <code>width</code> 和 <code>height</code> 字段，计算 <code>Rectangle</code> 的面积。这表明宽高是相互联系的，并为这些值提供了描述性的名称而不是使用元组的索引值 <code>0</code> 和 <code>1</code> 。结构体胜在更清晰明了。</p>
 <h3 id="通过派生-trait-增加实用功能"><a class="header" href="#通过派生-trait-增加实用功能">通过派生 trait 增加实用功能</a></h3>
 <p>如果能够在调试程序时打印出 <code>Rectangle</code> 实例来查看其所有字段的值就更好了。示例 5-11 像前面章节那样尝试使用 <code>println!</code> 宏。但这并不行。</p>
@@ -276,7 +276,7 @@ fn main() {
     height: 50
 }
 </code></pre>
-<p>Rust 为我们提供了很多可以通过 <code>derive</code> 注解来使用的 trait，他们可以为我们的自定义类型增加实用的行为。附录 C 中列出了这些 trait 和行为。第十章会介绍如何通过自定义行为来实现这些 trait，同时还有如何创建你自己的 trait。</p>
+<p>Rust 为我们提供了很多可以通过 <code>derive</code> 注解来使用的 trait，他们可以为我们的自定义类型增加实用的行为。附录 C 中列出了这些 trait 和行为。第 10 章会介绍如何通过自定义行为来实现这些 trait，同时还有如何创建你自己的 trait。</p>
 <p>我们的 <code>area</code> 函数是非常特殊的，它只计算长方形的面积。如果这个行为与 <code>Rectangle</code> 结构体再结合得更紧密一些就更好了，因为它不能用于其他类型。现在让我们看看如何继续重构这些代码，来将 <code>area</code> 函数协调进 <code>Rectangle</code> 类型定义的 <code>area</code> <strong>方法</strong> 中。</p>
 
                     </main>

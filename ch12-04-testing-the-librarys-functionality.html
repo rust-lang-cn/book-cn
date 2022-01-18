@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -162,7 +162,7 @@
 <p>这只是众多编写软件的方法之一，不过 TDD 有助于驱动代码的设计。在编写能使测试通过的代码之前编写测试有助于在开发过程中保持高测试覆盖率。</p>
 <p>我们将测试驱动实现实际在文件内容中搜索查询字符串并返回匹配的行示例的功能。我们将在一个叫做 <code>search</code> 的函数中增加这些功能。</p>
 <h3 id="编写失败测试"><a class="header" href="#编写失败测试">编写失败测试</a></h3>
-<p>去掉 <em>src/lib.rs</em> 和 <em>src/main.rs</em> 中用于检查程序行为的 <code>println!</code> 语句，因为不再真正需要他们了。接着我们会像 <a href="ch11-01-writing-tests.html#the-anatomy-of-a-test-function">第十一章</a> 那样增加一个 <code>test</code> 模块和一个测试函数。测试函数指定了 <code>search</code> 函数期望拥有的行为：它会获取一个需要查询的字符串和用来查询的文本，并只会返回包含请求的文本行。示例 12-15 展示了这个测试，它还不能编译：</p>
+<p>去掉 <em>src/lib.rs</em> 和 <em>src/main.rs</em> 中用于检查程序行为的 <code>println!</code> 语句，因为不再真正需要他们了。接着我们会像 <a href="ch11-01-writing-tests.html#the-anatomy-of-a-test-function">第 11 章</a> 那样增加一个 <code>test</code> 模块和一个测试函数。测试函数指定了 <code>search</code> 函数期望拥有的行为：它会获取一个需要查询的字符串和用来查询的文本，并只会返回包含请求的文本行。示例 12-15 展示了这个测试，它还不能编译：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -204,7 +204,7 @@ Pick three.&quot;;
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 12-16：刚好足够使测试通过编译的 <code>search</code> 函数定义</span></p>
-<p>注意需要在 <code>search</code> 的签名中定义一个显式生命周期 <code>'a</code> 并用于 <code>contents</code> 参数和返回值。回忆一下 <a href="ch10-03-lifetime-syntax.html">第十章</a> 中讲到生命周期参数指定哪个参数的生命周期与返回值的生命周期相关联。在这个例子中，我们表明返回的 vector 中应该包含引用参数 <code>contents</code>（而不是参数<code>query</code>） slice 的字符串 slice。</p>
+<p>注意需要在 <code>search</code> 的签名中定义一个显式生命周期 <code>'a</code> 并用于 <code>contents</code> 参数和返回值。回忆一下 <a href="ch10-03-lifetime-syntax.html">第 10 章</a> 中讲到生命周期参数指定哪个参数的生命周期与返回值的生命周期相关联。在这个例子中，我们表明返回的 vector 中应该包含引用参数 <code>contents</code>（而不是参数<code>query</code>） slice 的字符串 slice。</p>
 <p>换句话说，我们告诉 Rust 函数 <code>search</code> 返回的数据将与 <code>search</code> 函数中的参数 <code>contents</code> 的数据存在的一样久。这是非常重要的！为了使这个引用有效那么 <strong>被</strong> slice 引用的数据也需要保持有效；如果编译器认为我们是在创建 <code>query</code> 而不是 <code>contents</code> 的字符串 slice，那么安全检查将是不正确的。</p>
 <p>如果尝试不用生命周期编译的话，我们将得到如下错误：</p>
 <pre><code class="language-text">error[E0106]: missing lifetime specifier
@@ -218,7 +218,7 @@ parameter
   signature does not say whether it is borrowed from `query` or `contents`
 </code></pre>
 <p>Rust 不可能知道我们需要的是哪一个参数，所以需要告诉它。因为参数 <code>contents</code> 包含了所有的文本而且我们希望返回匹配的那部分文本，所以我们知道 <code>contents</code> 是应该要使用生命周期语法来与返回值相关联的参数。</p>
-<p>其他语言中并不需要你在函数签名中将参数与返回值相关联。所以这么做可能仍然感觉有些陌生，随着时间的推移这将会变得越来越容易。你可能想要将这个例子与第十章中 <a href="ch10-03-lifetime-syntax.html#validating-references-with-lifetimes">“生命周期与引用有效性”</a> 部分做对比。</p>
+<p>其他语言中并不需要你在函数签名中将参数与返回值相关联。所以这么做可能仍然感觉有些陌生，随着时间的推移这将会变得越来越容易。你可能想要将这个例子与第 10 章中 <a href="ch10-03-lifetime-syntax.html#validating-references-with-lifetimes">“生命周期与引用有效性”</a> 部分做对比。</p>
 <p>现在运行测试：</p>
 <pre><code class="language-text">$ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
@@ -267,7 +267,7 @@ error: test failed, to rerun pass '--lib'
 }
 </code></pre>
 <p><span class="caption">示例 12-17：遍历 <code>contents</code> 的每一行</span></p>
-<p><code>lines</code> 方法返回一个迭代器。<a href="ch13-02-iterators.html">第十三章</a> 会深入了解迭代器，不过我们已经在 <a href="ch03-05-control-flow.html#looping-through-a-collection-with-for">示例 3-5</a> 中见过使用迭代器的方法了，在那里使用了一个 <code>for</code> 循环和迭代器在一个集合的每一项上运行了一些代码。</p>
+<p><code>lines</code> 方法返回一个迭代器。<a href="ch13-02-iterators.html">第 13 章</a> 会深入了解迭代器，不过我们已经在 <a href="ch03-05-control-flow.html#looping-through-a-collection-with-for">示例 3-5</a> 中见过使用迭代器的方法了，在那里使用了一个 <code>for</code> 循环和迭代器在一个集合的每一项上运行了一些代码。</p>
 <h4 id="用查询字符串搜索每一行"><a class="header" href="#用查询字符串搜索每一行">用查询字符串搜索每一行</a></h4>
 <p>接下来将会增加检查当前行是否包含查询字符串的功能。幸运的是，字符串类型为此也有一个叫做 <code>contains</code> 的实用方法！如示例 12-18 所示在 <code>search</code> 函数中加入 <code>contains</code> 方法调用。注意这仍然不能编译：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
@@ -305,7 +305,7 @@ test tests::one_result ... ok
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 </code></pre>
 <p>测试通过了，它可以工作了！</p>
-<p>现在正是可以考虑重构的时机，在保证测试通过，保持功能不变的前提下重构 <code>search</code> 函数。<code>search</code> 函数中的代码并不坏，不过并没有利用迭代器的一些实用功能。第十三章将回到这个例子并深入探索迭代器并看看如何改进代码。</p>
+<p>现在正是可以考虑重构的时机，在保证测试通过，保持功能不变的前提下重构 <code>search</code> 函数。<code>search</code> 函数中的代码并不坏，不过并没有利用迭代器的一些实用功能。第 13 章将回到这个例子并深入探索迭代器并看看如何改进代码。</p>
 <h4 id="在-run-函数中使用-search-函数"><a class="header" href="#在-run-函数中使用-search-函数">在 <code>run</code> 函数中使用 <code>search</code> 函数</a></h4>
 <p>现在 <code>search</code> 函数是可以工作并测试通过了的，我们需要实际在 <code>run</code> 函数中调用 <code>search</code>。需要将 <code>config.query</code> 值和 <code>run</code> 从文件中读取的 <code>contents</code> 传递给 <code>search</code> 函数。接着 <code>run</code> 会打印出 <code>search</code> 返回的每一行：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>

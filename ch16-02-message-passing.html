@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -165,7 +165,7 @@ fn main() {
 </code></pre>
 <p><span class="caption">示例 16-6: 创建一个通道，并将其两端赋值给 <code>tx</code> 和 <code>rx</code></span></p>
 <p>这里使用 <code>mpsc::channel</code> 函数创建一个新的通道；<code>mpsc</code> 是 <strong>多个生产者，单个消费者</strong>（<em>multiple producer, single consumer</em>）的缩写。简而言之，Rust 标准库实现通道的方式意味着一个通道可以有多个产生值的 <strong>发送</strong>（<em>sending</em>）端，但只能有一个消费这些值的 <strong>接收</strong>（<em>receiving</em>）端。想象一下多条小河小溪最终汇聚成大河：所有通过这些小河发出的东西最后都会来到下游的大河。目前我们以单个生产者开始，但是当示例可以工作后会增加多个生产者。</p>
-<p><code>mpsc::channel</code> 函数返回一个元组：第一个元素是发送端，而第二个元素是接收端。由于历史原因，<code>tx</code> 和 <code>rx</code> 通常作为 <strong>发送者</strong>（<em>transmitter</em>）和 <strong>接收者</strong>（<em>receiver</em>）的缩写，所以这就是我们将用来绑定这两端变量的名字。这里使用了一个 <code>let</code> 语句和模式来解构了此元组；第十八章会讨论 <code>let</code> 语句中的模式和解构。如此使用 <code>let</code> 语句是一个方便提取 <code>mpsc::channel</code> 返回的元组中一部分的手段。</p>
+<p><code>mpsc::channel</code> 函数返回一个元组：第一个元素是发送端，而第二个元素是接收端。由于历史原因，<code>tx</code> 和 <code>rx</code> 通常作为 <strong>发送者</strong>（<em>transmitter</em>）和 <strong>接收者</strong>（<em>receiver</em>）的缩写，所以这就是我们将用来绑定这两端变量的名字。这里使用了一个 <code>let</code> 语句和模式来解构了此元组；第 18 章会讨论 <code>let</code> 语句中的模式和解构。如此使用 <code>let</code> 语句是一个方便提取 <code>mpsc::channel</code> 返回的元组中一部分的手段。</p>
 <p>让我们将发送端移动到一个新建线程中并发送一个字符串，这样新建线程就可以和主线程通讯了，如示例 16-7 所示。这类似于在河的上游扔下一只橡皮鸭或从一个线程向另一个线程发送聊天信息：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::thread;
@@ -182,7 +182,7 @@ fn main() {
 </code></pre></pre>
 <p><span class="caption">示例 16-7: 将 <code>tx</code> 移动到一个新建的线程中并发送 “hi”</span></p>
 <p>这里再次使用 <code>thread::spawn</code> 来创建一个新线程并使用 <code>move</code> 将 <code>tx</code> 移动到闭包中这样新建线程就拥有 <code>tx</code> 了。新建线程需要拥有通道的发送端以便能向通道发送消息。</p>
-<p>通道的发送端有一个 <code>send</code> 方法用来获取需要放入通道的值。<code>send</code> 方法返回一个 <code>Result&lt;T, E&gt;</code> 类型，所以如果接收端已经被丢弃了，将没有发送值的目标，所以发送操作会返回错误。在这个例子中，出错的时候调用 <code>unwrap</code> 产生 panic。不过对于一个真实程序，需要合理地处理它：回到第九章复习正确处理错误的策略。</p>
+<p>通道的发送端有一个 <code>send</code> 方法用来获取需要放入通道的值。<code>send</code> 方法返回一个 <code>Result&lt;T, E&gt;</code> 类型，所以如果接收端已经被丢弃了，将没有发送值的目标，所以发送操作会返回错误。在这个例子中，出错的时候调用 <code>unwrap</code> 产生 panic。不过对于一个真实程序，需要合理地处理它：回到第 9 章复习正确处理错误的策略。</p>
 <p>在示例 16-8 中，我们在主线程中从通道的接收端获取值。这类似于在河的下游捞起橡皮鸭或接收聊天信息：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::thread;

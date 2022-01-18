@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -153,7 +153,7 @@
                         <h2 id="模式语法"><a class="header" href="#模式语法">模式语法</a></h2>
 <p>在本书中我们已领略过许多不同类型模式的例子。在本节中，我们收集了模式中所有有效的语法，并讨论了为什么可能要使用每个语法。</p>
 <h3 id="匹配字面值"><a class="header" href="#匹配字面值">匹配字面值</a></h3>
-<p>如第六章所示，可以直接匹配字面值模式。如下代码给出了一些例子：</p>
+<p>如第 6 章所示，可以直接匹配字面值模式。如下代码给出了一些例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -189,7 +189,7 @@ match x {
 <p>第二个匹配分支中的模式引入了一个新变量 <code>y</code>，它会匹配任何 <code>Some</code> 中的值。因为我们在 <code>match</code> 表达式的新作用域中，这是一个新变量，而不是开头声明为值 10 的那个 <code>y</code>。这个新的 <code>y</code> 绑定会匹配任何 <code>Some</code> 中的值，在这里是 <code>x</code> 中的值。因此这个 <code>y</code> 绑定了 <code>x</code> 中 <code>Some</code> 内部的值。这个值是 5，所以这个分支的表达式将会执行并打印出 <code>Matched, y = 5</code>。</p>
 <p>如果 <code>x</code> 的值是 <code>None</code> 而不是 <code>Some(5)</code>，头两个分支的模式不会匹配，所以会匹配下划线。这个分支的模式中没有引入变量 <code>x</code>，所以此时表达式中的 <code>x</code> 会是外部没有被覆盖的 <code>x</code>。在这个假想的例子中，<code>match</code> 将会打印 <code>Default case, x = None</code>。</p>
 <p>一旦 <code>match</code> 表达式执行完毕，其作用域也就结束了，同理内部 <code>y</code> 的作用域也结束了。最后的 <code>println!</code> 会打印 <code>at the end: x = Some(5), y = 10</code>。</p>
-<p>为了创建能够比较外部 <code>x</code> 和 <code>y</code> 的值，而不引入覆盖变量的 <code>match</code> 表达式，我们需要相应地使用带有条件的匹配守卫（match guard）。我们稍后将在 <a href="#extra-conditionals-with-match-guards">“匹配守卫提供的额外条件”</a> 这一小节讨论匹配守卫。</p>
+<p>为了创建能够比较外部 <code>x</code> 和 <code>y</code> 的值，而不引入覆盖变量的 <code>match</code> 表达式，我们需要相应地使用带有条件的匹配守卫（match guard）。我们稍后将在 <a href="#%E5%8C%B9%E9%85%8D%E5%AE%88%E5%8D%AB%E6%8F%90%E4%BE%9B%E7%9A%84%E9%A2%9D%E5%A4%96%E6%9D%A1%E4%BB%B6">“匹配守卫提供的额外条件”</a> 这一小节讨论匹配守卫。</p>
 <h3 id="多个模式"><a class="header" href="#多个模式">多个模式</a></h3>
 <p>在 <code>match</code> 表达式中，可以使用 <code>|</code> 语法匹配多个模式，它代表 <strong>或</strong>（<em>or</em>）的意思。例如，如下代码将 <code>x</code> 的值与匹配分支相比较，第一个分支有 <strong>或</strong> 选项，意味着如果 <code>x</code> 的值匹配此分支的任一个值，它就会运行：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -294,7 +294,7 @@ fn main() {
 <p>类似的，第二个分支通过指定字段 <code>x</code> 匹配字面值 <code>0</code> 来匹配任何位于 <code>y</code> 轴上的点，并为字段 <code>y</code> 创建了变量 <code>y</code>。第三个分支没有指定任何字面值，所以其会匹配任何其他的 <code>Point</code> 并为 <code>x</code> 和 <code>y</code> 两个字段创建变量。</p>
 <p>在这个例子中，值 <code>p</code> 因为其 <code>x</code> 包含 0 而匹配第二个分支，因此会打印出 <code>On the y axis at 7</code>。</p>
 <h4 id="解构枚举"><a class="header" href="#解构枚举">解构枚举</a></h4>
-<p>本书之前的部分曾经解构过枚举，比如第六章中示例 6-5 中解构了一个 <code>Option&lt;i32&gt;</code>。一个当时没有明确提到的细节是解构枚举的模式需要对应枚举所定义的储存数据的方式。让我们以示例 6-2 中的 <code>Message</code> 枚举为例，编写一个 <code>match</code> 使用模式解构每一个内部值，如示例 18-15 所示：</p>
+<p>本书之前的部分曾经解构过枚举，比如第 6 章中示例 6-5 中解构了一个 <code>Option&lt;i32&gt;</code>。一个当时没有明确提到的细节是解构枚举的模式需要对应枚举所定义的储存数据的方式。让我们以示例 6-2 中的 <code>Message</code> 枚举为例，编写一个 <code>match</code> 使用模式解构每一个内部值，如示例 18-15 所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">enum Message {
     Quit,
@@ -623,7 +623,7 @@ match msg {
 <p>使用 <code>@</code> 可以在一个模式中同时测试和保存变量值。</p>
 <h2 id="总结"><a class="header" href="#总结">总结</a></h2>
 <p>模式是 Rust 中一个很有用的功能，它帮助我们区分不同类型的数据。当用于 <code>match</code> 语句时，Rust 确保模式会包含每一个可能的值，否则程序将不能编译。<code>let</code> 语句和函数参数的模式使得这些结构更强大，可以在将值解构为更小部分的同时为变量赋值。可以创建简单或复杂的模式来满足我们的要求。</p>
-<p>接下来，在本书倒数第二章中，我们将介绍一些 Rust 众多功能中较为高级的部分。</p>
+<p>接下来，在本书倒数第 2 章中，我们将介绍一些 Rust 众多功能中较为高级的部分。</p>
 
                     </main>
 

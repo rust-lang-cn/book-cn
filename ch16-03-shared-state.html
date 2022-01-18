@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -156,7 +156,7 @@
 <p>What would communicating by sharing memory look like? In addition, why would message passing enthusiasts not use it and do the opposite instead?</p>
 <p>通过共享内存通讯看起来如何？除此之外，为何消息传递的拥护者并不使用它并反其道而行之呢？</p>
 </blockquote>
-<p>在某种程度上，任何编程语言中的通道都类似于单所有权，因为一旦将一个值传送到通道中，将无法再使用这个值。共享内存类似于多所有权：多个线程可以同时访问相同的内存位置。第十五章介绍了智能指针如何使得多所有权成为可能，然而这会增加额外的复杂性，因为需要以某种方式管理这些不同的所有者。Rust 的类型系统和所有权规则极大的协助了正确地管理这些所有权。作为一个例子，让我们看看互斥器，一个更为常见的共享内存并发原语。</p>
+<p>在某种程度上，任何编程语言中的通道都类似于单所有权，因为一旦将一个值传送到通道中，将无法再使用这个值。共享内存类似于多所有权：多个线程可以同时访问相同的内存位置。第 15 章介绍了智能指针如何使得多所有权成为可能，然而这会增加额外的复杂性，因为需要以某种方式管理这些不同的所有者。Rust 的类型系统和所有权规则极大的协助了正确地管理这些所有权。作为一个例子，让我们看看互斥器，一个更为常见的共享内存并发原语。</p>
 <h3 id="互斥器一次只允许一个线程访问数据"><a class="header" href="#互斥器一次只允许一个线程访问数据">互斥器一次只允许一个线程访问数据</a></h3>
 <p><strong>互斥器</strong>（<em>mutex</em>）是 <em>mutual exclusion</em> 的缩写，也就是说，任意时刻，其只允许一个线程访问某些数据。为了访问互斥器中的数据，线程首先需要通过获取互斥器的 <strong>锁</strong>（<em>lock</em>）来表明其希望访问数据。锁是一个作为互斥器一部分的数据结构，它记录谁有数据的排他访问权。因此，我们描述互斥器为通过锁系统 <strong>保护</strong>（<em>guarding</em>）其数据。</p>
 <p>互斥器以难以使用著称，因为你不得不记住：</p>
@@ -230,9 +230,9 @@ in previous iteration of loop
    = note: move occurs because `counter` has type `std::sync::Mutex&lt;i32&gt;`,
 which does not implement the `Copy` trait
 </code></pre>
-<p>错误信息表明 <code>counter</code> 值在上一次循环中被移动了。所以 Rust 告诉我们不能将 <code>counter</code> 锁的所有权移动到多个线程中。让我们通过一个第十五章讨论过的多所有权手段来修复这个编译错误。</p>
+<p>错误信息表明 <code>counter</code> 值在上一次循环中被移动了。所以 Rust 告诉我们不能将 <code>counter</code> 锁的所有权移动到多个线程中。让我们通过一个第 15 章讨论过的多所有权手段来修复这个编译错误。</p>
 <h4 id="多线程和多所有权"><a class="header" href="#多线程和多所有权">多线程和多所有权</a></h4>
-<p>在第十五章中，通过使用智能指针 <code>Rc&lt;T&gt;</code> 来创建引用计数的值，以便拥有多所有者。让我们在这也这么做看看会发生什么。将示例 16-14 中的 <code>Mutex&lt;T&gt;</code> 封装进 <code>Rc&lt;T&gt;</code> 中并在将所有权移入线程之前克隆了 <code>Rc&lt;T&gt;</code>。现在我们理解了所发生的错误，同时也将代码改回使用 <code>for</code> 循环，并保留闭包的 <code>move</code> 关键字：</p>
+<p>在第 15 章中，通过使用智能指针 <code>Rc&lt;T&gt;</code> 来创建引用计数的值，以便拥有多所有者。让我们在这也这么做看看会发生什么。将示例 16-14 中的 <code>Mutex&lt;T&gt;</code> 封装进 <code>Rc&lt;T&gt;</code> 中并在将所有权移入线程之前克隆了 <code>Rc&lt;T&gt;</code>。现在我们理解了所发生的错误，同时也将代码改回使用 <code>for</code> 循环，并保留闭包的 <code>move</code> 关键字：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">use std::rc::Rc;
 use std::sync::Mutex;
@@ -312,8 +312,8 @@ fn main() {
 </code></pre>
 <p>成功了！我们从 0 数到了 10，这可能并不是很显眼，不过一路上我们确实学习了很多关于 <code>Mutex&lt;T&gt;</code> 和线程安全的内容！这个例子中构建的结构可以用于比增加计数更为复杂的操作。使用这个策略，可将计算分成独立的部分，分散到多个线程中，接着使用 <code>Mutex&lt;T&gt;</code> 使用各自的结算结果更新最终的结果。</p>
 <h3 id="refcelltrct-与-mutextarct-的相似性"><a class="header" href="#refcelltrct-与-mutextarct-的相似性"><code>RefCell&lt;T&gt;</code>/<code>Rc&lt;T&gt;</code> 与 <code>Mutex&lt;T&gt;</code>/<code>Arc&lt;T&gt;</code> 的相似性</a></h3>
-<p>你可能注意到了，因为 <code>counter</code> 是不可变的，不过可以获取其内部值的可变引用；这意味着 <code>Mutex&lt;T&gt;</code> 提供了内部可变性，就像 <code>Cell</code> 系列类型那样。正如第十五章中使用 <code>RefCell&lt;T&gt;</code> 可以改变 <code>Rc&lt;T&gt;</code> 中的内容那样，同样的可以使用 <code>Mutex&lt;T&gt;</code> 来改变 <code>Arc&lt;T&gt;</code> 中的内容。</p>
-<p>另一个值得注意的细节是 Rust 不能避免使用 <code>Mutex&lt;T&gt;</code> 的全部逻辑错误。回忆一下第十五章使用 <code>Rc&lt;T&gt;</code> 就有造成引用循环的风险，这时两个 <code>Rc&lt;T&gt;</code> 值相互引用，造成内存泄漏。同理，<code>Mutex&lt;T&gt;</code> 也有造成 <strong>死锁</strong>（<em>deadlock</em>） 的风险。这发生于当一个操作需要锁住两个资源而两个线程各持一个锁，这会造成它们永远相互等待。如果你对这个主题感兴趣，尝试编写一个带有死锁的 Rust 程序，接着研究任何其他语言中使用互斥器的死锁规避策略并尝试在 Rust 中实现他们。标准库中 <code>Mutex&lt;T&gt;</code> 和 <code>MutexGuard</code> 的 API 文档会提供有用的信息。</p>
+<p>你可能注意到了，因为 <code>counter</code> 是不可变的，不过可以获取其内部值的可变引用；这意味着 <code>Mutex&lt;T&gt;</code> 提供了内部可变性，就像 <code>Cell</code> 系列类型那样。正如第 15 章中使用 <code>RefCell&lt;T&gt;</code> 可以改变 <code>Rc&lt;T&gt;</code> 中的内容那样，同样的可以使用 <code>Mutex&lt;T&gt;</code> 来改变 <code>Arc&lt;T&gt;</code> 中的内容。</p>
+<p>另一个值得注意的细节是 Rust 不能避免使用 <code>Mutex&lt;T&gt;</code> 的全部逻辑错误。回忆一下第 15 章使用 <code>Rc&lt;T&gt;</code> 就有造成引用循环的风险，这时两个 <code>Rc&lt;T&gt;</code> 值相互引用，造成内存泄漏。同理，<code>Mutex&lt;T&gt;</code> 也有造成 <strong>死锁</strong>（<em>deadlock</em>） 的风险。这发生于当一个操作需要锁住两个资源而两个线程各持一个锁，这会造成它们永远相互等待。如果你对这个主题感兴趣，尝试编写一个带有死锁的 Rust 程序，接着研究任何其他语言中使用互斥器的死锁规避策略并尝试在 Rust 中实现他们。标准库中 <code>Mutex&lt;T&gt;</code> 和 <code>MutexGuard</code> 的 API 文档会提供有用的信息。</p>
 <p>接下来，为了丰富本章的内容，让我们讨论一下 <code>Send</code>和 <code>Sync</code> trait 以及如何对自定义类型使用他们。</p>
 
                     </main>

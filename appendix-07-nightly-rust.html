@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -155,7 +155,7 @@
 <h3 id="无停滞稳定"><a class="header" href="#无停滞稳定">无停滞稳定</a></h3>
 <p>作为一个语言，Rust <strong>十分</strong> 注重代码的稳定性。我们希望 Rust 成为你代码坚实的基础，假如持续地有东西在变，这个希望就实现不了。但与此同时，如果不能实验新功能的话，在发布之前我们又无法发现其中重大的缺陷，而一旦发布便再也没有修改的机会了。</p>
 <p>对于这个问题我们的解决方案被称为 “无停滞稳定”（“stability without stagnation”），其指导性原则是：无需担心升级到最新的稳定版 Rust。每次升级应该是无痛的，并应带来新功能，更少的 bug 和更快的编译速度。</p>
-<h3 id="choo-choo-del开车啦逃del-发布通道和发布时刻表riding-the-trains"><a class="header" href="#choo-choo-del开车啦逃del-发布通道和发布时刻表riding-the-trains">Choo, Choo! <del>（开车啦，逃）</del> 发布通道和发布时刻表（Riding the Trains）</a></h3>
+<h3 id="choo-choo-开车啦逃-发布通道和发布时刻表riding-the-trains"><a class="header" href="#choo-choo-开车啦逃-发布通道和发布时刻表riding-the-trains">Choo, Choo! <del>（开车啦，逃）</del> 发布通道和发布时刻表（Riding the Trains）</a></h3>
 <p>Rust 开发运行于一个 <del>车次表</del> <strong>发布时刻表</strong>（<em>train schedule</em>）之上。也就是说，所有的开发工作都位于 Rust 仓库的 <code>master</code> 分支。发布采用 software release train 模型，其被用于思科 IOS 等其它软件项目。Rust 有三个 <strong>发布通道</strong>（<em>release channel</em>）：</p>
 <ul>
 <li>Nightly</li>
@@ -176,7 +176,7 @@ beta:                *
                      |
 beta:                *
 </code></pre>
-<p>比如我们发现了一个回归缺陷。好消息是在这些缺陷流入稳定发布之前还有一些时间来测试 beta 版本！fix 被合并到 <code>master</code>，为此 nightly 版本得到了修复，接着这些 fix 将 backport 到 <code>beta</code> 分支，一个新的 beta 发布就产生了：</p>
+<p>比如我们发现了一个回归缺陷。好消息是在这些缺陷流入稳定发布之前还有一些时间来测试 beta 版本！修复被合并到 <code>master</code>，为此 nightly 版本得到了修复，接着这些修复将并入到 <code>beta</code> 分支，一个新的 beta 发布就产生了：</p>
 <pre><code class="language-text">nightly: * - - * - - * - - * - - * - - *
                      |
 beta:                * - - - - - - - - *

@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -172,17 +172,13 @@ error[E0384]: cannot assign twice to immutable variable `x`
   |         -
   |         |
   |         first assignment to `x`
-  |         help: make this binding mutable: `mut x`
+  |         help: consider making this binding mutable: `mut x`
 3 |     println!(&quot;The value of x is: {}&quot;, x);
 4 |     x = 6;
   |     ^^^^^ cannot assign twice to immutable variable
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0384`.
-error: could not compile `variables`
-
-To learn more, run the command again with --verbose.
+error: could not compile `variables` due to previous error
 </code></pre>
 <p>这个例子展示了编译器如何帮助你查找程序中的错误。即使编译器错误可能令人沮丧，它们也只是表明你的程序做你想做的事情并不安全；并<strong>不</strong>意味着你不是一个好开发者！有经验的 Rustaceans 依然会遇到编译错误。</p>
 <p>上面的错误指出错误的原因是 <code>cannot assign twice to immutable variable x</code>（不能对不可变变量二次赋值），因为我们尝试给不可变的 <code>x</code> 变量赋值为第二个值。</p>
@@ -232,7 +228,10 @@ The value of x is: 6
 
     let x = x + 1;
 
-    let x = x * 2;
+    {
+        let x = x * 2;
+        println!(&quot;The value of x in the inner scope is: {}&quot;, x);
+    }
 
     println!(&quot;The value of x is: {}&quot;, x);
 }
@@ -242,7 +241,8 @@ The value of x is: 6
    Compiling variables v0.1.0 (file:///projects/variables)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/variables`
-The value of x is: 12
+The value of x in the inner scope is: 12
+The value of x is: 6
 </code></pre>
 <p>这和将变量标记为 <code>mut</code> 的方式不同，因为除非我们再次使用 <code>let</code> 关键字，否则若是我们不小心尝试重新赋值给这个变量，我们将得到一个编译错误。通过使用 <code>let</code>，我们可以对一个值进行一些转换，但在这些转换完成后，变量将是不可变的。</p>
 <p><code>mut</code> 和变量遮蔽之间的另一个区别是，因为我们在再次使用 <code>let</code> 关键字时有效地创建了一个新的变量，所以我们可以改变值的类型，但重复使用相同的名称。例如，假设我们程序要求用户输入空格字符来显示他们想要的空格数目，但我们实际上想要将该输入存储为一个数字：</p>
@@ -266,12 +266,8 @@ error[E0308]: mismatched types
 3 |     spaces = spaces.len();
   |              ^^^^^^^^^^^^ expected `&amp;str`, found `usize`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `variables`
-
-To learn more, run the command again with --verbose.
+error: could not compile `variables` due to previous error
 </code></pre>
 <p>现在我们已经探索了变量是如何工作的，接下来我们学习更多的数据类型。</p>
 

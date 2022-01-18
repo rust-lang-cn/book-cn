@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -393,7 +393,7 @@ impl State for Published {
 <p><span class="caption">示例 17-17: 更新 <code>Post</code> 的 <code>content</code> 方法来委托调用 <code>State</code> 的<code>content</code> 方法</span></p>
 <p>因为目标是将所有像这样的规则保持在实现了 <code>State</code> 的结构体中，我们将调用 <code>state</code> 中的值的 <code>content</code> 方法并传递博文实例（也就是 <code>self</code>）作为参数。接着返回 <code>state</code> 值的 <code>content</code> 方法的返回值。</p>
 <p>这里调用 <code>Option</code> 的 <code>as_ref</code> 方法是因为需要 <code>Option</code> 中值的引用而不是获取其所有权。因为 <code>state</code> 是一个 <code>Option&lt;Box&lt;State&gt;&gt;</code>，调用 <code>as_ref</code> 会返回一个 <code>Option&lt;&amp;Box&lt;State&gt;&gt;</code>。如果不调用 <code>as_ref</code>，将会得到一个错误，因为不能将 <code>state</code> 移动出借用的 <code>&amp;self</code> 函数参数。</p>
-<p>接着调用 <code>unwrap</code> 方法，这里我们知道它永远也不会 panic，因为 <code>Post</code> 的所有方法都确保在他们返回时 <code>state</code> 会有一个 <code>Some</code> 值。这就是一个第十二章 <a href="ch09-03-to-panic-or-not-to-panic.html#cases-in-which-you-have-more-information-than-the-compiler">“当我们比编译器知道更多的情况”</a>  部分讨论过的我们知道 <code>None</code> 是不可能的而编译器却不能理解的情况。</p>
+<p>接着调用 <code>unwrap</code> 方法，这里我们知道它永远也不会 panic，因为 <code>Post</code> 的所有方法都确保在他们返回时 <code>state</code> 会有一个 <code>Some</code> 值。这就是一个第 12 章 <a href="ch09-03-to-panic-or-not-to-panic.html#cases-in-which-you-have-more-information-than-the-compiler">“当我们比编译器知道更多的情况”</a>  部分讨论过的我们知道 <code>None</code> 是不可能的而编译器却不能理解的情况。</p>
 <p>接着我们就有了一个 <code>&amp;Box&lt;State&gt;</code>，当调用其 <code>content</code> 时，解引用强制转换会作用于 <code>&amp;</code> 和 <code>Box</code> ，这样最终会调用实现了 <code>State</code> trait 的类型的 <code>content</code> 方法。这意味着需要为 <code>State</code> trait 定义增加 <code>content</code>，这也是放置根据所处状态返回什么内容的逻辑的地方，如示例 17-18 所示：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -422,7 +422,7 @@ impl State for Published {
 </span></code></pre></pre>
 <p><span class="caption">示例 17-18: 为 <code>State</code> trait 增加 <code>content</code> 方法</span></p>
 <p>这里增加了一个 <code>content</code> 方法的默认实现来返回一个空字符串 slice。这意味着无需为 <code>Draft</code> 和 <code>PendingReview</code> 结构体实现 <code>content</code> 了。<code>Published</code> 结构体会覆盖 <code>content</code> 方法并会返回 <code>post.content</code> 的值。</p>
-<p>注意这个方法需要生命周期注解，如第十章所讨论的。这里获取 <code>post</code> 的引用作为参数，并返回 <code>post</code> 一部分的引用，所以返回的引用的生命周期与 <code>post</code> 参数相关。</p>
+<p>注意这个方法需要生命周期注解，如第 10 章所讨论的。这里获取 <code>post</code> 的引用作为参数，并返回 <code>post</code> 一部分的引用，所以返回的引用的生命周期与 <code>post</code> 参数相关。</p>
 <p>现在示例完成了 —— 现在示例 17-11 中所有的代码都能工作！我们通过发布博文工作流的规则实现了状态模式。围绕这些规则的逻辑都存在于状态对象中而不是分散在 <code>Post</code> 之中。</p>
 <h3 id="状态模式的权衡取舍"><a class="header" href="#状态模式的权衡取舍">状态模式的权衡取舍</a></h3>
 <p>我们展示了 Rust 是能够实现面向对象的状态模式的，以便能根据博文所处的状态来封装不同类型的行为。<code>Post</code> 的方法并不知道这些不同类型的行为。通过这种组织代码的方式，要找到所有已发布博文的不同行为只需查看一处代码：<code>Published</code> 的 <code>State</code> trait 的实现。</p>
@@ -436,7 +436,7 @@ impl State for Published {
 </ul>
 <p>状态模式的一个缺点是因为状态实现了状态之间的转换，一些状态会相互联系。如果在 <code>PendingReview</code> 和 <code>Published</code> 之间增加另一个状态，比如 <code>Scheduled</code>，则不得不修改 <code>PendingReview</code> 中的代码来转移到 <code>Scheduled</code>。如果 <code>PendingReview</code> 无需因为新增的状态而改变就更好了，不过这意味着切换到另一种设计模式。</p>
 <p>另一个缺点是我们会发现一些重复的逻辑。为了消除他们，可以尝试为 <code>State</code> trait 中返回 <code>self</code> 的 <code>request_review</code> 和 <code>approve</code> 方法增加默认实现，不过这会违反对象安全性，因为 trait 不知道 <code>self</code> 具体是什么。我们希望能够将 <code>State</code> 作为一个 trait 对象，所以需要其方法是对象安全的。</p>
-<p>另一个重复是 <code>Post</code> 中 <code>request_review</code> 和 <code>approve</code> 这两个类似的实现。他们都委托调用了 <code>state</code> 字段中 <code>Option</code> 值的同一方法，并在结果中为 <code>state</code> 字段设置了新值。如果 <code>Post</code> 中的很多方法都遵循这个模式，我们可能会考虑定义一个宏来消除重复（查看第十九章的 <a href="ch19-06-macros.html#macros">“宏”</a>  部分）。</p>
+<p>另一个重复是 <code>Post</code> 中 <code>request_review</code> 和 <code>approve</code> 这两个类似的实现。他们都委托调用了 <code>state</code> 字段中 <code>Option</code> 值的同一方法，并在结果中为 <code>state</code> 字段设置了新值。如果 <code>Post</code> 中的很多方法都遵循这个模式，我们可能会考虑定义一个宏来消除重复（查看第 19 章的 <a href="ch19-06-macros.html#macros">“宏”</a>  部分）。</p>
 <p>完全按照面向对象语言的定义实现这个模式并没有尽可能地利用 Rust 的优势。让我们看看一些代码中可以做出的修改，来将无效的状态和状态转移变为编译时错误。</p>
 <h4 id="将状态和行为编码为类型"><a class="header" href="#将状态和行为编码为类型">将状态和行为编码为类型</a></h4>
 <p>我们将展示如何稍微反思状态模式来进行一系列不同的权衡取舍。不同于完全封装状态和状态转移使得外部代码对其毫不知情，我们将状态编码进不同的类型。如此，Rust 的类型检查就会将任何在只能使用发布博文的地方使用草案博文的尝试变为编译时错误。</p>

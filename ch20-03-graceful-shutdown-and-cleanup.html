@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -236,7 +236,7 @@ error[E0308]: mismatched types
     }
 }
 </code></pre>
-<p>如第十七章我们见过的，<code>Option</code> 上的 <code>take</code> 方法会取出 <code>Some</code> 而留下 <code>None</code>。使用 <code>if let</code> 解构 <code>Some</code> 并得到线程，接着在线程上调用 <code>join</code>。如果 worker 的线程已然是 <code>None</code>，就知道此时这个 worker 已经清理了其线程所以无需做任何操作。</p>
+<p>如第 17 章我们见过的，<code>Option</code> 上的 <code>take</code> 方法会取出 <code>Some</code> 而留下 <code>None</code>。使用 <code>if let</code> 解构 <code>Some</code> 并得到线程，接着在线程上调用 <code>join</code>。如果 worker 的线程已然是 <code>None</code>，就知道此时这个 worker 已经清理了其线程所以无需做任何操作。</p>
 <h3 id="向线程发送信号使其停止接收任务"><a class="header" href="#向线程发送信号使其停止接收任务">向线程发送信号使其停止接收任务</a></h3>
 <p>有了所有这些修改，代码就能编译且没有任何警告。不过也有坏消息，这些代码还不能以我们期望的方式运行。问题的关键在于 <code>Worker</code> 中分配的线程所运行的闭包中的逻辑：调用 <code>join</code> 并不会关闭线程，因为他们一直 <code>loop</code> 来寻找任务。如果采用这个实现来尝试丢弃 <code>ThreadPool</code> ，则主线程会永远阻塞在等待第一个线程结束上。</p>
 <p>为了修复这个问题，修改线程既监听是否有 <code>Job</code> 运行也要监听一个应该停止监听并退出无限循环的信号。所以通道将发送这个枚举的两个成员之一而不是 <code>Job</code> 实例：</p>

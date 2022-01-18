@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="定义并实例化结构体"><a class="header" href="#定义并实例化结构体">定义并实例化结构体</a></h2>
-<p>结构体和我们在第三章讨论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
+<p>结构体和我们在第 3 章讨论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
 <p>定义结构体，需要使用 <code>struct</code> 关键字并为整个结构体提供一个名字。结构体的名字需要描述它所组合的数据的意义。接着，在大括号中，定义每一部分数据的名字和类型，我们称为 <strong>字段</strong>（<em>field</em>）。例如，示例 5-1 展示了一个存储用户账号信息的结构体：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -312,7 +312,7 @@ user1.email = String::from(&quot;anotheremail@example.com&quot;);
 <p><span class="caption">示例 5-7：使用结构体更新语法为一个 <code>User</code> 实例设置新的 <code>email</code> 和 <code>username</code> 值，不过其余值来自 <code>user1</code> 变量中实例的字段</span></p>
 <p>示例 5-7 中的代码也在 <code>user2</code> 中创建了一个新实例，其有不同的 <code>email</code> 和 <code>username</code> 值不过 <code>active</code> 和 <code>sign_in_count</code> 字段的值与 <code>user1</code> 相同。</p>
 <h3 id="使用没有命名字段的元组结构体来创建不同的类型"><a class="header" href="#使用没有命名字段的元组结构体来创建不同的类型">使用没有命名字段的元组结构体来创建不同的类型</a></h3>
-<p>也可以定义与元组（在第三章讨论过）类似的结构体，称为 <strong>元组结构体</strong>（<em>tuple structs</em>）。元组结构体有着结构体名称提供的含义，但没有具体的字段名，只有字段的类型。当你想给整个元组取一个名字，并使元组成为与其他元组不同的类型时，元组结构体是很有用的，这时像常规结构体那样为每个字段命名就显得多余和形式化了。</p>
+<p>也可以定义与元组（在第 3 章讨论过）类似的结构体，称为 <strong>元组结构体</strong>（<em>tuple structs</em>）。元组结构体有着结构体名称提供的含义，但没有具体的字段名，只有字段的类型。当你想给整个元组取一个名字，并使元组成为与其他元组不同的类型时，元组结构体是很有用的，这时像常规结构体那样为每个字段命名就显得多余和形式化了。</p>
 <p>要定义元组结构体，以 <code>struct</code> 关键字和结构体名开头并后跟元组中的类型。例如，下面是两个分别叫做 <code>Color</code> 和 <code>Point</code> 元组结构体的定义和用法：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -326,11 +326,11 @@ let origin = Point(0, 0, 0);
 </span></code></pre></pre>
 <p>注意 <code>black</code> 和 <code>origin</code> 值的类型不同，因为它们是不同的元组结构体的实例。你定义的每一个结构体有其自己的类型，即使结构体中的字段有着相同的类型。例如，一个获取 <code>Color</code> 类型参数的函数不能接受 <code>Point</code> 作为参数，即便这两个类型都由三个 <code>i32</code> 值组成。在其他方面，元组结构体实例类似于元组：可以将其解构为单独的部分，也可以使用 <code>.</code> 后跟索引来访问单独的值，等等。</p>
 <h3 id="没有任何字段的类单元结构体"><a class="header" href="#没有任何字段的类单元结构体">没有任何字段的类单元结构体</a></h3>
-<p>我们也可以定义一个没有任何字段的结构体！它们被称为 <strong>类单元结构体</strong>（<em>unit-like structs</em>）因为它们类似于 <code>()</code>，即 unit 类型。类单元结构体常常在你想要在某个类型上实现 trait 但不需要在类型中存储数据的时候发挥作用。我们将在第十章介绍 trait。</p>
+<p>我们也可以定义一个没有任何字段的结构体！它们被称为 <strong>类单元结构体</strong>（<em>unit-like structs</em>）因为它们类似于 <code>()</code>，即 unit 类型。类单元结构体常常在你想要在某个类型上实现 trait 但不需要在类型中存储数据的时候发挥作用。我们将在第 10 章介绍 trait。</p>
 <blockquote>
 <h3 id="结构体数据的所有权"><a class="header" href="#结构体数据的所有权">结构体数据的所有权</a></h3>
 <p>在示例 5-1 中的 <code>User</code> 结构体的定义中，我们使用了自身拥有所有权的 <code>String</code> 类型而不是 <code>&amp;str</code> 字符串 slice 类型。这是一个有意而为之的选择，因为我们想要这个结构体拥有它所有的数据，为此只要整个结构体是有效的话其数据也是有效的。</p>
-<p>可以使结构体存储被其他对象拥有的数据的引用，不过这么做的话需要用上 <strong>生命周期</strong>（<em>lifetimes</em>），这是一个第十章会讨论的 Rust 功能。生命周期确保结构体引用的数据有效性跟结构体本身保持一致。如果你尝试在结构体中存储一个引用而不指定生命周期将是无效的，比如这样：</p>
+<p>可以使结构体存储被其他对象拥有的数据的引用，不过这么做的话需要用上 <strong>生命周期</strong>（<em>lifetimes</em>），这是一个第 10 章会讨论的 Rust 功能。生命周期确保结构体引用的数据有效性跟结构体本身保持一致。如果你尝试在结构体中存储一个引用而不指定生命周期将是无效的，比如这样：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">struct User {
     username: &amp;str,
@@ -361,7 +361,7 @@ error[E0106]: missing lifetime specifier
 3 |     email: &amp;str,
   |            ^ expected lifetime parameter
 </code></pre>
-<p>第十章会讲到如何修复这个问题以便在结构体中存储引用，不过现在，我们会使用像 <code>String</code> 这类拥有所有权的类型来替代 <code>&amp;str</code> 这样的引用以修正这个错误。</p>
+<p>第 10 章会讲到如何修复这个问题以便在结构体中存储引用，不过现在，我们会使用像 <code>String</code> 这类拥有所有权的类型来替代 <code>&amp;str</code> 这样的引用以修正这个错误。</p>
 </blockquote>
 <!-- manual-regeneration
 for the error above

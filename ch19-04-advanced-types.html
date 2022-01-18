@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -158,7 +158,7 @@
 <h3 id="为了类型安全和抽象而使用-newtype-模式"><a class="header" href="#为了类型安全和抽象而使用-newtype-模式">为了类型安全和抽象而使用 newtype 模式</a></h3>
 <p>newtype 模式可以用于一些其他我们还未讨论的功能，包括静态的确保某值不被混淆，和用来表示一个值的单元。实际上示例 19-15 中已经有一个这样的例子：<code>Millimeters</code> 和 <code>Meters</code> 结构体都在 newtype 中封装了 <code>u32</code> 值。如果编写了一个有 <code>Millimeters</code> 类型参数的函数，不小心使用 <code>Meters</code> 或普通的 <code>u32</code> 值来调用该函数的程序是不能编译的。</p>
 <p>另一个 newtype 模式的应用在于抽象掉一些类型的实现细节：例如，封装类型可以暴露出与直接使用其内部私有类型时所不同的公有 API，以便限制其功能。</p>
-<p>newtype 也可以隐藏其内部的泛型类型。例如，可以提供一个封装了 <code>HashMap&lt;i32, String&gt;</code> 的 <code>People</code> 类型，用来储存人名以及相应的 ID。使用 <code>People</code> 的代码只需与提供的公有 API 交互即可，比如向 <code>People</code> 集合增加名字字符串的方法，这样这些代码就无需知道在内部我们将一个 <code>i32</code> ID 赋予了这个名字了。newtype 模式是一种实现第十七章 <a href="ch17-01-what-is-oo.html#encapsulation-that-hides-implementation-details">“封装隐藏了实现细节”</a>  部分所讨论的隐藏实现细节的封装的轻量级方法。</p>
+<p>newtype 也可以隐藏其内部的泛型类型。例如，可以提供一个封装了 <code>HashMap&lt;i32, String&gt;</code> 的 <code>People</code> 类型，用来储存人名以及相应的 ID。使用 <code>People</code> 的代码只需与提供的公有 API 交互即可，比如向 <code>People</code> 集合增加名字字符串的方法，这样这些代码就无需知道在内部我们将一个 <code>i32</code> ID 赋予了这个名字了。newtype 模式是一种实现第 17 章 <a href="ch17-01-what-is-oo.html#encapsulation-that-hides-implementation-details">“封装隐藏了实现细节”</a>  部分所讨论的隐藏实现细节的封装的轻量级方法。</p>
 <h3 id="类型别名用来创建类型同义词"><a class="header" href="#类型别名用来创建类型同义词">类型别名用来创建类型同义词</a></h3>
 <p>连同 newtype 模式，Rust 还提供了声明 <strong>类型别名</strong>（<em>type alias</em>）的能力，使用 <code>type</code> 关键字来给予现有类型另一个名字。例如，可以像这样创建 <code>i32</code> 的别名 <code>Kilometers</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -275,7 +275,7 @@ pub trait Write {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 19-26: <code>match</code> 语句和一个以 <code>continue</code> 结束的分支</span></p>
-<p>当时我们忽略了代码中的一些细节。在第六章 <a href="ch06-02-match.html#the-match-control-flow-operator">“<code>match</code> 控制流运算符”</a> 部分，我们学习了 <code>match</code> 的分支必须返回相同的类型。如下代码不能工作：</p>
+<p>当时我们忽略了代码中的一些细节。在第 6 章 <a href="ch06-02-match.html#the-match-control-flow-operator">“<code>match</code> 控制流运算符”</a> 部分，我们学习了 <code>match</code> 的分支必须返回相同的类型。如下代码不能工作：</p>
 <pre><code class="language-rust ignore does_not_compile">let guess = match guess.trim().parse() {
     Ok(_) =&gt; 5,
     Err(_) =&gt; &quot;hello&quot;,
@@ -310,9 +310,9 @@ loop {
 let s2: str = &quot;How's it going?&quot;;
 </code></pre>
 <p>Rust 需要知道应该为特定类型的值分配多少内存，同时所有同一类型的值必须使用相同数量的内存。如果允许编写这样的代码，也就意味着这两个 <code>str</code> 需要占用完全相同大小的空间，不过它们有着不同的长度。这也就是为什么不可能创建一个存放动态大小类型的变量的原因。</p>
-<p>那么该怎么办呢？你已经知道了这种问题的答案：<code>s1</code> 和 <code>s2</code> 的类型是 <code>&amp;str</code> 而不是 <code>str</code>。如果你回想第四章 <a href="ch04-03-slices.html#string-slices">“字符串 slice”</a>  部分，slice 数据结储存了开始位置和 slice 的长度。</p>
+<p>那么该怎么办呢？你已经知道了这种问题的答案：<code>s1</code> 和 <code>s2</code> 的类型是 <code>&amp;str</code> 而不是 <code>str</code>。如果你回想第 4 章 <a href="ch04-03-slices.html#string-slices">“字符串 slice”</a>  部分，slice 数据结储存了开始位置和 slice 的长度。</p>
 <p>所以虽然 <code>&amp;T</code> 是一个储存了 <code>T</code> 所在的内存位置的单个值，<code>&amp;str</code> 则是 <strong>两个</strong> 值：<code>str</code> 的地址和其长度。这样，<code>&amp;str</code> 就有了一个在编译时可以知道的大小：它是 <code>usize</code> 长度的两倍。也就是说，我们总是知道 <code>&amp;str</code> 的大小，而无论其引用的字符串是多长。这里是 Rust 中动态大小类型的常规用法：他们有一些额外的元信息来储存动态信息的大小。这引出了动态大小类型的黄金规则：必须将动态大小类型的值置于某种指针之后。</p>
-<p>可以将 <code>str</code> 与所有类型的指针结合：比如 <code>Box&lt;str&gt;</code> 或 <code>Rc&lt;str&gt;</code>。事实上，之前我们已经见过了，不过是另一个动态大小类型：trait。每一个 trait 都是一个可以通过 trait 名称来引用的动态大小类型。在第十七章 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分，我们提到了为了将 trait 用于 trait 对象，必须将他们放入指针之后，比如 <code>&amp;dyn Trait</code> 或 <code>Box&lt;dyn Trait&gt;</code>（<code>Rc&lt;dyn Trait&gt;</code> 也可以）。</p>
+<p>可以将 <code>str</code> 与所有类型的指针结合：比如 <code>Box&lt;str&gt;</code> 或 <code>Rc&lt;str&gt;</code>。事实上，之前我们已经见过了，不过是另一个动态大小类型：trait。每一个 trait 都是一个可以通过 trait 名称来引用的动态大小类型。在第 17 章 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分，我们提到了为了将 trait 用于 trait 对象，必须将他们放入指针之后，比如 <code>&amp;dyn Trait</code> 或 <code>Box&lt;dyn Trait&gt;</code>（<code>Rc&lt;dyn Trait&gt;</code> 也可以）。</p>
 <p>为了处理 DST，Rust 有一个特定的 trait 来确定一个类型的大小是否在编译时可知：这就是 <code>Sized</code> trait。这个 trait 自动为编译器在编译时就知道其大小的类型实现。另外，Rust 隐式的为每一个泛型函数增加了 <code>Sized</code> bound。也就是说，对于如下泛型函数定义：</p>
 <pre><code class="language-rust ignore">fn generic&lt;T&gt;(t: T) {
     // --snip--

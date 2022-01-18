@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -165,8 +165,8 @@
 <p>实现一个宏而不是函数的消极面是宏定义要比函数定义更复杂，因为你正在编写生成 Rust 代码的 Rust 代码。由于这样的间接性，宏定义通常要比函数定义更难阅读、理解以及维护。</p>
 <p>宏和函数的最后一个重要的区别是：在一个文件里调用宏 <strong>之前</strong> 必须定义它，或将其引入作用域，而函数则可以在任何地方定义和调用。</p>
 <h3 id="使用-macro_rules-的声明宏用于通用元编程"><a class="header" href="#使用-macro_rules-的声明宏用于通用元编程">使用 <code>macro_rules!</code> 的声明宏用于通用元编程</a></h3>
-<p>Rust 最常用的宏形式是 <strong>声明宏</strong>（<em>declarative macros</em>）。它们有时也被称为 “macros by example”、“<code>macro_rules!</code> 宏” 或者就是 “macros”。其核心概念是，声明宏允许我们编写一些类似 Rust <code>match</code> 表达式的代码。正如在第六章讨论的那样，<code>match</code> 表达式是控制结构，其接收一个表达式，与表达式的结果进行模式匹配，然后根据模式匹配执行相关代码。宏也将一个值和包含相关代码的模式进行比较；此种情况下，该值是传递给宏的 Rust 源代码字面值，模式用于和传递给宏的源代码进行比较，同时每个模式的相关代码则用于替换传递给宏的代码。所有这一切都发生于编译时。</p>
-<p>可以使用 <code>macro_rules!</code> 来定义宏。让我们通过查看 <code>vec!</code> 宏定义来探索如何使用 <code>macro_rules!</code> 结构。第八章讲述了如何使用 <code>vec!</code> 宏来生成一个给定值的 vector。例如，下面的宏用三个整数创建一个 vector：</p>
+<p>Rust 最常用的宏形式是 <strong>声明宏</strong>（<em>declarative macros</em>）。它们有时也被称为 “macros by example”、“<code>macro_rules!</code> 宏” 或者就是 “macros”。其核心概念是，声明宏允许我们编写一些类似 Rust <code>match</code> 表达式的代码。正如在第 6 章讨论的那样，<code>match</code> 表达式是控制结构，其接收一个表达式，与表达式的结果进行模式匹配，然后根据模式匹配执行相关代码。宏也将一个值和包含相关代码的模式进行比较；此种情况下，该值是传递给宏的 Rust 源代码字面值，模式用于和传递给宏的源代码进行比较，同时每个模式的相关代码则用于替换传递给宏的代码。所有这一切都发生于编译时。</p>
+<p>可以使用 <code>macro_rules!</code> 来定义宏。让我们通过查看 <code>vec!</code> 宏定义来探索如何使用 <code>macro_rules!</code> 结构。第 8 章讲述了如何使用 <code>vec!</code> 宏来生成一个给定值的 vector。例如，下面的宏用三个整数创建一个 vector：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -200,7 +200,7 @@ macro_rules! vec {
 <p>无论何时导入定义了宏的包，<code>#[macro_export]</code> 注解说明宏应该是可用的。 如果没有该注解，这个宏不能被引入作用域。</p>
 <p>接着使用 <code>macro_rules!</code> 和宏名称开始宏定义，且所定义的宏并 <strong>不带</strong> 感叹号。名字后跟大括号表示宏定义体，在该例中宏名称是 <code>vec</code> 。</p>
 <p><code>vec!</code> 宏的结构和 <code>match</code> 表达式的结构类似。此处有一个单边模式 <code>( $( $x:expr ),* )</code> ，后跟 <code>=&gt;</code> 以及和模式相关的代码块。如果模式匹配，该相关代码块将被执行。假设这是这个宏中唯一的模式，则只有这一种有效匹配，其他任何匹配都是错误的。更复杂的宏会有多个单边模式。</p>
-<p>宏定义中有效模式语法和在第十八章提及的模式语法是不同的，因为宏模式所匹配的是 Rust 代码结构而不是值。回过头来检查下示例 19-28 中模式片段什么意思。对于全部的宏模式语法，请查阅<a href="https://doc.rust-lang.org/reference/macros.html">参考</a>。</p>
+<p>宏定义中有效模式语法和在第 18 章提及的模式语法是不同的，因为宏模式所匹配的是 Rust 代码结构而不是值。回过头来检查下示例 19-28 中模式片段什么意思。对于全部的宏模式语法，请查阅<a href="https://doc.rust-lang.org/reference/macros.html">参考</a>。</p>
 <p>首先，一对括号包含了整个模式。接下来是美元符号（ <code>$</code> ），后跟一对括号，捕获了符合括号内模式的值以用于替换后的代码。<code>$()</code> 内则是 <code>$x:expr</code> ，其匹配 Rust 的任意表达式，并将该表达式记作 <code>$x</code>。</p>
 <p><code>$()</code> 之后的逗号说明一个可有可无的逗号分隔符可以出现在 <code>$()</code> 所匹配的代码之后。紧随逗号之后的 <code>*</code> 说明该模式匹配零个或更多个 <code>*</code> 之前的任何模式。</p>
 <p>当以 <code>vec![1, 2, 3];</code> 调用宏时，<code>$x</code> 模式与三个表达式 <code>1</code>、<code>2</code> 和 <code>3</code> 进行了三次匹配。</p>
@@ -212,7 +212,7 @@ temp_vec.push(3);
 temp_vec
 </code></pre>
 <p>我们已经定义了一个宏，其可以接收任意数量和类型的参数，同时可以生成能够创建包含指定元素的 vector 的代码。</p>
-<p><code>macro_rules!</code> 中有一些奇怪的地方。在将来，会有第二种采用 <code>macro</code> 关键字的声明宏，其工作方式类似但修复了这些极端情况。在此之后，<code>macro_rules!</code> 实际上就过时（deprecated）了。在此基础之上，同时鉴于大多数 Rust 程序员 <strong>使用</strong> 宏而非 <strong>编写</strong> 宏的事实，此处不再深入探讨 <code>macro_rules!</code>。请查阅在线文档或其他资源，如 <a href="https://danielkeep.github.io/tlborm/book/index.html">“The Little Book of Rust Macros”</a> 来更多地了解如何写宏。</p>
+<p><code>macro_rules!</code> 中有一些奇怪的地方。在将来，会有第二种采用 <code>macro</code> 关键字的声明宏，其工作方式类似但修复了这些极端情况。在此之后，<code>macro_rules!</code> 实际上就过时（deprecated）了。在此基础之上，同时鉴于大多数 Rust 开发者 <strong>使用</strong> 宏而非 <strong>编写</strong> 宏的事实，此处不再深入探讨 <code>macro_rules!</code>。请查阅在线文档或其他资源，如 <a href="https://danielkeep.github.io/tlborm/book/index.html">“The Little Book of Rust Macros”</a> 来更多地了解如何写宏。</p>
 <h3 id="用于从属性生成代码的过程宏"><a class="header" href="#用于从属性生成代码的过程宏">用于从属性生成代码的过程宏</a></h3>
 <p>第二种形式的宏被称为 <strong>过程宏</strong>（<em>procedural macros</em>），因为它们更像函数（一种过程类型）。过程宏接收 Rust 代码作为输入，在这些代码上进行操作，然后产生另一些代码作为输出，而非像声明式宏那样匹配对应模式然后以另一部分代码替换当前代码。</p>
 <p>有三种类型的过程宏（自定义派生（derive），类属性和类函数），不过它们的工作方式都类似。</p>
@@ -228,7 +228,7 @@ pub fn some_name(input: TokenStream) -&gt; TokenStream {
 <p>过程宏包含一个函数，这也是其得名的原因：“过程” 是 “函数” 的同义词。那么为何不叫 “函数宏” 呢？好吧，有一个过程宏是 “类函数” 的，叫成函数会产生混乱。无论如何，定义过程宏的函数接受一个 <code>TokenStream</code> 作为输入并产生一个 <code>TokenStream</code> 作为输出。这也就是宏的核心：宏所处理的源代码组成了输入 <code>TokenStream</code>，同时宏生成的代码是输出 <code>TokenStream</code>。最后，函数上有一个属性；这个属性表明过程宏的类型。在同一 crate 中可以有多种的过程宏。</p>
 <p>考虑到这些宏是如此类似，我们会从自定义派生宏开始。接着会解释与其他形式宏的微小区别。</p>
 <h3 id="如何编写自定义-derive-宏"><a class="header" href="#如何编写自定义-derive-宏">如何编写自定义 <code>derive</code> 宏</a></h3>
-<p>让我们创建一个 <code>hello_macro</code> crate，其包含名为 <code>HelloMacro</code> 的 trait 和关联函数 <code>hello_macro</code>。不同于让 crate 的用户为其每一个类型实现 <code>HelloMacro</code> trait，我们将会提供一个过程式宏以便用户可以使用 <code>#[derive(HelloMacro)]</code> 注解他们的类型来得到 <code>hello_macro</code> 函数的默认实现。该默认实现会打印 <code>Hello, Macro! My name is TypeName!</code>，其中 <code>TypeName</code> 为定义了 trait 的类型名。换言之，我们会创建一个 crate，使程序员能够写类似示例 19-30 中的代码。</p>
+<p>让我们创建一个 <code>hello_macro</code> crate，其包含名为 <code>HelloMacro</code> 的 trait 和关联函数 <code>hello_macro</code>。不同于让 crate 的用户为其每一个类型实现 <code>HelloMacro</code> trait，我们将会提供一个过程式宏以便用户可以使用 <code>#[derive(HelloMacro)]</code> 注解他们的类型来得到 <code>hello_macro</code> 函数的默认实现。该默认实现会打印 <code>Hello, Macro! My name is TypeName!</code>，其中 <code>TypeName</code> 为定义了 trait 的类型名。换言之，我们会创建一个 crate，使开发者能够写类似示例 19-30 中的代码。</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use hello_macro::HelloMacro;
 use hello_macro_derive::HelloMacro;

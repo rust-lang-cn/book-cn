@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -163,11 +163,11 @@
 <p>如果你希望不同于 <code>derive</code> 属性所提供的行为，请查阅 <a href="https://doc.rust-lang.org/std/index.html">标准库文档</a> 中每个 trait 的细节以了解如何手动实现它们。</p>
 <p>标准库中定义的其它 trait 不能通过 <code>derive</code> 在类型上实现。这些 trait 不存在有意义的默认行为，所以由你负责以合理的方式实现它们。</p>
 <p>一个无法被派生的 trait 的例子是为终端用户处理格式化的 <code>Display</code> 。你应该时常考虑使用合适的方法来为终端用户显示一个类型。终端用户应该看到类型的什么部分？他们会找出相关部分吗？对他们来说最相关的数据格式是什么样的？Rust 编译器没有这样的洞察力，因此无法为你提供合适的默认行为。</p>
-<p>本附录所提供的可派生 trait 列表并不全面：库可以为其自己的 trait 实现 <code>derive</code>，可以使用 <code>derive</code> 的 trait 列表事实上是无限的。实现 <code>derive</code> 涉及到过程宏的应用，这在第十九章的 <a href="ch19-06-macros.html#macros">“宏”</a> 有介绍。</p>
-<h3 id="用于程序员输出的-debug"><a class="header" href="#用于程序员输出的-debug">用于程序员输出的 <code>Debug</code></a></h3>
+<p>本附录所提供的可派生 trait 列表并不全面：库可以为其自己的 trait 实现 <code>derive</code>，可以使用 <code>derive</code> 的 trait 列表事实上是无限的。实现 <code>derive</code> 涉及到过程宏的应用，这在第 19 章的 <a href="ch19-06-macros.html#macros">“宏”</a> 有介绍。</p>
+<h3 id="用于开发者输出的-debug"><a class="header" href="#用于开发者输出的-debug">用于开发者输出的 <code>Debug</code></a></h3>
 <p><code>Debug</code> trait 用于开启格式化字符串中的调试格式，其通过在 <code>{}</code> 占位符中增加 <code>:?</code> 表明。</p>
-<p><code>Debug</code> trait 允许以调试目的来打印一个类型的实例，所以使用该类型的程序员可以在程序执行的特定时间点观察其实例。</p>
-<p>例如，在使用 <code>assert_eq!</code> 宏时，<code>Debug</code> trait 是必须的。如果等式断言失败，这个宏就把给定实例的值作为参数打印出来，如此程序员可以看到两个实例为什么不相等。</p>
+<p><code>Debug</code> trait 允许以调试目的来打印一个类型的实例，所以使用该类型的开发者可以在程序执行的特定时间点观察其实例。</p>
+<p>例如，在使用 <code>assert_eq!</code> 宏时，<code>Debug</code> trait 是必须的。如果等式断言失败，这个宏就把给定实例的值作为参数打印出来，如此开发者可以看到两个实例为什么不相等。</p>
 <h3 id="等值比较的-partialeq-和-eq"><a class="header" href="#等值比较的-partialeq-和-eq">等值比较的 <code>PartialEq</code> 和 <code>Eq</code></a></h3>
 <p><code>PartialEq</code> trait 可以比较一个类型的实例以检查是否相等，并开启了 <code>==</code> 和 <code>!=</code> 运算符的功能。</p>
 <p>派生的 <code>PartialEq</code> 实现了 <code>eq</code> 方法。当 <code>PartialEq</code> 在结构体上派生时，只有<em>所有</em> 的字段都相等时两个实例才相等，同时只要有任何字段不相等则两个实例就不相等。当在枚举上派生时，每一个成员都和其自身相等，且和其他成员都不相等。</p>
@@ -182,10 +182,10 @@
 <p><code>Ord</code> trait 也让你明白在一个带注解类型上的任意两个值存在有效顺序。<code>Ord</code> trait 实现了 <code>cmp</code> 方法，它返回一个 <code>Ordering</code> 而不是 <code>Option&lt;Ordering&gt;</code>，因为总存在一个合法的顺序。只可以在实现了 <code>PartialOrd</code> 和 <code>Eq</code>（<code>Eq</code> 依赖 <code>PartialEq</code>）的类型上使用 <code>Ord</code> trait 。当在结构体或枚举上派生时， <code>cmp</code> 和以 <code>PartialOrd</code> 派生实现的 <code>partial_cmp</code> 表现一致。</p>
 <p>例如，当在 <code>BTreeSet&lt;T&gt;</code>（一种基于有序值存储数据的数据结构）上存值时，<code>Ord</code> 是必须的。</p>
 <h3 id="复制值的-clone-和-copy"><a class="header" href="#复制值的-clone-和-copy">复制值的 <code>Clone</code> 和 <code>Copy</code></a></h3>
-<p><code>Clone</code> trait 可以明确地创建一个值的深拷贝（deep copy），复制过程可能包含任意代码的执行以及堆上数据的复制。查阅第四章 <a href="ch04-01-what-is-ownership.html#ways-variables-and-data-interact-clone">“变量和数据的交互方式：移动”</a>  以获取有关 <code>Clone</code> 的更多信息。</p>
+<p><code>Clone</code> trait 可以明确地创建一个值的深拷贝（deep copy），复制过程可能包含任意代码的执行以及堆上数据的复制。查阅第 4 章 <a href="ch04-01-what-is-ownership.html#ways-variables-and-data-interact-clone">“变量和数据的交互方式：移动”</a>  以获取有关 <code>Clone</code> 的更多信息。</p>
 <p>派生 <code>Clone</code> 实现了 <code>clone</code> 方法，其为整个的类型实现时，在类型的每一部分上调用了 <code>clone</code> 方法。这意味着类型中所有字段或值也必须实现了 <code>Clone</code>，这样才能够派生 <code>Clone</code> 。</p>
 <p>例如，当在一个切片（slice）上调用 <code>to_vec</code> 方法时，<code>Clone</code> 是必须的。切片并不拥有其所包含实例的类型，但是从 <code>to_vec</code> 中返回的 vector 需要拥有其实例，因此，<code>to_vec</code> 在每个元素上调用 <code>clone</code>。因此，存储在切片中的类型必须实现 <code>Clone</code>。</p>
-<p><code>Copy</code> trait 允许你通过只拷贝存储在栈上的位来复制值而不需要额外的代码。查阅第四章 <a href="ch04-01-what-is-ownership.html#stack-only-data-copy">“只在栈上的数据：拷贝”</a> 的部分来获取有关 <code>Copy</code> 的更多信息。</p>
+<p><code>Copy</code> trait 允许你通过只拷贝存储在栈上的位来复制值而不需要额外的代码。查阅第 4 章 <a href="ch04-01-what-is-ownership.html#stack-only-data-copy">“只在栈上的数据：拷贝”</a> 的部分来获取有关 <code>Copy</code> 的更多信息。</p>
 <p><code>Copy</code> trait 并未定义任何方法来阻止编程人员重写这些方法或违反不需要执行额外代码的假设。尽管如此，所有的编程人员可以假设复制（copy）一个值非常快。</p>
 <p>可以在类型内部全部实现 <code>Copy</code> trait 的任意类型上派生 <code>Copy</code>。 但只可以在那些同时实现了 <code>Clone</code> 的类型上使用 <code>Copy</code> trait ，因为一个实现了 <code>Copy</code> 的类型也简单地实现了 <code>Clone</code>，其执行和 <code>Copy</code> 相同的任务。</p>
 <p><code>Copy</code> trait 很少使用；实现 <code>Copy</code> 的类型是可以优化的，这意味着你无需调用 <code>clone</code>，这让代码更简洁。</p>
@@ -195,8 +195,8 @@
 <p>例如，在 <code>HashMap&lt;K, V&gt;</code> 上存储数据，存放 key 的时候，<code>Hash</code> 是必须的。</p>
 <h3 id="默认值的-default"><a class="header" href="#默认值的-default">默认值的 <code>Default</code></a></h3>
 <p><code>Default</code> trait 使你创建一个类型的默认值。 派生 <code>Default</code> 实现了 <code>default</code> 函数。<code>default</code> 函数的派生实现调用了类型每部分的 <code>default</code> 函数，这意味着类型中所有的字段或值也必须实现了 <code>Default</code>，这样才能够派生 <code>Default</code> 。</p>
-<p><code>Default::default</code> 函数通常结合结构体更新语法一起使用，这在第五章的 <a href="ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax">“使用结构体更新语法从其他实例中创建实例”</a> 部分有讨论。可以自定义一个结构体的一小部分字段而剩余字段则使用 <code>..Default::default()</code> 设置为默认值。</p>
-<p>例如，当你在 <code>Option&lt;T&gt;</code> 实例上使用 <code>unwrap_or_default</code> 方法时，<code>Default</code> trait是必须的。如果 <code>Option&lt;T&gt;</code> 是 <code>None</code>的话, <code>unwrap_or_default</code> 方法将返回存储在 <code>Option&lt;T&gt;</code> 中 <code>T</code> 类型的 <code>Default::default</code> 的结果。</p>
+<p><code>Default::default</code> 函数通常结合结构体更新语法一起使用，这在第 5 章的 <a href="ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax">“使用结构体更新语法从其他实例中创建实例”</a> 部分有讨论。可以自定义一个结构体的一小部分字段而剩余字段则使用 <code>..Default::default()</code> 设置为默认值。</p>
+<p>例如，当你在 <code>Option&lt;T&gt;</code> 实例上使用 <code>unwrap_or_default</code> 方法时，<code>Default</code> trait 是必须的。如果 <code>Option&lt;T&gt;</code> 是 <code>None</code> 的话, <code>unwrap_or_default</code> 方法将返回存储在 <code>Option&lt;T&gt;</code> 中 <code>T</code> 类型的 <code>Default::default</code> 的结果。</p>
 
                     </main>
 

@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="泛型数据类型"><a class="header" href="#泛型数据类型">泛型数据类型</a></h2>
-<p>我们可以使用泛型为像函数签名或结构体这样的项创建定义，这样它们就可以用于多种不同的具体数据类型。让我们看看如何使用泛型定义函数、结构体、枚举和方法，然后我们将讨论泛型如何影响代码性能。</p>
+<p>我们可以使用泛型为函数签名或结构体等项创建定义，这样它们就可以用于多种不同的具体数据类型。让我们看看如何使用泛型定义函数、结构体、枚举和方法，然后我们将讨论泛型如何影响代码性能。</p>
 <h3 id="在函数定义中使用泛型"><a class="header" href="#在函数定义中使用泛型">在函数定义中使用泛型</a></h3>
 <p>当使用泛型定义函数时，本来在函数签名中指定参数和返回值的类型的地方，会改用泛型来表示。采用这种技术，使得代码适应性更强，从而为函数的调用者提供更多的功能，同时也避免了代码的重复。</p>
 <p>回到 <code>largest</code> 函数，示例 10-4 中展示了两个函数，它们的功能都是寻找 slice 中最大值。</p>
@@ -195,8 +195,8 @@ fn main() {
 </span>}
 </code></pre></pre>
 <p><span class="caption">示例 10-4：两个函数，不同点只是名称和签名类型</span></p>
-<p><code>largest_i32</code> 函数是从示例 10-3 中摘出来的，它用来寻找 slice 中最大的 <code>i32</code>。<code>largest_char</code> 函数寻找 slice 中最大的 <code>char</code>。因为两者函数体的代码是一样的，我们可以定义一个函数，再引进泛型参数来消除这种重复。</p>
-<p>为了参数化新函数中的这些类型，我们也需要为类型参数取个名字，道理和给函数的形参起名一样。任何标识符都可以作为类型参数的名字。这里选用 <code>T</code>，因为传统上来说，Rust 的参数名字都比较短，通常就只有一个字母，同时，Rust 类型名的命名规范是骆驼命名法（CamelCase）。<code>T</code> 作为 “type” 的缩写是大部分 Rust 程序员的首选。</p>
+<p><code>largest_i32</code> 函数是从示例 10-3 中摘出来的，它用来寻找 slice 中最大的 <code>i32</code>。<code>largest_char</code> 函数寻找 slice 中最大的 <code>char</code>。因为两者函数体的代码一致，我们可以定义一个函数，再引进泛型参数来消除这种重复。</p>
+<p>为了参数化新函数中的这些类型，我们也需要为类型参数取个名字，道理和给函数的形参起名一样。任何标识符都可以作为类型参数的名字。这里选用 <code>T</code>，因为传统上来说，Rust 的参数名字都比较短，通常就只有一个字母，同时，Rust 类型名的命名规范是骆驼命名法（CamelCase）。<code>T</code> 作为 “type” 的缩写是大部分 Rust 开发者的首选。</p>
 <p>如果要在函数体中使用参数，就必须在函数签名中声明它的名字，好让编译器知道这个名字指代的是什么。同理，当在函数签名中使用一个类型参数时，必须在使用它之前就声明它。为了定义泛型版本的 <code>largest</code> 函数，类型参数声明位于函数名称与参数列表中间的尖括号 <code>&lt;&gt;</code> 中，像这样：</p>
 <pre><code class="language-rust ignore">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; T {
 </code></pre>
@@ -291,9 +291,9 @@ fn main() {
 }
 </code></pre></pre>
 <p><span class="caption">示例 10-8：使用两个泛型的 <code>Point</code>，这样 <code>x</code> 和 <code>y</code> 可能是不同类型</span></p>
-<p>现在所有这些 <code>Point</code> 实例都合法了！你可以在定义中使用任意多的泛型类型参数，不过太多的话，代码将难以阅读和理解。当你的代码中需要许多泛型类型时，它可能表明你的代码需要重构，分解成更小的结构。</p>
+<p>现在所有的 <code>Point</code> 实例都合法了！你可以在定义中使用任意多的泛型类型参数，不过太多的话，代码将难以阅读和理解。当你的代码中需要许多泛型类型时，它可能表明你的代码需要重构，分解成更小的结构。</p>
 <h3 id="枚举定义中的泛型"><a class="header" href="#枚举定义中的泛型">枚举定义中的泛型</a></h3>
-<p>和结构体类似，枚举也可以在成员中存放泛型数据类型。第六章我们曾用过标准库提供的 <code>Option&lt;T&gt;</code> 枚举，这里再回顾一下：</p>
+<p>和结构体类似，枚举也可以在成员中存放泛型数据类型。第 6 章我们曾用过标准库提供的 <code>Option&lt;T&gt;</code> 枚举，这里再回顾一下：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -303,8 +303,8 @@ fn main() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>现在这个定义应该更容易理解了。如你所见 <code>Option&lt;T&gt;</code> 是一个拥有泛型 <code>T</code> 的枚举，它有两个成员：<code>Some</code>，它存放了一个类型 <code>T</code> 的值，和不存在任何值的<code>None</code>。通过 <code>Option&lt;T&gt;</code> 枚举可以表达有一个可能的值的抽象概念，同时因为 <code>Option&lt;T&gt;</code> 是泛型的，无论这个可能的值是什么类型都可以使用这个抽象。</p>
-<p>枚举也可以拥有多个泛型类型。第九章使用过的 <code>Result</code> 枚举定义就是一个这样的例子：</p>
+<p>现在这个定义应该更容易理解了。如你所见 <code>Option&lt;T&gt;</code> 是一个拥有泛型 <code>T</code> 的枚举，它有两个成员：<code>Some</code>，它存放了一个类型 <code>T</code> 的值，和不存在任何值的 <code>None</code>。通过 <code>Option&lt;T&gt;</code> 枚举可以表达有一个可能的值的抽象概念，同时因为 <code>Option&lt;T&gt;</code> 是泛型的，无论这个可能的值是什么类型都可以使用这个抽象。</p>
+<p>枚举也可以拥有多个泛型类型。第 9 章使用过的 <code>Result</code> 枚举定义就是一个这样的例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -314,10 +314,10 @@ fn main() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>Result</code> 枚举有两个泛型类型，<code>T</code> 和 <code>E</code>。<code>Result</code> 有两个成员：<code>Ok</code>，它存放一个类型 <code>T</code> 的值，而 <code>Err</code> 则存放一个类型 <code>E</code> 的值。这个定义使得 <code>Result</code> 枚举能很方便的表达任何可能成功（返回 <code>T</code> 类型的值）也可能失败（返回 <code>E</code> 类型的值）的操作。实际上，这就是我们在示例 9-3 用来打开文件的方式：当成功打开文件的时候，<code>T</code> 对应的是 <code>std::fs::File</code> 类型；而当打开文件时出现问题时，<code>E</code> 的值则是 <code>std::io::Error</code> 类型。</p>
+<p><code>Result</code> 枚举有两个泛型类型，<code>T</code> 和 <code>E</code>。<code>Result</code> 有两个成员：<code>Ok</code>，它存放一个类型 <code>T</code> 的值，而 <code>Err</code> 则存放一个类型 <code>E</code> 的值。这个定义使得 <code>Result</code> 枚举能很方便的表达任何可能成功（返回 <code>T</code> 类型的值）也可能失败（返回 <code>E</code> 类型的值）的操作。实际上，这就是我们在示例 9-3 用来打开文件的方式：当成功打开文件的时候，<code>T</code> 对应的是 <code>std::fs::File</code> 类型；而当打开文件出现问题时，<code>E</code> 的值则是 <code>std::io::Error</code> 类型。</p>
 <p>当你意识到代码中定义了多个结构体或枚举，它们不一样的地方只是其中的值的类型的时候，不妨通过泛型类型来避免重复。</p>
 <h3 id="方法定义中的泛型"><a class="header" href="#方法定义中的泛型">方法定义中的泛型</a></h3>
-<p>在为结构体和枚举实现方法时（像第五章那样），一样也可以用泛型。示例 10-9 中展示了示例 10-6 中定义的结构体 <code>Point&lt;T&gt;</code>，和在其上实现的名为 <code>x</code> 的方法。</p>
+<p>在为结构体和枚举实现方法时（像第 5 章那样），一样也可以用泛型。示例 10-9 中展示了示例 10-6 中定义的结构体 <code>Point&lt;T&gt;</code>，和在其上实现的名为 <code>x</code> 的方法。</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct Point&lt;T&gt; {
     x: T,
@@ -383,7 +383,7 @@ fn main() {
 }
 </code></pre></pre>
 <p><span class="caption">示例 10-11：方法使用了与结构体定义中不同类型的泛型</span></p>
-<p>在 <code>main</code> 函数中，定义了一个有 <code>i32</code> 类型的 <code>x</code>（其值为 <code>5</code>）和 <code>f64</code> 的 <code>y</code>（其值为 <code>10.4</code>）的 <code>Point</code>。<code>p2</code> 则是一个有着字符串 slice 类型的 <code>x</code>（其值为 <code>&quot;Hello&quot;</code>）和 <code>char</code> 类型的 <code>y</code>（其值为<code>c</code>）的 <code>Point</code>。在 <code>p1</code> 上以 <code>p2</code> 作为参数调用 <code>mixup</code> 会返回一个 <code>p3</code>，它会有一个 <code>i32</code> 类型的 <code>x</code>，因为 <code>x</code> 来自 <code>p1</code>，并拥有一个 <code>char</code> 类型的 <code>y</code>，因为 <code>y</code> 来自 <code>p2</code>。<code>println!</code> 会打印出 <code>p3.x = 5, p3.y = c</code>。</p>
+<p>在 <code>main</code> 函数中，定义了一个有 <code>i32</code> 类型的 <code>x</code>（其值为 <code>5</code>）和 <code>f64</code> 的 <code>y</code>（其值为 <code>10.4</code>）的 <code>Point</code>。<code>p2</code> 则是一个有着字符串 slice 类型的 <code>x</code>（其值为 <code>&quot;Hello&quot;</code>）和 <code>char</code> 类型的 <code>y</code>（其值为 <code>c</code>）的 <code>Point</code>。在 <code>p1</code> 上以 <code>p2</code> 作为参数调用 <code>mixup</code> 会返回一个 <code>p3</code>，它会有一个 <code>i32</code> 类型的 <code>x</code>，因为 <code>x</code> 来自 <code>p1</code>，并拥有一个 <code>char</code> 类型的 <code>y</code>，因为 <code>y</code> 来自 <code>p2</code>。<code>println!</code> 会打印出 <code>p3.x = 5, p3.y = c</code>。</p>
 <p>这个例子的目的是展示一些泛型通过 <code>impl</code> 声明而另一些通过方法定义声明的情况。这里泛型参数 <code>T</code> 和 <code>U</code> 声明于 <code>impl</code> 之后，因为他们与结构体定义相对应。而泛型参数 <code>V</code> 和 <code>W</code> 声明于 <code>fn mixup</code> 之后，因为他们只是相对于方法本身的。</p>
 <h3 id="泛型代码的性能"><a class="header" href="#泛型代码的性能">泛型代码的性能</a></h3>
 <p>在阅读本部分内容的同时，你可能会好奇使用泛型类型参数是否会有运行时消耗。好消息是：Rust 实现了泛型，使得使用泛型类型参数的代码相比使用具体类型并没有任何速度上的损失。</p>

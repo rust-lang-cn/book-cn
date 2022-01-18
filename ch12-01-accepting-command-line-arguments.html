@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -161,7 +161,7 @@ $ cd minigrep
 </code></pre>
 <p>现在 <code>cargo new</code> 生成的程序忽略任何传递给它的参数。<a href="https://crates.io/">Crates.io</a> 上有一些现成的库可以帮助我们接受命令行参数，不过我们正在学习这些内容，让我们自己来实现一个。</p>
 <h3 id="读取参数值"><a class="header" href="#读取参数值">读取参数值</a></h3>
-<p>为了确保 <code>minigrep</code> 能够获取传递给它的命令行参数的值，我们需要一个 Rust 标准库提供的函数，也就是 <code>std::env::args</code>。这个函数返回一个传递给程序的命令行参数的 <strong>迭代器</strong>（<em>iterator</em>）。我们会在 <a href="ch13-00-functional-features.html">第十三章</a> 全面的介绍它们。但是现在只需理解迭代器的两个细节：迭代器生成一系列的值，可以在迭代器上调用 <code>collect</code> 方法将其转换为一个集合，比如包含所有迭代器产生元素的 vector。</p>
+<p>为了确保 <code>minigrep</code> 能够获取传递给它的命令行参数的值，我们需要一个 Rust 标准库提供的函数，也就是 <code>std::env::args</code>。这个函数返回一个传递给程序的命令行参数的 <strong>迭代器</strong>（<em>iterator</em>）。我们会在 <a href="ch13-00-functional-features.html">第 13 章</a> 全面的介绍它们。但是现在只需理解迭代器的两个细节：迭代器生成一系列的值，可以在迭代器上调用 <code>collect</code> 方法将其转换为一个集合，比如包含所有迭代器产生元素的 vector。</p>
 <p>使用示例 12-1 中的代码来读取任何传递给 <code>minigrep</code> 的命令行参数并将其收集到一个 vector 中。</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::env;
@@ -172,7 +172,7 @@ fn main() {
 }
 </code></pre></pre>
 <p><span class="caption">示例 12-1：将命令行参数收集到一个 vector 中并打印出来</span></p>
-<p>首先使用 <code>use</code> 语句来将 <code>std::env</code> 模块引入作用域以便可以使用它的 <code>args</code> 函数。注意 <code>std::env::args</code> 函数被嵌套进了两层模块中。正如 <a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#creating-idiomatic-use-paths">第七章</a> 讲到的，当所需函数嵌套了多于一层模块时，通常将父模块引入作用域，而不是其自身。这便于我们利用 <code>std::env</code> 中的其他函数。这比增加了 <code>use std::env::args;</code> 后仅仅使用 <code>args</code> 调用函数要更明确一些，因为 <code>args</code> 容易被错认成一个定义于当前模块的函数。</p>
+<p>首先使用 <code>use</code> 语句来将 <code>std::env</code> 模块引入作用域以便可以使用它的 <code>args</code> 函数。注意 <code>std::env::args</code> 函数被嵌套进了两层模块中。正如 <a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#creating-idiomatic-use-paths">第 7 章</a> 讲到的，当所需函数嵌套了多于一层模块时，通常将父模块引入作用域，而不是其自身。这便于我们利用 <code>std::env</code> 中的其他函数。这比增加了 <code>use std::env::args;</code> 后仅仅使用 <code>args</code> 调用函数要更明确一些，因为 <code>args</code> 容易被错认成一个定义于当前模块的函数。</p>
 <blockquote>
 <h3 id="args-函数和无效的-unicode"><a class="header" href="#args-函数和无效的-unicode"><code>args</code> 函数和无效的 Unicode</a></h3>
 <p>注意 <code>std::env::args</code> 在其任何参数包含无效 Unicode 字符时会 panic。如果你需要接受包含无效 Unicode 字符的参数，使用 <code>std::env::args_os</code> 代替。这个函数返回 <code>OsString</code> 值而不是 <code>String</code> 值。这里出于简单考虑使用了 <code>std::env::args</code>，因为 <code>OsString</code> 值每个平台都不一样而且比 <code>String</code> 值处理起来更为复杂。</p>

@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,11 +151,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="不安全-rust"><a class="header" href="#不安全-rust">不安全 Rust</a></h2>
-<p>目前为止讨论过的代码都有 Rust 在编译时会强制执行的内存安全保证。然而，Rust 还隐藏有第二种语言，它不会强制执行这类内存安全保证：这被称为 <strong>不安全 Rust</strong>（<em>unsafe Rust</em>）。它与常规 Rust 代码无异，但是会提供额外的超级力量。</p>
-<p>不安全 Rust 之所以存在，是因为静态分析本质上是保守的。当编译器尝试确定一段代码是否支持某个保证时，拒绝一些有效的程序比接受无效程序要好一些。这必然意味着有时代码可能是合法的，但是 Rust 不这么认为！在这种情况下，可以使用不安全代码告诉编译器，“相信我，我知道我在干什么。”这么做的缺点就是你只能靠自己了：如果不安全代码出错了，比如解引用空指针，可能会导致不安全的内存使用。</p>
+<p>目前为止讨论过的代码都有 Rust 在编译时会强制执行的内存安全保证。然而，Rust 还隐藏有第二种语言，它不会强制执行这类内存安全保证：这被称为 <strong>不安全 Rust</strong>（<em>unsafe Rust</em>）。它与常规 Rust 代码无异，但是会提供额外的超能力。</p>
+<p>尽管代码可能没问题，但如果 Rust 编译器没有足够的信息可以确定，它将拒绝代码。</p>
+<p>不安全 Rust 之所以存在，是因为静态分析本质上是保守的。当编译器尝试确定一段代码是否支持某个保证时，拒绝一些有效的程序比接受无效程序要好一些。这必然意味着有时代码<strong>可能</strong>是合法的，但如果 Rust 编译器没有足够的信息来确定，它将拒绝该代码。在这种情况下，可以使用不安全代码告诉编译器，“相信我，我知道我在干什么。”这么做的缺点就是你只能靠自己了：如果不安全代码出错了，比如解引用空指针，可能会导致不安全的内存使用。</p>
 <p>另一个 Rust 存在不安全一面的原因是：底层计算机硬件固有的不安全性。如果 Rust 不允许进行不安全操作，那么有些任务则根本完成不了。Rust 需要能够进行像直接与操作系统交互，甚至于编写你自己的操作系统这样的底层系统编程！这也是 Rust 语言的目标之一。让我们看看不安全 Rust 能做什么，和怎么做。</p>
-<h3 id="不安全的超级力量"><a class="header" href="#不安全的超级力量">不安全的超级力量</a></h3>
-<p>可以通过 <code>unsafe</code> 关键字来切换到不安全 Rust，接着可以开启一个新的存放不安全代码的块。这里有五类可以在不安全 Rust 中进行而不能用于安全 Rust 的操作，它们称之为 “不安全的超级力量。” 这些超级力量是：</p>
+<h3 id="不安全的超能力"><a class="header" href="#不安全的超能力">不安全的超能力</a></h3>
+<p>可以通过 <code>unsafe</code> 关键字来切换到不安全 Rust，接着可以开启一个新的存放不安全代码的块。这里有五类可以在不安全 Rust 中进行而不能用于安全 Rust 的操作，它们称之为 “不安全的超能力。” 这些超能力是：</p>
 <ul>
 <li>解引用裸指针</li>
 <li>调用不安全的函数或方法</li>
@@ -164,12 +165,12 @@
 <li>访问 <code>union</code> 的字段</li>
 </ul>
 <p>有一点很重要，<code>unsafe</code> 并不会关闭借用检查器或禁用任何其他 Rust 安全检查：如果在不安全代码中使用引用，它仍会被检查。<code>unsafe</code> 关键字只是提供了那五个不会被编译器检查内存安全的功能。你仍然能在不安全块中获得某种程度的安全。</p>
-<p>再者，<code>unsafe</code> 不意味着块中的代码就一定是危险的或者必然导致内存安全问题：其意图在于作为程序员你将会确保 <code>unsafe</code> 块中的代码以有效的方式访问内存。</p>
+<p>再者，<code>unsafe</code> 不意味着块中的代码就一定是危险的或者必然导致内存安全问题：其意图在于作为开发者你将会确保 <code>unsafe</code> 块中的代码以有效的方式访问内存。</p>
 <p>人是会犯错误的，错误总会发生，不过通过要求这五类操作必须位于标记为 <code>unsafe</code> 的块中，就能够知道任何与内存安全相关的错误必定位于 <code>unsafe</code> 块内。保持 <code>unsafe</code> 块尽可能小，如此当之后调查内存 bug 时就会感谢你自己了。</p>
 <p>为了尽可能隔离不安全代码，将不安全代码封装进一个安全的抽象并提供安全 API 是一个好主意，当我们学习不安全函数和方法时会讨论到。标准库的一部分被实现为在被评审过的不安全代码之上的安全抽象。这个技术防止了 <code>unsafe</code> 泄露到所有你或者用户希望使用由 <code>unsafe</code> 代码实现的功能的地方，因为使用其安全抽象是安全的。</p>
-<p>让我们按顺序依次介绍上述五个超级力量，同时我们会看到一些提供不安全代码的安全接口的抽象。</p>
+<p>让我们按顺序依次介绍上述五个超能力，同时我们会看到一些提供不安全代码的安全接口的抽象。</p>
 <h3 id="解引用裸指针"><a class="header" href="#解引用裸指针">解引用裸指针</a></h3>
-<p>回到第四章的 <a href="ch04-02-references-and-borrowing.html#dangling-references">“悬垂引用”</a>  部分，那里提到了编译器会确保引用总是有效的。不安全 Rust 有两个被称为 <strong>裸指针</strong>（<em>raw pointers</em>）的类似于引用的新类型。和引用一样，裸指针是不可变或可变的，分别写作 <code>*const T</code> 和 <code>*mut T</code>。这里的星号不是解引用运算符；它是类型名称的一部分。在裸指针的上下文中，<strong>不可变</strong> 意味着指针解引用之后不能直接赋值。</p>
+<p>回到第 4 章的 <a href="ch04-02-references-and-borrowing.html#%E6%82%AC%E5%9E%82%E5%BC%95%E7%94%A8dangling-references">“悬垂引用”</a>  部分，那里提到了编译器会确保引用总是有效的。不安全 Rust 有两个被称为 <strong>裸指针</strong>（<em>raw pointers</em>）的类似于引用的新类型。和引用一样，裸指针是不可变或可变的，分别写作 <code>*const T</code> 和 <code>*mut T</code>。这里的星号不是解引用运算符；它是类型名称的一部分。在裸指针的上下文中，<strong>不可变</strong> 意味着指针解引用之后不能直接赋值。</p>
 <p>与引用和智能指针的区别在于，记住裸指针</p>
 <ul>
 <li>允许忽略借用规则，可以同时拥有不可变和可变的指针，或多个指向相同位置的可变指针</li>
@@ -201,7 +202,7 @@ let r = address as *const i32;
 </span></code></pre></pre>
 <p><span class="caption">示例 19-2: 创建指向任意内存地址的裸指针</span></p>
 <p>记得我们说过可以在安全代码中创建裸指针，不过不能 <strong>解引用</strong> 裸指针和读取其指向的数据。现在我们要做的就是对裸指针使用解引用运算符 <code>*</code>，这需要一个 <code>unsafe</code> 块，如示例 19-3 所示：</p>
-<pre><pre class="playground"><code class="language-rust unsafe">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut num = 5;
@@ -222,7 +223,7 @@ unsafe {
 <h3 id="调用不安全函数或方法"><a class="header" href="#调用不安全函数或方法">调用不安全函数或方法</a></h3>
 <p>第二类要求使用不安全块的操作是调用不安全函数。不安全函数和方法与常规函数方法十分类似，除了其开头有一个额外的 <code>unsafe</code>。在此上下文中，关键字<code>unsafe</code>表示该函数具有调用时需要满足的要求，而 Rust 不会保证满足这些要求。通过在 <code>unsafe</code> 块中调用不安全函数，表明我们已经阅读过此函数的文档并对其是否满足函数自身的契约负责。</p>
 <p>如下是一个没有做任何操作的不安全函数 <code>dangerous</code> 的例子：</p>
-<pre><pre class="playground"><code class="language-rust unsafe">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>unsafe fn dangerous() {}
@@ -233,11 +234,22 @@ unsafe {
 <span class="boring">}
 </span></code></pre></pre>
 <p>必须在一个单独的 <code>unsafe</code> 块中调用 <code>dangerous</code> 函数。如果尝试不使用 <code>unsafe</code> 块调用 <code>dangerous</code>，则会得到一个错误：</p>
-<pre><code class="language-text">error[E0133]: call to unsafe function requires unsafe function or block
- --&gt;
+<pre><code class="language-console">$ cargo run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+error[E0133]: call to unsafe function is unsafe and requires unsafe function or block
+ --&gt; src/main.rs:4:5
   |
 4 |     dangerous();
   |     ^^^^^^^^^^^ call to unsafe function
+  |
+  = note: consult the function's documentation for information on how to avoid undefined behavior
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0133`.
+error: could not compile `unsafe-example`
+
+To learn more, run the command again with --verbose.
 </code></pre>
 <p>通过将 <code>dangerous</code> 调用插入 <code>unsafe</code> 块中，我们就向 Rust 保证了我们已经阅读过函数的文档，理解如何正确使用，并验证过其满足函数的契约。</p>
 <p>不安全函数体也是有效的 <code>unsafe</code> 块，所以在不安全函数中进行另一个不安全操作时无需新增额外的 <code>unsafe</code> 块。</p>
@@ -271,19 +283,31 @@ assert_eq!(b, &amp;mut [4, 5, 6]);
 <p>此函数首先获取 slice 的长度，然后通过检查参数是否小于或等于这个长度来断言参数所给定的索引位于 slice 当中。该断言意味着如果传入的索引比要分割的 slice 的索引更大，此函数在尝试使用这个索引前 panic。</p>
 <p>之后我们在一个元组中返回两个可变的 slice：一个从原始 slice 的开头直到 <code>mid</code> 索引，另一个从 <code>mid</code> 直到原 slice 的结尾。</p>
 <p>如果尝试编译示例 19-5 的代码，会得到一个错误：</p>
-<pre><code class="language-text">error[E0499]: cannot borrow `*slice` as mutable more than once at a time
- --&gt;
+<pre><code class="language-console">$ cargo run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+error[E0499]: cannot borrow `*slice` as mutable more than once at a time
+ --&gt; src/main.rs:6:30
   |
-6 |     (&amp;mut slice[..mid],
-  |           ----- first mutable borrow occurs here
-7 |      &amp;mut slice[mid..])
-  |           ^^^^^ second mutable borrow occurs here
-8 | }
-  | - first borrow ends here
+1 | fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+  |                        - let's call the lifetime of this reference `'1`
+...
+6 |     (&amp;mut slice[..mid], &amp;mut slice[mid..])
+  |     -------------------------^^^^^--------
+  |     |     |                  |
+  |     |     |                  second mutable borrow occurs here
+  |     |     first mutable borrow occurs here
+  |     returning this value requires that `*slice` is borrowed for `'1`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0499`.
+error: could not compile `unsafe-example`
+
+To learn more, run the command again with --verbose.
 </code></pre>
 <p>Rust 的借用检查器不能理解我们要借用这个 slice 的两个不同部分：它只知道我们借用了同一个 slice 两次。本质上借用 slice 的不同部分是可以的，因为结果两个 slice 不会重叠，不过 Rust 还没有智能到能够理解这些。当我们知道某些事是可以的而 Rust 不知道的时候，就是触及不安全代码的时候了</p>
 <p>示例 19-6 展示了如何使用 <code>unsafe</code> 块，裸指针和一些不安全函数调用来实现 <code>split_at_mut</code>：</p>
-<pre><pre class="playground"><code class="language-rust unsafe">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::slice;
@@ -302,12 +326,12 @@ fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;m
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 19-6: 在 <code>split_at_mut</code> 函数的实现中使用不安全代码</span></p>
-<p>回忆第四章的 <a href="ch04-03-slices.html#the-slice-type">“Slice 类型” </a> 部分，slice 是一个指向一些数据的指针，并带有该 slice 的长度。可以使用 <code>len</code> 方法获取 slice 的长度，使用 <code>as_mut_ptr</code> 方法访问 slice 的裸指针。在这个例子中，因为有一个 <code>i32</code> 值的可变 slice，<code>as_mut_ptr</code> 返回一个 <code>*mut i32</code> 类型的裸指针，储存在 <code>ptr</code> 变量中。</p>
+<p>回忆第 4 章的 <a href="ch04-03-slices.html#the-slice-type">“Slice 类型” </a> 部分，slice 是一个指向一些数据的指针，并带有该 slice 的长度。可以使用 <code>len</code> 方法获取 slice 的长度，使用 <code>as_mut_ptr</code> 方法访问 slice 的裸指针。在这个例子中，因为有一个 <code>i32</code> 值的可变 slice，<code>as_mut_ptr</code> 返回一个 <code>*mut i32</code> 类型的裸指针，储存在 <code>ptr</code> 变量中。</p>
 <p>我们保持索引 <code>mid</code> 位于 slice 中的断言。接着是不安全代码：<code>slice::from_raw_parts_mut</code> 函数获取一个裸指针和一个长度来创建一个 slice。这里使用此函数从 <code>ptr</code> 中创建了一个有 <code>mid</code> 个项的 slice。之后在 <code>ptr</code> 上调用 <code>add</code> 方法并使用 <code>mid</code> 作为参数来获取一个从 <code>mid</code> 开始的裸指针，使用这个裸指针并以 <code>mid</code> 之后项的数量为长度创建一个 slice。</p>
 <p><code>slice::from_raw_parts_mut</code> 函数是不安全的因为它获取一个裸指针，并必须确信这个指针是有效的。裸指针上的 <code>add</code> 方法也是不安全的，因为其必须确信此地址偏移量也是有效的指针。因此必须将 <code>slice::from_raw_parts_mut</code> 和 <code>add</code> 放入 <code>unsafe</code> 块中以便能调用它们。通过观察代码，和增加 <code>mid</code> 必然小于等于 <code>len</code> 的断言，我们可以说 <code>unsafe</code> 块中所有的裸指针将是有效的 slice 中数据的指针。这是一个可以接受的 <code>unsafe</code> 的恰当用法。</p>
 <p>注意无需将 <code>split_at_mut</code> 函数的结果标记为 <code>unsafe</code>，并可以在安全 Rust 中调用此函数。我们创建了一个不安全代码的安全抽象，其代码以一种安全的方式使用了 <code>unsafe</code> 代码，因为其只从这个函数访问的数据中创建了有效的指针。</p>
 <p>与此相对，示例 19-7 中的 <code>slice::from_raw_parts_mut</code> 在使用 slice 时很有可能会崩溃。这段代码获取任意内存地址并创建了一个长为一万的 slice：</p>
-<pre><pre class="playground"><code class="language-rust unsafe">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::slice;
@@ -324,7 +348,7 @@ let slice: &amp;[i32] = unsafe {
 <p>我们并不拥有这个任意地址的内存，也不能保证这段代码创建的 slice 包含有效的 <code>i32</code> 值。试图使用臆测为有效的 <code>slice</code> 会导致未定义的行为。</p>
 <h4 id="使用-extern-函数调用外部代码"><a class="header" href="#使用-extern-函数调用外部代码">使用 <code>extern</code> 函数调用外部代码</a></h4>
 <p>有时你的 Rust 代码可能需要与其他语言编写的代码交互。为此 Rust 有一个关键字，<code>extern</code>，有助于创建和使用 <strong>外部函数接口</strong>（<em>Foreign Function Interface</em>， FFI）。外部函数接口是一个编程语言用以定义函数的方式，其允许不同（外部）编程语言调用这些函数。</p>
-<p>示例 19-8 展示了如何集成 C 标准库中的 <code>abs</code> 函数。<code>extern</code> 块中声明的函数在 Rust 代码中总是不安全的。因为其他语言不会强制执行 Rust 的规则且 Rust 无法检查它们，所以确保其安全是程序员的责任：</p>
+<p>示例 19-8 展示了如何集成 C 标准库中的 <code>abs</code> 函数。<code>extern</code> 块中声明的函数在 Rust 代码中总是不安全的。因为其他语言不会强制执行 Rust 的规则且 Rust 无法检查它们，所以确保其安全是开发者的责任：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust unsafe">extern &quot;C&quot; {
     fn abs(input: i32) -&gt; i32;
@@ -364,11 +388,12 @@ fn main() {
 }
 </code></pre></pre>
 <p><span class="caption">示例 19-9: 定义和使用一个不可变静态变量</span></p>
-<p><code>static</code> 变量类似于第三章 <a href="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants">“变量和常量的区别”</a>  部分讨论的常量。通常静态变量的名称采用 <code>SCREAMING_SNAKE_CASE</code> 写法，并 <strong>必须</strong> 标注变量的类型，在这个例子中是 <code>&amp;'static str</code>。静态变量只能储存拥有 <code>'static</code> 生命周期的引用，这意味着 Rust 编译器可以自己计算出其生命周期而无需显式标注。访问不可变静态变量是安全的。</p>
+<p>静态变量类似于常量，我们在第 3 章的 &quot;变量和常量的区别 &quot;一节中讨论过。静态变量的名字按惯例采用SCREAMING_SNAKE_CASE。静态变量只能存储具有 &quot;静态寿命 &quot;的引用，这意味着Rust编译器可以计算出其寿命，我们不需要明确注释。访问一个不可变的静态变量是安全的。</p>
+<p>静态（<code>static</code>）变量类似于第 3 章 <a href="ch03-01-variables-and-mutability.html#%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB">“变量和常量的区别”</a>  部分讨论的常量。通常静态变量的名称采用 <code>SCREAMING_SNAKE_CASE</code> 写法。静态变量只能储存拥有 <code>'static</code> 生命周期的引用，这意味着 Rust 编译器可以自己计算出其生命周期而无需显式标注。访问不可变静态变量是安全的。</p>
 <p>常量与不可变静态变量可能看起来很类似，不过一个微妙的区别是静态变量中的值有一个固定的内存地址。使用这个值总是会访问相同的地址。另一方面，常量则允许在任何被用到的时候复制其数据。</p>
 <p>常量与静态变量的另一个区别在于静态变量可以是可变的。访问和修改可变静态变量都是 <strong>不安全</strong> 的。示例 19-10 展示了如何声明、访问和修改名为 <code>COUNTER</code> 的可变静态变量：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust unsafe">static mut COUNTER: u32 = 0;
+<pre><pre class="playground"><code class="language-rust">static mut COUNTER: u32 = 0;
 
 fn add_to_count(inc: u32) {
     unsafe {
@@ -386,10 +411,10 @@ fn main() {
 </code></pre></pre>
 <p><span class="caption">示例 19-10: 读取或修改一个可变静态变量是不安全的</span></p>
 <p>就像常规变量一样，我们使用 <code>mut</code> 关键来指定可变性。任何读写 <code>COUNTER</code> 的代码都必须位于 <code>unsafe</code> 块中。这段代码可以编译并如期打印出 <code>COUNTER: 3</code>，因为这是单线程的。拥有多个线程访问 <code>COUNTER</code> 则可能导致数据竞争。</p>
-<p>拥有可以全局访问的可变数据，难以保证不存在数据竞争，这就是为何 Rust 认为可变静态变量是不安全的。任何可能的情况，请优先使用第十六章讨论的并发技术和线程安全智能指针，这样编译器就能检测不同线程间的数据访问是否是安全的。</p>
+<p>拥有可以全局访问的可变数据，难以保证不存在数据竞争，这就是为何 Rust 认为可变静态变量是不安全的。任何可能的情况，请优先使用第 16 章讨论的并发技术和线程安全智能指针，这样编译器就能检测不同线程间的数据访问是否是安全的。</p>
 <h3 id="实现不安全-trait"><a class="header" href="#实现不安全-trait">实现不安全 trait</a></h3>
-<p>最后一个只能用在 <code>unsafe</code> 中的操作是实现不安全 trait。当至少有一个方法中包含编译器不能验证的不变量时 trait 是不安全的。可以在 <code>trait</code> 之前增加 <code>unsafe</code> 关键字将 trait 声明为 <code>unsafe</code>，同时 trait 的实现也必须标记为 <code>unsafe</code>，如示例 19-11 所示：</p>
-<pre><pre class="playground"><code class="language-rust unsafe">
+<p><code>unsafe</code> 的另一个操作用例是实现不安全 trait。当 trait 中至少有一个方法中包含编译器无法验证的不变式（invariant）时 trait 是不安全的。可以在 <code>trait</code> 之前增加 <code>unsafe</code> 关键字将 trait 声明为 <code>unsafe</code>，同时 trait 的实现也必须标记为 <code>unsafe</code>，如示例 19-11 所示：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>unsafe trait Foo {
@@ -403,11 +428,11 @@ unsafe impl Foo for i32 {
 </span></code></pre></pre>
 <p><span class="caption">示例 19-11: 定义并实现不安全 trait</span></p>
 <p>通过 <code>unsafe impl</code>，我们承诺将保证编译器所不能验证的不变量。</p>
-<p>作为一个例子，回忆第十六章 <a href="ch16-04-extensible-concurrency-sync-and-send.html#extensible-concurrency-with-the-sync-and-send-traits">“使用 <code>Sync</code> 和 <code>Send</code> trait 的可扩展并发”</a>  部分中的 <code>Sync</code> 和 <code>Send</code> 标记 trait，编译器会自动为完全由 <code>Send</code> 和 <code>Sync</code> 类型组成的类型自动实现他们。如果实现了一个包含一些不是 <code>Send</code> 或 <code>Sync</code> 的类型，比如裸指针，并希望将此类型标记为 <code>Send</code> 或 <code>Sync</code>，则必须使用 <code>unsafe</code>。Rust 不能验证我们的类型保证可以安全的跨线程发送或在多线程间访问，所以需要我们自己进行检查并通过 <code>unsafe</code> 表明。</p>
+<p>作为一个例子，回忆第 16 章 <a href="ch16-04-extensible-concurrency-sync-and-send.html#%E4%BD%BF%E7%94%A8-sync-%E5%92%8C-send-trait-%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E5%B9%B6%E5%8F%91">“使用 <code>Sync</code> 和 <code>Send</code> trait 的可扩展并发”</a>  部分中的 <code>Sync</code> 和 <code>Send</code> 标记 trait，编译器会自动为完全由 <code>Send</code> 和 <code>Sync</code> 类型组成的类型自动实现他们。如果实现了一个包含一些不是 <code>Send</code> 或 <code>Sync</code> 的类型，比如裸指针，并希望将此类型标记为 <code>Send</code> 或 <code>Sync</code>，则必须使用 <code>unsafe</code>。Rust 不能验证我们的类型保证可以安全的跨线程发送或在多线程间访问，所以需要我们自己进行检查并通过 <code>unsafe</code> 表明。</p>
 <h3 id="访问联合体中的字段"><a class="header" href="#访问联合体中的字段">访问联合体中的字段</a></h3>
-<p><code>union</code> 和 <code>struct</code> 类似，但是在一个实例中同时只能使用一个声明的字段。联合体主要用于和 C 代码中的联合体交互。访问联合体的字段是不安全的，因为 Rust 无法保证当前存储在联合体实例中数据的类型。可以查看<a href="https://doc.rust-lang.org/reference/items/unions.html">参考文档</a>了解有关联合体的更多信息。</p>
+<p>仅适用于 <code>unsafe</code> 的最后一个操作是访问 <strong>联合体</strong> 中的字段，<code>union</code> 和 <code>struct</code> 类似，但是在一个实例中同时只能使用一个声明的字段。联合体主要用于和 C 代码中的联合体交互。访问联合体的字段是不安全的，因为 Rust 无法保证当前存储在联合体实例中数据的类型。可以查看<a href="https://rustwiki.org/zh-CN/reference/items/unions.html">参考文档</a>了解有关联合体的更多信息。</p>
 <h3 id="何时使用不安全代码"><a class="header" href="#何时使用不安全代码">何时使用不安全代码</a></h3>
-<p>使用 <code>unsafe</code> 来进行这五个操作（超级力量）之一是没有问题的，甚至是不需要深思熟虑的，不过使得 <code>unsafe</code> 代码正确也实属不易，因为编译器不能帮助保证内存安全。当有理由使用 <code>unsafe</code> 代码时，是可以这么做的，通过使用显式的 <code>unsafe</code> 标注使得在出现错误时易于追踪问题的源头。</p>
+<p>使用 <code>unsafe</code> 来进行这五个操作（超能力）之一是没有问题的，甚至是不需要深思熟虑的，不过使得 <code>unsafe</code> 代码正确也实属不易，因为编译器不能帮助保证内存安全。当有理由使用 <code>unsafe</code> 代码时，是可以这么做的，通过使用显式的 <code>unsafe</code> 标注可以更容易地在错误发生时追踪问题的源头。</p>
 
                     </main>
 

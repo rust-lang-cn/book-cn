@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="vector-用来储存一系列的值"><a class="header" href="#vector-用来储存一系列的值">vector 用来储存一系列的值</a></h2>
-<p>我们要讲到的第一个类型是 <code>Vec&lt;T&gt;</code>，也被称为 <em>vector</em>。vector 允许我们在一个单独的数据结构中储存多于一个的值，它在内存中彼此相邻地排列所有的值。vector 只能储存相同类型的值。它们在拥有一系列项的场景下非常实用，例如文件中的文本行或是购物车中商品的价格。</p>
+<p>我们要讲到的第一个类型是 <code>Vec&lt;T&gt;</code>，也被称为 <em>vector</em>。vector 允许我们在一个单独的数据结构中储存多个值，所有值在内存中彼此相邻排列。vector 只能储存相同类型的值。它们在拥有一系列项的场景下非常实用，例如文件中的文本行或购物车中商品的价格。</p>
 <h3 id="新建-vector"><a class="header" href="#新建-vector">新建 vector</a></h3>
 <p>为了创建一个新的空 vector，可以调用 <code>Vec::new</code> 函数，如示例 8-1 所示：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -161,7 +161,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 8-1：新建一个空的 vector 来储存 <code>i32</code> 类型的值</span></p>
-<p>注意这里我们增加了一个类型注解。因为没有向这个 vector 中插入任何值，Rust 并不知道我们想要储存什么类型的元素。这是一个非常重要的点。vector 是用泛型实现的，第十章会涉及到如何对你自己的类型使用它们。现在，所有你需要知道的就是 <code>Vec</code> 是一个由标准库提供的类型，它可以存放任何类型，而当 <code>Vec</code> 存放某个特定类型时，那个类型位于尖括号中。在示例 8-1 中，我们告诉 Rust <code>v</code> 这个 <code>Vec</code> 将存放 <code>i32</code> 类型的元素。</p>
+<p>注意这里我们增加了一个类型注解。因为没有向这个 vector 中插入任何值，Rust 并不知道我们想要储存什么类型的元素。这一点非常重要。vector 是用泛型实现的，第 10 章会涉及到如何对你自己的类型使用它们。现在，我们知道 <code>Vec</code> 是一个由标准库提供的类型，它可以存放任何类型，而当 <code>Vec</code> 存放某个特定类型时，那个类型位于尖括号中。在示例 8-1 中，我们告诉 Rust <code>v</code> 这个 <code>Vec</code> 将存放 <code>i32</code> 类型的元素。</p>
 <p>在更实际的代码中，一旦插入值 Rust 就可以推断出想要存放的类型，所以你很少会需要这些类型注解。更常见的做法是使用初始值来创建一个 <code>Vec</code>，而且为了方便 Rust 提供了 <code>vec!</code> 宏。这个宏会根据我们提供的值来创建一个新的 <code>Vec</code>。示例 8-2 新建一个拥有值 <code>1</code>、<code>2</code> 和 <code>3</code> 的 <code>Vec&lt;i32&gt;</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -185,7 +185,7 @@ v.push(8);
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 8-3：使用 <code>push</code> 方法向 vector 增加值</span></p>
-<p>如第三章中讨论的任何变量一样，如果想要能够改变它的值，必须使用 <code>mut</code> 关键字使其可变。放入其中的所有值都是 <code>i32</code> 类型的，而且 Rust 也根据数据做出如此判断，所以不需要 <code>Vec&lt;i32&gt;</code> 注解。</p>
+<p>如第 3 章中讨论的任何变量一样，如果想要能够改变它的值，必须使用 <code>mut</code> 关键字使其可变。放入其中的所有值都是 <code>i32</code> 类型的，而且 Rust 也根据数据做出如此判断，所以不需要 <code>Vec&lt;i32&gt;</code> 注解。</p>
 <h3 id="丢弃-vector-时也会丢弃其所有元素"><a class="header" href="#丢弃-vector-时也会丢弃其所有元素">丢弃 vector 时也会丢弃其所有元素</a></h3>
 <p>类似于任何其他的 <code>struct</code>，vector 在其离开作用域时会被释放，如示例 8-4 所标注的：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -232,8 +232,8 @@ let does_not_exist = v.get(100);
 </span></code></pre></pre>
 <p><span class="caption">示例 8-6：尝试访问一个包含 5 个元素的 vector 的索引 100 处的元素</span></p>
 <p>当运行这段代码，你会发现对于第一个 <code>[]</code> 方法，当引用一个不存在的元素时 Rust 会造成 panic。这个方法更适合当程序认为尝试访问超过 vector 结尾的元素是一个严重错误的情况，这时应该使程序崩溃。</p>
-<p>当 <code>get</code> 方法被传递了一个数组外的索引时，它不会 panic 而是返回 <code>None</code>。当偶尔出现超过 vector 范围的访问属于正常情况的时候可以考虑使用它。接着你的代码可以有处理 <code>Some(&amp;element)</code> 或 <code>None</code> 的逻辑，如第六章讨论的那样。例如，索引可能来源于用户输入的数字。如果它们不慎输入了一个过大的数字那么程序就会得到 <code>None</code> 值，你可以告诉用户当前 vector 元素的数量并再请求它们输入一个有效的值。这就比因为输入错误而使程序崩溃要友好的多！</p>
-<p>一旦程序获取了一个有效的引用，借用检查器将会执行所有权和借用规则（第四章讲到）来确保 vector 内容的这个引用和任何其他引用保持有效。回忆一下不能在相同作用域中同时存在可变和不可变引用的规则。这个规则适用于示例 8-7，当我们获取了 vector 的第一个元素的不可变引用并尝试在 vector 末尾增加一个元素的时候，这是行不通的：</p>
+<p>当 <code>get</code> 方法被传递了一个数组外的索引时，它不会 panic 而是返回 <code>None</code>。当偶尔出现超过 vector 范围的访问属于正常情况的时候可以考虑使用它。接着你的代码可以有处理 <code>Some(&amp;element)</code> 或 <code>None</code> 的逻辑，如第 6 章讨论的那样。例如，索引可能来源于用户输入的数字。如果它们不慎输入了一个过大的数字那么程序就会得到 <code>None</code> 值，你可以告诉用户当前 vector 元素的数量并再请求它们输入一个有效的值。这就比因为输入错误而使程序崩溃要友好的多！</p>
+<p>一旦程序获取了一个有效的引用，借用检查器将会执行所有权和借用规则（第 4 章讲到）来确保 vector 内容的这个引用和任何其他引用保持有效。回忆一下不能在相同作用域中同时存在可变和不可变引用的规则。这个规则适用于示例 8-7，当我们获取了 vector 的第一个元素的不可变引用并尝试在 vector 末尾增加一个元素的时候，这是行不通的：</p>
 <pre><code class="language-rust ignore does_not_compile">let mut v = vec![1, 2, 3, 4, 5];
 
 let first = &amp;v[0];
@@ -283,7 +283,7 @@ for i in &amp;mut v {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例8-9：遍历 vector 中元素的可变引用</span></p>
-<p>为了修改可变引用所指向的值，在使用 <code>+=</code> 运算符之前必须使用解引用运算符（<code>*</code>）获取 <code>i</code> 中的值。第十五章的 <a href="ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator">“通过解引用运算符追踪指针的值”</a> 部分会详细介绍解引用运算符。</p>
+<p>为了修改可变引用所指向的值，在使用 <code>+=</code> 运算符之前必须使用解引用运算符（<code>*</code>）获取 <code>i</code> 中的值。第 15 章的 <a href="ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator">“通过解引用运算符追踪指针的值”</a> 部分会详细介绍解引用运算符。</p>
 <h3 id="使用枚举来储存多种类型"><a class="header" href="#使用枚举来储存多种类型">使用枚举来储存多种类型</a></h3>
 <p>在本章的开始，我们提到 vector 只能储存相同类型的值。这是很不方便的；绝对会有需要储存一系列不同类型的值的用例。幸运的是，枚举的成员都被定义为相同的枚举类型，所以当需要在 vector 中储存不同类型值时，我们可以定义并使用一个枚举！</p>
 <p>例如，假如我们想要从电子表格的一行中获取值，而这一行的有些列包含数字，有些包含浮点值，还有些是字符串。我们可以定义一个枚举，其成员会存放这些不同类型的值，同时所有这些枚举成员都会被当作相同类型，那个枚举的类型。接着可以创建一个储存枚举值的 vector，这样最终就能够储存不同类型的值了。示例 8-10 展示了其用例：</p>
@@ -304,8 +304,8 @@ let row = vec![
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 8-10：定义一个枚举，以便能在 vector 中存放不同类型的数据</span></p>
-<p>Rust 在编译时就必须准确的知道 vector 中类型的原因在于它需要知道储存每个元素到底需要多少内存。第二个好处是可以准确的知道这个 vector 中允许什么类型。如果 Rust 允许 vector 存放任意类型，那么当对 vector 元素执行操作时一个或多个类型的值就有可能会造成错误。使用枚举外加 <code>match</code> 意味着 Rust 能在编译时就保证总是会处理所有可能的情况，正如第六章讲到的那样。</p>
-<p>如果在编写程序时不能确切无遗地知道运行时会储存进 vector 的所有类型，枚举技术就行不通了。相反，你可以使用 trait 对象，第十七章会讲到它。</p>
+<p>Rust 在编译时就必须准确的知道 vector 中类型的原因在于它需要知道储存每个元素到底需要多少内存。第二个好处是可以准确的知道这个 vector 中允许什么类型。如果 Rust 允许 vector 存放任意类型，那么当对 vector 元素执行操作时一个或多个类型的值就有可能会造成错误。使用枚举外加 <code>match</code> 意味着 Rust 能在编译时就保证总是会处理所有可能的情况，正如第 6 章讲到的那样。</p>
+<p>如果在编写程序时不能确切无遗地知道运行时会储存进 vector 的所有类型，枚举技术就行不通了。相反，你可以使用 trait 对象，第 17 章会讲到它。</p>
 <p>现在我们了解了一些使用 vector 的最常见的方式，请一定去看看标准库中 <code>Vec</code> 定义的很多其他实用方法的 API 文档。例如，除了 <code>push</code> 之外还有一个 <code>pop</code> 方法，它会移除并返回 vector 的最后一个元素。让我们继续下一个集合类型：<code>String</code>！</p>
 
                     </main>

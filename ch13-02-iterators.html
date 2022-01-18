@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -162,7 +162,7 @@ let v1_iter = v1.iter();
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 13-13：创建一个迭代器</span></p>
-<p>一旦创建迭代器之后，可以选择用多种方式利用它。在第三章的示例 3-5 中，我们使用迭代器和 <code>for</code> 循环在每一个项上执行了一些代码，虽然直到现在为止我们一直没有具体讨论调用 <code>iter</code> 到底具体做了什么。</p>
+<p>一旦创建迭代器之后，可以选择用多种方式利用它。在第 3 章的示例 3-5 中，我们使用迭代器和 <code>for</code> 循环在每一个项上执行了一些代码，虽然直到现在为止我们一直没有具体讨论调用 <code>iter</code> 到底具体做了什么。</p>
 <p>示例 13-14 中的例子将迭代器的创建和 <code>for</code> 循环中的使用分开。迭代器被储存在 <code>v1_iter</code> 变量中，而这时没有进行迭代。一旦 <code>for</code> 循环开始使用 <code>v1_iter</code>，接着迭代器中的每一个元素被用于循环的一次迭代，这会打印出其每一个值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -193,7 +193,7 @@ for val in v1_iter {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>注意这里有一个我们还未讲到的新语法：<code>type Item</code> 和 <code>Self::Item</code>，他们定义了 trait 的 <strong>关联类型</strong>（<em>associated type</em>）。第十九章会深入讲解关联类型，不过现在只需知道这段代码表明实现 <code>Iterator</code> trait 要求同时定义一个 <code>Item</code> 类型，这个 <code>Item</code> 类型被用作 <code>next</code> 方法的返回值类型。换句话说，<code>Item</code> 类型将是迭代器返回元素的类型。</p>
+<p>注意这里有一个我们还未讲到的新语法：<code>type Item</code> 和 <code>Self::Item</code>，他们定义了 trait 的 <strong>关联类型</strong>（<em>associated type</em>）。第 19 章会深入讲解关联类型，不过现在只需知道这段代码表明实现 <code>Iterator</code> trait 要求同时定义一个 <code>Item</code> 类型，这个 <code>Item</code> 类型被用作 <code>next</code> 方法的返回值类型。换句话说，<code>Item</code> 类型将是迭代器返回元素的类型。</p>
 <p><code>next</code> 是 <code>Iterator</code> 实现者被要求定义的唯一方法。<code>next</code> 一次返回迭代器中的一个项，封装在 <code>Some</code> 中，当迭代器结束时，它返回 <code>None</code>。</p>
 <p>可以直接调用迭代器的 <code>next</code> 方法；示例 13-15 有一个测试展示了重复调用由 vector 创建的迭代器的 <code>next</code> 方法所得到的值：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
@@ -261,7 +261,7 @@ and do nothing unless consumed
   = note: #[warn(unused_must_use)] on by default
 </code></pre>
 <p>示例 13-17 中的代码实际上并没有做任何事；所指定的闭包从未被调用过。警告提醒了我们为什么：迭代器适配器是惰性的，而这里我们需要消费迭代器。</p>
-<p>为了修复这个警告并消费迭代器获取有用的结果，我们将使用第十二章示例 12-1 结合 <code>env::args</code> 使用的 <code>collect</code> 方法。这个方法消费迭代器并将结果收集到一个数据结构中。</p>
+<p>为了修复这个警告并消费迭代器获取有用的结果，我们将使用第 12 章示例 12-1 结合 <code>env::args</code> 使用的 <code>collect</code> 方法。这个方法消费迭代器并将结果收集到一个数据结构中。</p>
 <p>在示例 13-18 中，我们将遍历由 <code>map</code> 调用生成的迭代器的结果收集到一个 vector 中，它将会含有原始 vector 中每个元素加 1 的结果：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -366,7 +366,7 @@ impl Counter {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 13-21：在 <code>Counter</code> 结构体上实现 <code>Iterator</code> trait</span></p>
-<p>这里将迭代器的关联类型 <code>Item</code> 设置为 <code>u32</code>，意味着迭代器会返回 <code>u32</code> 值集合。再一次，这里仍无需担心关联类型，第十九章会讲到。</p>
+<p>这里将迭代器的关联类型 <code>Item</code> 设置为 <code>u32</code>，意味着迭代器会返回 <code>u32</code> 值集合。再一次，这里仍无需担心关联类型，第 19 章会讲到。</p>
 <p>我们希望迭代器对其内部状态加一，这也就是为何将 <code>count</code> 初始化为 0：我们希望迭代器首先返回 1。如果 <code>count</code> 值小于 6，<code>next</code> 会返回封装在 <code>Some</code> 中的当前值，不过如果 <code>count</code> 大于或等于 6，迭代器会返回 <code>None</code>。</p>
 <h4 id="使用-counter-迭代器的-next-方法"><a class="header" href="#使用-counter-迭代器的-next-方法">使用 <code>Counter</code> 迭代器的 <code>next</code> 方法</a></h4>
 <p>一旦实现了 <code>Iterator</code> trait，我们就有了一个迭代器！示例 13-22 展示了一个测试用来演示使用 <code>Counter</code> 结构体的迭代器功能，通过直接调用 <code>next</code> 方法，正如示例 13-15 中从 vector 创建的迭代器那样：</p>

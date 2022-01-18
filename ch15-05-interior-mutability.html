@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,10 +151,10 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="refcellt-和内部可变性模式"><a class="header" href="#refcellt-和内部可变性模式"><code>RefCell&lt;T&gt;</code> 和内部可变性模式</a></h2>
-<p><strong>内部可变性</strong>（<em>Interior mutability</em>）是 Rust 中的一个设计模式，它允许你即使在有不可变引用时也可以改变数据，这通常是借用规则所不允许的。为了改变数据，该模式在数据结构中使用 <code>unsafe</code> 代码来模糊 Rust 通常的可变性和借用规则。我们还未讲到不安全代码；第十九章会学习它们。当可以确保代码在运行时会遵守借用规则，即使编译器不能保证的情况，可以选择使用那些运用内部可变性模式的类型。所涉及的 <code>unsafe</code> 代码将被封装进安全的 API 中，而外部类型仍然是不可变的。</p>
+<p><strong>内部可变性</strong>（<em>Interior mutability</em>）是 Rust 中的一个设计模式，它允许你即使在有不可变引用时也可以改变数据，这通常是借用规则所不允许的。为了改变数据，该模式在数据结构中使用 <code>unsafe</code> 代码来模糊 Rust 通常的可变性和借用规则。我们还未讲到不安全代码；第 19 章会学习它们。当可以确保代码在运行时会遵守借用规则，即使编译器不能保证的情况，可以选择使用那些运用内部可变性模式的类型。所涉及的 <code>unsafe</code> 代码将被封装进安全的 API 中，而外部类型仍然是不可变的。</p>
 <p>让我们通过遵循内部可变性模式的 <code>RefCell&lt;T&gt;</code> 类型来开始探索。</p>
 <h3 id="通过-refcellt-在运行时检查借用规则"><a class="header" href="#通过-refcellt-在运行时检查借用规则">通过 <code>RefCell&lt;T&gt;</code> 在运行时检查借用规则</a></h3>
-<p>不同于 <code>Rc&lt;T&gt;</code>，<code>RefCell&lt;T&gt;</code> 代表其数据的唯一的所有权。那么是什么让 <code>RefCell&lt;T&gt;</code> 不同于像 <code>Box&lt;T&gt;</code> 这样的类型呢？回忆一下第四章所学的借用规则：</p>
+<p>不同于 <code>Rc&lt;T&gt;</code>，<code>RefCell&lt;T&gt;</code> 代表其数据的唯一的所有权。那么是什么让 <code>RefCell&lt;T&gt;</code> 不同于像 <code>Box&lt;T&gt;</code> 这样的类型呢？回忆一下第 4 章所学的借用规则：</p>
 <ol>
 <li>在任意给定时刻，只能拥有一个可变引用或任意数量的不可变引用 <strong>之一</strong>（而不是两者）。</li>
 <li>引用必须总是有效的。</li>
@@ -162,8 +162,8 @@
 <p>对于引用和 <code>Box&lt;T&gt;</code>，借用规则的不可变性作用于编译时。对于 <code>RefCell&lt;T&gt;</code>，这些不可变性作用于 <strong>运行时</strong>。对于引用，如果违反这些规则，会得到一个编译错误。而对于 <code>RefCell&lt;T&gt;</code>，如果违反这些规则程序会 panic 并退出。</p>
 <p>在编译时检查借用规则的优势是这些错误将在开发过程的早期被捕获，同时对运行时没有性能影响，因为所有的分析都提前完成了。为此，在编译时检查借用规则是大部分情况的最佳选择，这也正是其为何是 Rust 的默认行为。</p>
 <p>相反在运行时检查借用规则的好处则是允许出现特定内存安全的场景，而它们在编译时检查中是不允许的。静态分析，正如 Rust 编译器，是天生保守的。但代码的一些属性不可能通过分析代码发现：其中最著名的就是 <a href="https://zh.wikipedia.org/wiki/%E5%81%9C%E6%9C%BA%E9%97%AE%E9%A2%98">停机问题（Halting Problem）</a>，这超出了本书的范畴，不过如果你感兴趣的话这是一个值得研究的有趣主题。</p>
-<p>因为一些分析是不可能的，如果 Rust 编译器不能通过所有权规则编译，它可能会拒绝一个正确的程序；从这种角度考虑它是保守的。如果 Rust 接受不正确的程序，那么用户也就不会相信 Rust 所做的保证了。然而，如果 Rust 拒绝正确的程序，虽然会给程序员带来不便，但不会带来灾难。<code>RefCell&lt;T&gt;</code> 正是用于当你确信代码遵守借用规则，而编译器不能理解和确定的时候。</p>
-<p>类似于 <code>Rc&lt;T&gt;</code>，<code>RefCell&lt;T&gt;</code> 只能用于单线程场景。如果尝试在多线程上下文中使用<code>RefCell&lt;T&gt;</code>，会得到一个编译错误。第十六章会介绍如何在多线程程序中使用 <code>RefCell&lt;T&gt;</code> 的功能。</p>
+<p>因为一些分析是不可能的，如果 Rust 编译器不能通过所有权规则编译，它可能会拒绝一个正确的程序；从这种角度考虑它是保守的。如果 Rust 接受不正确的程序，那么用户也就不会相信 Rust 所做的保证了。然而，如果 Rust 拒绝正确的程序，虽然会给开发者带来不便，但不会带来灾难。<code>RefCell&lt;T&gt;</code> 正是用于当你确信代码遵守借用规则，而编译器不能理解和确定的时候。</p>
+<p>类似于 <code>Rc&lt;T&gt;</code>，<code>RefCell&lt;T&gt;</code> 只能用于单线程场景。如果尝试在多线程上下文中使用<code>RefCell&lt;T&gt;</code>，会得到一个编译错误。第 16 章会介绍如何在多线程程序中使用 <code>RefCell&lt;T&gt;</code> 的功能。</p>
 <p>如下为选择 <code>Box&lt;T&gt;</code>，<code>Rc&lt;T&gt;</code> 或 <code>RefCell&lt;T&gt;</code> 的理由：</p>
 <ul>
 <li><code>Rc&lt;T&gt;</code> 允许相同数据有多个所有者；<code>Box&lt;T&gt;</code> 和 <code>RefCell&lt;T&gt;</code> 有单一所有者。</li>
@@ -413,7 +413,7 @@ fn main() {
 <p><span class="caption">示例 15-24：使用 <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> 创建可以修改的 <code>List</code></span></p>
 <p>这里创建了一个 <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> 实例并储存在变量 <code>value</code> 中以便之后直接访问。接着在 <code>a</code> 中用包含 <code>value</code> 的 <code>Cons</code> 成员创建了一个 <code>List</code>。需要克隆 <code>value</code> 以便 <code>a</code> 和 <code>value</code> 都能拥有其内部值 <code>5</code> 的所有权，而不是将所有权从 <code>value</code> 移动到 <code>a</code> 或者让 <code>a</code> 借用 <code>value</code>。</p>
 <p>我们将列表 <code>a</code> 封装进了 <code>Rc&lt;T&gt;</code> 这样当创建列表 <code>b</code> 和 <code>c</code> 时，他们都可以引用 <code>a</code>，正如示例 15-18 一样。</p>
-<p>一旦创建了列表 <code>a</code>、<code>b</code> 和 <code>c</code>，我们将 <code>value</code> 的值加 10。为此对 <code>value</code> 调用了 <code>borrow_mut</code>，这里使用了第五章讨论的自动解引用功能（<a href="ch05-03-method-syntax.html#wheres-the---operator">“<code>-&gt;</code> 运算符到哪去了？”</a> 部分）来解引用 <code>Rc&lt;T&gt;</code> 以获取其内部的 <code>RefCell&lt;T&gt;</code> 值。<code>borrow_mut</code> 方法返回 <code>RefMut&lt;T&gt;</code> 智能指针，可以对其使用解引用运算符并修改其内部值。</p>
+<p>一旦创建了列表 <code>a</code>、<code>b</code> 和 <code>c</code>，我们将 <code>value</code> 的值加 10。为此对 <code>value</code> 调用了 <code>borrow_mut</code>，这里使用了第 5 章讨论的自动解引用功能（<a href="ch05-03-method-syntax.html#wheres-the---operator">“<code>-&gt;</code> 运算符到哪去了？”</a> 部分）来解引用 <code>Rc&lt;T&gt;</code> 以获取其内部的 <code>RefCell&lt;T&gt;</code> 值。<code>borrow_mut</code> 方法返回 <code>RefMut&lt;T&gt;</code> 智能指针，可以对其使用解引用运算符并修改其内部值。</p>
 <p>当我们打印出 <code>a</code>、<code>b</code> 和 <code>c</code> 时，可以看到他们都拥有修改后的值 15 而不是 5：</p>
 <pre><code class="language-text">a after = Cons(RefCell { value: 15 }, Nil)
 b after = Cons(RefCell { value: 6 }, Cons(RefCell { value: 15 }, Nil))

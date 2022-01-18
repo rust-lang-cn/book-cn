@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,16 +151,16 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="智能指针"><a class="header" href="#智能指针">智能指针</a></h1>
-<p><strong>指针</strong> （<em>pointer</em>）是一个包含内存地址的变量的通用概念。这个地址引用，或 “指向”（points at）一些其他数据。Rust 中最常见的指针是第四章介绍的 <strong>引用</strong>（<em>reference</em>）。引用以 <code>&amp;</code> 符号为标志并借用了他们所指向的值。除了引用数据没有任何其他特殊功能。它们也没有任何额外开销，所以应用得最多。</p>
-<p>另一方面，<strong>智能指针</strong>（<em>smart pointers</em>）是一类数据结构，他们的表现类似指针，但是也拥有额外的元数据和功能。智能指针的概念并不为 Rust 所独有；其起源于 C++ 并存在于其他语言中。Rust 标准库中不同的智能指针提供了多于引用的额外功能。本章将会探索的一个例子便是 <strong>引用计数</strong> （<em>reference counting</em>）智能指针类型，其允许数据有多个所有者。引用计数智能指针记录总共有多少个所有者，并当没有任何所有者时负责清理数据。</p>
-<p>在 Rust 中，普通引用和智能指针的一个额外的区别是引用是一类只借用数据的指针；相反，在大部分情况下，智能指针 <strong>拥有</strong> 他们指向的数据。</p>
-<p>实际上本书中已经出现过一些智能指针，比如第八章的 <code>String</code> 和 <code>Vec&lt;T&gt;</code>，虽然当时我们并不这么称呼它们。这些类型都属于智能指针因为它们拥有一些数据并允许你修改它们。它们也带有元数据（比如他们的容量）和额外的功能或保证（<code>String</code> 的数据总是有效的 UTF-8 编码）。</p>
-<p>智能指针通常使用结构体实现。智能指针区别于常规结构体的显著特性在于其实现了 <code>Deref</code> 和 <code>Drop</code> trait。<code>Deref</code> trait 允许智能指针结构体实例表现的像引用一样，这样就可以编写既用于引用、又用于智能指针的代码。<code>Drop</code> trait 允许我们自定义当智能指针离开作用域时运行的代码。本章会讨论这些 trait 以及为什么对于智能指针来说他们很重要。</p>
+<p><strong>指针</strong> （<em>pointer</em>）是一个包含内存地址的变量的通用概念。这个地址引用，或 “指向”（points at）一些其他数据。Rust 中最常见的指针是第 4 章介绍的 <strong>引用</strong>（<em>reference</em>）。引用以 <code>&amp;</code> 符号为标志并借用了它们所指向的值。除了引用数据没有任何其他特殊功能。它们也没有任何额外开销，所以应用得最多。</p>
+<p>另一方面，<strong>智能指针</strong>（<em>smart pointers</em>）是一类数据结构，它们的表现类似指针，但是也拥有额外的元数据和功能。智能指针的概念并非 Rust 独有：其起源于 C++，也存在于其他语言中。Rust 标准库中不同的智能指针提供了多于引用的额外功能。本章将会探索的一个例子便是 <strong>引用计数</strong> （<em>reference counting</em>）智能指针类型，其允许数据有多个所有者。引用计数智能指针记录总共有多少个所有者，并当没有任何所有者时负责清理数据。</p>
+<p>在 Rust 中，普通引用和智能指针的一个额外的区别是引用是一类只借用数据的指针；相反，在大部分情况下，智能指针 <strong>拥有</strong> 它们指向的数据。</p>
+<p>实际上本书中已经出现过一些智能指针，比如第 8 章的 <code>String</code> 和 <code>Vec&lt;T&gt;</code>，虽然当时我们并不这么称呼它们。这些类型都属于智能指针因为它们拥有一些数据并允许你修改它们。它们也带有元数据（比如它们的容量）和额外的功能或保证（<code>String</code> 的数据总是有效的 UTF-8 编码）。</p>
+<p>智能指针通常使用结构体实现。智能指针区别于常规结构体的显著特性在于其实现了 <code>Deref</code> 和 <code>Drop</code> trait。<code>Deref</code> trait 允许智能指针结构体实例表现的像引用一样，这样就可以编写既用于引用、又用于智能指针的代码。<code>Drop</code> trait 允许我们自定义当智能指针离开作用域时运行的代码。本章会讨论这些 trait 以及为什么对于智能指针来说它们很重要。</p>
 <p>考虑到智能指针是一个在 Rust 经常被使用的通用设计模式，本章并不会覆盖所有现存的智能指针。很多库都有自己的智能指针而你也可以编写属于你自己的智能指针。这里将会讲到的是来自标准库中最常用的一些：</p>
 <ul>
 <li><code>Box&lt;T&gt;</code>，用于在堆上分配值</li>
 <li><code>Rc&lt;T&gt;</code>，一个引用计数类型，其数据可以有多个所有者</li>
-<li><code>Ref&lt;T&gt;</code> 和 <code>RefMut&lt;T&gt;</code>，通过 <code>RefCell&lt;T&gt;</code> 访问。（ <code>RefCell&lt;T&gt;</code> 是一个在运行时而不是在编译时执行借用规则的类型）。</li>
+<li><code>Ref&lt;T&gt;</code> 和 <code>RefMut&lt;T&gt;</code>，通过 <code>RefCell&lt;T&gt;</code> 访问（ <code>RefCell&lt;T&gt;</code> 是一个在运行时而不是在编译时执行借用规则的类型）</li>
 </ul>
 <p>另外我们会涉及 <strong>内部可变性</strong>（<em>interior mutability</em>）模式，这是不可变类型暴露出改变其内部值的 API。我们也会讨论 <strong>引用循环</strong>（<em>reference cycles</em>）会如何泄漏内存，以及如何避免。</p>
 <p>让我们开始吧！</p>

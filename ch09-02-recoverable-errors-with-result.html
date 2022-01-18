@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -152,7 +152,7 @@
                     <main>
                         <h2 id="result-与可恢复的错误"><a class="header" href="#result-与可恢复的错误"><code>Result</code> 与可恢复的错误</a></h2>
 <p>大部分错误并没有严重到需要程序完全停止执行。有时，一个函数会因为一个容易理解并做出反应的原因失败。例如，如果因为打开一个并不存在的文件而失败，此时我们可能想要创建这个文件，而不是终止进程。</p>
-<p>回忆一下第二章 <a href="ch02-00-guessing-game-tutorial.html#handling-potential-failure-with-the-result-type">“使用 <code>Result</code> 类型来处理潜在的错误”</a> 部分中的那个 <code>Result</code> 枚举，它定义有如下两个成员，<code>Ok</code> 和 <code>Err</code>：</p>
+<p>回忆一下第 2 章 <a href="ch02-00-guessing-game-tutorial.html#%E4%BD%BF%E7%94%A8-result-%E7%B1%BB%E5%9E%8B%E6%9D%A5%E5%A4%84%E7%90%86%E6%BD%9C%E5%9C%A8%E7%9A%84%E9%94%99%E8%AF%AF">“使用 <code>Result</code> 类型来处理潜在的错误”</a> 部分中的那个 <code>Result</code> 枚举，它定义有如下两个成员，<code>Ok</code> 和 <code>Err</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -162,7 +162,7 @@
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>T</code> 和 <code>E</code> 是泛型类型参数；第十章会详细介绍泛型。现在你需要知道的就是 <code>T</code> 代表成功时返回的 <code>Ok</code> 成员中的数据的类型，而 <code>E</code> 代表失败时返回的 <code>Err</code> 成员中的错误的类型。因为 <code>Result</code> 有这些泛型类型参数，我们可以将 <code>Result</code> 类型和标准库中为其定义的函数用于很多不同的场景，这些情况中需要返回的成功值和失败值可能会各不相同。</p>
+<p><code>T</code> 和 <code>E</code> 是泛型类型参数；第 10 章会详细介绍泛型。现在你需要知道的就是 <code>T</code> 代表成功时返回的 <code>Ok</code> 成员中的数据的类型，而 <code>E</code> 代表失败时返回的 <code>Err</code> 成员中的错误的类型。因为 <code>Result</code> 有这些泛型类型参数，我们可以将 <code>Result</code> 类型和标准库中为其定义的函数用于很多不同的场景，这些情况中需要返回的成功值和失败值可能会各不相同。</p>
 <p>让我们调用一个返回 <code>Result</code> 的函数，因为它可能会失败：如示例 9-3 所示打开一个文件：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::fs::File;
@@ -189,7 +189,7 @@ fn main() {
 <p>这就告诉我们了 <code>File::open</code> 函数的返回值类型是 <code>Result&lt;T, E&gt;</code>。这里泛型参数 <code>T</code> 放入了成功值的类型 <code>std::fs::File</code>，它是一个文件句柄。<code>E</code> 被用在失败值上时 <code>E</code> 的类型是 <code>std::io::Error</code>。</p>
 <p>这个返回值类型说明 <code>File::open</code> 调用可能会成功并返回一个可以进行读写的文件句柄。这个函数也可能会失败：例如，文件可能并不存在，或者可能没有访问文件的权限。<code>File::open</code> 需要一个方式告诉我们是成功还是失败，并同时提供给我们文件句柄或错误信息。而这些信息正是 <code>Result</code> 枚举可以提供的。</p>
 <p>当 <code>File::open</code> 成功的情况下，变量 <code>f</code> 的值将会是一个包含文件句柄的 <code>Ok</code> 实例。在失败的情况下，<code>f</code> 的值会是一个包含更多关于出现了何种错误信息的 <code>Err</code> 实例。</p>
-<p>我们需要在示例 9-3 的代码中增加根据 <code>File::open</code> 返回值进行不同处理的逻辑。示例 9-4 展示了一个使用基本工具处理 <code>Result</code> 的例子：第六章学习过的 <code>match</code> 表达式。</p>
+<p>我们需要在示例 9-3 的代码中增加根据 <code>File::open</code> 返回值进行不同处理的逻辑。示例 9-4 展示了一个使用基本工具（第 6 章学习过的 <code>match</code> 表达式）处理 <code>Result</code> 的例子：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
@@ -236,7 +236,7 @@ fn main() {
 <p><span class="caption">示例 9-5：使用不同的方式处理不同类型的错误</span></p>
 <p><code>File::open</code> 返回的 <code>Err</code> 成员中的值类型 <code>io::Error</code>，它是一个标准库中提供的结构体。这个结构体有一个返回 <code>io::ErrorKind</code> 值的 <code>kind</code> 方法可供调用。<code>io::ErrorKind</code> 是一个标准库提供的枚举，它的成员对应 <code>io</code> 操作可能导致的不同错误类型。我们感兴趣的成员是 <code>ErrorKind::NotFound</code>，它代表尝试打开的文件并不存在。这样，<code>match</code> 就匹配完 <code>f</code> 了，不过对于 <code>error.kind()</code> 还有一个内层 <code>match</code>。</p>
 <p>我们希望在内层 <code>match</code> 中检查的条件是 <code>error.kind()</code> 的返回值是否为 <code>ErrorKind</code>的 <code>NotFound</code> 成员。如果是，则尝试通过 <code>File::create</code> 创建文件。然而因为 <code>File::create</code> 也可能会失败，还需要增加一个内层 <code>match</code> 语句。当文件不能被打开，会打印出一个不同的错误信息。外层 <code>match</code> 的最后一个分支保持不变，这样对任何除了文件不存在的错误会使程序 panic。</p>
-<p>这里有好多 <code>match</code>！<code>match</code> 确实很强大，不过也非常的基础。第十三章我们会介绍闭包（closure）。<code>Result&lt;T, E&gt;</code> 有很多接受闭包的方法，并采用 <code>match</code> 表达式实现。一个更老练的 Rustacean 可能会这么写：</p>
+<p>这里有好多 <code>match</code>！<code>match</code> 确实很强大，不过也非常的基础。第 13 章我们会介绍闭包（closure）。<code>Result&lt;T, E&gt;</code> 有很多接受闭包的方法，并采用 <code>match</code> 表达式实现。一个更老练的 Rustacean 可能会这么写：</p>
 <pre><code class="language-rust ignore">use std::fs::File;
 use std::io::ErrorKind;
 
@@ -252,7 +252,7 @@ fn main() {
     });
 }
 </code></pre>
-<p>虽然这段代码有着如示例 9-5 一样的行为，但并没有包含任何 <code>match</code> 表达式且更容易阅读。在阅读完第十三章后再回到这个例子，并查看标准库文档 <code>unwrap_or_else</code> 方法都做了什么操作。在处理错误时，还有很多这类方法可以消除大量嵌套的 <code>match</code> 表达式。</p>
+<p>虽然这段代码有着如示例 9-5 一样的行为，但并没有包含任何 <code>match</code> 表达式且更容易阅读。在阅读完第 13 章后再回到这个例子，并查看标准库文档 <code>unwrap_or_else</code> 方法都做了什么操作。在处理错误时，还有很多这类方法可以消除大量嵌套的 <code>match</code> 表达式。</p>
 <h3 id="失败时-panic-的简写unwrap-和-expect"><a class="header" href="#失败时-panic-的简写unwrap-和-expect">失败时 panic 的简写：<code>unwrap</code> 和 <code>expect</code></a></h3>
 <p><code>match</code> 能够胜任它的工作，不过它可能有点冗长并且不总是能很好的表明其意图。<code>Result&lt;T, E&gt;</code> 类型定义了很多辅助方法来处理各种情况。其中之一叫做 <code>unwrap</code>，它的实现就类似于示例 9-4 中的 <code>match</code> 语句。如果 <code>Result</code> 值是成员 <code>Ok</code>，<code>unwrap</code> 会返回 <code>Ok</code> 中的值。如果 <code>Result</code> 是成员 <code>Err</code>，<code>unwrap</code> 会为我们调用 <code>panic!</code>。这里是一个实践 <code>unwrap</code> 的例子：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
@@ -275,7 +275,7 @@ fn main() {
     let f = File::open(&quot;hello.txt&quot;).expect(&quot;Failed to open hello.txt&quot;);
 }
 </code></pre></pre>
-<p><code>expect</code> 与 <code>unwrap</code> 的使用方式一样：返回文件句柄或调用 <code>panic!</code> 宏。<code>expect</code> 用来调用 <code>panic!</code> 的错误信息将会作为参数传递给 <code>expect</code> ，而不像<code>unwrap</code> 那样使用默认的 <code>panic!</code> 信息。它看起来像这样：</p>
+<p><code>expect</code> 与 <code>unwrap</code> 的使用方式一样：返回文件句柄或调用 <code>panic!</code> 宏。<code>expect</code> 在调用 <code>panic!</code> 时使用的错误信息将是我们传递给 <code>expect</code> 的参数，而不像 <code>unwrap</code> 那样使用默认的 <code>panic!</code> 信息。它看起来像这样：</p>
 <pre><code class="language-text">thread 'main' panicked at 'Failed to open hello.txt: Error { repr: Os { code:
 2, message: &quot;No such file or directory&quot; } }', src/libcore/result.rs:906:4
 </code></pre>
@@ -311,7 +311,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <p><span class="caption">示例 9-6：一个函数使用 <code>match</code> 将错误返回给代码调用者</span></p>
 <p>首先让我们看看函数的返回值：<code>Result&lt;String, io::Error&gt;</code>。这意味着函数返回一个 <code>Result&lt;T, E&gt;</code> 类型的值，其中泛型参数 <code>T</code> 的具体类型是 <code>String</code>，而 <code>E</code> 的具体类型是 <code>io::Error</code>。如果这个函数没有出任何错误成功返回，函数的调用者会收到一个包含 <code>String</code> 的 <code>Ok</code> 值 —— 函数从文件中读取到的用户名。如果函数遇到任何错误，函数的调用者会收到一个 <code>Err</code> 值，它储存了一个包含更多这个问题相关信息的 <code>io::Error</code> 实例。这里选择 <code>io::Error</code> 作为函数的返回值是因为它正好是函数体中那两个可能会失败的操作的错误返回值：<code>File::open</code> 函数和 <code>read_to_string</code> 方法。</p>
 <p>函数体以 <code>File::open</code> 函数开头。接着使用 <code>match</code> 处理返回值 <code>Result</code>，类似于示例 9-4 中的 <code>match</code>，唯一的区别是当 <code>Err</code> 时不再调用 <code>panic!</code>，而是提早返回并将 <code>File::open</code> 返回的错误值作为函数的错误返回值传递给调用者。如果 <code>File::open</code> 成功了，我们将文件句柄储存在变量 <code>f</code> 中并继续。</p>
-<p>接着我们在变量 <code>s</code> 中创建了一个新 <code>String</code> 并调用文件句柄 <code>f</code> 的 <code>read_to_string</code> 方法来将文件的内容读取到 <code>s</code> 中。<code>read_to_string</code> 方法也返回一个 <code>Result</code> 因为它也可能会失败：哪怕是 <code>File::open</code> 已经成功了。所以我们需要另一个 <code>match</code> 来处理这个 <code>Result</code>：如果 <code>read_to_string</code> 成功了，那么这个函数就成功了，并返回文件中的用户名，它现在位于被封装进 <code>Ok</code> 的 <code>s</code> 中。如果<code>read_to_string</code> 失败了，则像之前处理 <code>File::open</code> 的返回值的 <code>match</code> 那样返回错误值。不过并不需要显式的调用 <code>return</code>，因为这是函数的最后一个表达式。</p>
+<p>接着我们在变量 <code>s</code> 中创建了一个新 <code>String</code> 并调用文件句柄 <code>f</code> 的 <code>read_to_string</code> 方法来将文件的内容读取到 <code>s</code> 中。<code>read_to_string</code> 方法也返回一个 <code>Result</code> 因为它也可能会失败：哪怕是 <code>File::open</code> 已经成功了。所以我们需要另一个 <code>match</code> 来处理这个 <code>Result</code>：如果 <code>read_to_string</code> 成功了，那么这个函数就成功了，并返回文件中的用户名，它现在位于被封装进 <code>Ok</code> 的 <code>s</code> 中。如果 <code>read_to_string</code> 失败了，则像之前处理 <code>File::open</code> 的返回值的 <code>match</code> 那样返回错误值。不过并不需要显式的调用 <code>return</code>，因为这是函数的最后一个表达式。</p>
 <p>调用这个函数的代码最终会得到一个包含用户名的 <code>Ok</code> 值，或者一个包含 <code>io::Error</code> 的 <code>Err</code> 值。我们无从得知调用者会如何处理这些值。例如，如果他们得到了一个 <code>Err</code> 值，他们可能会选择 <code>panic!</code> 并使程序崩溃、使用一个默认的用户名或者从文件之外的地方寻找用户名。我们没有足够的信息知晓调用者具体会如何尝试，所以将所有的成功或失败信息向上传播，让他们选择合适的处理方法。</p>
 <p>这种传播错误的模式在 Rust 是如此的常见，以至于 Rust 提供了 <code>?</code> 问号运算符来使其更易于处理。</p>
 <h3 id="传播错误的简写-运算符"><a class="header" href="#传播错误的简写-运算符">传播错误的简写：<code>?</code> 运算符</a></h3>
@@ -355,7 +355,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 9-8：问号运算符之后的链式方法调用</span></p>
-<p>在 <code>s</code> 中创建新的 <code>String</code> 被放到了函数开头；这一部分没有变化。我们对 <code>File::open(&quot;hello.txt&quot;)?</code> 的结果直接链式调用了 <code>read_to_string</code>，而不再创建变量 <code>f</code>。仍然需要 <code>read_to_string</code> 调用结尾的 <code>?</code>，而且当 <code>File::open</code> 和 <code>read_to_string</code> 都成功没有失败时返回包含用户名 <code>s</code> 的 <code>Ok</code> 值。其功能再一次与示例 9-6 和示例 9-7 保持一致，不过这是一个与众不同且更符合工程学(ergonomic)的写法。</p>
+<p>在 <code>s</code> 中创建新的 <code>String</code> 被放到了函数开头；这一部分没有变化。我们对 <code>File::open(&quot;hello.txt&quot;)?</code> 的结果直接链式调用了 <code>read_to_string</code>，而不再创建变量 <code>f</code>。仍然需要 <code>read_to_string</code> 调用结尾的 <code>?</code>，而且当 <code>File::open</code> 和 <code>read_to_string</code> 都成功没有失败时返回包含用户名 <code>s</code> 的 <code>Ok</code> 值。其功能再一次与示例 9-6 和示例 9-7 保持一致，不过这是一个与众不同且更符合工程学（ergonomic）的写法。</p>
 <p>说到编写这个函数的不同方法，甚至还有一个更短的写法：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -373,7 +373,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <p>将文件读取到一个字符串是相当常见的操作，所以 Rust 提供了名为 <code>fs::read_to_string</code> 的函数，它会打开文件、新建一个 <code>String</code>、读取文件的内容，并将内容放入 <code>String</code>，接着返回它。当然，这样做就没有展示所有这些错误处理的机会了，所以我们最初就选择了艰苦的道路。</p>
 <h3 id="-运算符可被用于返回-result-的函数"><a class="header" href="#-运算符可被用于返回-result-的函数"><code>?</code> 运算符可被用于返回 <code>Result</code> 的函数</a></h3>
 <p><code>?</code> 运算符可被用于返回值类型为 <code>Result</code> 的函数，因为他被定义为与示例 9-6 中的 <code>match</code> 表达式有着完全相同的工作方式。<code>match</code> 的 <code>return Err(e)</code> 部分要求返回值类型是 <code>Result</code>，所以函数的返回值必须是 <code>Result</code> 才能与这个 <code>return</code> 相兼容。</p>
-<p>让我们看看在 <code>main</code> 函数中使用 <code>?</code> 运算符会发生什么，如果你还记得的话其返回值类型是<code>()</code>：</p>
+<p>让我们看看在 <code>main</code> 函数中使用 <code>?</code> 运算符会发生什么，如果你还记得的话其返回值类型是 <code>()</code>：</p>
 <pre><code class="language-rust ignore does_not_compile">use std::fs::File;
 
 fn main() {
@@ -403,7 +403,7 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     Ok(())
 }
 </code></pre>
-<p><code>Box&lt;dyn Error&gt;</code> 被称为 “trait 对象”（“trait object”），第十七章 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分会做介绍。目前可以理解 <code>Box&lt;dyn Error&gt;</code> 为使用 <code>?</code> 时 <code>main</code> 允许返回的 “任何类型的错误”。</p>
+<p><code>Box&lt;dyn Error&gt;</code> 被称为 “trait 对象”（trait object），第 17 章 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分会做介绍。目前可以理解 <code>Box&lt;dyn Error&gt;</code> 为使用 <code>?</code> 时 <code>main</code> 允许返回的 “任何类型的错误”。</p>
 <p>现在我们讨论过了调用 <code>panic!</code> 或返回 <code>Result</code> 的细节，是时候回到他们各自适合哪些场景的话题了。</p>
 
                     </main>

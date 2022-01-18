@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -153,7 +153,7 @@
                         <h2 id="trait定义共享的行为"><a class="header" href="#trait定义共享的行为">trait：定义共享的行为</a></h2>
 <p><em>trait</em> 告诉 Rust 编译器某个特定类型拥有可能与其他类型共享的功能。可以通过 trait 以一种抽象的方式定义共享的行为。可以使用 <em>trait bounds</em> 指定泛型是任何拥有特定行为的类型。</p>
 <blockquote>
-<p>注意：<em>trait</em> 类似于其他语言中的常被称为 <strong>接口</strong>（<em>interfaces</em>）的功能，虽然有一些不同。</p>
+<p>注意：<em>trait</em> 类似于其他语言中常被称为 <strong>接口</strong>（<em>interfaces</em>）的功能，虽然有一些不同。</p>
 </blockquote>
 <h3 id="定义-trait"><a class="header" href="#定义-trait">定义 trait</a></h3>
 <p>一个类型的行为由其可供调用的方法构成。如果可以对不同类型调用相同的方法的话，这些类型就可以共享相同的行为了。trait 定义是一种将方法签名组合起来的方法，目的是定义一个实现某些目的所必需的行为的集合。</p>
@@ -274,7 +274,7 @@ println!(&quot;New article available! {}&quot;, article.summarize());
     }
 }
 </code></pre>
-<p>一旦定义了 <code>summarize_author</code>，我们就可以对 <code>Tweet</code> 结构体的实例调用 <code>summarize</code> 了，而 <code>summary</code> 的默认实现会调用我们提供的 <code>summarize_author</code> 定义。因为实现了 <code>summarize_author</code>，<code>Summary</code> trait 就提供了 <code>summarize</code> 方法的功能，且无需编写更多的代码。</p>
+<p>一旦定义了 <code>summarize_author</code>，我们就可以对 <code>Tweet</code> 结构体的实例调用 <code>summarize</code> 了，而 <code>summarize</code> 的默认实现会调用我们提供的 <code>summarize_author</code> 定义。因为实现了 <code>summarize_author</code>，<code>Summary</code> trait 就提供了 <code>summarize</code> 方法的功能，且无需编写更多的代码。</p>
 <pre><code class="language-rust ignore">let tweet = Tweet {
     username: String::from(&quot;horse_ebooks&quot;),
     content: String::from(&quot;of course, as you probably already know, people&quot;),
@@ -285,7 +285,7 @@ println!(&quot;New article available! {}&quot;, article.summarize());
 println!(&quot;1 new tweet: {}&quot;, tweet.summarize());
 </code></pre>
 <p>这会打印出 <code>1 new tweet: (Read more from @horse_ebooks...)</code>。</p>
-<p>注意无法从相同方法的重载实现中调用默认方法。</p>
+<p>请注意，无法从相同方法的重载实现中调用默认方法。</p>
 <h3 id="trait-作为参数"><a class="header" href="#trait-作为参数">trait 作为参数</a></h3>
 <p>知道了如何定义 trait 和在类型上实现这些 trait 之后，我们可以探索一下如何使用 trait 来接受多种不同类型的参数。</p>
 <p>例如在示例 10-13 中为 <code>NewsArticle</code> 和 <code>Tweet</code> 类型实现了 <code>Summary</code> trait。我们可以定义一个函数 <code>notify</code> 来调用其参数 <code>item</code> 上的 <code>summarize</code> 方法，该参数是实现了 <code>Summary</code> trait 的某种类型。为此可以使用 <code>impl Trait</code> 语法，像这样：</p>
@@ -295,7 +295,7 @@ println!(&quot;1 new tweet: {}&quot;, tweet.summarize());
 </code></pre>
 <p>对于 <code>item</code> 参数，我们指定了 <code>impl</code> 关键字和 trait 名称，而不是具体的类型。该参数支持任何实现了指定 trait 的类型。在 <code>notify</code> 函数体中，可以调用任何来自 <code>Summary</code> trait 的方法，比如 <code>summarize</code>。我们可以传递任何 <code>NewsArticle</code> 或 <code>Tweet</code> 的实例来调用 <code>notify</code>。任何用其它如 <code>String</code> 或 <code>i32</code> 的类型调用该函数的代码都不能编译，因为它们没有实现 <code>Summary</code>。</p>
 <h4 id="trait-bound-语法"><a class="header" href="#trait-bound-语法">Trait Bound 语法</a></h4>
-<p><code>impl Trait</code> 语法适用于直观的例子，它不过是一个较长形式的语法糖。这被称为 <em>trait bound</em>，这看起来像：</p>
+<p><code>impl Trait</code> 语法适用于直观的例子，它实际上是一种较长形式语法的语法糖。我们称为 <em>trait bound</em>，它看起来像：</p>
 <pre><code class="language-rust ignore">pub fn notify&lt;T: Summary&gt;(item: T) {
     println!(&quot;Breaking news! {}&quot;, item.summarize());
 }
@@ -326,7 +326,7 @@ println!(&quot;1 new tweet: {}&quot;, tweet.summarize());
           U: Clone + Debug
 {
 </code></pre>
-<p>这个函数签名就显得不那么杂乱，函数名、参数列表和返回值类型都离得很近，看起来类似没有很多 trait bounds 的函数。</p>
+<p>这个函数签名就显得不那么杂乱，函数名、参数列表和返回值类型都离得很近，看起来跟没有那么多 trait bounds 的函数很像。</p>
 <h3 id="返回实现了-trait-的类型"><a class="header" href="#返回实现了-trait-的类型">返回实现了 trait 的类型</a></h3>
 <p>也可以在返回值中使用 <code>impl Trait</code> 语法，来返回实现了某个 trait 的类型：</p>
 <pre><code class="language-rust ignore">fn returns_summarizable() -&gt; impl Summary {
@@ -339,7 +339,7 @@ println!(&quot;1 new tweet: {}&quot;, tweet.summarize());
 }
 </code></pre>
 <p>通过使用 <code>impl Summary</code> 作为返回值类型，我们指定了 <code>returns_summarizable</code> 函数返回某个实现了 <code>Summary</code> trait 的类型，但是不确定其具体的类型。在这个例子中 <code>returns_summarizable</code> 返回了一个 <code>Tweet</code>，不过调用方并不知情。</p>
-<p>返回一个只是指定了需要实现的 trait 的类型的能力在闭包和迭代器场景十分的有用，第十三章会介绍它们。闭包和迭代器创建只有编译器知道的类型，或者是非常非常长的类型。<code>impl  Trait</code> 允许你简单的指定函数返回一个 <code>Iterator</code> 而无需写出实际的冗长的类型。</p>
+<p>返回一个只是指定了需要实现的 trait 的类型的能力在闭包和迭代器场景十分的有用，第 13 章会介绍它们。闭包和迭代器创建只有编译器知道的类型，或者是非常非常长的类型。<code>impl  Trait</code> 允许你简单的指定函数返回一个 <code>Iterator</code> 而无需写出实际的冗长的类型。</p>
 <p>不过这只适用于返回单一类型的情况。例如，这段代码的返回值类型指定为返回 <code>impl Summary</code>，但是返回了 <code>NewsArticle</code> 或 <code>Tweet</code> 就行不通：</p>
 <pre><code class="language-rust ignore does_not_compile">fn returns_summarizable(switch: bool) -&gt; impl Summary {
     if switch {
@@ -360,7 +360,7 @@ println!(&quot;1 new tweet: {}&quot;, tweet.summarize());
     }
 }
 </code></pre>
-<p>这里尝试返回 <code>NewsArticle</code> 或 <code>Tweet</code>。这不能编译，因为 <code>impl Trait</code> 工作方式的限制。第十七章的 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分会介绍如何编写这样一个函数。</p>
+<p>这里尝试返回 <code>NewsArticle</code> 或 <code>Tweet</code>。这不能编译，因为 <code>impl Trait</code> 工作方式的限制。第 17 章的 <a href="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types">“为使用不同类型的值而设计的 trait 对象”</a> 部分会介绍如何编写这样一个函数。</p>
 <h3 id="使用-trait-bounds-来修复-largest-函数"><a class="header" href="#使用-trait-bounds-来修复-largest-函数">使用 trait bounds 来修复 <code>largest</code> 函数</a></h3>
 <p>现在你知道了如何使用泛型参数 trait bound 来指定所需的行为。让我们回到实例 10-5 修复使用泛型类型参数的 <code>largest</code> 函数定义！回顾一下，最后尝试编译代码时出现的错误是：</p>
 <pre><code class="language-text">error[E0369]: binary operation `&gt;` cannot be applied to type `T`
@@ -393,7 +393,7 @@ error[E0507]: cannot move out of borrowed content
   |         |hint: to prevent move, use `ref item` or `ref mut item`
   |         cannot move out of borrowed content
 </code></pre>
-<p>错误的核心是 <code>cannot move out of type [T], a non-copy slice</code>，对于非泛型版本的 <code>largest</code> 函数，我们只尝试了寻找最大的 <code>i32</code> 和 <code>char</code>。正如第四章 <a href="ch04-01-what-is-ownership.html#stack-only-data-copy">“只在栈上的数据：拷贝”</a>  部分讨论过的，像 <code>i32</code> 和 <code>char</code> 这样的类型是已知大小的并可以储存在栈上，所以他们实现了 <code>Copy</code> trait。当我们将 <code>largest</code> 函数改成使用泛型后，现在 <code>list</code> 参数的类型就有可能是没有实现 <code>Copy</code> trait 的。这意味着我们可能不能将 <code>list[0]</code> 的值移动到 <code>largest</code> 变量中，这导致了上面的错误。</p>
+<p>错误的核心是 <code>cannot move out of type [T], a non-copy slice</code>，对于非泛型版本的 <code>largest</code> 函数，我们只尝试了寻找最大的 <code>i32</code> 和 <code>char</code>。正如第 4 章 <a href="ch04-01-what-is-ownership.html#stack-only-data-copy">“只在栈上的数据：拷贝”</a>  部分讨论过的，像 <code>i32</code> 和 <code>char</code> 这样的类型是已知大小的并可以储存在栈上，所以他们实现了 <code>Copy</code> trait。当我们将 <code>largest</code> 函数改成使用泛型后，现在 <code>list</code> 参数的类型就有可能是没有实现 <code>Copy</code> trait 的。这意味着我们可能不能将 <code>list[0]</code> 的值移动到 <code>largest</code> 变量中，这导致了上面的错误。</p>
 <p>为了只对实现了 <code>Copy</code> 的类型调用这些代码，可以在 <code>T</code> 的 trait bounds 中增加 <code>Copy</code>！示例 10-15 中展示了一个可以编译的泛型版本的 <code>largest</code> 函数的完整代码，只要传递给 <code>largest</code> 的 slice 值的类型实现了 <code>PartialOrd</code> <strong>和</strong> <code>Copy</code> 这两个 trait，例如 <code>i32</code> 和 <code>char</code>：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn largest&lt;T: PartialOrd + Copy&gt;(list: &amp;[T]) -&gt; T {
@@ -468,7 +468,7 @@ impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
 </span>let s = 3.to_string();
 <span class="boring">}
 </span></code></pre></pre>
-<p>blanket implementation 会出现在 trait 文档的 “Implementers” 部分。</p>
+<p>blanket implementation 会出现在 trait 文档的 “Implementors” 部分。</p>
 <p>trait 和 trait bound 让我们使用泛型类型参数来减少重复，并仍然能够向编译器明确指定泛型类型需要拥有哪些行为。因为我们向编译器提供了 trait bound 信息，它就可以检查代码中所用到的具体类型是否提供了正确的行为。在动态类型语言中，如果我们尝试调用一个类型并没有实现的方法，会在运行时出现错误。Rust 将这些错误移动到了编译时，甚至在代码能够运行之前就强迫我们修复错误。另外，我们也无需编写运行时检查行为的代码，因为在编译时就已经检查过了，这样相比其他那些不愿放弃泛型灵活性的语言有更好的性能。</p>
 <p>这里还有一种泛型，我们一直在使用它甚至都没有察觉它的存在，这就是 <strong>生命周期</strong>（<em>lifetimes</em>）。不同于其他泛型帮助我们确保类型拥有期望的行为，生命周期则有助于确保引用在我们需要他们的时候一直有效。让我们学习生命周期是如何做到这些的。</p>
 

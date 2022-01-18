@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -154,7 +154,7 @@
 <p>我们曾经在项目中使用 <a href="https://crates.io">crates.io</a><!-- ignore --> 上的包作为依赖，不过你也可以通过发布自己的包来向别人分享代码。<a href="https://crates.io">crates.io</a><!-- ignore --> 用来分发包的源代码，所以它主要托管开源代码。</p>
 <p>Rust 和 Cargo 有一些帮助别人更方便找到和使用你发布的包的功能。我们将介绍一些这样的功能，接着讲到如何发布一个包。</p>
 <h3 id="编写有用的文档注释"><a class="header" href="#编写有用的文档注释">编写有用的文档注释</a></h3>
-<p>准确的包文档有助于其他用户理解如何以及何时使用他们，所以花一些时间编写文档是值得的。第三章中我们讨论了如何使用两斜杠 <code>//</code> 注释 Rust 代码。Rust 也有特定的用于文档的注释类型，通常被称为 <strong>文档注释</strong>（<em>documentation comments</em>），他们会生成 HTML 文档。这些 HTML 展示公有 API 文档注释的内容，他们意在让对库感兴趣的程序员理解如何 <strong>使用</strong> 这个 crate，而不是它是如何被 <strong>实现</strong> 的。</p>
+<p>准确的包文档有助于其他用户理解如何以及何时使用他们，所以花一些时间编写文档是值得的。第 3 章中我们讨论了如何使用两斜杠 <code>//</code> 注释 Rust 代码。Rust 也有特定的用于文档的注释类型，通常被称为 <strong>文档注释</strong>（<em>documentation comments</em>），他们会生成 HTML 文档。这些 HTML 展示公有 API 文档注释的内容，他们意在让对库感兴趣的开发者理解如何 <strong>使用</strong> 这个 crate，而不是它是如何被 <strong>实现</strong> 的。</p>
 <p>文档注释使用三斜杠 <code>///</code> 而不是两斜杆以支持 Markdown 注解来格式化文本。文档注释就位于需要文档的项的之前。示例 14-1 展示了一个 <code>my_crate</code> crate 中 <code>add_one</code> 函数的文档注释：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">/// Adds one to the number given.
@@ -181,7 +181,7 @@ pub fn add_one(x: i32) -&gt; i32 {
 <ul>
 <li><strong>Panics</strong>：这个函数可能会 <code>panic!</code> 的场景。并不希望程序崩溃的函数调用者应该确保他们不会在这些情况下调用此函数。</li>
 <li><strong>Errors</strong>：如果这个函数返回 <code>Result</code>，此部分描述可能会出现何种错误以及什么情况会造成这些错误，这有助于调用者编写代码来采用不同的方式处理不同的错误。</li>
-<li><strong>Safety</strong>：如果这个函数使用 <code>unsafe</code> 代码（这会在第十九章讨论），这一部分应该会涉及到期望函数调用者支持的确保 <code>unsafe</code> 块中代码正常工作的不变条件（invariants）。</li>
+<li><strong>Safety</strong>：如果这个函数使用 <code>unsafe</code> 代码（这会在第 19 章讨论），这一部分应该会涉及到期望函数调用者支持的确保 <code>unsafe</code> 块中代码正常工作的不变条件（invariants）。</li>
 </ul>
 <p>大部分文档注释不需要所有这些部分，不过这是一个提醒你检查调用你代码的人有兴趣了解的内容的列表。</p>
 <h4 id="文档注释作为测试"><a class="header" href="#文档注释作为测试">文档注释作为测试</a></h4>
@@ -213,7 +213,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 <p><span class="caption">图 14-2：包含 <code>my_crate</code> 整体描述的注释所渲染的文档</span></p>
 <p>位于项之中的文档注释对于描述 crate 和模块特别有用。使用他们描述其容器整体的目的来帮助 crate 用户理解你的代码组织。</p>
 <h3 id="使用-pub-use-导出合适的公有-api"><a class="header" href="#使用-pub-use-导出合适的公有-api">使用 <code>pub use</code> 导出合适的公有 API</a></h3>
-<p>第七章介绍了如何使用 <code>mod</code> 关键字来将代码组织进模块中，如何使用 <code>pub</code> 关键字将项变为公有，和如何使用 <code>use</code> 关键字将项引入作用域。然而你开发时候使用的文件架构可能并不方便用户。你的结构可能是一个包含多个层级的分层结构，不过这对于用户来说并不方便。这是因为想要使用被定义在很深层级中的类型的人可能很难发现这些类型的存在。他们也可能会厌烦使用 <code>use my_crate::some_module::another_module::UsefulType;</code> 而不是 <code>use my_crate::UsefulType;</code> 来使用类型。</p>
+<p>第 7 章介绍了如何使用 <code>mod</code> 关键字来将代码组织进模块中，如何使用 <code>pub</code> 关键字将项变为公有，和如何使用 <code>use</code> 关键字将项引入作用域。然而你开发时候使用的文件架构可能并不方便用户。你的结构可能是一个包含多个层级的分层结构，不过这对于用户来说并不方便。这是因为想要使用被定义在很深层级中的类型的人可能很难发现这些类型的存在。他们也可能会厌烦要使用 <code>use my_crate::some_module::another_module::UsefulType;</code> 而不是 <code>use my_crate::UsefulType;</code> 来使用类型。</p>
 <p>公有 API 的结构是你发布 crate 时主要需要考虑的。crate 用户没有你那么熟悉其结构，并且如果模块层级过大他们可能会难以找到所需的部分。</p>
 <p>好消息是，即使文件结构对于用户来说 <strong>不是</strong> 很方便，你也无需重新安排内部组织：你可以选择使用 <code>pub use</code> 重导出（re-export）项来使公有结构不同于私有结构。重导出获取位于一个位置的公有项并将其公开到另一个位置，好像它就定义在这个新位置一样。</p>
 <p>例如，假设我们创建了一个描述美术信息的库 <code>art</code>。这个库中包含了一个有两个枚举 <code>PrimaryColor</code> 和 <code>SecondaryColor</code> 的模块 <code>kinds</code>，以及一个包含函数 <code>mix</code> 的模块 <code>utils</code>，如示例 14-3 所示：</p>

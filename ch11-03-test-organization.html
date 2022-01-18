@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -252,8 +252,8 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 <p>这个命令只运行了 <em>tests</em> 目录中我们指定的文件 <code>integration_test.rs</code> 中的测试。</p>
 <h4 id="集成测试中的子模块"><a class="header" href="#集成测试中的子模块">集成测试中的子模块</a></h4>
 <p>随着集成测试的增加，你可能希望在 <code>tests</code> 目录增加更多文件以便更好的组织他们，例如根据测试的功能来将测试分组。正如我们之前提到的，每一个 <em>tests</em> 目录中的文件都被编译为单独的 crate。</p>
-<p>将每个集成测试文件当作其自己的 crate 来对待，这更有助于创建单独的作用域，这种单独的作用域能提供更类似与最终使用者使用 crate 的环境。然而，正如你在第七章中学习的如何将代码分为模块和文件的知识，<em>tests</em> 目录中的文件不能像 <em>src</em> 中的文件那样共享相同的行为。</p>
-<p>当你有一些在多个集成测试文件都会用到的帮助函数，而你尝试按照第七章 “将模块移动到其他文件” 部分的步骤将他们提取到一个通用的模块中时， <em>tests</em> 目录中不同文件的行为就会显得很明显。例如，如果我们可以创建 一个<em>tests/common.rs</em> 文件并创建一个名叫 <code>setup</code> 的函数，我们希望这个函数能被多个测试文件的测试函数调用：</p>
+<p>将每个集成测试文件当作其自己的 crate 来对待，这更有助于创建单独的作用域，这种单独的作用域能提供更类似与最终使用者使用 crate 的环境。然而，正如你在第 7 章中学习的如何将代码分为模块和文件的知识，<em>tests</em> 目录中的文件不能像 <em>src</em> 中的文件那样共享相同的行为。</p>
+<p>当你有一些在多个集成测试文件都会用到的帮助函数，而你尝试按照第 7 章 “将模块移动到其他文件” 部分的步骤将他们提取到一个通用的模块中时， <em>tests</em> 目录中不同文件的行为就会显得很明显。例如，如果我们可以创建 一个<em>tests/common.rs</em> 文件并创建一个名叫 <code>setup</code> 的函数，我们希望这个函数能被多个测试文件的测试函数调用：</p>
 <p><span class="filename">文件名: tests/common.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

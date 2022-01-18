@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -151,12 +151,13 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="附录-a关键字"><a class="header" href="#附录-a关键字">附录 A：关键字</a></h2>
-<p>下面的列表包含 Rust 中正在使用或者以后会用到的关键字。因此，这些关键字不能被用作标识符（除了 “<a href="#raw-identifiers">原始标识符</a>” 部分介绍的原始标识符），这包括函数、变量、参数、结构体字段、模块、crate、常量、宏、静态值、属性、类型、trait 或生命周期
-的名字。</p>
+<p>下面的列表包含 Rust 中正在使用或者以后会用到的关键字。因此，这些关键字不能被用作标识符（除了 “<a href="#raw-identifiers">原始标识符</a>” 部分介绍的原始标识符），这包括函数、变量、参数、结构体字段、模块、crate、常量、宏、静态值、属性、类型、trait 或生命周期的名字。</p>
 <h3 id="目前正在使用的关键字"><a class="header" href="#目前正在使用的关键字">目前正在使用的关键字</a></h3>
 <p>如下关键字目前有对应其描述的功能。</p>
 <ul>
 <li><code>as</code> - 强制类型转换，消除特定包含项的 trait 的歧义，或者对 <code>use</code> 和 <code>extern crate</code> 语句中的项重命名</li>
+<li><code>async</code> - 返回一个 <code>Future</code> 而不是阻塞当前线程</li>
+<li><code>await</code> - 暂停执行，直到 <code>Future</code> 的结果准备好</li>
 <li><code>break</code> - 立刻退出循环</li>
 <li><code>const</code> - 定义常量或不变裸指针（constant raw pointer）</li>
 <li><code>continue</code> - 继续进入下一次循环迭代</li>
@@ -194,11 +195,9 @@
 <li><code>while</code> - 基于一个表达式的结果判断是否进行循环</li>
 </ul>
 <h3 id="保留做将来使用的关键字"><a class="header" href="#保留做将来使用的关键字">保留做将来使用的关键字</a></h3>
-<p>如下关键字没有任何功能，不过由 Rust 保留以备将来的应用。</p>
+<p>如下关键字没有任何功能，不过由 Rust 保留以备将来应用。</p>
 <ul>
 <li><code>abstract</code></li>
-<li><code>async</code></li>
-<li><code>await</code></li>
 <li><code>become</code></li>
 <li><code>box</code></li>
 <li><code>do</code></li>
@@ -214,7 +213,7 @@
 </ul>
 <h3 id="原始标识符"><a class="header" href="#原始标识符">原始标识符</a></h3>
 <p>原始标识符（Raw identifiers）允许你使用通常不能使用的关键字，其带有 <code>r#</code> 前缀。</p>
-<p>例如，<code>match</code> 是关键字。如果尝试编译如下使用 <code>match</code> 作为名字的函数：</p>
+<p>例如，<code>match</code> 是关键字。如果尝试编译如下使用 <code>match</code> 作为名称的函数：</p>
 <pre><code class="language-rust ignore does_not_compile">fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
     haystack.contains(needle)
 }
@@ -237,7 +236,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>此代码编译没有任何错误。注意 <code>r#</code> 前缀需同时用于函数名定义和 <code>main</code> 函数中的调用。</p>
-<p>原始标识符允许使用你选择的任何单词作为标识符，即使该单词恰好是保留关键字。 此外，原始标识符允许你使用以不同于你的 crate 使用的 Rust 版本编写的库。比如，<code>try</code> 在 2015 edition 中不是关键字，而在 2018 edition 则是。所以如果用 2015 edition 编写的库中带有 <code>try</code> 函数，在 2018 edition 中调用时就需要使用原始标识符语法，在这里是 <code>r#try</code>。有关版本的更多信息，请参见<a href="appendix-05-editions.html">附录 E</a>.</p>
+<p>原始标识符允许使用你选择的任何单词作为标识符，即使该单词恰好是保留关键字。 此外，原始标识符允许你使用以不同于你的 crate 使用的 Rust 版本编写的库。比如，<code>try</code> 在 2015 edition 中不是关键字，而在 2018 edition 则是。所以如果用 2015 edition 编写的库中带有 <code>try</code> 函数，在 2018 edition 中调用时就需要使用原始标识符语法，在这里是 <code>r#try</code>。有关版本的更多信息，请参见<a href="appendix-05-editions.html">附录 E</a>。</p>
 
                     </main>
 

@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -152,12 +152,12 @@
                     <main>
                         <h1 id="泛型trait-和生命周期"><a class="header" href="#泛型trait-和生命周期">泛型、trait 和生命周期</a></h1>
 <p>每一个编程语言都有高效处理重复概念的工具。在 Rust 中其工具之一就是 <strong>泛型</strong>（<em>generics</em>）。泛型是具体类型或其他属性的抽象替代。我们可以表达泛型的属性，比如他们的行为或如何与其他泛型相关联，而不需要在编写和编译代码时知道他们在这里实际上代表什么。</p>
-<p>同理为了编写一份可以用于多种具体值的代码，函数并不知道其参数为何值，这时就可以让函数获取泛型而不是像 <code>i32</code> 或 <code>String</code> 这样的具体值。我们已经使用过第六章的 <code>Option&lt;T&gt;</code>，第八章的 <code>Vec&lt;T&gt;</code> 和 <code>HashMap&lt;K, V&gt;</code>，以及第九章的 <code>Result&lt;T, E&gt;</code> 这些泛型了。本章会探索如何使用泛型定义我们自己的类型、函数和方法！</p>
+<p>同理为了编写一份可以用于多种具体值的代码，函数并不知道其参数为何值，这时就可以让函数获取泛型而不是像 <code>i32</code> 或 <code>String</code> 这样的具体值。我们已经使用过第 6 章的 <code>Option&lt;T&gt;</code>，第 8 章的 <code>Vec&lt;T&gt;</code> 和 <code>HashMap&lt;K, V&gt;</code>，以及第 9 章的 <code>Result&lt;T, E&gt;</code> 这些泛型了。本章会探索如何使用泛型定义我们自己的类型、函数和方法！</p>
 <p>首先，我们将回顾一下提取函数以减少代码重复的机制。接下来，我们将使用相同的技术，从两个仅参数类型不同的函数中创建一个泛型函数。我们也会讲到结构体和枚举定义中的泛型。</p>
 <p>之后，我们讨论 <strong>trait</strong>，这是一个定义泛型行为的方法。trait 可以与泛型结合来将泛型限制为拥有特定行为的类型，而不是任意类型。</p>
 <p>最后介绍 <strong>生命周期</strong>（<em>lifetimes</em>），它是一类允许我们向编译器提供引用如何相互关联的泛型。Rust 的生命周期功能允许在很多场景下借用值的同时仍然使编译器能够检查这些引用的有效性。</p>
 <h2 id="提取函数来减少重复"><a class="header" href="#提取函数来减少重复">提取函数来减少重复</a></h2>
-<p>在介绍泛型语法之前，首先来回顾一个不使用泛型的处理重复的技术：提取一个函数。当熟悉了这个技术以后，我们将使用相同的机制来提取一个泛型函数！如同你识别出可以提取到函数中重复代码那样，你也会开始识别出能够使用泛型的重复代码。</p>
+<p>在介绍泛型语法之前，首先来回顾一个不使用泛型处理重复的技术：提取一个函数。当熟悉了这个技术以后，我们将使用相同的机制来提取一个泛型函数！如同你识别出可以提取到函数中重复代码那样，你也会开始识别出能够使用泛型的重复代码。</p>
 <p>考虑一下这个寻找列表中最大值的小程序，如示例 10-1 所示：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -237,15 +237,15 @@ fn main() {
 </span>}
 </code></pre></pre>
 <p><span class="caption">示例 10-3：抽象后的寻找两个数字列表最大值的代码</span></p>
-<p><code>largest</code> 函数有一个参数 <code>list</code>，它代表会传递给函数的任何具体的 <code>i32</code>值的 slice。函数定义中的 <code>list</code> 代表任何 <code>&amp;[i32]</code>。当调用 <code>largest</code> 函数时，其代码实际上运行于我们传递的特定值上。</p>
+<p><code>largest</code> 函数有一个参数 <code>list</code>，它代表会传递给函数的任何具体的 <code>i32</code> 值的 slice。函数定义中的 <code>list</code> 代表任何 <code>&amp;[i32]</code>。当调用 <code>largest</code> 函数时，其代码实际上运行于我们传递的特定值上。</p>
 <p>总的来说，从示例 10-2 到示例 10-3 中涉及的机制经历了如下几步：</p>
 <ol>
 <li>找出重复代码。</li>
 <li>将重复代码提取到了一个函数中，并在函数签名中指定了代码中的输入和返回值。</li>
 <li>将重复代码的两个实例，改为调用函数。</li>
 </ol>
-<p>在不同的场景使用不同的方式，我们也可以利用相同的步骤和泛型来减少重复代码。与函数体可以在抽象<code>list</code>而不是特定值上操作的方式相同，泛型允许代码对抽象类型进行操作。</p>
-<p>如果我们有两个函数，一个寻找一个 <code>i32</code> 值的 slice 中的最大项而另一个寻找 <code>char</code> 值的 slice 中的最大项该怎么办？该如何消除重复呢？让我们拭目以待！</p>
+<p>在不同的场景使用不同的方式，我们也可以利用相同的步骤和泛型来减少重复代码。与函数体可以在抽象 <code>list</code> 而不是特定值上操作的方式相同，泛型允许代码对抽象类型进行操作。</p>
+<p>如果我们有两个函数，一个寻找 <code>i32</code> 值的 slice 中的最大项，而另一个寻找 <code>char</code> 值的 slice 中的最大项，该怎么办？该如何消除重复呢？让我们拭目以待！</p>
 
                     </main>
 
