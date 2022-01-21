@@ -112,7 +112,7 @@ let loopback = IpAddr::V6(String::from("::1"));
 
 这些代码展示了使用枚举来存储两种不同 IP 地址的几种可能的选择。然而，事实证明存储和编码 IP 地址实在是太常见了[以致标准库提供了一个开箱即用的定义！][IpAddr]<!-- ignore -->让我们看看标准库是如何定义 `IpAddr` 的：它正有着跟我们定义和使用的一样的枚举和成员，不过它将成员中的地址数据嵌入到了两个不同形式的结构体中，它们对不同的成员的定义是不同的：
 
-[IpAddr]: https://doc.rust-lang.org/std/net/enum.IpAddr.html
+[IpAddr]: https://rustwiki.org/zh-CN/std/net/enum.IpAddr.html
 
 ```rust
 struct Ipv4Addr {
@@ -207,7 +207,7 @@ Tony Hoare，null 的发明者，在他 2009 年的演讲 “Null References: Th
 
 问题不在于概念而在于具体的实现。为此，Rust 并没有空值，不过它确实拥有一个可以编码存在或不存在概念的枚举。这个枚举是 `Option<T>`，而且它[定义于标准库中][option]<!-- ignore -->，如下:
 
-[option]: https://doc.rust-lang.org/std/option/enum.Option.html
+[option]: https://rustwiki.org/zh-CN/std/option/enum.Option.html
 
 ```rust
 enum Option<T> {
@@ -260,6 +260,6 @@ not satisfied
 
 那么当有一个 `Option<T>` 的值时，如何从 `Some` 成员中取出 `T` 的值来使用它呢？`Option<T>` 枚举拥有大量用于各种情况的方法：你可以查看[它的文档][docs]<!-- ignore -->。熟悉 `Option<T>` 的方法将对你的 Rust 之旅非常有用。
 
-[docs]: https://doc.rust-lang.org/std/option/enum.Option.html
+[docs]: https://rustwiki.org/zh-CN/std/option/enum.Option.html
 
 总的来说，为了使用 `Option<T>` 值，需要编写处理每个成员的代码。你想要一些代码只当拥有 `Some(T)` 值时运行，允许这些代码使用其中的 `T`。也希望一些代码在值为 `None` 时运行，这些代码并没有一个可用的 `T` 值。`match` 表达式就是这么一个处理枚举的控制流结构：它会根据枚举的成员运行不同的代码，这些代码可以使用匹配到的值中的数据。

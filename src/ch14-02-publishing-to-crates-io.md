@@ -285,7 +285,7 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 ```
 
-[Cargo 的文档](http://doc.rust-lang.org/cargo/) 描述了其他可以指定的元信息，他们可以帮助你的 crate 更容易被发现和使用！
+[Cargo 的文档](http://rustwiki.org/zh-CN/cargo/) 描述了其他可以指定的元信息，他们可以帮助你的 crate 更容易被发现和使用！
 
 ### 发布到 Crates.io
 

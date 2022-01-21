@@ -8,6 +8,6 @@ Rust 标准库中包含一系列被称为 **集合**（*collections*）的非常
 
 对于标准库提供的其他类型的集合，请查看[文档][collections]。
 
-[collections]: https://doc.rust-lang.org/std/collections
+[collections]: https://rustwiki.org/zh-CN/std/collections
 
 我们将讨论如何创建和更新 vector、字符串和哈希 map，以及它们有什么特别之处。

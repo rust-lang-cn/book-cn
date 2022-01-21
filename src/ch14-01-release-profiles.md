@@ -40,4 +40,4 @@ opt-level = 1
 
 这会覆盖默认的设置 `0`。现在运行 `cargo build` 时，Cargo 将会使用 `dev` 的默认配置加上定制的 `opt-level`。因为 `opt-level` 设置为 `1`，Cargo 会比默认进行更多的优化，但是没有发布构建那么多。
 
-对于每个配置的设置和其默认值的完整列表，请查看 [Cargo 的文档](https://doc.rust-lang.org/cargo/reference/manifest.html#the-profile-sections)
+对于每个配置的设置和其默认值的完整列表，请查看 [Cargo 的文档](https://rustwiki.org/zh-CN/cargo/reference/manifest.html#the-profile-sections)

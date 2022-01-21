@@ -10,7 +10,7 @@
 - 是否允许实现该 trait 的条件
 - 需要 trait 操作的例子
 
-如果你希望不同于 `derive` 属性所提供的行为，请查阅 [标准库文档](https://doc.rust-lang.org/std/index.html) 中每个 trait 的细节以了解如何手动实现它们。
+如果你希望不同于 `derive` 属性所提供的行为，请查阅 [标准库文档](https://rustwiki.org/zh-CN/std/index.html) 中每个 trait 的细节以了解如何手动实现它们。
 
 标准库中定义的其它 trait 不能通过 `derive` 在类型上实现。这些 trait 不存在有意义的默认行为，所以由你负责以合理的方式实现它们。
 

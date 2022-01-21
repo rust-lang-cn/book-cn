@@ -63,7 +63,7 @@ $ cd guessing_game
 
 默认情况下，Rust 将 [*prelude*][prelude]<!-- ignore --> 模块中少量的类型引入到每个程序的作用域中。如果需要的类型不在 prelude 中，你必须使用 `use` 语句显式地将其引入作用域。`std::io` 库提供很多有用的功能，包括接收用户输入的功能。
 
-[prelude]: https://doc.rust-lang.org/std/prelude/index.html
+[prelude]: https://rustwiki.org/zh-CN/std/prelude/index.html
 
 如第 1 章所提及，`main` 函数是程序的入口点：
 
@@ -106,7 +106,7 @@ let mut bar = 5; // 可变
 
 让我们回到猜数字程序中。现在我们知道了 `let mut guess` 会引入一个叫做 `guess` 的可变变量。等号（`=`）的右边是 `guess` 所绑定的值，它是 `String::new` 的结果，这个函数会返回一个 `String` 的新实例。[`String`][string]<!-- ignore --> 是一个标准库提供的字符串类型，它是 UTF-8 编码的可增长文本块。
 
-[string]: https://doc.rust-lang.org/std/string/struct.String.html
+[string]: https://rustwiki.org/zh-CN/std/string/struct.String.html
 
 `::new` 那一行的 `::` 语法表明 `new` 是 `String` 类型的一个 **关联函数**（*associated function*）。关联函数是针对类型实现的，在这个例子中是 `String`，而不是 `String` 的某个特定实例。一些语言中把它称为 **静态方法**（*static method*）。
 
@@ -122,11 +122,11 @@ let mut bar = 5; // 可变
 
 如果程序的开头没有 `use std::io` 这一行，可以把函数调用写成 `std::io::stdin`。`stdin` 函数返回一个 [`std::io::Stdin`][iostdin]<!-- ignore --> 的实例，这代表终端标准输入句柄的类型。
 
-[iostdin]: https://doc.rust-lang.org/std/io/struct.Stdin.html
+[iostdin]: https://rustwiki.org/zh-CN/std/io/struct.Stdin.html
 
 代码的下一部分，`.read_line(&mut guess)`，调用 [`read_line`][read_line]<!-- ignore --> 方法从标准输入句柄获取用户输入。我们还向 `read_line()` 传递了一个参数：`&mut guess`。
 
-[read_line]: https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line
+[read_line]: https://rustwiki.org/zh-CN/std/io/struct.Stdin.html#method.read_line
 
 `read_line` 的工作是，无论用户在标准输入中键入什么内容，都将其存入一个字符串中，因此它需要字符串作为参数。这个字符串参数应该是可变的，以便 `read_line` 将用户输入附加上去。
 
@@ -150,8 +150,8 @@ io::stdin().read_line(&mut guess).expect("Failed to read line");
 
 之前提到了 `read_line` 将用户输入附加到传递给它的字符串中，不过它也返回一个值——在这个例子中是 [`io::Result`][ioresult]<!-- ignore -->。Rust 标准库中有很多叫做 `Result` 的类型：一个通用的 [`Result`][result]<!-- ignore --> 以及在子模块中的特化版本，比如 `io::Result`。
 
-[ioresult]: https://doc.rust-lang.org/std/io/type.Result.html
-[result]: https://doc.rust-lang.org/std/result/enum.Result.html
+[ioresult]: https://rustwiki.org/zh-CN/std/io/type.Result.html
+[result]: https://rustwiki.org/zh-CN/std/result/enum.Result.html
 
 `Result` 类型是 [*枚举*（*enumeration*）][enums]<!-- ignore -->，通常也写作 *enums*。枚举类型持有固定集合的值，这些值被称为枚举的 **成员**（*variants*）。第 6 章将介绍枚举的更多细节。
 
@@ -161,7 +161,7 @@ io::stdin().read_line(&mut guess).expect("Failed to read line");
 
 这些 `Result` 类型的作用是编码错误处理信息。`Result` 类型的值，像其他类型一样，拥有定义于其上的方法。`io::Result` 的实例拥有 [`expect` 方法][expect]<!-- ignore -->。如果 `io::Result` 实例的值是 `Err`，`expect` 会导致程序崩溃，并显示当做参数传递给 `expect` 的信息。如果 `read_line` 方法返回 `Err`，则可能是来源于底层操作系统错误的结果。如果 `io::Result` 实例的值是 `Ok`，`expect` 会获取 `Ok` 中的值并原样返回。在本例中，这个值是用户输入到标准输入中的字节数。
 
-[expect]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
+[expect]: https://rustwiki.org/zh-CN/std/result/enum.Result.html#method.expect
 
 如果不调用 `expect`，程序也能编译，不过会出现一个警告：
 
@@ -443,7 +443,7 @@ class="keystroke">enter</span>产生回车和换行符 `\r\n`）。`trim` 方法
 
 [字符串的 `parse` 方法][parse]<!-- ignore --> 将字符串解析成数字。因为这个方法可以解析多种数字类型，因此需要告诉 Rust 具体的数字类型，这里通过 `let guess: u32` 指定。`guess` 后面的冒号（`:`）告诉 Rust 我们指定了变量的类型。Rust 有一些内建的数字类型；`u32` 是一个无符号的 32 位整型。对于不大的正整数来说，它是不错的类型，第 3 章还会讲到其他数字类型。另外，程序中的 `u32` 注解以及与 `secret_number` 的比较，意味着 Rust 会推断出 `secret_number` 也是 `u32` 类型。现在可以使用相同类型比较两个值了！
 
-[parse]: https://doc.rust-lang.org/std/primitive.str.html#method.parse
+[parse]: https://rustwiki.org/zh-CN/std/primitive.str.html#method.parse
 
 `parse` 调用很容易产生错误。例如，字符串中包含 `A👍%`，就无法将其转换为一个数字。因此，`parse` 方法返回一个 `Result` 类型。像之前 [“使用 `Result` 类型来处理潜在的错误”][handling-potential-failure-with-the-result-type]<!-- ignore
 -->) 讨论的 `read_line` 方法那样，再次按部就班地用 `expect` 方法处理即可。如果 `parse` 不能从字符串生成一个数字，返回一个 `Result` 的 `Err` 成员时，`expect` 会使游戏崩溃并打印附带的信息。如果 `parse` 成功地将字符串转换为一个数字，它会返回 `Result` 的 `Ok` 成员，然后 `expect` 会返回 `Ok` 值中的数字。

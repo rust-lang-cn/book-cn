@@ -64,7 +64,7 @@ macro_rules! vec {
 
 宏定义中有效模式语法和在第 18 章提及的模式语法是不同的，因为宏模式所匹配的是 Rust 代码结构而不是值。回过头来检查下示例 19-28 中模式片段什么意思。对于全部的宏模式语法，请查阅[参考]。
 
-[参考]: https://doc.rust-lang.org/reference/macros.html
+[参考]: https://rustwiki.org/zh-CN/reference/macros.html
 
 首先，一对括号包含了整个模式。接下来是美元符号（ `$` ），后跟一对括号，捕获了符合括号内模式的值以用于替换后的代码。`$()` 内则是 `$x:expr` ，其匹配 Rust 的任意表达式，并将该表达式记作 `$x`。
 
