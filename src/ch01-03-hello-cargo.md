@@ -143,7 +143,7 @@ $ cargo build
 
 关于更多 Cargo 的信息，请查阅[对应文档][its documentation]。
 
-[its documentation]: https://doc.rust-lang.org/cargo/
+[its documentation]: https://rustwiki.org/zh-CN/cargo/
 
 ## 总结
 
