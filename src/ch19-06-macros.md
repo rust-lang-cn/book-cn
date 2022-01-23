@@ -108,7 +108,7 @@ pub fn some_name(input: TokenStream) -> TokenStream {
 
 <span class="caption">示例 19-29: 一个使用过程宏的例子</span>
 
-定义过程宏的函数以一个 `TokenStream` 作为输入并产生一个 `TokenStream` 作为输出。该 `TokenStream` 类型由包含在 Rust 中的 `proc_macroRust` crate 定义，并表示令牌序列。这是宏的核心：宏操作的源代码构成了输入 `TokenStream`，宏产生的代码是输出 `TokenStream`。该函数还附加了一个属性，该属性指定我们正在创建过程宏的类型。我们可以在同一个 crate 中拥有多种过程宏。
+定义过程宏的函数以一个 `TokenStream` 作为输入并产生一个 `TokenStream` 作为输出。该 `TokenStream` 类型由包含在 Rust 中的 `proc_macro` crate 定义，并表示令牌序列。这是宏的核心：宏操作的源代码构成了输入 `TokenStream`，宏产生的代码是输出 `TokenStream`。该函数还附加了一个属性，该属性指定我们正在创建过程宏的类型。我们可以在同一个 crate 中拥有多种过程宏。
 
 让我们看看不同种类的过程宏。我们将从自定义派生宏开始，然后解释与其他形式宏不同的细微差别。
 
