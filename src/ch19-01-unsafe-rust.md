@@ -30,7 +30,7 @@
 
 ### 解引用裸指针
 
-回到第 4 章的 [“悬垂引用”][dangling-references]  部分，那里提到了编译器会确保引用总是有效的。不安全 Rust 有两个被称为 **裸指针**（*raw pointers*）的类似于引用的新类型。和引用一样，裸指针是不可变或可变的，分别写作 `*const T` 和 `*mut T`。这里的星号不是解引用运算符；它是类型名称的一部分。在裸指针的上下文中，**不可变** 意味着指针解引用之后不能直接赋值。
+回到第 4 章的 [“悬垂引用”][dangling-references]<!-- ignore -->  部分，那里提到了编译器会确保引用总是有效的。不安全 Rust 有两个被称为 **裸指针**（*raw pointers*）的类似于引用的新类型。和引用一样，裸指针是不可变或可变的，分别写作 `*const T` 和 `*mut T`。这里的星号不是解引用运算符；它是类型名称的一部分。在裸指针的上下文中，**不可变** 意味着指针解引用之后不能直接赋值。
 
 与引用和智能指针的区别在于，记住裸指针
 
@@ -85,7 +85,7 @@ unsafe {
 
 还需注意示例 19-1 和 19-3 中创建了同时指向相同内存位置 `num` 的裸指针 `*const i32` 和 `*mut i32`。相反如果尝试创建 `num` 的不可变和可变引用，这将无法编译因为 Rust 的所有权规则不允许拥有可变引用的同时拥有不可变引用。通过裸指针，就能够同时创建同一地址的可变指针和不可变指针，若通过可变指针修改数据，则可能潜在造成数据竞争。请多加小心！
 
-既然存在这么多的危险，为何还要使用裸指针呢？一个主要的应用场景便是调用 C 代码接口，这在下一部分 [“调用不安全函数或方法”](#calling-an-unsafe-function-or-method)  中会讲到。另一个场景是构建借用检查器无法理解的安全抽象。让我们先介绍不安全函数，接着看一看使用不安全代码的安全抽象的例子。
+既然存在这么多的危险，为何还要使用裸指针呢？一个主要的应用场景便是调用 C 代码接口，这在下一部分 [“调用不安全函数或方法”](#调用不安全函数或方法)  中会讲到。另一个场景是构建借用检查器无法理解的安全抽象。让我们先介绍不安全函数，接着看一看使用不安全代码的安全抽象的例子。
 
 ### 调用不安全函数或方法
 
@@ -210,7 +210,7 @@ fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 
 <span class="caption">示例 19-6: 在 `split_at_mut` 函数的实现中使用不安全代码</span>
 
-回忆第 4 章的 [“Slice 类型” ][the-slice-type] 部分，slice 是一个指向一些数据的指针，并带有该 slice 的长度。可以使用 `len` 方法获取 slice 的长度，使用 `as_mut_ptr` 方法访问 slice 的裸指针。在这个例子中，因为有一个 `i32` 值的可变 slice，`as_mut_ptr` 返回一个 `*mut i32` 类型的裸指针，储存在 `ptr` 变量中。
+回忆第 4 章的 [“Slice 类型”][the-slice-type]<!-- ignore --> 部分，slice 是一个指向一些数据的指针，并带有该 slice 的长度。可以使用 `len` 方法获取 slice 的长度，使用 `as_mut_ptr` 方法访问 slice 的裸指针。在这个例子中，因为有一个 `i32` 值的可变 slice，`as_mut_ptr` 返回一个 `*mut i32` 类型的裸指针，储存在 `ptr` 变量中。
 
 我们保持索引 `mid` 位于 slice 中的断言。接着是不安全代码：`slice::from_raw_parts_mut` 函数获取一个裸指针和一个长度来创建一个 slice。这里使用此函数从 `ptr` 中创建了一个有 `mid` 个项的 slice。之后在 `ptr` 上调用 `add` 方法并使用 `mid` 作为参数来获取一个从 `mid` 开始的裸指针，使用这个裸指针并以 `mid` 之后项的数量为长度创建一个 slice。
 
@@ -294,7 +294,7 @@ fn main() {
 
 静态变量类似于常量，我们在第 3 章的 "变量和常量的区别 "一节中讨论过。静态变量的名字按惯例采用SCREAMING_SNAKE_CASE。静态变量只能存储具有 "静态寿命 "的引用，这意味着Rust编译器可以计算出其寿命，我们不需要明确注释。访问一个不可变的静态变量是安全的。
 
-静态（`static`）变量类似于第 3 章 [“变量和常量的区别”][differences-between-variables-and-constants]  部分讨论的常量。通常静态变量的名称采用 `SCREAMING_SNAKE_CASE` 写法。静态变量只能储存拥有 `'static` 生命周期的引用，这意味着 Rust 编译器可以自己计算出其生命周期而无需显式标注。访问不可变静态变量是安全的。
+静态（`static`）变量类似于第 3 章 [“变量和常量的区别”][differences-between-variables-and-constants]<!-- ignore -->  部分讨论的常量。通常静态变量的名称采用 `SCREAMING_SNAKE_CASE` 写法。静态变量只能储存拥有 `'static` 生命周期的引用，这意味着 Rust 编译器可以自己计算出其生命周期而无需显式标注。访问不可变静态变量是安全的。
 
 常量与不可变静态变量可能看起来很类似，不过一个微妙的区别是静态变量中的值有一个固定的内存地址。使用这个值总是会访问相同的地址。另一方面，常量则允许在任何被用到的时候复制其数据。
 
@@ -344,11 +344,11 @@ unsafe impl Foo for i32 {
 
 通过 `unsafe impl`，我们承诺将保证编译器所不能验证的不变量。
 
-作为一个例子，回忆第 16 章 [“使用 `Sync` 和 `Send` trait 的可扩展并发”][extensible-concurrency-with-the-sync-and-send-traits]  部分中的 `Sync` 和 `Send` 标记 trait，编译器会自动为完全由 `Send` 和 `Sync` 类型组成的类型自动实现他们。如果实现了一个包含一些不是 `Send` 或 `Sync` 的类型，比如裸指针，并希望将此类型标记为 `Send` 或 `Sync`，则必须使用 `unsafe`。Rust 不能验证我们的类型保证可以安全的跨线程发送或在多线程间访问，所以需要我们自己进行检查并通过 `unsafe` 表明。
+作为一个例子，回忆第 16 章 [“使用 `Sync` 和 `Send` trait 的可扩展并发”][extensible-concurrency-with-the-sync-and-send-traits]<!-- ignore -->  部分中的 `Sync` 和 `Send` 标记 trait，编译器会自动为完全由 `Send` 和 `Sync` 类型组成的类型自动实现他们。如果实现了一个包含一些不是 `Send` 或 `Sync` 的类型，比如裸指针，并希望将此类型标记为 `Send` 或 `Sync`，则必须使用 `unsafe`。Rust 不能验证我们的类型保证可以安全的跨线程发送或在多线程间访问，所以需要我们自己进行检查并通过 `unsafe` 表明。
 
 ### 访问联合体中的字段
 
-仅适用于 `unsafe` 的最后一个操作是访问 **联合体** 中的字段，`union` 和 `struct` 类似，但是在一个实例中同时只能使用一个声明的字段。联合体主要用于和 C 代码中的联合体交互。访问联合体的字段是不安全的，因为 Rust 无法保证当前存储在联合体实例中数据的类型。可以查看[参考文档][reference]了解有关联合体的更多信息。
+仅适用于 `unsafe` 的最后一个操作是访问 **联合体** 中的字段，`union` 和 `struct` 类似，但是在一个实例中同时只能使用一个声明的字段。联合体主要用于和 C 代码中的联合体交互。访问联合体的字段是不安全的，因为 Rust 无法保证当前存储在联合体实例中数据的类型。可以查看[参考文档][reference]<!-- ignore -->了解有关联合体的更多信息。
 
 ### 何时使用不安全代码
 
@@ -360,5 +360,5 @@ ch04-02-references-and-borrowing.html#悬垂引用dangling-references
 ch03-01-variables-and-mutability.html#变量和常量的区别
 [extensible-concurrency-with-the-sync-and-send-traits]:
 ch16-04-extensible-concurrency-sync-and-send.html#使用-sync-和-send-trait-的可扩展并发
-[the-slice-type]: ch04-03-slices.html#the-slice-type
+[the-slice-type]: ch04-03-slices.html#切片-slice-类型
 [reference]: https://rustwiki.org/zh-CN/reference/items/unions.html

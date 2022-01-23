@@ -1,6 +1,6 @@
 ## 高级 trait
 
-第 10 章 [“trait：定义共享的行为”][traits-defining-shared-behavior]  部分，我们第一次涉及到了 trait，不过就像生命周期一样，我们并没有覆盖一些较为高级的细节。现在我们更加了解 Rust 了，可以深入理解其本质了。
+第 10 章 [“trait：定义共享的行为”][traits-defining-shared-behavior]<!-- ignore -->  部分，我们第一次涉及到了 trait，不过就像生命周期一样，我们并没有覆盖一些较为高级的细节。现在我们更加了解 Rust 了，可以深入理解其本质了。
 
 ### 关联类型在 trait 定义中指定占位符类型
 
@@ -8,7 +8,7 @@
 
 本章所描述的大部分内容都非常少见。关联类型则比较适中；它们比本书其他的内容要少见，不过比本章中的很多内容要更常见。
 
-一个带有关联类型的 trait 的例子是标准库提供的 `Iterator` trait。它有一个叫做 `Item` 的关联类型来替代遍历的值的类型。第 13 章的 [“`Iterator` trait 和 `next` 方法”][the-iterator-trait-and-the-next-method] 部分曾提到过 `Iterator` trait 的定义如示例 19-12 所示：
+一个带有关联类型的 trait 的例子是标准库提供的 `Iterator` trait。它有一个叫做 `Item` 的关联类型来替代遍历的值的类型。第 13 章的 [“`Iterator` trait 和 `next` 方法”][the-iterator-trait-and-the-next-method]<!-- ignore --> 部分曾提到过 `Iterator` trait 的定义如示例 19-12 所示：
 
 ```rust
 pub trait Iterator {
@@ -468,7 +468,7 @@ impl fmt::Display for Point {
 
 ### newtype 模式用以在外部类型上实现外部 trait
 
-在第 10 章的 [“为类型实现 trait”][implementing-a-trait-on-a-type] 部分，我们提到了孤儿规则（orphan rule），它说明只要 trait 或类型对于当前 crate 是本地的话就可以在此类型上实现该 trait。一个绕开这个限制的方法是使用 **newtype 模式**（*newtype pattern*），它涉及到在一个元组结构体（第 5 章 [“用没有命名字段的元组结构体来创建不同的类型”][tuple-structs]  部分介绍了元组结构体）中创建一个新类型。这个元组结构体带有一个字段作为希望实现 trait 的类型的简单封装。接着这个封装类型对于 crate 是本地的，这样就可以在这个封装上实现 trait。*Newtype* 是一个源自 ~~（U.C.0079，逃）~~ Haskell 编程语言的概念。使用这个模式没有运行时性能惩罚，这个封装类型在编译时就被省略了。
+在第 10 章的 [“为类型实现 trait”][implementing-a-trait-on-a-type]<!-- ignore -->  部分，我们提到了孤儿规则（orphan rule），它说明只要 trait 或类型对于当前 crate 是本地的话就可以在此类型上实现该 trait。一个绕开这个限制的方法是使用 **newtype 模式**（*newtype pattern*），它涉及到在一个元组结构体（第 5 章 [“使用没有命名字段的元组结构体来创建不同的类型”][tuple-structs]<!-- ignore -->   部分介绍了元组结构体）中创建一个新类型。这个元组结构体带有一个字段作为希望实现 trait 的类型的简单封装。接着这个封装类型对于 crate 是本地的，这样就可以在这个封装上实现 trait。*Newtype* 是一个源自 Haskell 编程语言的概念。使用这个模式没有运行时性能消耗，这个封装类型在编译时就被省略了。
 
 例如，如果想要在 `Vec<T>` 上实现 `Display`，而孤儿规则阻止我们直接这么做，因为 `Display` trait 和 `Vec<T>` 都定义于我们的 crate 之外。可以创建一个包含 `Vec<T>` 实例的 `Wrapper` 结构体，接着可以如列表 19-31 那样在 `Wrapper` 上实现 `Display` 并使用 `Vec<T>` 的值：
 
@@ -495,15 +495,15 @@ fn main() {
 
 `Display` 的实现使用 `self.0` 来访问其内部的 `Vec<T>`，因为 `Wrapper` 是元组结构体而 `Vec<T>` 是结构体总位于索引 0 的项。接着就可以使用 `Wrapper` 中 `Display` 的功能了。
 
-此方法的缺点是，因为 `Wrapper` 是一个新类型，它没有定义于其值之上的方法；必须直接在 `Wrapper` 上实现 `Vec<T>` 的所有方法，这样就可以代理到`self.0` 上 —— 这就允许我们完全像 `Vec<T>` 那样对待 `Wrapper`。如果希望新类型拥有其内部类型的每一个方法，为封装类型实现 `Deref` trait（第 15 章 [“通过 `Deref` trait 将智能指针当作常规引用处理”][smart-pointer-deref]  部分讨论过）并返回其内部类型是一种解决方案。如果不希望封装类型拥有所有内部类型的方法 —— 比如为了限制封装类型的行为 —— 则必须只自行实现所需的方法。
+此方法的缺点是，因为 `Wrapper` 是一个新类型，它没有定义于其值之上的方法；必须直接在 `Wrapper` 上实现 `Vec<T>` 的所有方法，这样就可以代理到`self.0` 上 —— 这就允许我们完全像 `Vec<T>` 那样对待 `Wrapper`。如果希望新类型拥有其内部类型的每一个方法，为封装类型实现 `Deref` trait（第 15 章 [“通过 `Deref` trait 将智能指针当作常规引用处理”][smart-pointer-deref]<!-- ignore -->  部分讨论过）并返回其内部类型是一种解决方案。如果不希望封装类型拥有所有内部类型的方法 —— 比如为了限制封装类型的行为 —— 则必须只自行实现所需的方法。
 
 上面便是 newtype 模式如何与 trait 结合使用的；还有一个不涉及 trait 的实用模式。现在让我们将话题的焦点转移到一些与 Rust 类型系统交互的高级方法上来吧。
 
 [implementing-a-trait-on-a-type]:
-ch10-02-traits.html#implementing-a-trait-on-a-type
+ch10-02-traits.html#为类型实现-trait
 [the-iterator-trait-and-the-next-method]:
-ch13-02-iterators.html#the-iterator-trait-and-the-next-method
+ch13-02-iterators.html#iterator-trait-和-next-方法
 [traits-defining-shared-behavior]:
-ch10-02-traits.html#traits-defining-shared-behavior
-[smart-pointer-deref]: ch15-02-deref.html#treating-smart-pointers-like-regular-references-with-the-deref-trait
-[tuple-structs]: ch05-01-defining-structs.html#using-tuple-structs-without-named-fields-to-create-different-types
+ch10-02-traits.html#trait定义共享的行为
+[smart-pointer-deref]: ch15-02-deref.html#通过-deref-trait-将智能指针当作常规引用处理
+[tuple-structs]: ch05-01-defining-structs.html#使用没有命名字段的元组结构体来创建不同的类型
