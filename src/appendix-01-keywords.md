@@ -19,7 +19,7 @@
 - `else` - 作为 `if` 和 `if let` 控制流结构的 fallback
 - `enum` - 定义一个枚举
 - `extern` - 链接一个外部 **crate** 、函数或变量
-- `false` - 布尔字面值 `false`
+- `false` - 布尔字面量 `false`
 - `fn` - 定义一个函数或 **函数指针类型** (*function pointer type*)
 - `for` - 遍历一个迭代器或实现一个 trait 或者指定一个更高级的生命周期
 - `if` - 基于条件表达式的结果分支
@@ -40,7 +40,7 @@
 - `struct` - 定义一个结构体
 - `super` - 表示当前模块的父模块
 - `trait` - 定义一个 trait
-- `true` - 布尔字面值 `true`
+- `true` - 布尔字面量 `true`
 - `type` - 定义一个类型别名或关联类型
 - `unsafe` - 表示不安全的代码、函数、trait 或实现
 - `use` - 引入外部空间的符号

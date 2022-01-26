@@ -229,7 +229,7 @@ impl Config {
 
 <span class="caption">示例 12-9：从 `Config::new` 中返回 `Result`</span>
 
-现在 `new` 函数返回一个 `Result`，在成功时带有一个 `Config` 实例而在出现错误时带有一个 `&'static str`。回忆一下第 10 章 “静态生命周期” 中讲到 `&'static str` 是字符串字面值的类型，也是目前的错误信息。
+现在 `new` 函数返回一个 `Result`，在成功时带有一个 `Config` 实例而在出现错误时带有一个 `&'static str`。回忆一下第 10 章 “静态生命周期” 中讲到 `&'static str` 是字符串字面量的类型，也是目前的错误信息。
 
 `new` 函数体中有两处修改：当没有足够参数时不再调用 `panic!`，而是返回 `Err` 值。同时我们将 `Config` 返回值包装进 `Ok` 成员中。这些修改使得函数符合其新的类型签名。
 
