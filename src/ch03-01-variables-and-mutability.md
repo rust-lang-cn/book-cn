@@ -33,7 +33,6 @@ assign twice to immutable variable x`（不能对不可变变量二次赋值）�
 
 <span class="filename">文件名：src/main.rs</span>
 
-
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/src/main.rs}}
 ```
