@@ -64,3 +64,17 @@ jobs:
         cargo run --bin lfp src
     - name: Validate references
       run: bash ci/validate.sh
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [test, lint]
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ./tools/rust-deploy/update-cn.sh >/dev/null 2>&1
