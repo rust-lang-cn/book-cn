@@ -16,7 +16,7 @@
 
 本文档的 HTML 格式在线版为 [https://rustwiki.org/zh-CN/book/](https://rustwiki.org/zh-CN/book/) （英文版为：[https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/)）；而离线版在使用 `rustup` 安装 Rust 后附带（注：目前此命令附带的文档只包含英文版，中文离线版可拉取[本书的中文翻译 GitHub 仓库][book-cn]生成） ，运行 `rustup docs --book` 来打开本书。
 
-本文档还提供了几个社区[翻译][translations]。
+本文档还提供了几个社区[翻译版本][translations]。
 
 可以从 [No Starch Press 获得纸质图书和电子书][nsprust]（注：中文出版书名为《Rust 权威指南》，可从购书平台中购买）。
 
