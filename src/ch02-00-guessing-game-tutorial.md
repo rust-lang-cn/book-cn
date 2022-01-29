@@ -328,7 +328,6 @@ $ cargo update
 
 ```toml
 [dependencies]
-
 rand = "0.9.0"
 ```
 
