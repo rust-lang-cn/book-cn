@@ -2,7 +2,7 @@
 
 第一步是安装 Rust。我们将通过 `rustup` 来下载 Rust，这是一个管理 Rust 版本和相关工具的命令行工具。这需要互联网连接才能下载。
 
-> 注意：如果你出于某些原因不想用 `rustup`，请参阅 请参阅 [Rust 其他安装方法的页面][otherinstall] 了解更多选项。
+> 注意：如果你出于某些原因不想用 `rustup`，请参阅 请参阅 [Rust 其他安装方法的页面][otherinstall]<!-- ignore -->了解更多选项。
 
 [otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
 
@@ -40,7 +40,7 @@ Linux 用户一般应按照相应发行版的文档来安装 GCC 或 Clang。例
 
 ### 在 Windows 上安装 `rustup`
 
-在 Windows 上，访问 [https://www.rust-lang.org/zh-CN/tools/install][install] 页面并按照说明安装 Rust。在安装过程的某个步骤，你可能会收到一条消息，提示你还需要适用于 Visual Studio 2013 或更高版本的 C++ 的构建工具（C++ build tools）。获取这些构建工具的最简单方法是安装 [Visual Studio 2019 的构建工具][visualstudio]。当被问及要安装哪些内容时，请确保已选择 “C++ build tools”，并包括 Windows 10 SDK 和英文语言包。
+在 Windows 上，访问 [https://www.rust-lang.org/zh-CN/tools/install][install]<!-- ignore --> 页面并按照说明安装 Rust。在安装过程的某个步骤，你可能会收到一条消息，提示你还需要适用于 Visual Studio 2013 或更高版本的 C++ 的构建工具（C++ build tools）。获取这些构建工具的最简单方法是安装 [Visual Studio 2019 的构建工具][visualstudio]<!-- ignore -->。当被问及要安装哪些内容时，请确保已选择 “C++ build tools”，并包括 Windows 10 SDK 和英文语言包。
 
 [install]: https://www.rust-lang.org/zh-CN/tools/install
 [visualstudio]: https://visualstudio.microsoft.com/visual-cpp-build-tools/
@@ -75,7 +75,7 @@ $ rustc --version
 rustc x.y.z (abcabcabc yyyy-mm-dd)
 ```
 
-如果你看到此信息，则说明您已成功安装 Rust！如果没看到此信息，并且你使用的是 Windows，请检查 Rust 是否在 `%PATH%` 系统变量中。如果都正确，但 `Rust` 仍然无法正常工作，那么你可以在很多地方获得帮助。最简单的是去 [Rust 官方 Discord][discord] 的 #beginners 频道 。在这里，你可以和其他 Rustacean（Rust 用户，自嘲的昵称）聊天并寻求帮助。其他不错的资源还有 [Rust 用户论坛][users] 和 [Stack Overflow][stackoverflow]。
+如果你看到此信息，则说明您已成功安装 Rust！如果没看到此信息，并且你使用的是 Windows，请检查 Rust 是否在 `%PATH%` 系统变量中。如果都正确，但 `Rust` 仍然无法正常工作，那么你可以在很多地方获得帮助。最简单的是去 [Rust 官方 Discord][discord]<!-- ignore --> 的 #beginners 频道 。在这里，你可以和其他 Rustacean（Rust 用户，自嘲的昵称）聊天并寻求帮助。其他不错的资源还有 [Rust 用户论坛][users]<!-- ignore -->和 [Stack Overflow][stackoverflow]。
 
 [discord]: https://discord.gg/rust-lang
 [users]: https://users.rust-lang.org/

@@ -1,16 +1,16 @@
 ## Hello, Cargo!
 
-Cargo 是 Rust 的构建系统和包管理器。大多数 Rustacean 们使用 Cargo 来管理他们的 Rust 项目，因为它可以为你处理很多任务，比如构建代码、下载依赖库，以及编译这些库。（我们把代码所需要的库叫做**依赖**（*dependencies*））。
+Cargo 是 Rust 的构建系统和包管理器。大多数 Rustacean 们使用 Cargo 来管理他们的 Rust 项目，因为它可以为你处理很多任务，比如构建代码、下载依赖库，以及编译这些库。（我们把代码所需要的库叫做**依赖**（*dependency*））。
 
 最简单的 Rust 程序（如我们刚刚编写的）不含任何依赖。所以如果使用 Cargo 来构建 “Hello, world!” 项目，将只会用到 Cargo 构建代码的那部分功能。在编写更复杂的 Rust 程序时，你将添加依赖项，如果使用 Cargo 启动项目，则添加依赖项将更容易。
 
-由于绝大多数 Rust 项目使用 Cargo，本书接下来的部分假设你也使用 Cargo。如果使用 [“安装”][installation]<!-- ignore --> 部分介绍的官方安装包的话，则自带了 Cargo。如果通过其他方式安装的话，可以在终端输入如下命令检查是否安装了 Cargo：
+由于绝大多数 Rust 项目使用 Cargo，本书接下来的部分假设你也使用 Cargo。如果使用[“安装”][installation]<!-- ignore --> 部分介绍的官方安装包的话，则自带了 Cargo。如果通过其他方式安装的话，可以在终端输入如下命令检查是否安装了 Cargo：
 
 ```console
 $ cargo --version
 ```
 
-如果你看到了版本号，说明已安装！如果看到类似 `command not found` 的错误，你应该查看相应安装文档以确定如何单独安装 Cargo。
+如果你看到了版本号，说明安装成功！如果看到类似 `command not found` 的错误，你应该查看相应安装文档以确定如何单独安装 Cargo。
 
 ### 使用 Cargo 创建项目
 
@@ -37,7 +37,7 @@ $ cd hello_cargo
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 ```
@@ -48,7 +48,7 @@ edition = "2018"
 
 第一行，`[package]`，是一个表块（section）标题，表明下面的语句用来配置一个包（package）。随着我们在这个文件增加更多的信息，还将增加其他表块。
 
-接下来的三行设置了 Cargo 编译程序所需的配置：项目的名称、版本，以及使用的 Rust 大版本号（edition，区别于 version）。附录 E 会介绍 `edition`（译注：Rust 的核心版本，即 2015、2018、2021 版等） 的值。
+接下来的三行设置了 Cargo 编译程序所需的配置：项目的名称、版本，以及使用的 Rust 大版本号（edition，区别于 version）。[附录 E][appendix-e]<!-- ignore --> 会介绍 `edition`（译注：Rust 的核心版本，即 2015、2018、2021 版等） 的值。
 
 最后一行的 `[dependencies]` 是罗列项目依赖的表块的开始。在 Rust 中，代码包被称为 *crate*。这个项目并不需要其他的 crate，不过在第 2 章的第一个项目会用到依赖，那时会用得上这个表块。
 
@@ -106,7 +106,7 @@ $ cargo run
 Hello, world!
 ```
 
-Cargo 还提供了一个叫 `cargo check` 的命令。该命令快速检查代码确保其可以编译，但并不产生可执行文件：
+Cargo 还提供了一个名为 `cargo check` 的命令。该命令快速检查代码确保其可以编译，但并不产生可执行文件：
 
 ```console
 $ cargo check
@@ -141,7 +141,7 @@ $ cd someproject
 $ cargo build
 ```
 
-关于更多 Cargo 的信息，请查阅[对应文档][its documentation]。
+关于更多 Cargo 的信息，请查阅[相应文档][its documentation]<!-- ignore -->。
 
 [its documentation]: https://rustwiki.org/zh-CN/cargo/
 
@@ -158,3 +158,4 @@ $ cargo build
 是时候通过构建更具强大的程序来熟悉阅读和编写 Rust 代码了。所以在第 2 章我们会构建一个猜数字游戏程序。如果你更愿意从学习 Rust 常用的编程概念开始，请阅读第 3 章，接着再回到第 2 章。
 
 [installation]: ch01-01-installation.html#安装
+[appendix-e]: appendix-05-editions.html
