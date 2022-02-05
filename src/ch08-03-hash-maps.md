@@ -38,7 +38,7 @@ let scores: HashMap<_, _> = teams.iter().zip(initial_scores.iter()).collect();
 
 <span class="caption">示例 8-21：用队伍列表和分数列表创建哈希 map</span>
 
-这里 `HashMap<_, _>` 类型注解是必要的，因为 `collect` 有可能当成多种不同的数据结构，而除非显式指定否则 Rust 无从得知你需要的类型。但是对于键和值的类型参数来说，可以使用下划线占位，而 Rust 能够根据 vector 中数据的类型推断出 `HashMap` 所包含的类型。
+这里 `HashMap<_, _>` 类型标注是必要的，因为 `collect` 有可能当成多种不同的数据结构，而除非显式指定否则 Rust 无从得知你需要的类型。但是对于键和值的类型参数来说，可以使用下划线占位，而 Rust 能够根据 vector 中数据的类型推断出 `HashMap` 所包含的类型。
 
 ### 哈希 map 和所有权
 

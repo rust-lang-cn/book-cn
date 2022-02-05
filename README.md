@@ -28,7 +28,7 @@
 
 [nostarch]: https://nostarch.com/rust
 
-在线上可以本组织官网[阅读中文版][book-cn]（**支持同一页面中英双语切换**）或在 Rust 官网上[阅读英文版][book-en]。另外在 Rust 官网的英文版在线阅读可以选择 [stable]、[beta] 和 [nightly] 三个不同的分支版本，这几个分支版本可能滞后于[英文仓库][github-en]的最新内容。
+在线版可以在本组织官网上[阅读中文版][book-cn]（**支持同一页面中英双语切换**）或在 Rust 官网上[阅读英文版][book-en]。另外在 Rust 官网的英文版在线阅读可以选择 [stable]、[beta] 和 [nightly] 三个不同的分支版本，这几个分支版本可能滞后于[英文仓库][github-en]的最新内容。
 
 [book-cn]: https://rustwiki.org/zh-CN/book
 [book-en]: https://doc.rust-lang.org/book/

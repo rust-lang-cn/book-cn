@@ -79,7 +79,7 @@ $ cd guessing_game
 
 这些代码仅仅打印提示，介绍游戏的内容然后请求用户输入。
 
-### 使用变量储存值
+### 使用变量存储值
 
 接下来，创建一个储存用户输入的**变量**（*variable*），像这样：
 
@@ -408,7 +408,7 @@ let guess: u32 = guess.trim().parse().expect("Please type a number!");
 我们将这个新变量绑定到 `guess.trim().parse()` 表达式上。表达式中的 `guess` 是指原始的 `guess` 变量，其中包含作为字符串的输入。`String` 实例的 `trim` 方法会去除字符串开头和结尾的空白字符，我们必须执行此方法才能将字符串与 `u32` 比较，因为 `u32` 只能包含数值型数据。用户必须输入 <span class="keystroke">enter</span> 键才能让 `read_line` 返回，并输入他们的猜想，这会在字符串中增加一个换行符。例如，用户输入 <span class="keystroke">5</span> 并按下 <span class="keystroke">enter</span>，`guess` 看起来像这样：`5\n`，`\n` 代表 “换行”（在 Windows 中，按 <span
 class="keystroke">enter</span> 键会得到一个回车和一个换行符 `\r\n`）。`trim` 方法会消除 `\n` 或 `\r\n`，只留下 `5`。
 
-[字符串的 `parse` 方法][parse]<!-- ignore --> 将字符串解析成数字。因为这个方法可以解析多种数字类型，因此需要告诉 Rust 具体的数字类型，这里通过 `let guess: u32` 指定。`guess` 后面的冒号（`:`）告诉 Rust 我们指定了变量的类型。Rust 有一些内建的数字类型；`u32` 是一个无符号的 32 位整型。对于不大的正整数来说，它是不错的类型，第 3 章还会讲到其他数字类型。另外，程序中的 `u32` 注解以及与 `secret_number` 的比较，意味着 Rust 会推断出 `secret_number` 也是 `u32` 类型。现在可以使用相同类型比较两个值了！
+[字符串的 `parse` 方法][parse]<!-- ignore --> 将字符串解析成数字。因为这个方法可以解析多种数字类型，因此需要告诉 Rust 具体的数字类型，这里通过 `let guess: u32` 指定。`guess` 后面的冒号（`:`）告诉 Rust 我们指定了变量的类型。Rust 有一些内建的数字类型；`u32` 是一个无符号的 32 位整型。对于不大的正整数来说，它是不错的类型，第 3 章还会讲到其他数字类型。另外，程序中的 `u32` 标注以及与 `secret_number` 的比较，意味着 Rust 会推断出 `secret_number` 也是 `u32` 类型。现在可以使用相同类型比较两个值了！
 
 由于 `parse` 方法只能用于可以逻辑转换为数字的字符，所以调用它很容易产生错误。例如，字符串中包含 `A👍%`，就无法将其转换为一个数字。因此，`parse` 方法返回一个 `Result` 类型。像前面 [“使用 `Result` 类型来处理潜在的错误”][handling-potential-failure-with-the-result-type]<!-- ignore--> 部分讨论的 `read_line` 方法那样，再次按部就班地用 `expect` 方法处理即可。如果 `parse` 不能从字符串生成一个数字，返回一个 `Result` 的 `Err` 成员时，`expect` 会使游戏崩溃并打印附带的信息。如果 `parse` 成功地将字符串转换为一个数字，它会返回 `Result` 的 `Ok` 成员，然后 `expect` 会返回 `Ok` 值中的数字。
 
