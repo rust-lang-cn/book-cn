@@ -250,13 +250,11 @@ again!
 
 你做到了！这是一个大章节：你学习了变量、标量和复合数据类型、函数、注释、 `if` 表达式和循环！如果你想要实践本章讨论的概念，尝试构建如下程序：
 
-* 相互转换摄氏与华氏温度。
-* 生成 n 阶斐波那契数列。
-* 打印圣诞颂歌 “The Twelve Days of Christmas” 的歌词，并利用歌曲中的重复部分（编写循环）。
+- 相互转换摄氏与华氏温度。
+- 生成 n 阶斐波那契数列。
+- 打印圣诞颂歌 “The Twelve Days of Christmas” 的歌词，并利用歌曲中的重复部分（编写循环）。
 
 当你准备好继续的时候，让我们讨论一个其他语言中**并不**常见的概念：所有权（ownership）。
 
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
-[quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.html#猜测正确后退出
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
+[quitting-after-a-correct-guess]: ch02-00-guessing-game-tutorial.html#猜测正确后退出

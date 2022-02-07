@@ -607,5 +607,4 @@ You win!
 
 本项目通过动手实践，向你介绍了许多 Rust 的新概念：`let`、`match`、方法、关联函数、使用外部 crate 等等。接下来的几章，你会继续深入学习这些概念。第 3 章介绍大部分编程语言都有的概念，比如变量、数据类型和函数，以及如何在 Rust 中使用它们。第 4 章探索所有权（ownership），这是一个 Rust 同其他语言大不相同的功能。第 5 章讨论结构体和方法的语法，而第 6 章侧重解释枚举。
 
-[variables-and-mutability]:
-ch03-01-variables-and-mutability.html#variables-and-mutability
+[variables-and-mutability]:ch03-01-variables-and-mutability.html#variables-and-mutability

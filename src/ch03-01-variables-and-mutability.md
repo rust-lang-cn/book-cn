@@ -20,8 +20,7 @@
 
 这个例子展示了编译器如何帮助你查找程序中的错误。即使编译器错误可能令人沮丧，它们也只是表明你的程序做你想做的事情并不安全；并**不**意味着你不是一个好开发者！有经验的 Rustaceans 依然会遇到编译错误。
 
-上面的错误指出错误的原因是 `cannot
-assign twice to immutable variable x`（不能对不可变变量二次赋值），因为我们尝试给不可变的 `x` 变量赋值为第二个值。
+上面的错误指出错误的原因是 `cannot assign twice to immutable variable x`（不能对不可变变量二次赋值），因为我们尝试给不可变的 `x` 变量赋值为第二个值。
 
 当我们尝试改变一个前面指定为不可变的值时我们会得到编译期错误，这点很重要，因为这种情况很可能导致 bug。如果我们代码的一部分假设某个值永远不会更改，而代码的另一部分更改了该值，那很可能第一部分代码不会按照所设计的逻辑运行。这个 bug 的根源在实际开发中可能很难追踪，特别是第二部分代码只是**偶尔**变更了原来的值。
 
@@ -108,6 +107,5 @@ const MAX_POINTS: u32 = 100_000;
 
 现在我们已经探索了变量是如何工作的，接下来我们学习更多的数据类型。
 
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
 [data-types]: ch03-02-data-types.html#数据类型
