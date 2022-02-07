@@ -124,13 +124,13 @@ Rust **确实**包含了打印出调试信息的功能，不过我们必须为�
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
 ```
 
-另一种使用 `Debug` 格式打印数值的方法是使用 [`dbg!` 宏][dbg]<!-- ignore -->。`dbg!` 宏接收一个表达式的所有权，打印出你代码中 `dbg!` 宏调用的文件和行号，以及该表达式的结果值，并返回该值的所有权。调用 `dbg!` 宏会打印到标准错误控制台流（`stderr`），而不是 `println!`，后者会打印到标准输出控制台流（`stdout`）。我们将在[第 12 章 “将错误信息写入标准错误而不是标准输出” 一节][err]<!-- ignore -->中更多地讨论 `stderr` 和 `stdout`。下面是一个例子，我们对分配给 `width` 字段的值以及 `rect1` 中整个结构的值感兴趣。
+另一种使用 `Debug` 格式打印数值的方法是使用 [`dbg!` 宏][dbg]<!-- ignore -->。`dbg!` 宏接收一个表达式的所有权，打印出代码中调用 `dbg!` 宏时所在的文件和行号，以及该表达式的结果值，并返回该值的所有权。调用 `dbg!` 宏会打印到标准错误控制台流（`stderr`），而不是 `println!`，后者会打印到标准输出控制台流（`stdout`）。我们将在[第 12 章 “将错误信息写入标准错误而不是标准输出” 一节][err]<!-- ignore -->中更多地讨论 `stderr` 和 `stdout`。下面是一个例子，我们对分配给 `width` 字段的值以及 `rect1` 中整个结构的值感兴趣。
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/src/main.rs}}
 ```
 
-我们可以把 `dbg!` 放在表达式 `30 * scale` 周围，因为 `dbg!` 返回表达式的值的所有权，所以 `width` 字段将获得相同的值，就像我们在那里没有 `dbg!` 调用一样。我们不希望 `dbg!` 拥有 `rect1` 的所有权，所以我们在下一次调用中使用对 `dbg!` 的引用。下面是这个例子的输出结果：
+我们可以把 `dbg!` 放在表达式 `30 * scale` 周围，因为 `dbg!` 返回表达式的值的所有权，所以 `width` 字段将获得相同的值，就像我们在那里没有 `dbg!` 调用一样。我们不希望 `dbg!` 拥有 `rect1` 的所有权，所以我们在下一次调用 `dbg!` 时传入一个引用。下面是这个例子的输出结果：
 
 ```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/no-listing-05-dbg-macro/output.txt}}

@@ -11,7 +11,7 @@
 > Chinese translation of [The Rust Programming Language][github-en]
 >
 > - 鉴于目前网上的中文版已经滞后英文内容，所以重新开启本书翻译，跟进原书，本书是 Rust 中文翻译项目组的重点翻译项目。
-> - 本文档已 100% 翻译成中文，最后更新时间为 2022-01-30。
+> - 本文档已 100% 翻译成中文，最后更新时间为 2022-02-06。
 > - 本仓库翻译内容包括 Rust 中文翻译项目组本身原有的翻译以及采用网上已有的开源的翻译版本（如：[KaiserY/trpl-zh-cn][KaiserY] 译本），我们尽可能避免不必要的重复劳动，我们对原译者感激不尽！
 
 [github-en]: https://github.com/rust-lang/book
@@ -28,7 +28,7 @@
 
 [nostarch]: https://nostarch.com/rust
 
-在线上可以本组织官网[阅读中文版][book-cn]（**支持同一页面中英双语切换**）或在 Rust 官网上[阅读英文版][book-en]。另外在 Rust 官网的英文版在线阅读可以选择 [stable]、[beta] 和 [nightly] 三个不同的分支版本，这几个分支版本可能滞后于[英文仓库][github-en]的最新内容。
+在线版可以在本组织官网上[阅读中文版][book-cn]（**支持同一页面中英双语切换**）或在 Rust 官网上[阅读英文版][book-en]。另外在 Rust 官网的英文版在线阅读可以选择 [stable]、[beta] 和 [nightly] 三个不同的分支版本，这几个分支版本可能滞后于[英文仓库][github-en]的最新内容。
 
 [book-cn]: https://rustwiki.org/zh-CN/book
 [book-en]: https://doc.rust-lang.org/book/
