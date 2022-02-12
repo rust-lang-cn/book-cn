@@ -1,7 +1,7 @@
 ## Storing Keys with Associated Values in Hash Maps
 
 The last of our common collections is the *hash map*. The type `HashMap<K, V>`
-stores a mapping of keys of type `K` to values of type `V`. It does this via a
+stores a mapping of keys of type `K` to values of type `V` using a
 *hashing function*, which determines how it places these keys and values into
 memory. Many programming languages support this kind of data structure, but
 they often use a different name, such as hash, map, object, hash table,
@@ -19,10 +19,10 @@ As always, check the standard library documentation for more information.
 
 ### Creating a New Hash Map
 
-You can create an empty hash map with `new` and add elements with `insert`. In
-Listing 8-20, we’re keeping track of the scores of two teams whose names are
-Blue and Yellow. The Blue team starts with 10 points, and the Yellow team
-starts with 50.
+One way to create an empty hash map is using `new` and adding elements with
+`insert`. In Listing 8-20, we’re keeping track of the scores of two teams whose
+names are *Blue* and *Yellow*. The Blue team starts with 10 points, and the
+Yellow team starts with 50.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
@@ -49,9 +49,9 @@ the [”Processing a Series of Items with Iterators” section of Chapter
 13][iterators]<!-- ignore -->. The `collect` method gathers data into a number
 of collection types, including `HashMap`. For example, if we had the team names
 and initial scores in two separate vectors, we could use the `zip` method to
-create a vector of tuples where “Blue” is paired with 10, and so forth. Then we
-could use the `collect` method to turn that vector of tuples into a hash map,
-as shown in Listing 8-21.
+create an iterator of tuples where “Blue” is paired with 10, and so forth. Then
+we could use the `collect` method to turn that iterator of tuples into a hash
+map, as shown in Listing 8-21.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
@@ -65,8 +65,8 @@ The type annotation `HashMap<_, _>` is needed here because it’s possible to
 want unless you specify. For the parameters for the key and value types,
 however, we use underscores, and Rust can infer the types that the hash map
 contains based on the types of the data in the vectors. In Listing 8-21, the
-key type will be `String` and the value type will be `i32`, just as the types
-were in Listing 8-20.
+key type will be `String` and the value type will be `i32`, just as in Listing
+8-20.
 
 ### Hash Maps and Ownership
 
@@ -125,10 +125,10 @@ Blue: 10
 
 ### Updating a Hash Map
 
-Although the number of keys and values is growable, each key can only have one
-value associated with it at a time. When you want to change the data in a hash
-map, you have to decide how to handle the case when a key already has a value
-assigned. You could replace the old value with the new value, completely
+Although the number of key and value pairs is growable, each key can only have
+one value associated with it at a time. When you want to change the data in a
+hash map, you have to decide how to handle the case when a key already has a
+value assigned. You could replace the old value with the new value, completely
 disregarding the old value. You could keep the old value and ignore the new
 value, only adding the new value if the key *doesn’t* already have a value. Or
 you could combine the old value and the new value. Let’s look at how to do each
@@ -199,25 +199,28 @@ the value 0.
 map that stores words and counts</span>
 
 This code will print `{"world": 2, "hello": 1, "wonderful": 1}`. The
-`or_insert` method actually returns a mutable reference (`&mut V`) to the value
-for this key. Here we store that mutable reference in the `count` variable, so
-in order to assign to that value, we must first dereference `count` using the
-asterisk (`*`). The mutable reference goes out of scope at the end of the `for`
-loop, so all of these changes are safe and allowed by the borrowing rules.
+`split_whitespace` method iterates over sub-slices, separated by whitespace, of
+the value in `text`. The `or_insert` method returns a mutable reference (`&mut
+V`) to the value for the specified key. Here we store that mutable reference in
+the `count` variable, so in order to assign to that value, we must first
+dereference `count` using the asterisk (`*`). The mutable reference goes out of
+scope at the end of the `for` loop, so all of these changes are safe and
+allowed by the borrowing rules.
 
 ### Hashing Functions
 
-By default, `HashMap` uses a hashing function called SipHash that can provide 
-resistance to Denial of Service (DoS) attacks involving hash tables[^siphash]. This
-is not the fastest hashing algorithm available, but the trade-off for better
-security that comes with the drop in performance is worth it. If you profile
-your code and find that the default hash function is too slow for your
-purposes, you can switch to another function by specifying a different
-*hasher*. A hasher is a type that implements the `BuildHasher` trait. We’ll
-talk about traits and how to implement them in Chapter 10. You don’t
-necessarily have to implement your own hasher from scratch;
-[crates.io](https://crates.io/) has libraries shared by other Rust users that
-provide hashers implementing many common hashing algorithms.
+By default, `HashMap` uses a hashing function called *SipHash* that can provide
+resistance to Denial of Service (DoS) attacks involving hash
+tables[^siphash]<!-- ignore -->. This is not the fastest hashing algorithm
+available, but the trade-off for better security that comes with the drop in
+performance is worth it. If you profile your code and find that the default
+hash function is too slow for your purposes, you can switch to another function
+by specifying a different hasher. A *hasher* is a type that implements the
+`BuildHasher` trait. We’ll talk about traits and how to implement them in
+Chapter 10. You don’t necessarily have to implement your own hasher from
+scratch; [crates.io](https://crates.io/)<!-- ignore --> has libraries shared by
+other Rust users that provide hashers implementing many common hashing
+algorithms.
 
 [^siphash]: [https://en.wikipedia.org/wiki/SipHash](https://en.wikipedia.org/wiki/SipHash)
 
@@ -227,9 +230,9 @@ Vectors, strings, and hash maps will provide a large amount of functionality
 necessary in programs when you need to store, access, and modify data. Here are
 some exercises you should now be equipped to solve:
 
-* Given a list of integers, use a vector and return the mean (the average
-  value), median (when sorted, the value in the middle position), and mode (the
-  value that occurs most often; a hash map will be helpful here) of the list.
+* Given a list of integers, use a vector and return the median (when sorted,
+  the value in the middle position) and mode (the value that occurs most often;
+  a hash map will be helpful here) of the list.
 * Convert strings to pig latin. The first consonant of each word is moved to
   the end of the word and “ay” is added, so “first” becomes “irst-fay.” Words
   that start with a vowel have “hay” added to the end instead (“apple” becomes

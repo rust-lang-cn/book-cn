@@ -27,7 +27,7 @@ overload that operator is listed.
 | `&&` | `expr && expr` | Short-circuiting logical AND | |
 | `*` | `expr * expr` | Arithmetic multiplication | `Mul` |
 | `*=` | `var *= expr` | Arithmetic multiplication and assignment | `MulAssign` |
-| `*` | `*expr` | Dereference | |
+| `*` | `*expr` | Dereference | `Deref` |
 | `*` | `*const type`, `*mut type` | Raw pointer | |
 | `+` | `trait + trait`, `'a + trait` | Compound type constraint | |
 | `+` | `expr + expr` | Arithmetic addition | `Add` |
@@ -38,11 +38,11 @@ overload that operator is listed.
 | `-=` | `var -= expr` | Arithmetic subtraction and assignment | `SubAssign` |
 | `->` | `fn(...) -> type`, <code>&vert;...&vert; -> type</code> | Function and closure return type | |
 | `.` | `expr.ident` | Member access | |
-| `..` | `..`, `expr..`, `..expr`, `expr..expr` | Right-exclusive range literal | |
-| `..=` | `..=expr`, `expr..=expr` | Right-inclusive range literal | |
+| `..` | `..`, `expr..`, `..expr`, `expr..expr` | Right-exclusive range literal | `PartialOrd` |
+| `..=` | `..=expr`, `expr..=expr` | Right-inclusive range literal | `PartialOrd` |
 | `..` | `..expr` | Struct literal update syntax | |
 | `..` | `variant(x, ..)`, `struct_type { x, .. }` | “And the rest” pattern binding | |
-| `...` | `expr...expr` | In a pattern: inclusive range pattern | |
+| `...` | `expr...expr` | (Deprecated, use `..=` instead) In a pattern: inclusive range pattern | |
 | `/` | `expr / expr` | Arithmetic division | `Div` |
 | `/=` | `var /= expr` | Arithmetic division and assignment | `DivAssign` |
 | `:` | `pat: type`, `ident: type` | Constraints | |
@@ -136,7 +136,7 @@ parameters with trait bounds.
 |--------|-------------|
 | `T: U` | Generic parameter `T` constrained to types that implement `U` |
 | `T: 'a` | Generic type `T` must outlive lifetime `'a` (meaning the type cannot transitively contain any references with lifetimes shorter than `'a`) |
-| `T : 'static` | Generic type `T` contains no borrowed references other than `'static` ones |
+| `T: 'static` | Generic type `T` contains no borrowed references other than `'static` ones |
 | `'b: 'a` | Generic lifetime `'b` must outlive lifetime `'a` |
 | `T: ?Sized` | Allow generic type parameter to be a dynamically sized type |
 | `'a + trait`, `trait + trait` | Compound type constraint |

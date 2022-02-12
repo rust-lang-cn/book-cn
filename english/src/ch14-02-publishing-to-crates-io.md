@@ -24,7 +24,7 @@ your crate is *implemented*.
 Documentation comments use three slashes, `///`, instead of two and support
 Markdown notation for formatting the text. Place documentation comments just
 before the item they’re documenting. Listing 14-1 shows documentation comments
-for an `add_one` function in a crate named `my_crate`:
+for an `add_one` function in a crate named `my_crate`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -177,7 +177,7 @@ function named `mix`, as shown in Listing 14-3:
 <span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
-{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs}}
+{{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 14-3: An `art` library with items organized into
@@ -324,7 +324,10 @@ $ cargo publish
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
 See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
 --snip--
-error: api errors (status 200 OK): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+error: failed to publish to registry at https://crates.io
+
+Caused by:
+  the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
 ```
 
 The reason is that you’re missing some crucial information: a description and
@@ -360,8 +363,7 @@ same way as Rust by using a dual license of `MIT OR Apache-2.0`. This practice
 demonstrates that you can also specify multiple license identifiers separated
 by `OR` to have multiple licenses for your project.
 
-With a unique name, the version, the author details that `cargo new` added
-when you created the crate, your description, and a license added, the
+With a unique name, the version, your description, and a license added, the
 *Cargo.toml* file for a project that is ready to publish might look like this:
 
 <span class="filename">Filename: Cargo.toml</span>
@@ -370,8 +372,7 @@ when you created the crate, your description, and a license added, the
 [package]
 name = "guessing_game"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
-edition = "2018"
+edition = "2021"
 description = "A fun game where you guess what number the computer has chosen."
 license = "MIT OR Apache-2.0"
 

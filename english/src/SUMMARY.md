@@ -32,7 +32,7 @@
 
 - [Enums and Pattern Matching](ch06-00-enums.md)
     - [Defining an Enum](ch06-01-defining-an-enum.md)
-    - [The `match` Control Flow Operator](ch06-02-match.md)
+    - [The `match` Control Flow Construct](ch06-02-match.md)
     - [Concise Control Flow with `if let`](ch06-03-if-let.md)
 
 ## Basic Rust Literacy
@@ -52,7 +52,7 @@
 - [Error Handling](ch09-00-error-handling.md)
     - [Unrecoverable Errors with `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
     - [Recoverable Errors with `Result`](ch09-02-recoverable-errors-with-result.md)
-    - [To `panic!` or Not To `panic!`](ch09-03-to-panic-or-not-to-panic.md)
+    - [To `panic!` or Not to `panic!`](ch09-03-to-panic-or-not-to-panic.md)
 
 - [Generic Types, Traits, and Lifetimes](ch10-00-generics.md)
     - [Generic Data Types](ch10-01-syntax.md)

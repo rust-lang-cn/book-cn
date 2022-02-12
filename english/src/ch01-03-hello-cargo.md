@@ -3,7 +3,8 @@
 Cargo is Rust’s build system and package manager. Most Rustaceans use this tool
 to manage their Rust projects because Cargo handles a lot of tasks for you,
 such as building your code, downloading the libraries your code depends on, and
-building those libraries. (We call libraries your code needs *dependencies*.)
+building those libraries. (We call the libraries that your code needs
+*dependencies*.)
 
 The simplest Rust programs, like the one we’ve written so far, don’t have any
 dependencies. So if we had built the “Hello, world!” project with Cargo, it
@@ -38,7 +39,7 @@ $ cargo new hello_cargo
 $ cd hello_cargo
 ```
 
-The first command creates a new directory called *hello_cargo*. We’ve named
+The first command created a new directory called *hello_cargo*. We’ve named
 our project *hello_cargo*, and Cargo creates its files in a directory of the
 same name.
 
@@ -63,8 +64,7 @@ code in Listing 1-2.
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 ```
@@ -79,11 +79,9 @@ The first line, `[package]`, is a section heading that indicates that the
 following statements are configuring a package. As we add more information to
 this file, we’ll add other sections.
 
-The next four lines set the configuration information Cargo needs to compile
-your program: the name, the version, who wrote it, and the edition of Rust to
-use. Cargo gets your name and email information from your environment, so if
-that information is not correct, fix the information now and then save the
-file. We’ll talk about the `edition` key in Appendix E.
+The next three lines set the configuration information Cargo needs to compile
+your program: the name, the version, and the edition of Rust to use. We’ll talk
+about the `edition` key in [Appendix E][appendix-e]<!-- ignore -->.
 
 The last line, `[dependencies]`, is the start of a section for you to list any
 of your project’s dependencies. In Rust, packages of code are referred to as
@@ -102,7 +100,7 @@ fn main() {
 
 Cargo has generated a “Hello, world!” program for you, just like the one we
 wrote in Listing 1-1! So far, the differences between our previous project and
-the project Cargo generates are that Cargo placed the code in the *src*
+the project Cargo generated are that Cargo placed the code in the *src*
 directory, and we have a *Cargo.toml* configuration file in the top directory.
 
 Cargo expects your source files to live inside the *src* directory. The
@@ -249,3 +247,4 @@ If you would rather start by learning how common programming concepts work in
 Rust, see Chapter 3 and then return to Chapter 2.
 
 [installation]: ch01-01-installation.html#installation
+[appendix-e]: appendix-05-editions.html

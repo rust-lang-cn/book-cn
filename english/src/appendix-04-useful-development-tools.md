@@ -158,26 +158,25 @@ For more information on Clippy, see [its documentation][clippy].
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 
-### IDE Integration Using the Rust Language Server
+### IDE Integration Using `rust-analyzer`
 
-To help IDE integration, the Rust project distributes the *Rust Language
-Server* (`rls`). This tool speaks the [Language Server
-Protocol][lsp], which is a specification for IDEs and programming
-languages to communicate with each other. Different clients can use the `rls`,
-such as [the Rust plug-in for Visual Studio Code][vscode].
+To help IDE integration, the Rust community recommends using
+[`rust-analyzer`][rust-analyzer]. This tool is a set of compiler-centric
+utilities that speaks the [Language Server Protocol][lsp], which is a
+specification for IDEs and programming languages to communicate with each
+other. Different clients can use `rust-analyzer`, such as [the Rust analyzer
+plug-in for Visual Studio Code][vscode].
 
 [lsp]: http://langserver.org/
-[vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust
+[vscode]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer
 
-To install the `rls`, enter the following:
+Visit the `rust-analyzer` project’s [home page][rust-analyzer] for installation
+instructions, then install the language server support in your particular IDE.
+Your IDE will gain abilities such as autocompletion, jump to definition, and
+inline errors.
 
-```console
-$ rustup component add rls
-```
+For more information on `rust-analyzer`, see [its
+documentation][rust-analyzer-manual].
 
-Then install the language server support in your particular IDE; you’ll gain
-abilities such as autocompletion, jump to definition, and inline errors.
-
-For more information on the `rls`, see [its documentation][rls].
-
-[rls]: https://github.com/rust-lang/rls
+[rust-analyzer]: https://rust-analyzer.github.io
+[rust-analyzer-manual]: https://rust-analyzer.github.io/manual.html

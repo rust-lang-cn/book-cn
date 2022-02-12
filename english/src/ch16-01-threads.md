@@ -26,40 +26,9 @@ thread.
 Programming languages implement threads in a few different ways. Many operating
 systems provide an API for creating new threads. This model where a language
 calls the operating system APIs to create threads is sometimes called *1:1*,
-meaning one operating system thread per one language thread.
-
-Many programming languages provide their own special implementation of threads.
-Programming language-provided threads are known as *green* threads, and
-languages that use these green threads will execute them in the context of a
-different number of operating system threads. For this reason, the
-green-threaded model is called the *M:N* model: there are `M` green threads per
-`N` operating system threads, where `M` and `N` are not necessarily the same
-number.
-
-Each model has its own advantages and trade-offs, and the trade-off most
-important to Rust is runtime support. *Runtime* is a confusing term and can
-have different meanings in different contexts.
-
-In this context, by *runtime* we mean code that is included by the language in
-every binary. This code can be large or small depending on the language, but
-every non-assembly language will have some amount of runtime code. For that
-reason, colloquially when people say a language has “no runtime,” they often
-mean “small runtime.” Smaller runtimes have fewer features but have the
-advantage of resulting in smaller binaries, which make it easier to combine the
-language with other languages in more contexts. Although many languages are
-okay with increasing the runtime size in exchange for more features, Rust needs
-to have nearly no runtime and cannot compromise on being able to call into C to
-maintain performance.
-
-The green-threading M:N model requires a larger language runtime to manage
-threads. As such, the Rust standard library only provides an implementation of
-1:1 threading. Because Rust is such a low-level language, there are crates that
-implement M:N threading if you would rather trade overhead for aspects such as
-more control over which threads run when and lower costs of context switching,
-for example.
-
-Now that we’ve defined threads in Rust, let’s explore how to use the
-thread-related API provided by the standard library.
+meaning one operating system thread per one language thread. The Rust standard
+library only provides an implementation of 1:1 threading; there are crates that
+implement other models of threading that make different tradeoffs.
 
 ### Creating a New Thread with `spawn`
 
@@ -200,13 +169,12 @@ threads run at the same time.
 
 ### Using `move` Closures with Threads
 
-The `move` closure is often used alongside `thread::spawn` because it allows
-you to use data from one thread in another thread.
-
-In Chapter 13, we mentioned we can use the `move` keyword before the parameter
-list of a closure to force the closure to take ownership of the values it uses
-in the environment. This technique is especially useful when creating new
-threads in order to transfer ownership of values from one thread to another.
+The `move` keyword is often used with closures passed to `thread::spawn`
+because the closure will then take ownership of the values it uses from the
+environment, thus transferring ownership of those values from one thread to
+another. In the [“Capturing the Environment with Closures”][capture]<!-- ignore
+--> section of Chapter 13, we discussed `move` in the context of closures. Now,
+we’ll concentrate more on the interaction between `move` and `thread::spawn`
 
 Notice in Listing 16-1 that the closure we pass to `thread::spawn` takes no
 arguments: we’re not using any data from the main thread in the spawned
@@ -268,7 +236,7 @@ after automatic regeneration, look at listings/ch16-fearless-concurrency/listing
 help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
   |
 6 |     let handle = thread::spawn(move || {
-  |                                ^^^^^^^
+  |                                ++++
 ```
 
 By adding the `move` keyword before the closure, we force the closure to take
@@ -308,3 +276,5 @@ ownership rules.
 
 With a basic understanding of threads and the thread API, let’s look at what we
 can *do* with threads.
+
+[capture]: ch13-01-closures.html#capturing-the-environment-with-closures
