@@ -1,0 +1,1036 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Closures: Anonymous Functions that Can Capture Their Environment - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">The Rust Programming Language</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hello, Cargo!</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Programming a Guessing Game</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Common Programming Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variables and Mutability</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Data Types</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Functions</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Comments</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Control Flow</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Understanding Ownership</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> What is Ownership?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> References and Borrowing</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> The Slice Type</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Using Structs to Structure Related Data</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Defining and Instantiating Structs</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> An Example Program Using Structs</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Method Syntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Enums and Pattern Matching</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Defining an Enum</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> The match Control Flow Construct</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Concise Control Flow with if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Managing Growing Projects with Packages, Crates, and Modules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Packages and Crates</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Defining Modules to Control Scope and Privacy</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Paths for Referring to an Item in the Module Tree</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Bringing Paths Into Scope with the use Keyword</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Separating Modules into Different Files</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Common Collections</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Storing Lists of Values with Vectors</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> Storing UTF-8 Encoded Text with Strings</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Storing Keys with Associated Values in Hash Maps</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Error Handling</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Unrecoverable Errors with panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Recoverable Errors with Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> To panic! or Not to panic!</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generic Types, Traits, and Lifetimes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generic Data Types</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Traits: Defining Shared Behavior</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Validating References with Lifetimes</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Writing Automated Tests</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> How to Write Tests</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Controlling How Tests Are Run</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Test Organization</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> An I/O Project: Building a Command Line Program</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Accepting Command Line Arguments</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Reading a File</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refactoring to Improve Modularity and Error Handling</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Developing the Library’s Functionality with Test Driven Development</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Working with Environment Variables</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Writing Error Messages to Standard Error Instead of Standard Output</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Functional Language Features: Iterators and Closures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html" class="active"><strong aria-hidden="true">13.1.</strong> Closures: Anonymous Functions that Can Capture Their Environment</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Processing a Series of Items with Iterators</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Improving Our I/O Project</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Comparing Performance: Loops vs. Iterators</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> More about Cargo and Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Customizing Builds with Release Profiles</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Publishing a Crate to Crates.io</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo Workspaces</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Installing Binaries from Crates.io with cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Extending Cargo with Custom Commands</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Smart Pointers</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Using Box&lt;T&gt; to Point to Data on the Heap</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Treating Smart Pointers Like Regular References with the Deref Trait</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Running Code on Cleanup with the Drop Trait</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Rc&lt;T&gt;, the Reference Counted Smart Pointer</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; and the Interior Mutability Pattern</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Reference Cycles Can Leak Memory</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Fearless Concurrency</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Using Threads to Run Code Simultaneously</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Using Message Passing to Transfer Data Between Threads</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Shared-State Concurrency</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Extensible Concurrency with the Sync and Send Traits</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Object Oriented Programming Features of Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Characteristics of Object-Oriented Languages</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Using Trait Objects That Allow for Values of Different Types</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Implementing an Object-Oriented Design Pattern</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Patterns and Matching</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> All the Places Patterns Can Be Used</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Refutability: Whether a Pattern Might Fail to Match</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Pattern Syntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Advanced Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsafe Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Advanced Traits</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Advanced Types</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Advanced Functions and Closures</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Macros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Final Project: Building a Multithreaded Web Server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Building a Single-Threaded Web Server</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Turning Our Single-Threaded Server into a Multithreaded Server</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Graceful Shutdown and Cleanup</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Keywords</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operators and Symbols</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Derivable Traits</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Useful Development Tools</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Editions</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Translations of the Book</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - How Rust is Made and “Nightly Rust”</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="closures-anonymous-functions-that-can-capture-their-environment"><a class="header" href="#closures-anonymous-functions-that-can-capture-their-environment">Closures: Anonymous Functions that Can Capture Their Environment</a></h2>
+<p>Rust’s closures are anonymous functions you can save in a variable or pass as
+arguments to other functions. You can create the closure in one place and then
+call the closure to evaluate it in a different context. Unlike functions,
+closures can capture values from the scope in which they’re defined. We’ll
+demonstrate how these closure features allow for code reuse and behavior
+customization.</p>
+<h3 id="creating-an-abstraction-of-behavior-with-closures"><a class="header" href="#creating-an-abstraction-of-behavior-with-closures">Creating an Abstraction of Behavior with Closures</a></h3>
+<p>Let’s work on an example of a situation in which it’s useful to store a closure
+to be executed later. Along the way, we’ll talk about the syntax of closures,
+type inference, and traits.</p>
+<p>Consider this hypothetical situation: we work at a startup that’s making an app
+to generate custom exercise workout plans. The backend is written in Rust, and
+the algorithm that generates the workout plan takes into account many factors,
+such as the app user’s age, body mass index, exercise preferences, recent
+workouts, and an intensity number they specify. The actual algorithm used isn’t
+important in this example; what’s important is that this calculation takes a
+few seconds. We want to call this algorithm only when we need to and only call
+it once so we don’t make the user wait more than necessary.</p>
+<p>We’ll simulate calling this hypothetical algorithm with the function
+<code>simulated_expensive_calculation</code> shown in Listing 13-1, which will print
+<code>calculating slowly...</code>, wait for two seconds, and then return whatever number
+we passed in.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">use std::thread;
+use std::time::Duration;
+
+fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
+    println!(&quot;calculating slowly...&quot;);
+    thread::sleep(Duration::from_secs(2));
+    intensity
+}
+<span class="boring">
+</span><span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-1: A function to stand in for a hypothetical
+calculation that takes about 2 seconds to run</span></p>
+<p>Next is the <code>main</code> function, which contains the parts of the workout app
+important for this example. This function represents the code that the app will
+call when a user asks for a workout plan. Because the interaction with the
+app’s frontend isn’t relevant to the use of closures, we’ll hardcode values
+representing inputs to our program and print the outputs.</p>
+<p>The required inputs are these:</p>
+<ul>
+<li>An intensity number from the user, which is specified when they request
+a workout to indicate whether they want a low-intensity workout or a
+high-intensity workout</li>
+<li>A random number that will generate some variety in the workout plans</li>
+</ul>
+<p>The output will be the recommended workout plan. Listing 13-2 shows the <code>main</code>
+function we’ll use.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
+</span><span class="boring">    println!(&quot;calculating slowly...&quot;);
+</span><span class="boring">    thread::sleep(Duration::from_secs(2));
+</span><span class="boring">    intensity
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn generate_workout(intensity: u32, random_number: u32) {}
+</span><span class="boring">
+</span>fn main() {
+    let simulated_user_specified_value = 10;
+    let simulated_random_number = 7;
+
+    generate_workout(simulated_user_specified_value, simulated_random_number);
+}
+</code></pre></pre>
+<p><span class="caption">Listing 13-2: A <code>main</code> function with hardcoded values to
+simulate user input and random number generation</span></p>
+<p>We’ve hardcoded the variable <code>simulated_user_specified_value</code> as 10 and the
+variable <code>simulated_random_number</code> as 7 for simplicity’s sake; in an actual
+program, we’d get the intensity number from the app frontend, and we’d use the
+<code>rand</code> crate to generate a random number, as we did in the Guessing Game
+example in Chapter 2. The <code>main</code> function calls a <code>generate_workout</code> function
+with the simulated input values.</p>
+<p>Now that we have the context, let’s get to the algorithm. The function
+<code>generate_workout</code> in Listing 13-3 contains the business logic of the
+app that we’re most concerned with in this example. The rest of the code
+changes in this example will be made to this function.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
+</span><span class="boring">    println!(&quot;calculating slowly...&quot;);
+</span><span class="boring">    thread::sleep(Duration::from_secs(2));
+</span><span class="boring">    intensity
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn generate_workout(intensity: u32, random_number: u32) {
+    if intensity &lt; 25 {
+        println!(
+            &quot;Today, do {} pushups!&quot;,
+            simulated_expensive_calculation(intensity)
+        );
+        println!(
+            &quot;Next, do {} situps!&quot;,
+            simulated_expensive_calculation(intensity)
+        );
+    } else {
+        if random_number == 3 {
+            println!(&quot;Take a break today! Remember to stay hydrated!&quot;);
+        } else {
+            println!(
+                &quot;Today, run for {} minutes!&quot;,
+                simulated_expensive_calculation(intensity)
+            );
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-3: The business logic that prints the workout
+plans based on the inputs and calls to the <code>simulated_expensive_calculation</code>
+function</span></p>
+<p>The code in Listing 13-3 has multiple calls to the slow calculation function.
+The first <code>if</code> block calls <code>simulated_expensive_calculation</code> twice, the <code>if</code>
+inside the outer <code>else</code> doesn’t call it at all, and the code inside the
+second <code>else</code> case calls it once.</p>
+<p>The desired behavior of the <code>generate_workout</code> function is to first check
+whether the user wants a low-intensity workout (indicated by a number less than
+25) or a high-intensity workout (a number of 25 or greater).</p>
+<p>Low-intensity workout plans will recommend a number of push-ups and sit-ups
+based on the complex algorithm we’re simulating.</p>
+<p>If the user wants a high-intensity workout, there’s some additional logic: if
+the value of the random number generated by the app happens to be 3, the app
+will recommend a break and hydration. If not, the user will get a number of
+minutes of running based on the complex algorithm.</p>
+<p>This code works the way the business wants it to now, but let’s say the data
+science team decides that we need to make some changes to the way we call the
+<code>simulated_expensive_calculation</code> function in the future. To simplify the
+update when those changes happen, we want to refactor this code so it calls the
+<code>simulated_expensive_calculation</code> function only once. We also want to cut the
+place where we’re currently unnecessarily calling the function twice without
+adding any other calls to that function in the process. That is, we don’t want
+to call it if the result isn’t needed, and we still want to call it only once.</p>
+<h4 id="refactoring-using-functions"><a class="header" href="#refactoring-using-functions">Refactoring Using Functions</a></h4>
+<p>We could restructure the workout program in many ways. First, we’ll try
+extracting the duplicated call to the <code>simulated_expensive_calculation</code>
+function into a variable, as shown in Listing 13-4.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn simulated_expensive_calculation(intensity: u32) -&gt; u32 {
+</span><span class="boring">    println!(&quot;calculating slowly...&quot;);
+</span><span class="boring">    thread::sleep(Duration::from_secs(2));
+</span><span class="boring">    intensity
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn generate_workout(intensity: u32, random_number: u32) {
+    let expensive_result = simulated_expensive_calculation(intensity);
+
+    if intensity &lt; 25 {
+        println!(&quot;Today, do {} pushups!&quot;, expensive_result);
+        println!(&quot;Next, do {} situps!&quot;, expensive_result);
+    } else {
+        if random_number == 3 {
+            println!(&quot;Take a break today! Remember to stay hydrated!&quot;);
+        } else {
+            println!(&quot;Today, run for {} minutes!&quot;, expensive_result);
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-4: Extracting the calls to
+<code>simulated_expensive_calculation</code> to one place and storing the result in the
+<code>expensive_result</code> variable</span></p>
+<p>This change unifies all the calls to <code>simulated_expensive_calculation</code> and
+solves the problem of the first <code>if</code> block unnecessarily calling the function
+twice. Unfortunately, we’re now calling this function and waiting for the
+result in all cases, which includes the inner <code>if</code> block that doesn’t use the
+result value at all.</p>
+<p>We want to refer to <code>simulated_expensive_calculation</code> only once in
+<code>generate_workout</code>, but defer the expensive calculation to only where
+we actually need the result. This is a use case for closures!</p>
+<h4 id="refactoring-with-closures-to-store-code"><a class="header" href="#refactoring-with-closures-to-store-code">Refactoring with Closures to Store Code</a></h4>
+<p>Instead of always calling the <code>simulated_expensive_calculation</code> function before
+the <code>if</code> blocks, we can define a closure and store the <em>closure</em> in a variable
+rather than storing the result of the function call, as shown in Listing 13-5.
+We can actually move the whole body of <code>simulated_expensive_calculation</code> within
+the closure we’re introducing here.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn generate_workout(intensity: u32, random_number: u32) {
+</span>    let expensive_closure = |num| {
+        println!(&quot;calculating slowly...&quot;);
+        thread::sleep(Duration::from_secs(2));
+        num
+    };
+<span class="boring">
+</span><span class="boring">    if intensity &lt; 25 {
+</span><span class="boring">        println!(&quot;Today, do {} pushups!&quot;, expensive_closure(intensity));
+</span><span class="boring">        println!(&quot;Next, do {} situps!&quot;, expensive_closure(intensity));
+</span><span class="boring">    } else {
+</span><span class="boring">        if random_number == 3 {
+</span><span class="boring">            println!(&quot;Take a break today! Remember to stay hydrated!&quot;);
+</span><span class="boring">        } else {
+</span><span class="boring">            println!(
+</span><span class="boring">                &quot;Today, run for {} minutes!&quot;,
+</span><span class="boring">                expensive_closure(intensity)
+</span><span class="boring">            );
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-5: Defining a closure and storing it in the
+<code>expensive_closure</code> variable</span></p>
+<p>The closure definition comes after the <code>=</code> to assign it to the variable
+<code>expensive_closure</code>. To define a closure, we start with a pair of vertical
+pipes (<code>|</code>), inside which we specify the parameters to the closure; this syntax
+was chosen because of its similarity to closure definitions in Smalltalk and
+Ruby. This closure has one parameter named <code>num</code>: if we had more than one
+parameter, we would separate them with commas, like <code>|param1, param2|</code>.</p>
+<p>After the parameters, we place curly brackets that hold the body of the
+closure—these are optional if the closure body is a single expression. The end
+of the closure, after the curly brackets, needs a semicolon to complete the
+<code>let</code> statement. The value returned from the last line in the closure body
+(<code>num</code>) will be the value returned from the closure when it’s called, because
+that line doesn’t end in a semicolon; just as in function bodies.</p>
+<p>Note that this <code>let</code> statement means <code>expensive_closure</code> contains the
+<em>definition</em> of an anonymous function, not the <em>resulting value</em> of calling the
+anonymous function. Recall that we’re using a closure because we want to define
+the code to call at one point, store that code, and call it at a later point;
+the code we want to call is now stored in <code>expensive_closure</code>.</p>
+<p>With the closure defined, we can change the code in the <code>if</code> blocks to call the
+closure to execute the code and get the resulting value. We call a closure like
+we do a function: we specify the variable name that holds the closure
+definition and follow it with parentheses containing the argument values we
+want to use, as shown in Listing 13-6.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span>fn generate_workout(intensity: u32, random_number: u32) {
+    let expensive_closure = |num| {
+        println!(&quot;calculating slowly...&quot;);
+        thread::sleep(Duration::from_secs(2));
+        num
+    };
+
+    if intensity &lt; 25 {
+        println!(&quot;Today, do {} pushups!&quot;, expensive_closure(intensity));
+        println!(&quot;Next, do {} situps!&quot;, expensive_closure(intensity));
+    } else {
+        if random_number == 3 {
+            println!(&quot;Take a break today! Remember to stay hydrated!&quot;);
+        } else {
+            println!(
+                &quot;Today, run for {} minutes!&quot;,
+                expensive_closure(intensity)
+            );
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-6: Calling the <code>expensive_closure</code> we’ve
+defined</span></p>
+<p>Now how to perform the expensive calculation is defined in only one
+place, and we’re only executing that code where we need the results.</p>
+<p>However, we’ve reintroduced one of the problems from Listing 13-3: we’re still
+calling the closure twice in the first <code>if</code> block, which will call the
+expensive code twice and make the user wait twice as long as they need to. We
+could fix this problem by creating a variable local to that <code>if</code> block to hold
+the result of calling the closure, but closures provide us with another
+solution. We’ll talk about that solution in a bit. But first let’s talk about
+why there aren’t type annotations in the closure definition and the traits
+involved with closures.</p>
+<h3 id="closure-type-inference-and-annotation"><a class="header" href="#closure-type-inference-and-annotation">Closure Type Inference and Annotation</a></h3>
+<p>Closures don’t require you to annotate the types of the parameters or the
+return value like <code>fn</code> functions do. Type annotations are required on functions
+because they’re part of an explicit interface exposed to your users. Defining
+this interface rigidly is important for ensuring that everyone agrees on what
+types of values a function uses and returns. But closures aren’t used in an
+exposed interface like this: they’re stored in variables and used without
+naming them and exposing them to users of our library.</p>
+<p>Closures are usually short and relevant only within a narrow context rather
+than in any arbitrary scenario. Within these limited contexts, the compiler is
+reliably able to infer the types of the parameters and the return type, similar
+to how it’s able to infer the types of most variables.</p>
+<p>Making programmers annotate the types in these small, anonymous functions would
+be annoying and largely redundant with the information the compiler already has
+available.</p>
+<p>As with variables, we can add type annotations if we want to increase
+explicitness and clarity at the cost of being more verbose than is strictly
+necessary. Annotating the types for the closure we defined in Listing 13-5
+would look like the definition shown in Listing 13-7.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">fn generate_workout(intensity: u32, random_number: u32) {
+</span>    let expensive_closure = |num: u32| -&gt; u32 {
+        println!(&quot;calculating slowly...&quot;);
+        thread::sleep(Duration::from_secs(2));
+        num
+    };
+<span class="boring">
+</span><span class="boring">    if intensity &lt; 25 {
+</span><span class="boring">        println!(&quot;Today, do {} pushups!&quot;, expensive_closure(intensity));
+</span><span class="boring">        println!(&quot;Next, do {} situps!&quot;, expensive_closure(intensity));
+</span><span class="boring">    } else {
+</span><span class="boring">        if random_number == 3 {
+</span><span class="boring">            println!(&quot;Take a break today! Remember to stay hydrated!&quot;);
+</span><span class="boring">        } else {
+</span><span class="boring">            println!(
+</span><span class="boring">                &quot;Today, run for {} minutes!&quot;,
+</span><span class="boring">                expensive_closure(intensity)
+</span><span class="boring">            );
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-7: Adding optional type annotations of the
+parameter and return value types in the closure</span></p>
+<p>With type annotations added, the syntax of closures looks more similar to the
+syntax of functions. The following is a vertical comparison of the syntax for
+the definition of a function that adds 1 to its parameter and a closure that
+has the same behavior. We’ve added some spaces to line up the relevant parts.
+This illustrates how closure syntax is similar to function syntax except for
+the use of pipes and the amount of syntax that is optional:</p>
+<pre><code class="language-rust ignore">fn  add_one_v1   (x: u32) -&gt; u32 { x + 1 }
+let add_one_v2 = |x: u32| -&gt; u32 { x + 1 };
+let add_one_v3 = |x|             { x + 1 };
+let add_one_v4 = |x|               x + 1  ;
+</code></pre>
+<p>The first line shows a function definition, and the second line shows a fully
+annotated closure definition. The third line removes the type annotations from
+the closure definition, and the fourth line removes the brackets, which are
+optional because the closure body has only one expression. These are all valid
+definitions that will produce the same behavior when they’re called. Calling
+the closures is required for <code>add_one_v3</code> and <code>add_one_v4</code> to be able to
+compile because the types will be inferred from their usage.</p>
+<p>Closure definitions will have one concrete type inferred for each of their
+parameters and for their return value. For instance, Listing 13-8 shows the
+definition of a short closure that just returns the value it receives as a
+parameter. This closure isn’t very useful except for the purposes of this
+example. Note that we haven’t added any type annotations to the definition: if
+we then try to call the closure twice, using a <code>String</code> as an argument the
+first time and a <code>u32</code> the second time, we’ll get an error.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span>    let example_closure = |x| x;
+
+    let s = example_closure(String::from(&quot;hello&quot;));
+    let n = example_closure(5);
+<span class="boring">}
+</span></code></pre>
+<p><span class="caption">Listing 13-8: Attempting to call a closure whose types
+are inferred with two different types</span></p>
+<p>The compiler gives us this error:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+error[E0308]: mismatched types
+ --&gt; src/main.rs:5:29
+  |
+5 |     let n = example_closure(5);
+  |                             ^- help: try using a conversion method: `.to_string()`
+  |                             |
+  |                             expected struct `String`, found integer
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `closure-example` due to previous error
+</code></pre>
+<p>The first time we call <code>example_closure</code> with the <code>String</code> value, the compiler
+infers the type of <code>x</code> and the return type of the closure to be <code>String</code>. Those
+types are then locked into the closure in <code>example_closure</code>, and we get a type
+error if we try to use a different type with the same closure.</p>
+<h3 id="storing-closures-using-generic-parameters-and-the-fn-traits"><a class="header" href="#storing-closures-using-generic-parameters-and-the-fn-traits">Storing Closures Using Generic Parameters and the <code>Fn</code> Traits</a></h3>
+<p>Let’s return to our workout generation app. In Listing 13-6, our code was still
+calling the expensive calculation closure more times than it needed to. One
+option to solve this issue is to save the result of the expensive closure in a
+variable for reuse and use the variable in each place we need the result,
+instead of calling the closure again. However, this method could result in a
+lot of repeated code.</p>
+<p>Fortunately, another solution is available to us. We can create a struct that
+will hold the closure and the resulting value of calling the closure. The
+struct will execute the closure only if we need the resulting value, and it
+will cache the resulting value so the rest of our code doesn’t have to be
+responsible for saving and reusing the result. You may know this pattern as
+<em>memoization</em> or <em>lazy evaluation</em>.</p>
+<p>To make a struct that holds a closure, we need to specify the type of the
+closure, because a struct definition needs to know the types of each of its
+fields. Each closure instance has its own unique anonymous type: that is, even
+if two closures have the same signature, their types are still considered
+different. To define structs, enums, or function parameters that use closures,
+we use generics and trait bounds, as we discussed in Chapter 10.</p>
+<p>The <code>Fn</code> traits are provided by the standard library. All closures implement at
+least one of the traits: <code>Fn</code>, <code>FnMut</code>, or <code>FnOnce</code>. We’ll discuss the
+difference between these traits in the <a href="#capturing-the-environment-with-closures">“Capturing the Environment with
+Closures”</a><!-- ignore --> section; in
+this example, we can use the <code>Fn</code> trait.</p>
+<p>We add types to the <code>Fn</code> trait bound to represent the types of the parameters
+and return values the closures must have to match this trait bound. In this
+case, our closure has a parameter of type <code>u32</code> and returns a <code>u32</code>, so the
+trait bound we specify is <code>Fn(u32) -&gt; u32</code>.</p>
+<p>Listing 13-9 shows the definition of the <code>Cacher</code> struct that holds a closure
+and an optional result value.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">struct Cacher&lt;T&gt;
+where
+    T: Fn(u32) -&gt; u32,
+{
+    calculation: T,
+    value: Option&lt;u32&gt;,
+}
+<span class="boring">
+</span><span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-9: Defining a <code>Cacher</code> struct that holds a
+closure in <code>calculation</code> and an optional result in <code>value</code></span></p>
+<p>The <code>Cacher</code> struct has a <code>calculation</code> field of the generic type <code>T</code>. The
+trait bounds on <code>T</code> specify that it’s a closure by using the <code>Fn</code> trait. Any
+closure we want to store in the <code>calculation</code> field must have one <code>u32</code>
+parameter (specified within the parentheses after <code>Fn</code>) and must return a
+<code>u32</code> (specified after the <code>-&gt;</code>).</p>
+<blockquote>
+<p>Note: Functions can implement all three of the <code>Fn</code> traits too. If what we
+want to do doesn’t require capturing a value from the environment, we can use
+a function rather than a closure where we need something that implements an
+<code>Fn</code> trait.</p>
+</blockquote>
+<p>The <code>value</code> field is of type <code>Option&lt;u32&gt;</code>. Before we execute the closure,
+<code>value</code> will be <code>None</code>. When code using a <code>Cacher</code> asks for the <em>result</em> of the
+closure, the <code>Cacher</code> will execute the closure at that time and store the
+result within a <code>Some</code> variant in the <code>value</code> field. Then if the code asks for
+the result of the closure again, instead of executing the closure again, the
+<code>Cacher</code> will return the result held in the <code>Some</code> variant.</p>
+<p>The logic around the <code>value</code> field we’ve just described is defined in Listing
+13-10.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">struct Cacher&lt;T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Fn(u32) -&gt; u32,
+</span><span class="boring">{
+</span><span class="boring">    calculation: T,
+</span><span class="boring">    value: Option&lt;u32&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;T&gt; Cacher&lt;T&gt;
+where
+    T: Fn(u32) -&gt; u32,
+{
+    fn new(calculation: T) -&gt; Cacher&lt;T&gt; {
+        Cacher {
+            calculation,
+            value: None,
+        }
+    }
+
+    fn value(&amp;mut self, arg: u32) -&gt; u32 {
+        match self.value {
+            Some(v) =&gt; v,
+            None =&gt; {
+                let v = (self.calculation)(arg);
+                self.value = Some(v);
+                v
+            }
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-10: The caching logic of <code>Cacher</code></span></p>
+<p>We want <code>Cacher</code> to manage the struct fields’ values rather than letting the
+calling code potentially change the values in these fields directly, so these
+fields are private.</p>
+<p>The <code>Cacher::new</code> function takes a generic parameter <code>T</code>, which we’ve defined
+as having the same trait bound as the <code>Cacher</code> struct. Then <code>Cacher::new</code>
+returns a <code>Cacher</code> instance that holds the closure specified in the
+<code>calculation</code> field and a <code>None</code> value in the <code>value</code> field, because we haven’t
+executed the closure yet.</p>
+<p>When the calling code needs the result of evaluating the closure, instead of
+calling the closure directly, it will call the <code>value</code> method. This method
+checks whether we already have a resulting value in <code>self.value</code> in a <code>Some</code>;
+if we do, it returns the value within the <code>Some</code> without executing the closure
+again.</p>
+<p>If <code>self.value</code> is <code>None</code>, the code calls the closure stored in
+<code>self.calculation</code>, saves the result in <code>self.value</code> for future use, and
+returns the value as well.</p>
+<p>Listing 13-11 shows how we can use this <code>Cacher</code> struct in the function
+<code>generate_workout</code> from Listing 13-6.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+</span><span class="boring">use std::time::Duration;
+</span><span class="boring">
+</span><span class="boring">struct Cacher&lt;T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Fn(u32) -&gt; u32,
+</span><span class="boring">{
+</span><span class="boring">    calculation: T,
+</span><span class="boring">    value: Option&lt;u32&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;T&gt; Cacher&lt;T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Fn(u32) -&gt; u32,
+</span><span class="boring">{
+</span><span class="boring">    fn new(calculation: T) -&gt; Cacher&lt;T&gt; {
+</span><span class="boring">        Cacher {
+</span><span class="boring">            calculation,
+</span><span class="boring">            value: None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn value(&amp;mut self, arg: u32) -&gt; u32 {
+</span><span class="boring">        match self.value {
+</span><span class="boring">            Some(v) =&gt; v,
+</span><span class="boring">            None =&gt; {
+</span><span class="boring">                let v = (self.calculation)(arg);
+</span><span class="boring">                self.value = Some(v);
+</span><span class="boring">                v
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn generate_workout(intensity: u32, random_number: u32) {
+    let mut expensive_result = Cacher::new(|num| {
+        println!(&quot;calculating slowly...&quot;);
+        thread::sleep(Duration::from_secs(2));
+        num
+    });
+
+    if intensity &lt; 25 {
+        println!(&quot;Today, do {} pushups!&quot;, expensive_result.value(intensity));
+        println!(&quot;Next, do {} situps!&quot;, expensive_result.value(intensity));
+    } else {
+        if random_number == 3 {
+            println!(&quot;Take a break today! Remember to stay hydrated!&quot;);
+        } else {
+            println!(
+                &quot;Today, run for {} minutes!&quot;,
+                expensive_result.value(intensity)
+            );
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let simulated_user_specified_value = 10;
+</span><span class="boring">    let simulated_random_number = 7;
+</span><span class="boring">
+</span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Listing 13-11: Using <code>Cacher</code> in the <code>generate_workout</code>
+function to abstract away the caching logic</span></p>
+<p>Instead of saving the closure in a variable directly, we save a new instance of
+<code>Cacher</code> that holds the closure. Then, in each place we want the result, we
+call the <code>value</code> method on the <code>Cacher</code> instance. We can call the <code>value</code>
+method as many times as we want, or not call it at all, and the expensive
+calculation will be run a maximum of once.</p>
+<p>Try running this program with the <code>main</code> function from Listing 13-2. Change the
+values in the <code>simulated_user_specified_value</code> and <code>simulated_random_number</code>
+variables to verify that in all the cases in the various <code>if</code> and <code>else</code>
+blocks, <code>calculating slowly...</code> appears only once and only when needed. The
+<code>Cacher</code> takes care of the logic necessary to ensure we aren’t calling the
+expensive calculation more than we need to so <code>generate_workout</code> can focus on
+the business logic.</p>
+<h3 id="limitations-of-the-cacher-implementation"><a class="header" href="#limitations-of-the-cacher-implementation">Limitations of the <code>Cacher</code> Implementation</a></h3>
+<p>Caching values is a generally useful behavior that we might want to use in
+other parts of our code with different closures. However, there are two
+problems with the current implementation of <code>Cacher</code> that would make reusing it
+in different contexts difficult.</p>
+<p>The first problem is that a <code>Cacher</code> instance assumes it will always get the
+same value for the parameter <code>arg</code> to the <code>value</code> method. That is, this test of
+<code>Cacher</code> will fail:</p>
+<pre><code class="language-rust ignore panics"><span class="boring">struct Cacher&lt;T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Fn(u32) -&gt; u32,
+</span><span class="boring">{
+</span><span class="boring">    calculation: T,
+</span><span class="boring">    value: Option&lt;u32&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;T&gt; Cacher&lt;T&gt;
+</span><span class="boring">where
+</span><span class="boring">    T: Fn(u32) -&gt; u32,
+</span><span class="boring">{
+</span><span class="boring">    fn new(calculation: T) -&gt; Cacher&lt;T&gt; {
+</span><span class="boring">        Cacher {
+</span><span class="boring">            calculation,
+</span><span class="boring">            value: None,
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn value(&amp;mut self, arg: u32) -&gt; u32 {
+</span><span class="boring">        match self.value {
+</span><span class="boring">            Some(v) =&gt; v,
+</span><span class="boring">            None =&gt; {
+</span><span class="boring">                let v = (self.calculation)(arg);
+</span><span class="boring">                self.value = Some(v);
+</span><span class="boring">                v
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[cfg(test)]
+</span><span class="boring">mod tests {
+</span><span class="boring">    use super::*;
+</span><span class="boring">
+</span>    #[test]
+    fn call_with_different_values() {
+        let mut c = Cacher::new(|a| a);
+
+        let v1 = c.value(1);
+        let v2 = c.value(2);
+
+        assert_eq!(v2, 2);
+    }
+<span class="boring">}
+</span></code></pre>
+<p>This test creates a new <code>Cacher</code> instance with a closure that returns the value
+passed into it. We call the <code>value</code> method on this <code>Cacher</code> instance with an
+<code>arg</code> value of 1 and then an <code>arg</code> value of 2, and we expect the call to
+<code>value</code> with the <code>arg</code> value of 2 to return 2.</p>
+<p>Run this test with the <code>Cacher</code> implementation in Listing 13-9 and Listing
+13-10, and the test will fail on the <code>assert_eq!</code> with this message:</p>
+<pre><code class="language-console">$ cargo test
+   Compiling cacher v0.1.0 (file:///projects/cacher)
+    Finished test [unoptimized + debuginfo] target(s) in 0.72s
+     Running unittests (target/debug/deps/cacher-074d7c200c000afa)
+
+running 1 test
+test tests::call_with_different_values ... FAILED
+
+failures:
+
+---- tests::call_with_different_values stdout ----
+thread 'main' panicked at 'assertion failed: `(left == right)`
+  left: `1`,
+ right: `2`', src/lib.rs:43:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::call_with_different_values
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>The problem is that the first time we called <code>c.value</code> with 1, the <code>Cacher</code>
+instance saved <code>Some(1)</code> in <code>self.value</code>. Thereafter, no matter what we pass into
+the <code>value</code> method, it will always return 1.</p>
+<p>Try modifying <code>Cacher</code> to hold a hash map rather than a single value. The keys
+of the hash map will be the <code>arg</code> values that are passed in, and the values of
+the hash map will be the result of calling the closure on that key. Instead of
+looking at whether <code>self.value</code> directly has a <code>Some</code> or a <code>None</code> value, the
+<code>value</code> function will look up the <code>arg</code> in the hash map and return the value if
+it’s present. If it’s not present, the <code>Cacher</code> will call the closure and save
+the resulting value in the hash map associated with its <code>arg</code> value.</p>
+<p>The second problem with the current <code>Cacher</code> implementation is that it only
+accepts closures that take one parameter of type <code>u32</code> and return a <code>u32</code>. We
+might want to cache the results of closures that take a string slice and return
+<code>usize</code> values, for example. To fix this issue, try introducing more generic
+parameters to increase the flexibility of the <code>Cacher</code> functionality.</p>
+<h3 id="capturing-the-environment-with-closures"><a class="header" href="#capturing-the-environment-with-closures">Capturing the Environment with Closures</a></h3>
+<p>In the workout generator example, we only used closures as inline anonymous
+functions. However, closures have an additional capability that functions don’t
+have: they can capture their environment and access variables from the scope in
+which they’re defined.</p>
+<p>Listing 13-12 has an example of a closure stored in the <code>equal_to_x</code> variable
+that uses the <code>x</code> variable from the closure’s surrounding environment.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let x = 4;
+
+    let equal_to_x = |z| z == x;
+
+    let y = 4;
+
+    assert!(equal_to_x(y));
+}
+</code></pre></pre>
+<p><span class="caption">Listing 13-12: Example of a closure that refers to a
+variable in its enclosing scope</span></p>
+<p>Here, even though <code>x</code> is not one of the parameters of <code>equal_to_x</code>, the
+<code>equal_to_x</code> closure is allowed to use the <code>x</code> variable that’s defined in the
+same scope that <code>equal_to_x</code> is defined in.</p>
+<p>We can’t do the same with functions; if we try with the following example, our
+code won’t compile:</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><code class="language-rust ignore does_not_compile">fn main() {
+    let x = 4;
+
+    fn equal_to_x(z: i32) -&gt; bool {
+        z == x
+    }
+
+    let y = 4;
+
+    assert!(equal_to_x(y));
+}
+</code></pre>
+<p>We get an error:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling equal-to-x v0.1.0 (file:///projects/equal-to-x)
+error[E0434]: can't capture dynamic environment in a fn item
+ --&gt; src/main.rs:5:14
+  |
+5 |         z == x
+  |              ^
+  |
+  = help: use the `|| { ... }` closure form instead
+
+For more information about this error, try `rustc --explain E0434`.
+error: could not compile `equal-to-x` due to previous error
+</code></pre>
+<p>The compiler even reminds us that this only works with closures!</p>
+<p>When a closure captures a value from its environment, it uses memory to store
+the values for use in the closure body. This use of memory is overhead that we
+don’t want to pay in more common cases where we want to execute code that
+doesn’t capture its environment. Because functions are never allowed to capture
+their environment, defining and using functions will never incur this overhead.</p>
+<p>Closures can capture values from their environment in three ways, which
+directly map to the three ways a function can take a parameter: taking
+ownership, borrowing mutably, and borrowing immutably. These are encoded in the
+three <code>Fn</code> traits as follows:</p>
+<ul>
+<li><code>FnOnce</code> consumes the variables it captures from its enclosing scope, known
+as the closure’s <em>environment</em>. To consume the captured variables, the
+closure must take ownership of these variables and move them into the closure
+when it is defined. The <code>Once</code> part of the name represents the fact that the
+closure can’t take ownership of the same variables more than once, so it can
+be called only once.</li>
+<li><code>FnMut</code> can change the environment because it mutably borrows values.</li>
+<li><code>Fn</code> borrows values from the environment immutably.</li>
+</ul>
+<p>When you create a closure, Rust infers which trait to use based on how the
+closure uses the values from the environment. All closures implement <code>FnOnce</code>
+because they can all be called at least once. Closures that don’t move the
+captured variables also implement <code>FnMut</code>, and closures that don’t need mutable
+access to the captured variables also implement <code>Fn</code>. In Listing 13-12, the
+<code>equal_to_x</code> closure borrows <code>x</code> immutably (so <code>equal_to_x</code> has the <code>Fn</code> trait)
+because the body of the closure only needs to read the value in <code>x</code>.</p>
+<p>If you want to force the closure to take ownership of the values it uses in the
+environment, you can use the <code>move</code> keyword before the parameter list. This
+technique is mostly useful when passing a closure to a new thread to move the
+data so it’s owned by the new thread.</p>
+<blockquote>
+<p>Note: <code>move</code> closures may still implement <code>Fn</code> or <code>FnMut</code>, even though
+they capture variables by move. This is because the traits implemented by a
+closure type are determined by what the closure does with captured values,
+not how it captures them. The <code>move</code> keyword only specifies the latter.</p>
+</blockquote>
+<p>We’ll have more examples of <code>move</code> closures in Chapter 16 when we talk about
+concurrency. For now, here’s the code from Listing 13-12 with the <code>move</code>
+keyword added to the closure definition and using vectors instead of integers,
+because integers can be copied rather than moved; note that this code will not
+yet compile.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
+<pre><code class="language-rust ignore does_not_compile">fn main() {
+    let x = vec![1, 2, 3];
+
+    let equal_to_x = move |z| z == x;
+
+    println!(&quot;can't use x here: {:?}&quot;, x);
+
+    let y = vec![1, 2, 3];
+
+    assert!(equal_to_x(y));
+}
+</code></pre>
+<p>We receive the following error:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling equal-to-x v0.1.0 (file:///projects/equal-to-x)
+error[E0382]: borrow of moved value: `x`
+ --&gt; src/main.rs:6:40
+  |
+2 |     let x = vec![1, 2, 3];
+  |         - move occurs because `x` has type `Vec&lt;i32&gt;`, which does not implement the `Copy` trait
+3 | 
+4 |     let equal_to_x = move |z| z == x;
+  |                      --------      - variable moved due to use in closure
+  |                      |
+  |                      value moved into closure here
+5 | 
+6 |     println!(&quot;can't use x here: {:?}&quot;, x);
+  |                                        ^ value borrowed here after move
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `equal-to-x` due to previous error
+</code></pre>
+<p>The <code>x</code> value is moved into the closure when the closure is defined, because we
+added the <code>move</code> keyword. The closure then has ownership of <code>x</code>, and <code>main</code>
+isn’t allowed to use <code>x</code> anymore in the <code>println!</code> statement. Removing
+<code>println!</code> will fix this example.</p>
+<p>Most of the time when specifying one of the <code>Fn</code> trait bounds, you can start
+with <code>Fn</code> and the compiler will tell you if you need <code>FnMut</code> or <code>FnOnce</code> based
+on what happens in the closure body.</p>
+<p>To illustrate situations where closures that can capture their environment are
+useful as function parameters, let’s move on to our next topic: iterators.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch13-00-functional-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch13-02-iterators.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch13-00-functional-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch13-02-iterators.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript" src="ferris.js"></script>
+
+
+    </body>
+</html>
