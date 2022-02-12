@@ -37,8 +37,7 @@ let guess: u32 = "42".parse().expect("Not a number!");
 
 每个定义形式要么是有符号类型要么是无符号类型，且带有一个显式的大小。**有符号**和**无符号**表示数字能否取负数——也就是说，这个数是否可能是负数（有符号类型），或一直为正而不需要带上符号（无符号类型）。就像在纸上写数字一样：当要强调符号时，数字前面可以带上正号或负号；然而，当很明显确定数字为正数时，就不需要加上正号了。有符号数字以[二进制补码](https://en.wikipedia.org/wiki/Two%27s_complement)<!-- ignore -->（译者补充：[“补码”百度百科](https://baike.baidu.com/item/%E8%A1%A5%E7%A0%81/6854613)）形式存储。
 
-每个有符号类型规定的数字范围是  -(2<sup>n - 1</sup>) ~ 2<sup>n -
-1</sup> - 1，其中 `n` 是该定义形式的位长度。所以 `i8` 可存储数字范围是 -(2<sup>7</sup>) ~ 2<sup>7</sup> - 1，即 -128 ~ 127。无符号类型可以存储的数字范围是 0 ~ 2<sup>n</sup> - 1，所以 `u8` 能够存储的数字为 0 ~ 2<sup>8</sup> - 1，即 0 ~ 255。
+每个有符号类型规定的数字范围是 -(2<sup>n - 1</sup>) ~ 2<sup>n - 1</sup> - 1，其中 `n` 是该定义形式的位长度。所以 `i8` 可存储数字范围是 -(2<sup>7</sup>) ~ 2<sup>7</sup> - 1，即 -128 ~ 127。无符号类型可以存储的数字范围是 0 ~ 2<sup>n</sup> - 1，所以 `u8` 能够存储的数字为 0 ~ 2<sup>8</sup> - 1，即 0 ~ 255。
 
 此外，`isize` 和 `usize` 类型取决于程序运行的计算机体系结构，在表中表示为“arch”：若使用 64 位架构系统则为 64 位，若使用 32 位架构系统则为 32 位。
 
@@ -47,11 +46,11 @@ let guess: u32 = "42".parse().expect("Not a number!");
 <span class="caption">表 3-2: Rust 的整型字面量</span>
 
 | 数字字面量         | 示例          |
-|------------------|---------------|
-| 十进制            | `98_222`      |
-| 十六进制          | `0xff`        |
-| 八进制            | `0o77`        |
-| 二进制            | `0b1111_0000` |
+| ------------------ | ------------- |
+| 十进制             | `98_222`      |
+| 十六进制           | `0xff`        |
+| 八进制             | `0o77`        |
+| 二进制             | `0b1111_0000` |
 | 字节 (仅限于 `u8`) | `b'A'`        |
 
 那么该使用哪种类型的整型呢？如果不确定，Rust 的默认形式通常是个不错的选择，整型默认是 `i32`。`isize` 和 `usize` 的主要应用场景是用作某些集合的索引。
@@ -93,7 +92,7 @@ Rust 的所有数字类型都支持基本数学运算：加法、减法、乘法
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-07-numeric-operations/src/main.rs}}
 ```
 
-这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。[附录 B][appendix_b]<!-- ignore -->  罗列了 Rust 提供的所有运算符。
+这些语句中的每个表达式都使用了数学运算符，并且计算结果为一个值，然后绑定到一个变量上。[附录 B][appendix_b]<!-- ignore --> 罗列了 Rust 提供的所有运算符的列表。
 
 #### 布尔类型
 
@@ -109,7 +108,7 @@ Rust 的所有数字类型都支持基本数学运算：加法、减法、乘法
 
 #### 字符类型
 
-Rust 的 `char` （字符）类型是该语言最基本的字母类型，下面是一些声明 `char` 值的例子：
+Rust 的 `char`（字符）类型是该语言最基本的字母类型，下面是一些声明 `char` 值的例子：
 
 <span class="filename">文件名：src/main.rs</span>
 
@@ -231,12 +230,11 @@ thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-该程序在索引操作中使用无效值时导致**运行时**（*runtime*）错误。程序退出并显示错误消息，未执行后面的 `println!` 语句。当你尝试使用索引访问元素时，Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust会出现 `panic`。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。
+该程序在索引操作中使用无效值时导致**运行时**（*runtime*）错误。程序退出并显示错误消息，未执行后面的 `println!` 语句。当你尝试使用索引访问元素时，Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust 会出现 `panic`。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。
 
 这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。第 9 章将进一步讨论 Rust 的错误处理。
 
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#比较猜测的数字和秘密数字
 [control-flow]: ch03-05-control-flow.html#控制流
 [strings]: ch08-02-strings.html#使用字符串存储-utf-8-编码的文本
 [stack-and-heap]: ch04-01-what-is-ownership.html#栈stack与堆heap

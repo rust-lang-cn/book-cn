@@ -32,4 +32,4 @@
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-25-comments-above-line/src/main.rs}}
 ```
 
-Rust 还具有另一种注释，即文档注释，我们将在第 14 章的“将 crate 发布到 Crates.io” 章节中进行讨论。
+Rust 还具有另一种注释，即文档注释，我们将在第 14 章的 “将 crate 发布到 Crates.io” 章节中进行讨论。
