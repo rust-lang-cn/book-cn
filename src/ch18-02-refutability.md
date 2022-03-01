@@ -37,12 +37,7 @@ if let Some(x) = some_option_value {
 
 <span class="caption">示例 18-9: 使用 `if let` 和一个带有可反驳模式的代码块来代替 `let`</span>
 
-我们给了代码一个得以继续的出路！这段代码完全有效，尽管这意味着我们不能在避免产生错误的情况下使用无可辩驳的模式。如果为 `if let` 提供了一个总是会匹配的模式，比如示例 18-10 中的 `x`，编译器会给出一个警告：
-
-We’ve given the code an out! This code is perfectly valid, although it means we
-cannot use an irrefutable pattern without receiving an error. If we give `if
-let` a pattern that will always match, such as `x`, as shown in Listing 18-10,
-the compiler will give a warning.
+我们给了代码一个得以继续的出路！这段代码完全有效，尽管这意味着我们不能在避免产生错误的情况下使用无可辩驳的模式。如果为 `if let` 提供了一个总是会匹配的模式，比如示例 18-10 中的 `x`，编译器会给出一个警告。
 
 ```rust,ignore
 if let x = 5 {
@@ -66,6 +61,6 @@ warning: irrefutable if-let pattern
   = note: #[warn(irrefutable_let_patterns)] on by default
 ```
 
-基于此，`match`匹配分支必须使用可反驳模式，除了最后一个分支需要使用能匹配任何剩余值的不可反驳模式。Rust允许我们在只有一个匹配分支的`match`中使用不可反驳模式，不过这么做不是特别有用，并可以被更简单的 `let` 语句替代。
+基于此，`match` 匹配分支必须使用可反驳模式，除了最后一个分支需要使用能匹配任何剩余值的不可反驳模式。Rust 允许我们在只有一个匹配分支的 `match` 中使用不可反驳模式，不过这么做不是特别有用，并可以被更简单的 `let` 语句替代。
 
 目前我们已经讨论了所有可以使用模式的地方, 以及可反驳模式与不可反驳模式的区别，下面让我们一起去把可以用来创建模式的语法过目一遍吧。
