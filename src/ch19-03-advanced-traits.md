@@ -416,7 +416,7 @@ trait OutlinePrint: fmt::Display {
 
 <span class="caption">示例 19-22: 实现 `OutlinePrint` trait，它要求来自 `Display` 的功能</span>
 
-因为指定了 `OutlinePrint` 需要 `Display` trait，则可以在 `outline_print` 中使用 `to_string`， 其会为任何实现 `Display` 的类型自动实现。如果不在 trait 名后增加 `: Display` 并尝试在 `outline_print` 中使用 `to_string`，则会得到一个错误说在当前作用域中没有找到用于 `&Self` 类型的方法 `to_string`。
+因为指定了 `OutlinePrint` 需要 `Display` trait，则可以在 `outline_print` 中使用 `to_string`， 其会为任何实现 `Display` 的类型自动实现。如果我们尝试使用 `to_string` 而不添加冒号（`:`）并在 trait 名称后面指定 `Display` trait，则会得到一个错误说在当前作用域中没有找到用于 `&Self` 类型的方法 `to_string`。
 
 让我们看看如果尝试在一个没有实现 `Display` 的类型上实现 `OutlinePrint` 会发生什么，比如 `Point` 结构体：
 
