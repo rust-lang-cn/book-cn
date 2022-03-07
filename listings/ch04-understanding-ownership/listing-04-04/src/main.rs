@@ -8,9 +8,9 @@ fn main() {
                                       // takes_and_gives_back 中,
                                       // 它也将返回值移给 s3
 } // 这里, s3 移出作用域并被丢弃。s2 也移出作用域，但已被移走，
-// 所以什么也不会发生。s1 移出作用域并被丢弃
+  // 所以什么也不会发生。s1 移出作用域并被丢弃
 
-fn gives_ownership() -> String {             // gives_ownership 将返回值移动给
+fn gives_ownership() -> String {           // gives_ownership 将返回值移动给
                                            // 调用它的函数
 
   let some_string = String::from("yours"); // some_string 进入作用域
