@@ -116,7 +116,7 @@ Rust 的 `char`（字符）类型是该语言最基本的字母类型，下面�
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-09-char/src/main.rs}}
 ```
 
-注意，我们声明的 `char` 字面量采用单引号括起来，这和字符串字面不同，字符串字面量是用双引号括起来。Rust 的字符类型大小为 4 个字节，表示的是一个 Unicode 标量值，这意味着它可以表示的远远不止是 ASCII。标音字母，中文/日文/韩文的文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法的字符类型。Unicode 值的范围为 `U+0000` ~ `U+D7FF` 和 `U+E000`~`U+10FFFF`。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章[“使用字符串存储 UTF-8 编码的文本”][strings]<!-- ignore -->中详细讨论这个主题。
+注意，我们声明的 `char` 字面量采用单引号括起来，这与字符串字面量不同，字符串字面量是用双引号括起来。Rust 的字符类型大小为 4 个字节，表示的是一个 Unicode 标量值，这意味着它可以表示的远远不止是 ASCII。标音字母，中文/日文/韩文的文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法的字符类型。Unicode 值的范围为 `U+0000` ~ `U+D7FF` 和 `U+E000`~`U+10FFFF`。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。我们将在第 8 章[“使用字符串存储 UTF-8 编码的文本”][strings]<!-- ignore -->中详细讨论这个主题。
 
 ### 复合类型
 
