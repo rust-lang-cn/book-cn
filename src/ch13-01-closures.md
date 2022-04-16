@@ -13,14 +13,7 @@ Rust 的 **闭包**（*closures*）是可以保存进变量或作为参数传递
 <span class="filename">文件名: src/main.rs</span>
 
 ```rust
-use std::thread;
-use std::time::Duration;
-
-fn simulated_expensive_calculation(intensity: u32) -> u32 {
-    println!("calculating slowly...");
-    thread::sleep(Duration::from_secs(2));
-    intensity
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs:here}}
 ```
 
 <span class="caption">示例 13-1：一个用来代替假定计算的函数，它大约会执行两秒钟</span>
