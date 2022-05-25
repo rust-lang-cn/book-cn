@@ -61,7 +61,7 @@
 
 - [编写自动化测试](ch11-00-testing.md)
   - [如何编写测试](ch11-01-writing-tests.md)
-  - [测试如何测试运行](ch11-02-running-tests.md)
+  - [控制测试如何运行](ch11-02-running-tests.md)
   - [测试的组织结构](ch11-03-test-organization.md)
 
 - [一个 I/O 项目：构建命令行程序](ch12-00-an-io-project.md)
