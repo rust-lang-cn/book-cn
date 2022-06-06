@@ -54,71 +54,22 @@ mod tests {
 
 运行 `cargo test` 将会看到这些测试的输出：
 
-```text
-running 2 tests
-test tests::this_test_will_pass ... ok
-test tests::this_test_will_fail ... FAILED
-
-failures:
-
----- tests::this_test_will_fail stdout ----
-I got the value 8
-thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
-  left: `5`,
- right: `10`', src/lib.rs:19:9
-note: Run with `RUST_BACKTRACE=1` for a backtrace.
-
-failures:
-    tests::this_test_will_fail
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+```console
+{{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
 ```
 
-注意输出中不会出现测试通过时打印的内容，即 `I got the value 4`。因为当测试通过时，这些输出会被截获。失败测试的输出 `I got the value 8` ，则出现在输出的测试摘要部分，同时也显示了测试失败的原因。
+注意输出中不会出现测试通过时打印的内容，即 `I got the value 4`。因为当测试通过时，这些输出会被截获。失败测试的输出 `I got the value 8`，则出现在输出的测试摘要部分，同时也显示了测试失败的原因。
 
 如果你希望也能看到通过的测试中打印的值，可以通过在末尾增加 `--show-output` 参数来告知 Rust 显示通过测试的输出：
 
-```text
+```console
 $ cargo test -- --show-output
 ```
 
 使用 `--show-output` 参数再次运行示例 11-10 中的测试会显示如下输出：
 
-```text
-$ cargo test -- --show-output
-   Compiling silly-function v0.1.0 (file:///projects/silly-function)
-    Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
-
-running 2 tests
-test tests::this_test_will_fail ... FAILED
-test tests::this_test_will_pass ... ok
-
-successes:
-
----- tests::this_test_will_pass stdout ----
-I got the value 4
-
-
-successes:
-    tests::this_test_will_pass
-
-failures:
-
----- tests::this_test_will_fail stdout ----
-I got the value 8
-thread 'main' panicked at 'assertion failed: `(left == right)`
-  left: `5`,
- right: `10`', src/lib.rs:19:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::this_test_will_fail
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass '--lib'
+```console
+{{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
 ```
 
 ### 通过指定名字来运行部分测试
