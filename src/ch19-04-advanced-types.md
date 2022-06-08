@@ -106,7 +106,7 @@ pub trait Write {
     fn flush(&mut self) -> Result<()>;
 
     fn write_all(&mut self, buf: &[u8]) -> Result<()>;
-    fn write_fmt(&mut self, fmt: Arguments) -> Result<()>;
+    fn write_fmt(&mut self, fmt: fmt::Arguments) -> Result<()>;
 }
 ```
 
