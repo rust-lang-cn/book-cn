@@ -1,8 +1,8 @@
 ## 包和 crate
 
-模块系统的第一部分，我们将介绍包和 crate。crate 是一个二进制项或者库。*crate root* 是一个源文件，Rust 编译器以它为起始点，并构成你的 crate 的根模块（我们将在[“定义模块来控制作用域与私有性”][modules]<!-- ignore -->一节深入解读）。*包*（*package*） 是提供一系列功能的一个或者多个 crate。一个包会包含有一个 *Cargo.toml* 文件，阐述如何去构建这些 crate。
+模块系统的第一部分，我们将介绍包和 crate。crate 是一个二进制项或者库。*crate root* 是一个源文件，Rust 编译器以它为起始点，并构成你的 crate 的根模块（我们将在[“定义模块来控制作用域与私有性”][modules]<!-- ignore -->一节深入解读）。*包*（*package*）是提供一系列功能的一个或者多个 crate。一个包会包含有一个 *Cargo.toml* 文件，阐述如何去构建这些 crate。
 
-包中所包含的内容由几条规则来确立。一个包中至多 **只能** 包含一个库 crate(library crate)；包中可以包含任意多个二进制 crate(binary crate)；包中至少包含一个 crate，无论是库的还是二进制的。
+包中所包含的内容由几条规则来确立。一个包中至多 **只能** 包含一个库 crate（library crate）；包中可以包含任意多个二进制 crate（binary crate）；包中至少包含一个 crate，无论是库的还是二进制的。
 
 让我们来看看创建包的时候会发生什么。首先，我们输入命令 `cargo new`：
 
