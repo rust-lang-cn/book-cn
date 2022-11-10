@@ -30,7 +30,7 @@
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
 ```
 
-在这里，我们选择让 `width` 方法的行为是如果实例的 `width` 字段的值大于 0，返回 `true`。如果该值为 0，则返回 `false`：我们可以在同名的方法中使用一个字段。我们可以在同名的方法中使用一个字段来达到任何目的。在 `main` 中，当我们在 `rect1.width` 后面加上括号时。Rust 知道我们指的是方法 `width`。当我们不使用圆括号时，Rust 知道我们指的是字段 `width`。
+在这里，我们选择让 `width` 方法的行为是如果实例的 `width` 字段的值大于 0，返回 `true`。如果该值为 0，则返回 `false`：我们可以在同名的方法中使用一个字段来达到任何目的。在 `main` 中，当我们在 `rect1.width` 后面加上括号时。Rust 知道我们指的是方法 `width`。当我们不使用圆括号时，Rust 知道我们指的是字段 `width`。
 
 通常，但并不总是如此，与字段同名的方法将被定义为只返回字段中的值，而不做其他事情。这样的方法被称为 *getters*，Rust 并不像其他一些语言那样为结构字段自动实现它们。Getters 很有用，因为你可以把字段变成私有的，但方法是公共的，这样就可以把对字段的只读访问作为该类型公共 API 的一部分。我们将在第七章中讨论什么是公有和私有，以及如何将一个字段或方法指定为公有或私有。
 
