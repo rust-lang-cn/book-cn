@@ -196,7 +196,7 @@ pub mod utils {
 
 <img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
 
-<span class="caption">图 14-10：`art` 文档的首页，这里列出了重导出的项</span>
+<span class="caption">图 14-4：`art` 文档的首页，这里列出了重导出的项</span>
 
 `art` crate 的用户仍然可以看见和选择使用示例 14-4 中的内部结构，或者可以使用示例 14-5 中更为方便的结构，如示例 14-6 所示：
 
