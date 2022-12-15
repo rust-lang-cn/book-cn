@@ -68,7 +68,7 @@ Rust 中的函数定义以 `fn` 开始，后跟着函数名和一对圆括号。
 
 **语句**（*statement*）是执行一些操作但不返回值的指令。表达式（*expression*）计算并产生一个值。让我们看一些例子：
 
-实际上，我们已经使用过语句和表达式。使用 `let` 关键字创建变量并绑定一个值是一个语句。在列表 3-1 中，`let y = 6;` 是一个语句。
+实际上，我们已经使用过语句和表达式。使用 `let` 关键字创建变量并绑定一个值是一个语句。在示例 3-1 中，`let y = 6;` 是一个语句。
 
 <span class="filename">文件名: src/main.rs</span>
 
@@ -76,7 +76,7 @@ Rust 中的函数定义以 `fn` 开始，后跟着函数名和一对圆括号。
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
 ```
 
-<span class="caption">列表 3-1：包含一个语句的 `main` 函数定义</span>
+<span class="caption">示例 3-1：包含一个语句的 `main` 函数定义</span>
 
 函数定义也是语句，上面整个例子本身就是一个语句。
 
