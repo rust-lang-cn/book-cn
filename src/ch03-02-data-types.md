@@ -168,7 +168,7 @@ Rust 的 `char`（字符）类型是该语言最基本的字母类型，下面�
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-13-arrays/src/main.rs}}
 ```
 
-当你希望将数据分配到栈（stack）而不是堆（heap）时（我们将在[第 4 章][stack-and-heap]<!-- ignore -->)中进一步讨论栈和堆），或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其大小**允许**增长或缩小。如果不确定是使用数组还是 vector，那就应该使用一个 vector。[第 8 章][vectors]<!-- ignore -->将详细地讨论 vector。
+当你希望将数据分配到栈（stack）而不是堆（heap）时（我们将在[第 4 章][stack-and-heap]<!-- ignore -->中进一步讨论栈和堆），或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其大小**允许**增长或缩小。如果不确定是使用数组还是 vector，那就应该使用一个 vector。[第 8 章][vectors]<!-- ignore -->将详细地讨论 vector。
 
 不过当你明确元素数量不需要改变时，数组会更有用。例如，如果你在程序中使用月份的名称，你很可能希望使用的是数组而不是 vector，因为你知道它始终包含 12 个元素：
 
