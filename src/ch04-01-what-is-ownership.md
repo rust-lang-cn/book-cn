@@ -71,7 +71,7 @@ let s = "hello";
 let s = String::from("hello");
 ```
 
-这两个冒号（`::`）是运算符，允许将特定的 `from` 函数置于 `String` 类型的命名空间（namespace）下，而不需要使用类似 `string_from` 这样的名字。在第 5 章的[“方法语法”（“Method Syntax”）][method-syntax]<!-- ignore -->部分会着重讲解这个语法而且在第 7 章的[“路径用于引用模块树中的项”][paths-module-tree]<!-- ignore -->中会讲到模块的命名空间。
+双冒号（`::`）运算符允许我们将特定的 `from` 函数置于 `String` 类型的命名空间（namespace）下，而不需要使用类似 `string_from` 这样的名字。我们将在第 5 章的[“方法语法”（“Method Syntax”）][method-syntax]<!-- ignore -->以及第 7 章的[“路径用于引用模块树中的项”][paths-module-tree]<!-- ignore -->中讨论模块的命名空间时，再详细说明此语法。
 
 **可以** 修改此类字符串 ：
 
