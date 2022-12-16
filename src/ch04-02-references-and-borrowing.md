@@ -54,7 +54,7 @@
 {{#include ../listings/ch04-understanding-ownership/listing-04-06/output.txt}}
 ```
 
-正如变量默认是不可变的，引用也一样。引用的值（默认情况下）是不可被修改的。
+正如变量在默认情况下是不可变的一样，引用也是不可变的。我们无法通过引用修改内容。
 
 ### 可变引用
 
