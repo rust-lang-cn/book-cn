@@ -15,13 +15,13 @@ mod back_of_house {
 }
 
 pub fn eat_at_restaurant() {
-    // Order a breakfast in the summer with Rye toast
+    // 在夏天点一份黑麦面包作为早餐
     let mut meal = back_of_house::Breakfast::summer("Rye");
-    // Change our mind about what bread we'd like
+    // 更改我们想要的面包
     meal.toast = String::from("Wheat");
     println!("I'd like {} toast please", meal.toast);
 
-    // The next line won't compile if we uncomment it; we're not allowed
-    // to see or modify the seasonal fruit that comes with the meal
+    // 如果取消下一行的注释，将会导致编译失败；我们被不允许
+    // 看到或更改随餐搭配的季节水果
     // meal.seasonal_fruit = String::from("blueberries");
 }
