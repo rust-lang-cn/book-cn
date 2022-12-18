@@ -54,7 +54,7 @@
 
 使用旧实例的大部分值但改变其部分值来创建一个新的结构体实例通常很有用。这可以通过**结构体更新语法**（*struct update syntax*）实现。
 
-首先，示例 5-6 展示了不使用更新语法时，如何在 `user2` 中创建一个新 `User` 实例。我们为 `email` 设置了新的值，其他值则使用了实例 5-2 中创建的 `user1` 中的同名值：
+首先，示例 5-6 展示了不使用更新语法时，如何在 `user2` 中创建一个新 `User` 实例。我们为 `email` 设置了新的值，其他值则使用了示例 5-2 中创建的 `user1` 中的同名值：
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-06/src/main.rs:here}}
