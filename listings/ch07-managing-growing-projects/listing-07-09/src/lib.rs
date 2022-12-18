@@ -21,7 +21,7 @@ pub fn eat_at_restaurant() {
     meal.toast = String::from("Wheat");
     println!("I'd like {} toast please", meal.toast);
 
-    // 如果取消下一行的注释，将会导致编译失败；我们被不允许
+    // 如果取消下一行的注释，将会导致编译失败；我们不被允许
     // 看到或更改随餐搭配的季节水果
     // meal.seasonal_fruit = String::from("blueberries");
 }
