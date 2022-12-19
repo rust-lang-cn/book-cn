@@ -22,7 +22,7 @@
 
 - [认识所有权](ch04-00-understanding-ownership.md)
   - [什么是所有权？](ch04-01-what-is-ownership.md)
-  - [引用和借用](ch04-02-references-and-borrowing.md)
+  - [引用与借用](ch04-02-references-and-borrowing.md)
   - [切片 slice](ch04-03-slices.md)
 
 - [使用结构体组织关联数据](ch05-00-structs.md)
