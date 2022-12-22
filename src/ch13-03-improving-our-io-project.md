@@ -73,7 +73,7 @@ fn main() {
 
 `env::args` 函数返回一个迭代器！不同于将迭代器的值收集到一个 vector 中接着传递一个 slice 给 `Config::new`，现在我们直接将 `env::args` 返回的迭代器的所有权传递给 `Config::new`。
 
-接下来需要更新 `Config::new` 的定义。在 I/O 项目的 *src/lib.rs* 中，将 `Config::new` 的签名改为如示例 13-26 所示。这仍然不能编译因为我们还需更新函数体：
+接下来需要更新 `Config::new` 的定义。在 I/O 项目的 *src/lib.rs* 中，将 `Config::new` 的签名改为如示例 13-26 所示。这仍然不能编译，因为我们还需更新函数体：
 
 <span class="filename">文件名: src/lib.rs</span>
 
@@ -85,7 +85,7 @@ impl Config {
 
 <span class="caption">示例 13-26：以迭代器作为参数更新 `Config::new` 的签名</span>
 
-`env::args` 函数的标准库文档显示，它返回的迭代器的类型为 `std::env::Args`。我们已经更新了 `Config :: new` 函数的签名，因此参数 `args` 的类型为 `std::env::Args` 而不是 `&[String]`。因为我们拥有 `args` 的所有权，并且将通过对其进行迭代来改变 `args` ，所以我们可以将 `mut` 关键字添加到 `args` 参数的规范中以使其可变。
+`env::args` 函数的标准库文档显示，它返回的迭代器的类型为 `std::env::Args`。我们已经更新了 `Config::new` 函数的签名，因此参数 `args` 的类型为 `std::env::Args` 而不是 `&[String]`。因为我们拥有 `args` 的所有权，并且将通过对其进行迭代来改变 `args` ，所以我们可以将 `mut` 关键字添加到 `args` 参数的规范中以使其可变。
 
 #### 使用 `Iterator` trait 代替索引
 
