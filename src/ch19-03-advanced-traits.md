@@ -466,7 +466,7 @@ impl fmt::Display for Point {
 
 那么在 `Point` 上实现 `OutlinePrint` trait 将能成功编译，并可以在 `Point` 实例上调用 `outline_print` 来显示位于星号框中的点的值。
 
-### newtype 模式用以在外部类型上实现外部 trait
+### newtype 模式用于在外部类型上实现外部 trait
 
 在第 10 章的 [“为类型实现 trait”][implementing-a-trait-on-a-type]<!-- ignore -->  部分，我们提到了孤儿规则（orphan rule），它说明只要 trait 或类型对于当前 crate 是本地的话就可以在此类型上实现该 trait。一个绕开这个限制的方法是使用 **newtype 模式**（*newtype pattern*），它涉及到在一个元组结构体（第 5 章 [“使用没有命名字段的元组结构体来创建不同的类型”][tuple-structs]<!-- ignore -->   部分介绍了元组结构体）中创建一个新类型。这个元组结构体带有一个字段作为希望实现 trait 的类型的简单封装。接着这个封装类型对于 crate 是本地的，这样就可以在这个封装上实现 trait。*Newtype* 是一个源自 Haskell 编程语言的概念。使用这个模式没有运行时性能消耗，这个封装类型在编译时就被省略了。
 
