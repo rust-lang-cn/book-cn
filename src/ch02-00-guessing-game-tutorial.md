@@ -136,7 +136,7 @@ let mut bananas = 5; // 可变
 io::stdin().read_line(&mut guess).expect("Failed to read line");
 ```
 
-但是，一行太长很难阅读，所以最好拆开来写。在使用 `.method_name()` 语法调用方法时，用换行和空格来拆分长代码行通常是明智的。现在让我们来看看这行代码干了什么。
+但是，一行过长的代码很难阅读，所以最好拆开来写。当你使用 `.method_name()` 语法调用方法时，用换行和空格来拆分长代码行通常是明智的。现在让我们来看看这行代码干了什么。
 
 之前提到了 `read_line` 将用户输入存储到我们传递给它的字符串中，但它也返回一个值——在这个例子中是 [`io::Result`][ioresult]<!-- ignore -->。Rust 标准库中有很多名为 `Result` 的类型：一个通用的 [`Result`][result]<!-- ignore --> 以及在子模块中的特化版本，比如 `io::Result`。`Result` 类型是 [*枚举*（*enumerations*）][enums]<!-- ignore -->，通常也写作 *enum*。枚举类型持有固定集合的值，这些值被称为枚举的**成员**（*variant*）。枚举往往与条件表达式 `match` 一起使用，`match` 是一种条件语句，在其被执行时，可以方便地匹配不同枚举值来执行不同的代码。
 
