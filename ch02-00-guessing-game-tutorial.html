@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Rust 程序设计语言中文也译为 Rust 权威指南，是 Rust 官方推出的学习 Rust 的必备教程。Rust Wiki 版的 Rust 程序设计语言简体中文版将由 Rust 中文翻译项目组持续维护和更新，确保内容最新最全。">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -35,14 +34,15 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +58,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,12 +70,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -83,16 +85,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Rust 程序设计语言</a></li><li class="chapter-item expanded affix "><a href="foreword.html">前言</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">简介</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> 入门指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hello, Cargo!</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html" class="active"><strong aria-hidden="true">2.</strong> 猜数字游戏</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> 通用编程概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> 变量和可变性</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> 数据类型</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> 函数</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> 控制流</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> 认识所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> 什么是所有权？</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> 引用和借用</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> 切片 slice</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> 使用结构体组织关联数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> 定义和举例说明结构体</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> 使用结构体的代码例子</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> 方法语法</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> 枚举和模式匹配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> 定义枚举</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> match 控制流运算符</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> if let 简单控制流</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> 使用包、Crate 和模块管理不断增长的项目</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> 包和 crate</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> 定义模块来控制作用域与私有性</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> 路径用于引用模块树中的项</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> 使用 use 关键字将名称引入作用域</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> 将模块分割进不同文件</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> 常见集合</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> 使用 vector 存储一列值</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> 使用字符串存储 UTF-8 编码的文本</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> 在哈希 map 中存储键和关联值</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> panic! 与不可恢复的错误</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Result 与可恢复的错误</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> panic! 还是不 panic!</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> 泛型、trait 与生命周期</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> 泛型数据类型</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> trait：定义共享的行为</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> 生命周期与引用有效性</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> 编写自动化测试</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> 如何编写测试</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> 测试如何测试运行</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> 测试的组织结构</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> 一个 I/O 项目：构建命令行程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> 接受命令行参数</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> 读取文件</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> 重构以改进模块化与错误处理</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> 采用测试驱动开发完善库的功能</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> 处理环境变量</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> 将错误信息输出到标准错误而不是标准输出</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Rust 中的函数式语言功能：迭代器与闭包</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> 闭包：可以捕获其环境的匿名函数</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> 使用迭代器处理元素序列</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> 改进之前的 I/O 项目</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> 性能比较：循环对迭代器</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> 更多关于 Cargo 和 Crates.io 的内容</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> 采用发布配置自定义构建</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo 工作空间</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> 使用 cargo install 从 Crates.io 安装二进制文件</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo 自定义扩展命令</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> 智能指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> 使用 Box&lt;T&gt; 指向堆上的数据</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> 使用 Deref trait 将智能指针当作常规引用处理</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> 使用 Drop Trait 运行清理代码</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Rc&lt;T&gt; 引用计数智能指针</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; 与内部可变性模式</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> 引用循环会导致内存泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> 无畏并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> 使用线程同一时间运行代码</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> 使用消息传递在线程间通信</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> 共享状态并发</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> 使用Sync 与 Send Trait 的可扩展并发</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Rust 的面向对象编程特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> 面向对象语言的特点</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> 为使用不同类型的值而设计的 trait 对象</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> 面向对象设计模式的实现</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> 模式和匹配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> 所有可能会用到模式的位置</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Refutability（可反驳性）: 模式是否会匹配失效</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> 模式语法</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> 高级特征</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> 不安全的 Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> 高级 trait</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> 高级类型</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> 高级函数与闭包</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> 宏</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> 最后的项目: 构建多线程 Web 服务器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> 构建单线程 Web 服务器</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> 将单线程服务器变为多线程服务器</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> 优雅停机与清理</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - 关键字</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - 运算符与符号</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - 可派生的 trait</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - 实用开发工具</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - 版本</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - 本书译本</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Rust 是如何开发的与 “Nightly Rust”</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Rust 程序设计语言</a></li><li class="chapter-item expanded affix "><a href="foreword.html">前言</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">简介</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> 入门指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hello, Cargo!</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html" class="active"><strong aria-hidden="true">2.</strong> 猜数字游戏</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> 通用编程概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> 变量和可变性</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> 数据类型</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> 函数</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> 控制流</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> 认识所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> 什么是所有权？</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> 引用与借用</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> 切片 slice</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> 使用结构体组织关联数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> 定义和举例说明结构体</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> 使用结构体的代码例子</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> 方法语法</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> 枚举和模式匹配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> 定义枚举</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> match 控制流运算符</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> if let 简单控制流</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> 使用包、Crate 和模块管理不断增长的项目</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> 包和 crate</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> 定义模块来控制作用域与私有性</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> 路径用于引用模块树中的项</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> 使用 use 关键字将名称引入作用域</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> 将模块分割进不同文件</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> 常见集合</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> 使用 vector 存储一列值</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> 使用字符串存储 UTF-8 编码的文本</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> 在哈希 map 中存储键和关联值</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> panic! 与不可恢复的错误</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Result 与可恢复的错误</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> panic! 还是不 panic!</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> 泛型、trait 与生命周期</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> 泛型数据类型</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> trait：定义共享的行为</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> 生命周期与引用有效性</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> 编写自动化测试</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> 如何编写测试</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> 控制测试如何运行</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> 测试的组织结构</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> 一个 I/O 项目：构建命令行程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> 接受命令行参数</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> 读取文件</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> 重构以改进模块化与错误处理</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> 采用测试驱动开发完善库的功能</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> 处理环境变量</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> 将错误信息输出到标准错误而不是标准输出</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Rust 中的函数式语言功能：迭代器与闭包</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> 闭包：可以捕获其环境的匿名函数</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> 使用迭代器处理元素序列</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> 改进之前的 I/O 项目</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> 性能比较：循环对迭代器</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> 更多关于 Cargo 和 Crates.io 的内容</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> 采用发布配置自定义构建</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo 工作空间</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> 使用 cargo install 从 Crates.io 安装二进制文件</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo 自定义扩展命令</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> 智能指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> 使用 Box&lt;T&gt; 指向堆上的数据</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> 使用 Deref trait 将智能指针当作常规引用处理</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> 使用 Drop Trait 运行清理代码</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Rc&lt;T&gt; 引用计数智能指针</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; 与内部可变性模式</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> 引用循环会导致内存泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> 无畏并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> 使用线程同一时间运行代码</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> 使用消息传递在线程间通信</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> 共享状态并发</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> 使用Sync 与 Send Trait 的可扩展并发</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Rust 的面向对象编程特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> 面向对象语言的特点</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> 为使用不同类型的值而设计的 trait 对象</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> 面向对象设计模式的实现</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> 模式和匹配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> 所有可能会用到模式的位置</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Refutability（可反驳性）: 模式是否会匹配失效</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> 模式语法</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> 高级特征</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> 不安全的 Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> 高级 trait</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> 高级类型</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> 高级函数与闭包</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> 宏</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> 最后的项目: 构建多线程 Web 服务器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> 构建单线程 Web 服务器</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> 将单线程服务器变为多线程服务器</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> 优雅停机与清理</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - 关键字</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - 运算符与符号</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - 可派生的 trait</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - 实用开发工具</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - 版本</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - 本书译本</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Rust 是如何开发的与 “Nightly Rust”</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -101,7 +125,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -140,7 +164,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -151,14 +175,14 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="编写猜数字游戏"><a class="header" href="#编写猜数字游戏">编写猜数字游戏</a></h1>
-<p>让我们一起动手完成一个项目，来快速上手 Rust！本章将介绍 Rust 中一些常用概念，并通过真实的程序来展示如何运用它们。你将会学到 <code>let</code>、<code>match</code>、方法、关联函数、引用外部 crate 等知识！后续章节会深入探讨这些概念的细节。在本章，我们将做基础练习。</p>
-<p>我们会实现一个经典的新手编程问题：猜数字游戏。它是这么工作的：程序将会随机生成一个 1 到 100 之间的随机整数。接着它会请玩家猜一个数并输入，然后提示猜测是大了还是小了。如果猜对了，它会打印祝贺信息并退出。</p>
+<p>让我们一起动手完成一个项目，来快速上手 Rust！本章将介绍 Rust 中一些常用概念，并向你展示如何在实际项目中运用它们。你将会学到 <code>let</code>、<code>match</code>、方法、关联函数、引用外部 crate 等知识！后续章节会深入探讨这些概念的细节。在本章，我们将做基础练习。</p>
+<p>我们会实现一个经典的新手编程问题：猜数字游戏。这是它的工作原理：程序会随机生成一个 1 到 100 之间的整数。接着它会提示玩家猜一个数并输入，然后指出猜测是大了还是小了。如果猜对了，它会打印祝贺信息并退出。</p>
 <h2 id="创建一个新项目"><a class="header" href="#创建一个新项目">创建一个新项目</a></h2>
-<p>要创建一个新项目，进入第 1 章中创建的 <em>projects</em> 目录，使用 Cargo 新建一个项目，如下：</p>
+<p>要创建一个新项目，请进入你在第 1 章中所创建的 <em>projects</em> 目录，使用 Cargo 新建一个项目，如下：</p>
 <pre><code class="language-console">$ cargo new guessing_game
 $ cd guessing_game
 </code></pre>
-<p>第一个命令 <code>cargo new</code> 获取项目的名称（<code>guessing_game</code>）作为第一个参数。第二个命令进入到新创建的项目目录。</p>
+<p>第一个命令 <code>cargo new</code>，把项目的名称（<code>guessing_game</code>）作为第一个参数。第二个命令进入到新创建的项目目录。</p>
 <p>看看生成的 <em>Cargo.toml</em> 文件：</p>
 <p><span class="filename">文件名：Cargo.toml</span></p>
 <pre><code class="language-toml">[package]
@@ -170,12 +194,11 @@ edition = &quot;2021&quot;
 
 [dependencies]
 </code></pre>
-<p>正如第 1 章那样，<code>cargo new</code> 生成了一个 “Hello, world!” 程序。查看 <em>src/main.rs</em> 文件：</p>
+<p>正如第 1 章那样，<code>cargo new</code> 为你生成了一个 “Hello, world!” 程序。查看 <em>src/main.rs</em> 文件：</p>
 <p><span class="filename">文件名：src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     println!(&quot;Hello, world!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>现在使用 <code>cargo run</code> 命令，一步完成 “Hello, world!” 程序的编译和运行：</p>
 <pre><code class="language-console">$ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
@@ -202,10 +225,9 @@ fn main() {
         .expect(&quot;Failed to read line&quot;);
 
     println!(&quot;You guessed: {}&quot;, guess);
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">示例 2-1：获取用户猜测并打印的代码</span></p>
-<p>这些代码包含很多信息，我们一行一行地过一遍。为了获取用户输入并打印结果作为输出，我们需要引入 <code>io</code> 输入/输出库到当前作用域。<code>io</code> 库来自于标准库，也被称为 <code>std</code>：</p>
+<p>这些代码包含很多信息，让我们一行一行地过一遍。为了获取用户输入并打印结果作为输出，我们需要引入 <code>io</code> 输入/输出库到当前作用域。<code>io</code> 库来自于标准库，标准库也被称为 <code>std</code>：</p>
 <pre><code class="language-rust ignore">use std::io;
 <span class="boring">
 </span><span class="boring">fn main() {
@@ -220,9 +242,8 @@ fn main() {
 </span><span class="boring">        .expect(&quot;Failed to read line&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;You guessed: {}&quot;, guess);
-</span><span class="boring">}
-</span></code></pre>
-<p>默认情况下，Rust会将少量标准库中定义的程序项（item）引入到每个程序的作用域中。这些项称作 <em>prelude</em>，可以在<a href="https://rustwiki.org/zh-CN/std/prelude/index.html">标准库文档</a><!-- ignore -->中了解到更多。</p>
+</span><span class="boring">}</span></code></pre>
+<p>默认情况下，Rust会将少量标准库中定义的程序项（item）引入到每个程序的作用域中。这些项称作 <em>prelude</em>，可以在<a href="https://rustwiki.org/zh-CN/std/prelude/index.html">标准库文档</a><!-- ignore -->中了解到关于它的所有知识。</p>
 <p>如果需要的类型不在 prelude 中，你必须使用 <code>use</code> 语句显式地将其引入作用域。<code>std::io</code> 库提供很多有用的功能，包括接收用户输入的功能。</p>
 <p>如第 1 章所提及，<code>main</code> 函数是程序的入口点：</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
@@ -239,10 +260,9 @@ fn main() {
 </span><span class="boring">        .expect(&quot;Failed to read line&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;You guessed: {}&quot;, guess);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p><code>fn</code> 语法声明了一个新函数，小括号 <code>()</code> 表明没有参数，大括号 <code>{</code> 作为函数体的开始。</p>
-<p>第 1 章也提及的 <code>println!</code> 是一个在屏幕上打印字符串的宏：</p>
+<p>正如你在第 1 章中学到的，<code>println!</code> 是一个在屏幕上打印字符串的宏：</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -257,9 +277,8 @@ fn main() {
 </span><span class="boring">        .expect(&quot;Failed to read line&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;You guessed: {}&quot;, guess);
-</span><span class="boring">}
-</span></code></pre>
-<p>这些代码仅仅打印提示，介绍游戏的内容然后请求用户输入。</p>
+</span><span class="boring">}</span></code></pre>
+<p>这段代码打印一个提示，介绍游戏的内容并请求用户输入。</p>
 <h3 id="使用变量存储值"><a class="header" href="#使用变量存储值">使用变量存储值</a></h3>
 <p>接下来，创建一个储存用户输入的<strong>变量</strong>（<em>variable</em>），像这样：</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
@@ -276,23 +295,20 @@ fn main() {
 </span><span class="boring">        .expect(&quot;Failed to read line&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;You guessed: {}&quot;, guess);
-</span><span class="boring">}
-</span></code></pre>
-<p>现在程序开始变得有意思了！这一小行代码发生了很多事。我们使用 <code>let</code> 声明来创建变量。这里是另外一个例子：</p>
-<pre><code class="language-rust ignore">let apples = 5;
-</code></pre>
-<p>这行代码新建了一个叫做 <code>apples</code> 的变量并把它绑定到值 <code>5</code> 上。在 Rust 中，变量默认是不可变的。我们将会在第 3 章的 <a href="ch03-01-variables-and-mutability.html#%E5%8F%98%E9%87%8F%E5%92%8C%E5%8F%AF%E5%8F%98%E6%80%A7">“变量与可变性”</a><!-- ignore -->章节详细讨论这个概念。下面的例子展示了如何在变量名前使用 <code>mut</code> 来使一个变量可变：</p>
+</span><span class="boring">}</span></code></pre>
+<p>现在程序开始变得有意思了！这一小行代码发生了很多事。我们使用 <code>let</code> 语句来创建变量。这里是另外一个例子：</p>
+<pre><code class="language-rust ignore">let apples = 5;</code></pre>
+<p>这行代码新建了一个叫做 <code>apples</code> 的变量并把它绑定到值 <code>5</code> 上。在 Rust 中，变量默认是不可变的。我们将会在第 3 章的 <a href="ch03-01-variables-and-mutability.html#%E5%8F%98%E9%87%8F%E5%92%8C%E5%8F%AF%E5%8F%98%E6%80%A7">“变量与可变性”</a><!-- ignore -->章节详细讨论这个概念。想要让变量可变，可以在变量名前添加 <code>mut</code>（mutability，可变性）：</p>
 <pre><code class="language-rust ignore">let apples = 5; // 不可变
-let mut bananas = 5; // 可变
-</code></pre>
+let mut bananas = 5; // 可变</code></pre>
 <blockquote>
 <p>注意：<code>//</code> 语法开始一个注释，持续到行尾。Rust 忽略注释中的所有内容，<a href="ch03-04-comments.html">第 3 章</a><!-- ignore -->将会详细介绍注释。</p>
 </blockquote>
-<p>回到猜猜看程序中，现在我们知道了 <code>let mut guess</code> 会引入一个叫做 <code>guess</code> 的可变变量。等号（<code>=</code>）告诉 Rust 现在想将某个值绑定在变量上。等号的右边是 <code>guess</code> 所绑定的值，它是 <code>String::new</code> 的结果，这个函数会返回一个 <code>String</code> 的新实例。<a href="https://rustwiki.org/zh-CN/std/string/struct.String.html"><code>String</code></a><!-- ignore --> 是一个标准库提供的字符串类型，这是 UTF-8 编码的可增长文本块。</p>
-<p><code>::new</code> 那一行的 <code>::</code> 语法表明 <code>new</code> 是 <code>String</code> 类型的一个关联函数。<strong>关联函数</strong>（<em>associated function</em>）是实现一种特定类型的函数，在这个例子中类型是 <code>String</code>。这个 <code>new</code> 函数创建了一个新的空字符串，你会发现很多类型上有 <code>new</code> 函数，因为它是创建类型实例的惯用函数名。</p>
-<p>总的来说，<code>let mut guess = String::new();</code> 这一行创建了一个可变变量，当前它绑定到一个新的 <code>String</code> 空实例上。</p>
+<p>回到猜数字程序中，现在我们知道了 <code>let mut guess</code> 会引入一个叫做 <code>guess</code> 的可变变量。等号（<code>=</code>）告诉 Rust 现在想将某个值绑定在变量上。等号的右边是 <code>guess</code> 所绑定的值，它是 <code>String::new</code> 的结果，这个函数会返回一个 <code>String</code> 的新实例。<a href="https://rustwiki.org/zh-CN/std/string/struct.String.html"><code>String</code></a><!-- ignore --> 是标准库提供的字符串类型，是一个 UTF-8 编码的可增长文本。</p>
+<p><code>::new</code> 那一行的 <code>::</code> 语法表明 <code>new</code> 是 <code>String</code> 类型的一个关联函数。<strong>关联函数</strong>（<em>associated function</em>）是实现一种特定类型的函数，在这个例子中类型是 <code>String</code>。这个 <code>new</code> 函数创建了一个新的空字符串。你会在很多类型上找到一个 <code>new</code> 函数，因为它是创建类型实例的惯用函数名。</p>
+<p>总的来说，<code>let mut guess = String::new();</code> 这一行创建了一个可变变量，目前它绑定到一个新的 <code>String</code> 空实例上。呼！</p>
 <h3 id="接收用户输入"><a class="header" href="#接收用户输入">接收用户输入</a></h3>
-<p>回忆一下，我们在程序的第一行使用 <code>use std::io;</code> 从标准库中引入了输入/输出功能。现在调用可以使我们处理用户输入的 <code>io</code> 库中的函数 <code>stdin</code>：</p>
+<p>回忆一下，我们在程序的第一行使用 <code>use std::io;</code> 从标准库中引入了输入/输出功能。现在我们可以从 <code>io</code> 模块调用 <code>stdin</code> 函数，这将允许我们处理用户输入：</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -307,13 +323,12 @@ let mut bananas = 5; // 可变
 <span class="boring">        .expect(&quot;Failed to read line&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;You guessed: {}&quot;, guess);
-</span><span class="boring">}
-</span></code></pre>
-<p>如果程序的开头没有使用 <code>use std::io</code> 引入 <code>io</code> 库，我们仍可以通过把函数调用写成 <code>std::io::stdin</code> 来使用函数。<code>stdin</code> 函数返回一个 <a href="https://rustwiki.org/zh-CN/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a><!-- ignore --> 的实例，这代表终端标准输入句柄的类型。</p>
-<p>接下来，<code>.read_line(&amp;mut guess)</code> 这一行调用了 <a href="https://rustwiki.org/zh-CN/std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a><!-- ignore --> 方法从标准输入句柄获取用户输入。我们还将 <code>&amp;mut guess</code> 作为参数传递给 <code>read_line()</code>，以告诉它在哪个字符串存储用户输入。<code>read_line</code> 的全部工作是，无论用户在标准输入中键入什么内容，都将其存入一个字符串中（不覆盖其内容），所以它需要字符串作为参数。这个字符串参数需要是可变的，以便该方法可以更改字符串的内容。</p>
-<p><code>&amp;</code> 表示这个参数是一个<strong>引用</strong>（<em>reference</em>），它允许多处代码访问同一处数据，而无需在内存中多次拷贝。引用是一个复杂的特性，Rust 的一个主要优势就是安全而简单的操作引用。完成当前程序并不需要了解太多细节。现在，我们只需知道就像变量一样，引用默认是不可变的。因此，需要写成 <code>&amp;mut guess</code> 来使其可变，而不是 <code>&amp;guess</code>。（第 4 章会更全面地解释引用。）</p>
+</span><span class="boring">}</span></code></pre>
+<p>如果程序的开头没有使用 <code>use std::io</code> 引入 <code>io</code> 库，我们仍可以通过 <code>std::io::stdin</code> 来调用函数。<code>stdin</code> 函数返回一个 <a href="https://rustwiki.org/zh-CN/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a><!-- ignore --> 的实例，这是一个类型，代表终端标准输入的句柄。</p>
+<p>接下来，<code>.read_line(&amp;mut guess)</code> 这一行调用了 <a href="https://rustwiki.org/zh-CN/std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a><!-- ignore --> 方法，来从标准输入句柄中获取用户输入。我们还将 <code>&amp;mut guess</code> 作为参数传递给 <code>read_line()</code>，以告诉它在哪个字符串存储用户输入。<code>read_line</code> 的全部工作是，将用户在标准输入中输入的任何内容都追加到一个字符串中（而不会覆盖其内容），所以它需要字符串作为参数。这个字符串应是可变的，以便该方法可以更改其内容。</p>
+<p><code>&amp;</code> 表示这个参数是一个<strong>引用</strong>（<em>reference</em>），这为你提供了一种方法，让代码的多个部分可以访问同一处数据，而无需在内存中多次拷贝。引用是一个复杂的特性，Rust 的一个主要优势就是安全而简单的使用引用。完成当前程序并不需要了解太多细节。现在，我们只需知道就像变量一样，引用默认是不可变的。因此，需要写成 <code>&amp;mut guess</code> 来使其可变，而不是 <code>&amp;guess</code>。（第 4 章会更全面地解释引用。）</p>
 <h3 id="使用-result-类型来处理潜在的错误"><a class="header" href="#使用-result-类型来处理潜在的错误">使用 <code>Result</code> 类型来处理潜在的错误</a></h3>
-<p>我们还要继续分析这行代码。虽然我们已经讲到了文本中的第三行，但它仍是逻辑行（虽然换行了但仍是语句）的一部分。下一部分是这个方法：</p>
+<p>我们还要继续分析这行代码。虽然我们已经讲到了文本中的第三行，但它仍然是单个逻辑代码行的一部分（即一行代码中插入了空行）。下一部分是这个方法：</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -328,17 +343,15 @@ let mut bananas = 5; // 可变
 </span>        .expect(&quot;Failed to read line&quot;);
 <span class="boring">
 </span><span class="boring">    println!(&quot;You guessed: {}&quot;, guess);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>我们完全可以这样写：</p>
-<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Failed to read line&quot;);
-</code></pre>
-<p>但是过长的行难以阅读，所以最好拆开来写。当你使用 <code>.method_name()</code> 语法调用方法时，换行并添加空格来拆分长代码行通常是明智的。现在来看看这行代码干了什么。</p>
-<p>之前提到了 <code>read_line</code> 将用户输入放置到传递给它的字符串中，不过它也返回一个值——在这个例子中是 <a href="https://rustwiki.org/zh-CN/std/io/type.Result.html"><code>io::Result</code></a><!-- ignore -->。Rust 标准库中有很多叫做 <code>Result</code> 的类型：一个通用的 <a href="https://rustwiki.org/zh-CN/std/result/enum.Result.html"><code>Result</code></a><!-- ignore --> 以及在子模块中的特化版本，比如 <code>io::Result</code>。<code>Result</code> 类型是 <a href="ch06-00-enums.html"><em>枚举</em>（<em>enumerations</em>）</a><!-- ignore -->，通常也写作 <em>enum</em>。枚举类型持有固定集合的值，这些值被称为枚举的<strong>成员</strong>（<em>variant</em>）。枚举往往与条件表达式 <code>match</code> 一起使用，可以方便地根据枚举值是哪个成员来执行不同的代码。</p>
-<p>第 6 章将介绍枚举的更多细节。这些 <code>Result</code> 类型的目的是编码错误处理信息。</p>
-<p><code>Result</code> 的成员是 <code>Ok</code> 和 <code>Err</code>，<code>Ok</code> 成员表示操作成功，内部包含成功时产生的值。<code>Err</code> 成员则意味着操作失败，并且包含失败的前因后果。</p>
-<p>这些 <code>Result</code> 类型的作用是编码错误处理信息。<code>Result</code> 类型的值，像其他类型一样，拥有定义于其上的方法。<code>io::Result</code> 的实例拥有 <a href="https://rustwiki.org/zh-CN/std/result/enum.Result.html#method.expect"><code>expect</code> 方法</a><!-- ignore -->。如果 <code>io::Result</code> 实例的值是 <code>Err</code>，<code>expect</code> 会导致程序崩溃，并显示当做参数传递给 <code>expect</code> 的信息。如果 <code>read_line</code> 方法返回 <code>Err</code>，则可能是来源于底层操作系统错误的结果。如果 <code>io::Result</code> 实例的值是 <code>Ok</code>，<code>expect</code> 会获取 <code>Ok</code> 中的值并原样返回。在本例中，这个值是用户输入的字节数。</p>
-<p>如果不调用 <code>expect</code>，程序也能编译，不过会出现一个警告：</p>
+<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Failed to read line&quot;);</code></pre>
+<p>但是，一行过长的代码很难阅读，所以最好拆开来写。当你使用 <code>.method_name()</code> 语法调用方法时，用换行和空格来拆分长代码行通常是明智的。现在让我们来看看这行代码干了什么。</p>
+<p>之前提到了 <code>read_line</code> 将用户输入存储到我们传递给它的字符串中，但它也返回一个值——在这个例子中是 <a href="https://rustwiki.org/zh-CN/std/io/type.Result.html"><code>io::Result</code></a><!-- ignore -->。Rust 标准库中有很多名为 <code>Result</code> 的类型：一个通用的 <a href="https://rustwiki.org/zh-CN/std/result/enum.Result.html"><code>Result</code></a><!-- ignore --> 以及在子模块中的特化版本，比如 <code>io::Result</code>。<code>Result</code> 类型是 <a href="ch06-00-enums.html"><em>枚举</em>（<em>enumerations</em>）</a><!-- ignore -->，通常也写作 <em>enum</em>。枚举类型持有固定集合的值，这些值被称为枚举的<strong>成员</strong>（<em>variant</em>）。枚举往往与条件表达式 <code>match</code> 一起使用，<code>match</code> 是一种条件语句，在其被执行时，可以方便地匹配不同枚举值来执行不同的代码。</p>
+<p>第 6 章将更详细地介绍枚举类型。这些 <code>Result</code> 类型的目的是编码错误处理信息。</p>
+<p><code>Result</code> 的成员是 <code>Ok</code> 和 <code>Err</code>，<code>Ok</code> 成员表示操作成功，且 <code>Ok</code> 内部包含成功生成的值。<code>Err</code> 成员则意味着操作失败，并且包含失败的前因后果。</p>
+<p><code>Result</code> 类型的值，就像任何类型的值一样，都有为其定义的方法。<code>io::Result</code> 的实例拥有 <a href="https://rustwiki.org/zh-CN/std/result/enum.Result.html#method.expect"><code>expect</code> 方法</a><!-- ignore -->。如果 <code>io::Result</code> 实例的值是 <code>Err</code>，<code>expect</code> 会导致程序崩溃，并显示传递给 <code>expect</code> 的参数。如果 <code>read_line</code> 方法返回 <code>Err</code>，则可能是底层操作系统引起的错误结果。如果 <code>io::Result</code> 实例的值是 <code>Ok</code>，<code>expect</code> 会获取 <code>Ok</code> 中的值并原样返回，以便你可以使用它。在本例中，这个值是用户输入的字节数。</p>
+<p>如果不调用 <code>expect</code>，程序也能编译，但会出现警告提示：</p>
 <pre><code class="language-console">$ cargo build
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
 warning: unused `Result` that must be used
@@ -353,10 +366,10 @@ warning: unused `Result` that must be used
 warning: `guessing_game` (bin &quot;guessing_game&quot;) generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 </code></pre>
-<p>Rust 警告我们没有使用 <code>read_line</code> 的返回值 <code>Result</code>，说明有一个可能的错误没有处理。</p>
-<p>消除警告的正确做法是实际编写错误处理代码，不过由于我们就是希望程序在出现问题时立即崩溃，所以直接使用 <code>expect</code>。<a href="ch09-02-recoverable-errors-with-result.html">第 9 章</a><!-- ignore -->会学习如何从错误中恢复。</p>
+<p>Rust 警告我们没有使用 <code>read_line</code> 的返回值 <code>Result</code>，这表明程序没有处理一个可能发生的错误。</p>
+<p>消除警告的正确做法是实际编写错误处理代码，但在这个例子中，我们只希望程序在出现问题时立即崩溃，因此我们可以直接使用 <code>expect</code>。你将在<a href="ch09-02-recoverable-errors-with-result.html">第 9 章</a><!-- ignore -->了解到如何从错误中恢复。</p>
 <h3 id="使用-println-占位符打印值"><a class="header" href="#使用-println-占位符打印值">使用 <code>println!</code> 占位符打印值</a></h3>
-<p>除了位于结尾的大括号，目前为止就只有这一行代码值得讨论一下了，就是这一行：</p>
+<p>除了闭合花括号外，目前为止代码中只有一行需要讨论：</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -371,18 +384,15 @@ warning: `guessing_game` (bin &quot;guessing_game&quot;) generated 1 warning
 </span><span class="boring">        .expect(&quot;Failed to read line&quot;);
 </span><span class="boring">
 </span>    println!(&quot;You guessed: {}&quot;, guess);
-<span class="boring">}
-</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>这行代码现在打印了存储用户输入的字符串。里面的 <code>{}</code> 是预留在特定位置的占位符：把 <code>{}</code> 想象成小蟹钳，可以夹住合适的值。使用 <code>{}</code> 也可以打印多个值：第一对 <code>{}</code> 使用格式化字符串之后的第一个值，第二对则使用第二个值，依此类推。调用一次 <code>println!</code> 打印多个值看起来像这样：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = 10;
 
 println!(&quot;x = {} and y = {}&quot;, x, y);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>这行代码会打印出 <code>x = 5 and y = 10</code>。</p>
 <h3 id="测试第一部分代码"><a class="header" href="#测试第一部分代码">测试第一部分代码</a></h3>
 <p>让我们来测试下猜数字游戏的第一部分。使用 <code>cargo run</code> 运行：</p>
@@ -496,8 +506,7 @@ fn main() {
         .expect(&quot;Failed to read line&quot;);
 
     println!(&quot;You guessed: {}&quot;, guess);
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">示例 2-3：添加生成随机数的代码</span></p>
 <p>首先，我们新增了一行 <code>use rand::Rng</code>。<code>Rng</code> 是一个 trait，它定义了随机数生成器应实现的方法，想使用这些方法的话，此 trait 必须在作用域中。第 10 章会详细介绍 trait。</p>
 <p>接下来，我们在中间添加两行。在首行中，我们调用 <code>rand::thread_rng</code> 函数来为我们提供将要使用的特定随机数生成器：它位于当前执行线程的本地环境中，并从操作系统获取 seed。然后我们调用随机数生成器的 <code>gen_range</code> 方法。该方法由我们刚才使用 <code>use rand::Rng</code> 语句引入的 <code>Rng</code> trait 定义。<code>gen_range</code> 方法获得一个区间表达式（range expression）作为参数，并在区间内生成一个随机数。我们在这里使用的区间表达式采用的格式为 <code>start..end</code>。它包括起始端，但排除终止端。所以我们需要指定 <code>1..101</code> 生成一个 1 到 100 之间的数字。或者我们可以传入区间 <code>1..=100</code>，这和前面的表达等价。</p>
@@ -563,8 +572,7 @@ fn main() {
         Ordering::Greater =&gt; println!(&quot;Too big!&quot;),
         Ordering::Equal =&gt; println!(&quot;You win!&quot;),
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">示例 2-4：处理比较两个数字可能的返回值</span></p>
 <p>首先我们增加了另一个 <code>use</code> 声明，从标准库引入了一个叫做 <code>std::cmp::Ordering</code> 的类型到作用域中。<code>Ordering</code> 也是一个枚举，不过它的成员是 <code>Less</code>、<code>Greater</code> 和 <code>Equal</code>。这是比较两个值时可能出现的三种结果。</p>
 <p>接着，底部的五行新代码使用了 <code>Ordering</code> 类型，<code>cmp</code> 方法用来比较两个值并可以在任何可比较的值上调用。它获取一个被比较值的引用：这里是把 <code>guess</code> 与 <code>secret_number</code> 做比较。 然后它会返回一个刚才通过 <code>use</code> 引入作用域的 <code>Ordering</code> 枚举的成员。使用一个 <a href="ch06-02-match.html"><code>match</code></a><!-- ignore --> 表达式，根据对 <code>guess</code> 和 <code>secret_number</code> 调用 <code>cmp</code> 返回的 <code>Ordering</code> 成员来决定接下来做什么。</p>
@@ -650,11 +658,9 @@ error: could not compile `guessing_game` due to 2 previous errors
         Ordering::Greater =&gt; println!(&quot;Too big!&quot;),
         Ordering::Equal =&gt; println!(&quot;You win!&quot;),
     }
-<span class="boring">}
-</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>这行代码是：</p>
-<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Please type a number!&quot;);
-</code></pre>
+<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Please type a number!&quot;);</code></pre>
 <p>这里创建了一个叫做 <code>guess</code> 的变量。不过等等，不是已经有了一个叫做 <code>guess</code> 的变量了吗？确实如此，不过 Rust 允许用一个新值来<strong>遮蔽</strong> （<em>shadow</em>） <code>guess</code> 之前的值。这允许我们复用 <code>guess</code> 变量的名字，而不是被迫创建两个不同变量，诸如 <code>guess_str</code> 和 <code>guess</code> 之类。我们会在第 3 章介绍变量遮蔽的更多细节，目前暂时只需要知道这个功能通常用作转换值类型。</p>
 <p>我们将这个新变量绑定到 <code>guess.trim().parse()</code> 表达式上。表达式中的 <code>guess</code> 是指原始的 <code>guess</code> 变量，其中包含作为字符串的输入。<code>String</code> 实例的 <code>trim</code> 方法会去除字符串开头和结尾的空白字符，我们必须执行此方法才能将字符串与 <code>u32</code> 比较，因为 <code>u32</code> 只能包含数值型数据。用户必须输入 <span class="keystroke">enter</span> 键才能让 <code>read_line</code> 返回，并输入他们的猜想，这会在字符串中增加一个换行符。例如，用户输入 <span class="keystroke">5</span> 并按下 <span class="keystroke">enter</span>，<code>guess</code> 看起来像这样：<code>5\n</code>，<code>\n</code> 代表 “换行”（在 Windows 中，按 <span
 class="keystroke">enter</span> 键会得到一个回车和一个换行符 <code>\r\n</code>）。<code>trim</code> 方法会消除 <code>\n</code> 或 <code>\r\n</code>，只留下 <code>5</code>。</p>
@@ -717,8 +723,7 @@ Too big!
             Ordering::Equal =&gt; println!(&quot;You win!&quot;),
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>如上所示，我们将提示用户猜测之后的所有内容放入了循环。确保 loop 循环中的代码多缩进四个空格，再次运行程序。注意这里有一个新问题，因为程序忠实地执行了我们的要求：永远地请求另一个猜测，用户好像无法退出啊！</p>
 <p>用户总能使用 <span class="keystroke">ctrl-c</span> 终止程序。不过还有另一个方法跳出无限循环，就是<a href="#%E6%AF%94%E8%BE%83%E7%8C%9C%E6%B5%8B%E7%9A%84%E6%95%B0%E5%AD%97%E5%92%8C%E7%A7%98%E5%AF%86%E6%95%B0%E5%AD%97">“比较猜测的数字和秘密数字”</a><!-- ignore -->部分提到的 <code>parse</code>：如果用户输入的答案不是一个数字，程序会崩溃。我们可以利用这一点来退出，如下所示：</p>
 <!-- manual-regeneration
@@ -791,8 +796,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
             }
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>通过在 <code>You win!</code> 之后增加一行 <code>break</code>，用户猜对了神秘数字后会退出循环。退出循环也意味着退出程序，因为循环是 <code>main</code> 的最后一部分。</p>
 <h3 id="处理无效输入"><a class="header" href="#处理无效输入">处理无效输入</a></h3>
 <p>为了进一步改善游戏性，不要在用户输入非数字时崩溃，需要忽略非数字，让用户可以继续猜测。可以通过修改 <code>guess</code> 将 <code>String</code> 转化为 <code>u32</code> 那部分代码来实现，如示例 2-5 所示：</p>
@@ -837,8 +841,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </span><span class="boring">            }
 </span><span class="boring">        }
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">示例 2-5: 忽略非数字的猜测并重新请求数字而不是让程序崩溃</span></p>
 <p>我们将 <code>expect</code> 调用换成 <code>match</code> 语句，从而实现遇到错误就崩溃转换成处理错误。须知 <code>parse</code> 返回一个 <code>Result</code> 类型，而 <code>Result</code> 是一个拥有 <code>Ok</code> 或 <code>Err</code> 成员的枚举。这里使用的 <code>match</code> 表达式，和之前处理 <code>cmp</code> 方法返回 <code>Ordering</code> 时用的一样。</p>
 <p>如果 <code>parse</code> 能够成功的将字符串转换为一个数字，它会返回一个包含结果数字的 <code>Ok</code>。这个 <code>Ok</code> 值与 <code>match</code> 第一个分支的模式相匹配，该分支对应的动作返回 <code>Ok</code> 值中的数字 <code>num</code>，最后如愿变成新创建的 <code>guess</code> 变量。</p>
@@ -909,8 +912,7 @@ fn main() {
             }
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">示例 2-6：猜数字游戏的完整代码</span></p>
 <h2 id="总结"><a class="header" href="#总结">总结</a></h2>
 <p>此时此刻，你顺利完成了猜数字游戏。恭喜！</p>
@@ -948,23 +950,24 @@ fn main() {
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="ferris.js"></script>
-        <script type="text/javascript" src="language.js"></script>
+        <script src="ferris.js"></script>
+        <script src="language.js"></script>
 
 
+    </div>
     </body>
 </html>
