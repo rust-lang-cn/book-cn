@@ -25,12 +25,12 @@ fn handle_connection(mut stream: TcpStream) {
     let sleep = b"GET /sleep HTTP/1.1\r\n";
 
     let (status_line, filename) = if buffer.starts_with(get) {
-        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+        ("HTTP/1.1 200 OK", "hello.html")
     } else if buffer.starts_with(sleep) {
         thread::sleep(Duration::from_secs(5));
-        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+        ("HTTP/1.1 200 OK", "hello.html")
     } else {
-        ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
     };
 
     // --snip--
@@ -151,7 +151,7 @@ error: aborting due to previous error
 
 <span class="filename">文件名: src/lib.rs</span>
 
-```rust
+```rust,no_run
 pub struct ThreadPool;
 ```
 
@@ -181,7 +181,7 @@ error[E0599]: no function or associated item named `new` found for type
 
 <span class="filename">文件夹: src/lib.rs</span>
 
-```rust
+```rust,no_run
 pub struct ThreadPool;
 
 impl ThreadPool {
