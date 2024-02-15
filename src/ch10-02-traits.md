@@ -289,7 +289,7 @@ fn returns_summarizable(switch: bool) -> impl Summary {
 
 ### 使用 trait bounds 来修复 `largest` 函数
 
-现在你知道了如何使用泛型参数 trait bound 来指定所需的行为。让我们回到实例 10-5 修复使用泛型类型参数的 `largest` 函数定义！回顾一下，最后尝试编译代码时出现的错误是：
+现在你知道了如何使用泛型参数 trait bound 来指定所需的行为。让我们回到示例 10-5 修复使用泛型类型参数的 `largest` 函数定义！回顾一下，最后尝试编译代码时出现的错误是：
 
 ```text
 error[E0369]: binary operation `>` cannot be applied to type `T`
