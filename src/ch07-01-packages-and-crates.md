@@ -4,7 +4,7 @@
 
 包中所包含的内容由几条规则来确立。一个包中至多 **只能** 包含一个库 crate（library crate）；包中可以包含任意多个二进制 crate（binary crate）；包中至少包含一个 crate，无论是库的还是二进制的。
 
-让我们来看看创建包的时候会发生什么。首先，我们输入命令 `cargo new`：
+让我们来看看创建包的时候会发生什么。首先，我们输入命令 `cargo new my-project`：
 
 ```text
 $ cargo new my-project
@@ -16,7 +16,7 @@ $ ls my-project/src
 main.rs
 ```
 
-当我们输入了这条命令，Cargo 会给我们的包创建一个 *Cargo.toml* 文件。查看 *Cargo.toml* 的内容，会发现并没有提到 *src/main.rs*，因为 Cargo 遵循的一个约定：*src/main.rs* 就是一个与包同名的二进制 crate 的 crate 根。同样的，Cargo 知道如果包目录中包含 *src/lib.rs*，则包带有与其同名的库 crate，且 *src/lib.rs* 是 crate 根。crate 根文件将由 Cargo 传递给 `rustc` 来实际构建库或者二进制项目。
+运行 “cargo new my-project ”后，我们使用 “ls ”查看 Cargo 创建了什么。在项目目录中，有一个*Cargo.toml*文件。还有一个*src*目录，包含*main.rs*。在文本编辑器中打开 *Cargo.toml*，注意其中没有提到 *src/main.rs*。Cargo 遵循的惯例是：*src/main.rs* 是与软件包同名的二进制crate的crate根。同样，Cargo 知道，如果软件包目录包含 *src/lib.rs*，那么软件包就包含一个与软件包同名的库crate，而 *src/lib.rs* 就是它的crate根。Cargo 会把 crate 根文件传给 `rustc` 来构建库或二进制文件。
 
 在此，我们有了一个只包含 *src/main.rs* 的包，意味着它只含有一个名为 `my-project` 的二进制 crate。如果一个包同时含有 *src/main.rs* 和 *src/lib.rs*，则它有两个 crate：一个库和一个二进制项，且名字都与包相同。通过将文件放在 *src/bin* 目录下，一个包可以拥有多个二进制 crate：每个 *src/bin* 下的文件都会被编译成一个独立的二进制 crate。
 
