@@ -82,6 +82,13 @@ $ start chrome.exe .\book\index.html            # Windows (Cmd)
 $ mdbook test
 ```
 
+## 生成PDF格式的离线文档 
+
+兼容Docfx文档工具，可以使用 [Docfx](https://dotnet.github.io/docfx/index.html) 来生成本地离线文档，本项目已经添加docfx配置，不影响mdbook工具，可以直接使用下面的命令打开docfx生成的文档页面以及生成PDF格式离线文档(带目录的PDF文件)。
+```bash
+docfx docfx.json --serve -p 9800
+```
+
 ## 参与贡献
 
 您的帮助，我们将感激不尽(We'd love your help)！请参见 [CONTRIBUTING.md][contrib-cn]（英文原项目参与贡献指引 [CONTRIBUTING-EN.md][contrib]）。
