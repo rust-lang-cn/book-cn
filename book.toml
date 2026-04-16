@@ -14,3 +14,9 @@ edit-url-template = "https://github.com/rust-lang-cn/book-cn/edit/master/{path}"
 [output.html.redirect]
 "ch01-00-introduction.html" = "ch00-00-introduction.html"
 "ch05-01-method-syntax.html" = "ch05-03-method-syntax.html"
+
+[output.pdf]
+# mdbook-pdf 插件 生成pdf 带目录
+
+[output.epub]
+# mdbook-epub 插件 生成epub
