@@ -10,7 +10,6 @@
 - [正體中文](https://github.com/rust-tw/book-tw)
 - [Українська](https://github.com/pavloslav/rust-book-uk-ua)
 - [Español](https://github.com/thecodix/book), [另一版本](https://github.com/ManRR/rust-book-es)
-- [Italiano](https://github.com/Ciro-Fusco/book_it)
 - [Русский](https://github.com/rust-lang-ru/book)
 - [한국어](https://github.com/rinthel/rust-lang-book-ko)
 - [日本語](https://github.com/rust-lang-ja/book-ja)
