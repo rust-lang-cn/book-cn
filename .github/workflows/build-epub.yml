@@ -13,7 +13,7 @@ on:
 
 jobs:
   build-epub:
-    name: Build EPUB using cargo
+    name: Build and Release EPUB
     runs-on: ubuntu-latest
     
     steps:
@@ -29,29 +29,21 @@ jobs:
         rustup toolchain install stable
         rustup default stable
 
-    - name: Install mdbook and mdbook-epub via cargo
+    - name: Install mdbook and mdbook-epub
       run: |
-        cargo install mdbook
-        cargo install mdbook-epub
+        cargo install mdbook --locked
+        cargo install mdbook-epub --locked
 
-    - name: Build EPUB
+    - name: Build book (HTML + EPUB)
       run: |
-        # 构建 EPUB
-        mdbook-epub build
-        
-        # 查找生成的 EPUB 文件
-        echo "Generated EPUB files:"
-        find . -name "*.epub" -type f
-        
-        # 创建 artifacts 目录并复制 EPUB
+        mdbook build
+        # EPUB 会生成在 book/epub/ 目录
+        ls -la book/epub/
+
+    - name: Prepare artifacts
+      run: |
         mkdir -p artifacts
-        find . -name "*.epub" -type f -exec cp {} artifacts/ \;
-
-    - name: List artifacts
-      run: |
-        ls -la artifacts/
-        echo "EPUB file:"
-        ls artifacts/*.epub
+        cp book/epub/*.epub artifacts/ 2>/dev/null || echo "No EPUB found"
 
     - name: Get version
       id: version
@@ -62,11 +54,6 @@ jobs:
           VERSION="${GITHUB_REF_NAME}"
         fi
         echo "version=${VERSION}" >> $GITHUB_OUTPUT
-        
-        # 获取 EPUB 文件名
-        EPUB_FILE=$(ls artifacts/*.epub 2>/dev/null | head -1)
-        EPUB_NAME=$(basename "$EPUB_FILE")
-        echo "epub_name=${EPUB_NAME}" >> $GITHUB_OUTPUT
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
@@ -80,7 +67,6 @@ jobs:
           
           ### 构建信息
           - 版本：${{ steps.version.outputs.version }}
-          - 构建时间：$(date -u '+%Y-%m-%d %H:%M:%S UTC')
           - 提交：${{ github.sha }}
           
           ### 阅读方式
