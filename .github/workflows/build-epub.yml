@@ -1,0 +1,97 @@
+name: Build and Release EPUB
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: false
+        default: 'nightly'
+
+jobs:
+  build-epub:
+    name: Build EPUB using cargo
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Setup Rust
+      run: |
+        rustup set profile minimal
+        rustup toolchain install stable
+        rustup default stable
+
+    - name: Install mdbook and mdbook-epub via cargo
+      run: |
+        cargo install mdbook
+        cargo install mdbook-epub
+
+    - name: Build EPUB
+      run: |
+        # 构建 EPUB
+        mdbook-epub build
+        
+        # 查找生成的 EPUB 文件
+        echo "Generated EPUB files:"
+        find . -name "*.epub" -type f
+        
+        # 创建 artifacts 目录并复制 EPUB
+        mkdir -p artifacts
+        find . -name "*.epub" -type f -exec cp {} artifacts/ \;
+
+    - name: List artifacts
+      run: |
+        ls -la artifacts/
+        echo "EPUB file:"
+        ls artifacts/*.epub
+
+    - name: Get version
+      id: version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          VERSION="${{ github.event.inputs.version }}"
+        else
+          VERSION="${GITHUB_REF_NAME}"
+        fi
+        echo "version=${VERSION}" >> $GITHUB_OUTPUT
+        
+        # 获取 EPUB 文件名
+        EPUB_FILE=$(ls artifacts/*.epub 2>/dev/null | head -1)
+        EPUB_NAME=$(basename "$EPUB_FILE")
+        echo "epub_name=${EPUB_NAME}" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        name: "Rust 程序设计语言 中文版 - ${{ steps.version.outputs.version }}"
+        tag_name: ${{ steps.version.outputs.version }}
+        body: |
+          ## Rust 程序设计语言（中文版）EPUB 电子书
+          
+          使用 mdbook-epub 自动构建的 EPUB 格式电子书。
+          
+          ### 构建信息
+          - 版本：${{ steps.version.outputs.version }}
+          - 构建时间：$(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          - 提交：${{ github.sha }}
+          
+          ### 阅读方式
+          下载 EPUB 文件后，可在以下设备阅读：
+          - Apple Books (iOS/macOS)
+          - Google Play Books (Android)
+          - Calibre (跨平台)
+          - 各类电子书阅读器
+        files: |
+          artifacts/*.epub
+        draft: false
+        prerelease: ${{ contains(steps.version.outputs.version, 'nightly') }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
